@@ -6,4 +6,5 @@
   <license>BSD</license>
   <review status="API cleared" notes="2012-06-20"/>
   <url>http://ros.org/wiki/qt_gui_core</url>
+  <depend stack="ros"/>
 </stack>
