@@ -11,6 +11,7 @@
   <depend package="qt_gui"/>
   <depend package="pluginlib"/>
   <rosdep name="libqt4-dev"/>
+  <rosdep name="pkg-config"/>
   <rosdep name="qt4-qmake"/>
   <rosdep name="tinyxml"/>
 
