@@ -6,5 +6,8 @@
   <license>BSD</license>
   <review status="API cleared" notes="2012-06-20"/>
   <url>http://ros.org/wiki/qt_gui_core</url>
+
   <depend stack="ros"/>
+  <depend stack="pluginlib"/> <!-- pluginlib -->
+  <depend stack="python_qt_binding"/>  <!-- python_qt_binding -->
 </stack>
