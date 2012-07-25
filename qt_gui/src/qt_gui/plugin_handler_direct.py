@@ -41,8 +41,8 @@ class PluginHandlerDirect(PluginHandler):
 
     """Handler for directly passing invocations between the framework and one `Plugin` instance."""
 
-    def __init__(self, main_window, instance_id, application_context, container_manager):
-        super(PluginHandlerDirect, self).__init__(main_window, instance_id, application_context, container_manager)
+    def __init__(self, parent, main_window, instance_id, application_context, container_manager):
+        super(PluginHandlerDirect, self).__init__(parent, main_window, instance_id, application_context, container_manager)
         self.setObjectName('PluginHandlerDirect')
         self._context = None
         self._plugin = None

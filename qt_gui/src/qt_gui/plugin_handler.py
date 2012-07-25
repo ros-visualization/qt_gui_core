@@ -50,8 +50,8 @@ class PluginHandler(QObject):
     reload_signal = Signal(str)
     help_signal = Signal(str)
 
-    def __init__(self, main_window, instance_id, application_context, container_manager):
-        super(PluginHandler, self).__init__()
+    def __init__(self, parent, main_window, instance_id, application_context, container_manager):
+        super(PluginHandler, self).__init__(parent)
         self.setObjectName('PluginHandler')
 
         self._main_window = main_window
@@ -130,7 +130,7 @@ class PluginHandler(QObject):
             callback(self._instance_id)
 
     def _delete_widget(self, widget):
-        del widget
+        widget.deleteLater()
 
     def unload(self, callback=None):
         """
@@ -285,21 +285,18 @@ class PluginHandler(QObject):
     @Slot('QWidget*')
     def remove_widget(self, widget):
         dock_widget, signaler = self._widgets[widget]
+        self._widgets.pop(widget)
         if signaler is not None:
             signaler.window_title_changed_signal.disconnect(self._on_widget_title_changed)
-        self._remove_dock_widget_from_parent(dock_widget)
-        # do not delete the widget, only the dock widget
-        widget.setParent(None)
-        del self._widgets[widget]
+        # separate widget from dock widget in order to not get deleted
+        dock_widget.setWidget(None)
+        # remove dock widget from parent and delete later
+        if self._main_window is not None:
+            dock_widget.parent().removeDockWidget(dock_widget)
+        dock_widget.deleteLater()
         # close plugin when last widget is removed
         if len(self._widgets) == 0:
             self._emit_close_plugin()
-
-    def _remove_dock_widget_from_parent(self, dock_widget):
-        if self._main_window is not None:
-            dock_widget.parent().removeDockWidget(dock_widget)
-            dock_widget.setParent(None)
-            dock_widget.deleteLater()
 
     def _emit_close_plugin(self):
         self.close_signal.emit(str(self._instance_id))

@@ -172,20 +172,20 @@ class PluginManager(QObject):
 
         # containers are pseudo-plugins and handled by a special handler
         if self._container_manager is not None and instance_id.plugin_id == self._container_manager.get_container_descriptor().plugin_id():
-            handler = PluginHandlerContainer(self._main_window, instance_id, self._application_context, self._container_manager)
+            handler = PluginHandlerContainer(self, self._main_window, instance_id, self._application_context, self._container_manager)
 
         # use platform specific handler for multiprocess-mode if available
         elif self._application_context.options.multi_process or self._application_context.options.embed_plugin:
             try:
                 from .plugin_handler_xembed import PluginHandlerXEmbed
-                handler = PluginHandlerXEmbed(self._main_window, instance_id, self._application_context, self._container_manager)
+                handler = PluginHandlerXEmbed(self, self._main_window, instance_id, self._application_context, self._container_manager)
             except ImportError:
                 qCritical('PluginManager._load_plugin() could not load plugin in a separate process')
                 return
 
         # use direct handler for in-process plugins
         else:
-            handler = PluginHandlerDirect(self._main_window, instance_id, self._application_context, self._container_manager)
+            handler = PluginHandlerDirect(self, self._main_window, instance_id, self._application_context, self._container_manager)
 
         self._add_running_plugin(instance_id, handler)
         handler.load(self._plugin_provider, callback)
@@ -298,7 +298,6 @@ class PluginManager(QObject):
             self._plugin_menu.remove_instance(instance_id)
         info = self._running_plugins[str(instance_id)]
         self._running_plugins.pop(str(instance_id))
-        info['handler'].deleteLater()
 
 
     @Slot(str)

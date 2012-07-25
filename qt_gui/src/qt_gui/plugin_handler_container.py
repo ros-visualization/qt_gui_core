@@ -36,8 +36,8 @@ class PluginHandlerContainer(PluginHandler):
 
     """Handler for creating a container."""
 
-    def __init__(self, main_window, instance_id, application_context, container_manager):
-        super(PluginHandlerContainer, self).__init__(main_window, instance_id, application_context, container_manager)
+    def __init__(self, parent, main_window, instance_id, application_context, container_manager):
+        super(PluginHandlerContainer, self).__init__(parent, main_window, instance_id, application_context, container_manager)
         self.setObjectName('PluginHandlerContainer')
         self._container = None
 
