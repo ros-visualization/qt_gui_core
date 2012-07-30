@@ -269,8 +269,7 @@ class PluginHandler(QObject):
             # find and remove possible remaining dock_widget with this object name
             old_dock_widget = self._main_window.findChild(DockWidget, dock_widget.objectName())
             if old_dock_widget is not None:
-                qWarning('PluginHandler._add_dock_widget_to_main_window() duplicate object name "%s", removing old dock widget!' % dock_widget.objectName())
-                self._main_window.removeDockWidget(old_dock_widget) # this is not actually doing anything...
+                qWarning('PluginHandler._add_dock_widget_to_main_window() duplicate object name "%s", assign unique object names before adding widgets!' % dock_widget.objectName())
             self._main_window.addDockWidget(Qt.BottomDockWidgetArea, dock_widget)
 
     def _on_widget_title_changed(self, widget):
