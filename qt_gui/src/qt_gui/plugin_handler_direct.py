@@ -131,6 +131,14 @@ class PluginHandlerDirect(PluginHandler):
         dock_widget.setObjectName(self._instance_id.tidy_str() + '__' + widget.objectName())
         self._add_dock_widget(dock_widget, widget)
 
+    # pointer to QToolBar must be used for PySide to work (at least with 1.0.1)
+    @Slot('QToolBar*')
+    def add_toolbar(self, toolbar):
+        if toolbar in self._toolbars:
+            qWarning('PluginHandlerDirect.add_toolbar() toolbar "%s" already added' % toolbar.objectName())
+            return
+        self._add_toolbar(toolbar)
+
     @Slot()
     def close_plugin(self):
         # only non-standalone plugins are closable

@@ -74,6 +74,26 @@ class PluginContext(QObject):
         """
         self._handler.remove_widget(widget)
 
+    def add_toolbar(self, toolbar):
+        """
+        Add a toolbar to the UI.
+        The toolbar is directly added to the QMainWindow.
+        This method can be called once for each toolbar a plugin would like to add and at any point in time (until the calling plugin has been shutdown).
+        Note: The ownership of the toolbar is transferred to the callee which will delete it when the plugin is shut down.
+        @param widget: The toolbar to add
+        @type widget: QToolBar
+        """
+        self._handler.add_toolbar(toolbar)
+
+    def remove_toolbar(self, toolbar):
+        """
+        Remove a previously added toolbar from the UI.
+        Note: The ownership of the toolbar is transferred to the caller.
+        @param widget: The toolbar to remove
+        @type widget: QToolBar
+        """
+        self._handler.remove_toolbar(toolbar)
+
     def close_plugin(self):
         """
         Close the plugin.

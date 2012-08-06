@@ -32,7 +32,7 @@ import traceback
 
 from . import qt_binding_helper  # @UnusedImport
 from QtCore import qCritical, qDebug, QObject, Qt, qWarning, Signal, Slot
-from QtGui import QDockWidget
+from QtGui import QDockWidget, QToolBar
 
 from .dock_widget import DockWidget
 from .dock_widget_title_bar import DockWidgetTitleBar
@@ -68,6 +68,8 @@ class PluginHandler(QObject):
         # mapping of added widgets to their parent dock widget and WindowTitleChangedSignaler
         self._widgets = {}
 
+        self._toolbars = []
+
     def instance_id(self):
         return self._instance_id
 
@@ -94,16 +96,21 @@ class PluginHandler(QObject):
 
     def _emit_load_completed(self, exception=None):
         if exception is not None:
-            # garbage already registered widgets
-            for widget in self._widgets.keys():
-                self.remove_widget(widget)
-                self._delete_widget(widget)
+            self._garbage_widgets_and_toolbars()
         if self.__callback is not None:
             callback = self.__callback
             self.__callback = None
             callback(self, exception)
         elif exception is not None:
             qCritical('PluginHandler.load() failed%s' % (':\n%s' % str(exception) if exception != True else ''))
+
+    def _garbage_widgets_and_toolbars(self):
+        for widget in self._widgets.keys():
+            self.remove_widget(widget)
+            self._delete_widget(widget)
+        for toolbar in self._toolbars:
+            self.remove_toolbar(toolbar)
+            self._delete_toolbar(toolbar)
 
     def shutdown_plugin(self, callback):
         """
@@ -121,9 +128,7 @@ class PluginHandler(QObject):
         raise NotImplementedError
 
     def emit_shutdown_plugin_completed(self):
-        for widget in self._widgets.keys():
-            self.remove_widget(widget)
-            self._delete_widget(widget)
+        self._garbage_widgets_and_toolbars()
         if self.__callback is not None:
             callback = self.__callback
             self.__callback = None
@@ -131,6 +136,9 @@ class PluginHandler(QObject):
 
     def _delete_widget(self, widget):
         widget.deleteLater()
+
+    def _delete_toolbar(self, toolbar):
+        toolbar.deleteLater()
 
     def unload(self, callback=None):
         """
@@ -266,7 +274,7 @@ class PluginHandler(QObject):
 
     def _add_dock_widget_to_main_window(self, dock_widget):
         if self._main_window is not None:
-            # find and remove possible remaining dock_widget with this object name
+            # warn about dock_widget with same object name
             old_dock_widget = self._main_window.findChild(DockWidget, dock_widget.objectName())
             if old_dock_widget is not None:
                 qWarning('PluginHandler._add_dock_widget_to_main_window() duplicate object name "%s", assign unique object names before adding widgets!' % dock_widget.objectName())
@@ -287,14 +295,34 @@ class PluginHandler(QObject):
         self._widgets.pop(widget)
         if signaler is not None:
             signaler.window_title_changed_signal.disconnect(self._on_widget_title_changed)
-        # separate widget from dock widget in order to not get deleted
+        # detach widget from dock widget in order to not get deleted
         dock_widget.setWidget(None)
         # remove dock widget from parent and delete later
         if self._main_window is not None:
             dock_widget.parent().removeDockWidget(dock_widget)
         dock_widget.deleteLater()
-        # close plugin when last widget is removed
-        if len(self._widgets) == 0:
+        # close plugin when last widget and toolbar is removed
+        if len(self._widgets) + len(self._toolbars) == 0:
+            self._emit_close_plugin()
+
+    def _add_toolbar(self, toolbar):
+        self._toolbars.append(toolbar)
+        if self._main_window is not None:
+            # warn about toolbar with same object name
+            old_toolbar = self._main_window.findChild(QToolBar, toolbar.objectName())
+            if old_toolbar is not None:
+                qWarning('PluginHandler._add_toolbar() duplicate object name "%s", assign unique object names before adding toolbars!' % toolbar.objectName())
+            self._main_window.addToolBar(Qt.TopToolBarArea, toolbar)
+
+    # pointer to QToolBar must be used for PySide to work (at least with 1.0.1)
+    @Slot('QToolBar*')
+    def remove_toolbar(self, toolbar):
+        self._toolbars.remove(toolbar)
+        # detach toolbar from parent
+        if toolbar.parent():
+            toolbar.parent().removeToolBar(toolbar)
+        # close plugin when last widget and toolbar is removed
+        if len(self._widgets) + len(self._toolbars) == 0:
             self._emit_close_plugin()
 
     def _emit_close_plugin(self):
