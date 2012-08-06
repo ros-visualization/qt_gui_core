@@ -58,7 +58,7 @@ class PluginHandlerDBusService(Object):
 
     @dbus.service.method('org.ros.qt_gui.PluginHandlerContainer', in_signature='', out_signature='')
     def close_plugin(self):
-        self._plugin_handler.close_plugin()
+        self._plugin_handler._emit_close_plugin()
 
     @dbus.service.signal('org.ros.qt_gui.PluginHandlerContainer', signature='')
     def shutdown_plugin(self):
