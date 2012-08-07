@@ -240,7 +240,7 @@ class PluginHandler(QObject):
             dock_widget.setTitleBarWidget(title_bar)
 
             # connect extra buttons
-            title_bar.connect_close_button(self._close_dock_widget)
+            title_bar.connect_close_button(self._remove_widget_by_dock_widget)
             title_bar.connect_button('help', self._emit_help_signal)
             if hide_help:
                 title_bar.hide_button('help')
@@ -251,7 +251,7 @@ class PluginHandler(QObject):
             # hide configuration button until existence of feature has been confirmed
             title_bar.hide_button('configuration')
 
-    def _close_dock_widget(self, dock_widget):
+    def _remove_widget_by_dock_widget(self, dock_widget):
         widget = [key for key, value in self._widgets.iteritems() if value[0] == dock_widget][0]
         self.remove_widget(widget)
 

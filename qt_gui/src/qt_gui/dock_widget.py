@@ -60,13 +60,13 @@ class DockWidget(QDockWidget):
             self._dragging_local_pos = e.pos()
 
         if self._dragging_parent is None and self._dragging_local_pos is not None and e.type() == QEvent.Move and QApplication.mouseButtons() & Qt.LeftButton:
-            if self.widget_at(e.pos()) is not None:
+            if self._widget_at(e.pos()) is not None:
                 qDebug('DockWidget._event() start drag, dockwidget=%s, parent=%s, floating=%s, pos=%s' % (str(self), str(self.parent()), str(self.isFloating()), str(self._dragging_local_pos)))
                 self._dragging_parent = self.parent()
                 # ignore further mouse events so that the widget behind this dock widget can be determined
                 self.setAttribute(Qt.WA_TransparentForMouseEvents)
 
-                # collect all main windows (except self.main_window) to re-implement QApplication.widgetAt() in self.widget_at()
+                # collect all main windows (except self.main_window) to re-implement QApplication.widgetAt() in self._widget_at()
                 self._main_windows = [self._container_manager.get_root_main_window()]
                 for container in self._container_manager.get_containers():
                     if container == self:
@@ -84,8 +84,8 @@ class DockWidget(QDockWidget):
             self._main_windows = []
 
         if self._dragging_parent is not None and e.type() == QEvent.MouseMove and e.buttons() & Qt.LeftButton and not self._releasing_and_repressing_while_dragging:
-            widget = self.widget_at(e.globalPos())
-            new_parent = self.get_new_parent(widget)
+            widget = self._widget_at(e.globalPos())
+            new_parent = self._get_new_parent(widget)
             #print 'new_parent', new_parent, (new_parent.objectName() if new_parent else '')
             if new_parent is not None and new_parent != self.parent():
                 self._releasing_and_repressing_while_dragging = True
@@ -125,7 +125,7 @@ class DockWidget(QDockWidget):
 
         return super(DockWidget, self).event(e)
 
-    def get_new_parent(self, widget):
+    def _get_new_parent(self, widget):
         from .dock_widget_container import DockWidgetContainer
         if isinstance(widget, DockWidgetContainer):
             if widget.isFloating():
@@ -137,8 +137,8 @@ class DockWidget(QDockWidget):
             widget = widget.parent()
         return widget
 
-    def widget_at(self, global_point):
-        #print 'widget_at()', global_point#, local_point
+    def _widget_at(self, global_point):
+        #print '_widget_at()', global_point#, local_point
         widget = QApplication.widgetAt(global_point)
         #print '- widget', widget, (widget.objectName() if widget is not None else '')
         root_main_window = self._container_manager.get_root_main_window()

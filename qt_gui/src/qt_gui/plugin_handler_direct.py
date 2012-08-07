@@ -92,7 +92,7 @@ class PluginHandlerDirect(PluginHandler):
     def _delete_widget(self, widget):
         # only delete widgets which are not at the same time the plugin
         if widget != self._plugin:
-            del widget
+            super(PluginHandlerDirect, self)._delete_widget(widget)
 
     def _unload(self):
         self._plugin_provider.unload(self._plugin)
