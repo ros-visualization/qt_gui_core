@@ -136,7 +136,7 @@ class PluginHandlerXEmbedClient(PluginHandlerDirect):
         embed_widget.setLayout(layout)
 
         # close embed widget when container is closed
-        # TODO nceessary?
+        # TODO necessary?
         #embed_widget.containerClosed.connect(embed_widget.close)
 
         embed_container_window_id = self._remote_container.embed_widget(os.getpid(), widget.objectName())
@@ -156,12 +156,13 @@ class PluginHandlerXEmbedClient(PluginHandlerDirect):
     # pointer to QWidget must be used for PySide to work (at least with 1.0.1)
     @Slot('QWidget*')
     def remove_widget(self, widget):
-        _, signaler = self._embed_widgets[widget]
+        embed_widget, signaler = self._embed_widgets[widget]
+        del self._embed_widgets[widget]
         signaler.window_title_changed_signal.disconnect(self._on_embed_widget_title_changed)
         self._remote_container.unembed_widget(widget.objectName())
         # do not delete the widget, only the embed widget
         widget.setParent(None)
-        del self._embed_widgets[widget]
+        embed_widget.deleteLater()
         # triggering close after last widget is closed is handled by the container
 
     def _emit_close_plugin(self):
