@@ -29,8 +29,8 @@
 # POSSIBILITY OF SUCH DAMAGE.
 
 from . import qt_binding_helper  # @UnusedImport
-from QtCore import qDebug, Signal
-from QtGui import QMainWindow
+from QtCore import qDebug, Qt, Signal
+from QtGui import QMainWindow, QToolBar
 
 from .settings import Settings
 
@@ -111,7 +111,19 @@ class MainWindow(QMainWindow):
     def _save_state_to_perspective(self):
         if self._settings is not None:
             self._settings.set_value('state', self.saveState())
+            # safe area for all toolbars
+            toolbar_settings = self._settings.get_settings('toolbar_areas')
+            for toolbar in self.findChildren(QToolBar):
+                area = self.toolBarArea(toolbar)
+                if area in [Qt.LeftToolBarArea, Qt.RightToolBarArea, Qt.TopToolBarArea, Qt.BottomToolBarArea]:
+                    toolbar_settings.set_value(toolbar.objectName(), area)
 
     def _restore_state_from_perspective(self):
         if self._settings.contains('state'):
             self.restoreState(self._settings.value('state'))
+            # restore area for all toolbars
+            toolbar_settings = self._settings.get_settings('toolbar_areas')
+            for toolbar in self.findChildren(QToolBar):
+                area = toolbar_settings.value(toolbar.objectName(), Qt.NoToolBarArea)
+                if area in [Qt.LeftToolBarArea, Qt.RightToolBarArea, Qt.TopToolBarArea, Qt.BottomToolBarArea]:
+                    self.addToolBar(area, toolbar)

@@ -306,6 +306,14 @@ class PluginHandler(QObject):
             self._emit_close_plugin()
 
     def _add_toolbar(self, toolbar):
+        # every toolbar needs a unique name for save/restore geometry/state to work
+        toolbar_object_name = toolbar.objectName()
+        prefix = self._instance_id.tidy_str() + '__'
+        # when added, removed and readded the prefix should not be prepended multiple times
+        if not toolbar_object_name.startswith(prefix):
+            toolbar_object_name = prefix + toolbar_object_name
+        toolbar.setObjectName(toolbar_object_name)
+
         self._toolbars.append(toolbar)
         if self._main_window is not None:
             # warn about toolbar with same object name

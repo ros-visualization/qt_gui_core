@@ -73,6 +73,19 @@ class PluginHandlerDBusService(Object):
     def unembed_widget(self, widget_object_name):
         self._plugin_handler.unembed_widget(widget_object_name)
 
+    @dbus.service.method('org.ros.qt_gui.PluginHandlerContainer', in_signature='is', out_signature='i')
+    def embed_toolbar(self, pid, toolbar_object_name):
+        return self._plugin_handler.embed_toolbar(pid, toolbar_object_name)
+
+    @dbus.service.signal('org.ros.qt_gui.PluginHandlerContainer', signature='ib')
+    def toolbar_orientation_changed(self, win_id, is_horizontal):
+        # no implementation - any method call is relayed as a signal to the service client
+        pass
+
+    @dbus.service.method('org.ros.qt_gui.PluginHandlerContainer', in_signature='s', out_signature='')
+    def unembed_toolbar(self, toolbar_object_name):
+        self._plugin_handler.unembed_toolbar(toolbar_object_name)
+
     @dbus.service.method('org.ros.qt_gui.PluginHandlerContainer', in_signature='', out_signature='')
     def close_plugin(self):
         self._plugin_handler._emit_close_plugin()

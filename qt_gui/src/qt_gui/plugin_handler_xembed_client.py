@@ -34,7 +34,7 @@ import traceback
 from dbus import Interface
 from dbus.connection import Connection
 from .plugin_handler_direct import PluginHandlerDirect
-from QtCore import qCritical, qDebug, qWarning, Slot
+from QtCore import qCritical, qDebug, Qt, qWarning, Slot
 from QtGui import QVBoxLayout, QX11EmbedWidget
 from .settings import Settings
 from .window_title_changed_signaler import WindowTitleChangedSignaler
@@ -65,6 +65,7 @@ class PluginHandlerXEmbedClient(PluginHandlerDirect):
         self._remote_container.connect_to_signal('save_settings', self._save_settings_from_remote)
         self._remote_container.connect_to_signal('restore_settings', self._restore_settings_from_remote)
         self._remote_container.connect_to_signal('trigger_configuration', self._trigger_configuration)
+        self._remote_container.connect_to_signal('toolbar_orientation_changed', self._toolbar_orientation_changed)
 
         proxy = conn.get_object(None, self._dbus_object_path + '/plugin')
         self._remote_plugin_settings = Interface(proxy, 'org.ros.qt_gui.Settings')
@@ -163,7 +164,50 @@ class PluginHandlerXEmbedClient(PluginHandlerDirect):
         # do not delete the widget, only the embed widget
         widget.setParent(None)
         embed_widget.deleteLater()
-        # triggering close after last widget is closed is handled by the container
+        # triggering close after last widget and toolbar is closed is handled by the container
+
+    # pointer to QToolBar must be used for PySide to work (at least with 1.0.1)
+    @Slot('QToolBar*')
+    def add_toolbar(self, toolbar):
+        if toolbar in self._embed_widgets:
+            qWarning('PluginHandlerXEmbedClient.add_toolbar() toolbar "%s" already added' % toolbar.objectName())
+            return
+        embed_widget = QX11EmbedWidget()
+        layout = QVBoxLayout()
+        layout.setContentsMargins(0, 0, 0, 0)
+        layout.addWidget(toolbar)
+        embed_widget.setLayout(layout)
+
+        # close embed widget when container is closed
+        # TODO necessary?
+        #embed_widget.containerClosed.connect(embed_widget.close)
+        def foo():
+            print('embed_widget.containerClosed')
+        embed_widget.containerClosed.connect(foo)
+
+        embed_container_window_id = self._remote_container.embed_toolbar(os.getpid(), toolbar.objectName())
+        embed_widget.embedInto(embed_container_window_id)
+
+        self._embed_widgets[toolbar] = embed_widget, None
+
+        embed_widget.show()
+
+    def _toolbar_orientation_changed(self, win_id, is_horizontal):
+        for toolbar, (embed_widget, _) in self._embed_widgets.items():
+            if embed_widget.containerWinId() == win_id:
+                toolbar.setOrientation(Qt.Horizontal if is_horizontal else Qt.Vertical)
+                break
+
+    # pointer to QToolBar must be used for PySide to work (at least with 1.0.1)
+    @Slot('QToolBar*')
+    def remove_toolbar(self, toolbar):
+        embed_widget, _ = self._embed_widgets[toolbar]
+        del self._embed_widgets[toolbar]
+        self._remote_container.unembed_widget(toolbar.objectName())
+        # do not delete the toolbar, only the embed widget
+        toolbar.setParent(None)
+        embed_widget.deleteLater()
+        # triggering close after last widget and toolbar is closed is handled by the container
 
     def _emit_close_plugin(self):
         self._remote_container.close_plugin()

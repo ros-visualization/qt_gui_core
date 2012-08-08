@@ -34,8 +34,8 @@ from dbus.server import Server
 from .plugin_handler import PluginHandler
 from .plugin_handler_dbus_service import PluginHandlerDBusService
 from .qt_binding_helper import QT_BINDING
-from QtCore import qDebug, QProcess, qWarning
-from QtGui import QX11EmbedContainer
+from QtCore import qDebug, QProcess, QSignalMapper, Qt, qWarning
+from QtGui import QToolBar, QX11EmbedContainer
 from .main import Main
 from .settings_proxy_dbus_service import SettingsProxyDBusService
 
@@ -63,8 +63,10 @@ class PluginHandlerXEmbedContainer(PluginHandler):
         self._pid = None
         # mapping of widget object name to their embed container
         self._embed_containers = {}
-
-        self._objects_and_paths = []
+        # mapping of toolbar object name to the toolbar
+        self._embed_toolbars = {}
+        self._signal_mapper_toolbars = QSignalMapper(self)
+        self._signal_mapper_toolbars.mapped[str].connect(self._on_toolbar_orientation_changed)
 
     def _load(self):
         self._dbus_server = Server('tcp:bind=*')
@@ -195,3 +197,29 @@ class PluginHandlerXEmbedContainer(PluginHandler):
         embed_container = self._embed_containers[widget_object_name]
         self.remove_widget(embed_container)
         del self._embed_containers[widget_object_name]
+
+    def embed_toolbar(self, pid, toolbar_object_name):
+        toolbar = QToolBar()
+        toolbar.setObjectName(toolbar_object_name)
+        embed_container = QX11EmbedContainer(toolbar)
+        toolbar.addWidget(embed_container)
+        #embed_container.clientClosed.connect(self._emit_close_signal)
+        self._add_toolbar(toolbar)
+        self._embed_containers[toolbar_object_name] = embed_container
+        # setup mapping to signal change of orientation to client
+        self._embed_toolbars[toolbar_object_name] = toolbar
+        self._signal_mapper_toolbars.setMapping(toolbar, toolbar_object_name)
+        toolbar.orientationChanged.connect(self._signal_mapper_toolbars.map)
+        return embed_container.winId()
+
+    def _on_toolbar_orientation_changed(self, toolbar_object_name):
+        embed_container = self._embed_containers[toolbar_object_name]
+        toolbar = self._embed_toolbars[toolbar_object_name]
+        self._dbus_container_service.toolbar_orientation_changed(embed_container.winId(), toolbar.orientation() == Qt.Horizontal)
+
+    def unembed_toolbar(self, toolbar_object_name):
+        embed_container = self._embed_containers[toolbar_object_name]
+        del self._embed_containers[toolbar_object_name]
+        del self._embed_toolbars[toolbar_object_name]
+        self.remove_toolbar(embed_container)
+        embed_container.close()
