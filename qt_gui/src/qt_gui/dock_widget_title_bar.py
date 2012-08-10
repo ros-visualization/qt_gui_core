@@ -41,6 +41,7 @@ class DockWidgetTitleBar(QWidget):
 
     def __init__(self, dock_widget):
         super(DockWidgetTitleBar, self).__init__(dock_widget)
+        self._dock_widget = dock_widget
 
         ui_file = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'DockWidgetTitleBar.ui')
         loadUi(ui_file, self)
@@ -65,7 +66,7 @@ class DockWidgetTitleBar(QWidget):
         self.float_button.clicked.connect(self._toggle_floating)
         self.dockable_button.clicked.connect(self._toggle_dockable)
 
-        dock_widget.featuresChanged.connect(self._features_changed)
+        self._dock_widget.featuresChanged.connect(self._features_changed)
         self._features_changed()
 
         self._update_title()
@@ -74,7 +75,10 @@ class DockWidgetTitleBar(QWidget):
         self._event_callbacks = {
             QEvent.WindowTitleChange: self._update_title,
         }
-        dock_widget.installEventFilter(self)
+        self._dock_widget.installEventFilter(self)
+
+    def __del__(self):
+        self._dock_widget.removeEventFilter(self)
 
     def connect_button(self, button_id, callback):
         button = self._extra_buttons.get(button_id, None)
