@@ -186,7 +186,6 @@ class Main(object):
             if context.provide_app_dbus_interfaces:
                 context.dbus_unique_bus_name = context.dbus_base_bus_name + '.pid%d' % os.getpid()
 
-            if context.provide_app_dbus_interfaces:
                 # provide pid of application via dbus
                 from .application_dbus_interface import ApplicationDBusInterface
                 _dbus_server = ApplicationDBusInterface(context.dbus_base_bus_name)
@@ -202,7 +201,7 @@ class Main(object):
                 except DBusException:
                     pass
                 else:
-                    remote_interface = Interface(remote_object, 'org.ros.qt_gui.Application')
+                    remote_interface = Interface(remote_object, context.dbus_base_bus_name + '.Application')
                     host_pid = remote_interface.get_pid()
             if host_pid is not None:
                 context.dbus_host_bus_name = context.dbus_base_bus_name + '.pid%d' % host_pid
@@ -215,7 +214,7 @@ class Main(object):
                 except DBusException:
                     (rc, msg) = (1, 'unable to communicate with GUI instance "%s"' % context.dbus_host_bus_name)
                 else:
-                    remote_interface = Interface(remote_object, 'org.ros.qt_gui.PluginManager')
+                    remote_interface = Interface(remote_object, context.dbus_base_bus_name + '.PluginManager')
                     (rc, msg) = remote_interface.start_plugin(self._options.command_start_plugin)
                 if rc == 0:
                     print('qt_gui_main() started plugin "%s" in GUI "%s"' % (msg, context.dbus_host_bus_name))
@@ -224,7 +223,7 @@ class Main(object):
                 return rc
             elif self._options.command_switch_perspective is not None:
                 remote_object = SessionBus().get_object(context.dbus_host_bus_name, '/PerspectiveManager')
-                remote_interface = Interface(remote_object, 'org.ros.qt_gui.PerspectiveManager')
+                remote_interface = Interface(remote_object, context.dbus_base_bus_name + '.PerspectiveManager')
                 remote_interface.switch_perspective(self._options.command_switch_perspective)
                 print('qt_gui_main() switched to perspective "%s" in GUI "%s"' % (self._options.command_switch_perspective, context.dbus_host_bus_name))
                 return 0
