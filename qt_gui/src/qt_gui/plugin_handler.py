@@ -49,6 +49,7 @@ class PluginHandler(QObject):
     close_signal = Signal(str)
     reload_signal = Signal(str)
     help_signal = Signal(str)
+    _defered_check_close = Signal()
 
     def __init__(self, parent, main_window, instance_id, application_context, container_manager):
         super(PluginHandler, self).__init__(parent)
@@ -59,6 +60,7 @@ class PluginHandler(QObject):
         self._application_context = application_context
         self._container_manager = container_manager
 
+        self._defered_check_close.connect(self._check_close, Qt.QueuedConnection)
         self._plugin_provider = None
         self.__callback = None
         self.__instance_settings = None
@@ -87,12 +89,6 @@ class PluginHandler(QObject):
 
     def _load(self):
         raise NotImplementedError
-
-    def _update_title_bars(self):
-        if self._plugin_has_configuration:
-            for dock_widget, _ in self._widgets.values():
-                title_bar = dock_widget.titleBarWidget()
-                title_bar.show_button('configuration')
 
     def _emit_load_completed(self, exception=None):
         if exception is not None:
@@ -242,14 +238,17 @@ class PluginHandler(QObject):
             # connect extra buttons
             title_bar.connect_close_button(self._remove_widget_by_dock_widget)
             title_bar.connect_button('help', self._emit_help_signal)
-            if hide_help:
-                title_bar.hide_button('help')
+            title_bar.show_button('help', not hide_help)
             title_bar.connect_button('reload', self._emit_reload_signal)
-            if hide_reload:
-                title_bar.hide_button('reload')
+            title_bar.show_button('reload', not hide_reload)
             title_bar.connect_button('configuration', self._trigger_configuration)
-            # hide configuration button until existence of feature has been confirmed
-            title_bar.hide_button('configuration')
+            title_bar.show_button('configuration', self._plugin_has_configuration)
+
+    def _update_title_bars(self):
+        if self._plugin_has_configuration:
+            for dock_widget, _ in self._widgets.values():
+                title_bar = dock_widget.titleBarWidget()
+                title_bar.show_button('configuration')
 
     def _remove_widget_by_dock_widget(self, dock_widget):
         widget = [key for key, value in self._widgets.iteritems() if value[0] == dock_widget][0]
@@ -301,9 +300,8 @@ class PluginHandler(QObject):
         if self._main_window is not None:
             dock_widget.parent().removeDockWidget(dock_widget)
         dock_widget.deleteLater()
-        # close plugin when last widget and toolbar is removed
-        if len(self._widgets) + len(self._toolbars) == 0:
-            self._emit_close_plugin()
+        # defer check for last widget closed to give plugin a chance to add another widget right away  
+        self._defered_check_close.emit()
 
     def _add_toolbar(self, toolbar):
         # every toolbar needs a unique name for save/restore geometry/state to work
@@ -329,7 +327,11 @@ class PluginHandler(QObject):
         # detach toolbar from parent
         if toolbar.parent():
             toolbar.parent().removeToolBar(toolbar)
-        # close plugin when last widget and toolbar is removed
+        # defer check for last widget closed to give plugin a chance to add another widget right away  
+        self._defered_check_close.emit()
+
+    def _check_close(self):
+        # close plugin when no widgets or toolbars are left
         if len(self._widgets) + len(self._toolbars) == 0:
             self._emit_close_plugin()
 
