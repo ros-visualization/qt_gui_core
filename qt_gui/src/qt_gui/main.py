@@ -37,7 +37,6 @@ import signal
 import sys
 from optparse import OptionGroup, OptionParser, SUPPRESS_HELP
 
-
 class Main(object):
 
     main_filename = None
@@ -110,6 +109,9 @@ class Main(object):
 
     def _caching_hook(self):
         pass
+    
+    def _add_reload_paths(self, reload_importer):
+        reload_importer.add_reload_path(os.path.join(os.path.dirname(__file__), *('..',) * 4))
 
     def main(self, argv=None):
         # check if DBus is available
@@ -402,6 +404,8 @@ class Main(object):
             qDebug('ReloadImporter() automatically reload all subsequent imports')
             from .reload_importer import ReloadImporter
             _reload_importer = ReloadImporter()
+            self._add_reload_paths(_reload_importer)
+            _reload_importer.enable()
 
         # switch perspective
         if perspective_manager is not None:

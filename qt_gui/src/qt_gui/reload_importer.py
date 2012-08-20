@@ -31,31 +31,51 @@
 # POSSIBILITY OF SUCH DAMAGE.
 
 import __builtin__
+import os 
 import sys
 
 
 class ReloadImporter:
 
-    """Overrides the builtin import and automatically reloads all modules which are imported after creating this class."""
+    """Overrides the builtin import and automatically reloads all modules which are imported from one 
+    of the reload paths after calling enable."""
 
     def __init__(self):
-        self._excluded_modules = sys.modules.copy()
+        self._excluded_modules = sys.modules.keys()
+        self._reload_paths = None
         self._import_stack = []
-        self._import_all = {}
-
+        self._reloaded_modules = set()
         self._import = __builtin__.__import__
+
+    def enable(self):
         __builtin__.__import__ = self._reimport
+        
+    def disable(self):
+        __builtin__.__import__ = self._import
+        
+    def add_reload_path(self, path):
+        if self._reload_paths is None:
+            self._reload_paths = tuple()
+        self._reload_paths += (os.path.abspath(path),)
+        
+    def _reload(self, module):
+        if module.__name__ not in self._import_stack and module.__name__ in sys.modules:
+            if not self._import_stack:
+                self._reloaded_modules.clear()
+            self._import_stack.append(module.__name__)
+            # force reload
+            if module.__name__ not in self._reloaded_modules:
+                reload(module)
+                self._reloaded_modules.add(module.__name__)
+            self._import_stack.pop()
 
     def _reimport(self, name, globals_=None, locals_=None, fromlist=None, level=-1):
-        result = self._import(name, globals_, locals_, fromlist if not None else [], level if not None else -1)
-        if result.__name__ not in self._excluded_modules and result.__name__ not in self._import_stack:
-            if result.__name__ in sys.modules:
-                if not self._import_stack:
-                    self._import_all = {}
-                self._import_stack.append(result.__name__)
-                # force reload
-                if result.__name__ not in self._import_all:
-                    reload(result)
-                    self._import_all[result.__name__] = True
-                self._import_stack.pop()
-        return result
+        module = self._import(name, globals_, locals_, fromlist if not None else [], level if not None else -1)
+        
+        if module.__name__ not in self._excluded_modules and \
+            (self._reload_paths is None or \
+              (hasattr(module, '__file__') and len([p for p in self._reload_paths if module.__file__.startswith(p)]) > 0) \
+            ):
+            self._reload(module)
+
+        return module
