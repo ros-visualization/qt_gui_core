@@ -71,4 +71,10 @@ void PluginContext::closePlugin()
   if (!rc) throw std::runtime_error("PluginContext::closePlugin() invoke method failed");
 }
 
+void PluginContext::reloadPlugin()
+{
+  bool rc = proxy_.invokeMethod("reload_plugin");
+  if (!rc) throw std::runtime_error("PluginContext::reloadPlugin() invoke method failed");
+}
+
 } // namespace

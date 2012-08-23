@@ -144,3 +144,7 @@ class PluginHandlerDirect(PluginHandler):
         # only non-standalone plugins are closable
         if self._application_context.options.standalone_plugin is None:
             self._emit_close_plugin()
+
+    @Slot()
+    def reload_plugin(self):
+        self._emit_reload_signal()

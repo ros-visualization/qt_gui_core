@@ -100,3 +100,9 @@ class PluginContext(QObject):
         The framework will call `Plugin.shutdown_plugin()` and unload it afterwards.
         """
         self._handler.close_plugin()
+
+    def reload_plugin(self):
+        """
+        Reload the plugin.
+        """
+        self._handler.reload_plugin()

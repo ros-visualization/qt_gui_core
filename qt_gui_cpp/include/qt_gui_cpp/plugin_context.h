@@ -87,6 +87,11 @@ public:
    */
   void closePlugin();
 
+  /**
+   * Reload the plugin.
+   */
+  void reloadPlugin();
+
 protected:
 
   GenericProxy proxy_;

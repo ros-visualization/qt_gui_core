@@ -21,6 +21,8 @@ public:
 
   void closePlugin();
 
+  void reloadPlugin();
+
 };
 
 };
