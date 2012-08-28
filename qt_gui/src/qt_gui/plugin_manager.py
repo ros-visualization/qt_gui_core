@@ -411,7 +411,7 @@ class PluginManager(QObject):
         plugins = self._restore_running_plugins_get_plugins()
         obsolete = []
         for instance_id in self._running_plugins.keys():
-            if instance_id not in plugins:
+            if instance_id not in plugins.keys():
                 obsolete.append(PluginInstanceId(instance_id=instance_id))
         self._number_of_ongoing_calls = len(obsolete)
         if self._number_of_ongoing_calls > 0:
@@ -428,7 +428,7 @@ class PluginManager(QObject):
             for plugin_id, serial_numbers in data.items():
                 for serial_number in serial_numbers:
                     instance_id = PluginInstanceId(plugin_id, serial_number)
-                    plugins[instance_id] = {'instance_id': instance_id}
+                    plugins[str(instance_id)] = instance_id
         return plugins
 
     def _restore_settings_unload_obsolete(self, instance_id):
@@ -449,9 +449,9 @@ class PluginManager(QObject):
         # trigger_load of not yet loaded plugins
         plugins = self._restore_running_plugins_get_plugins()
         loading = []
-        for instance_id, info in plugins.items():
-            if instance_id not in self._running_plugins:
-                loading.append(info['instance_id'])
+        for instance_id_str, instance_id in plugins.items():
+            if instance_id_str not in self._running_plugins.keys():
+                loading.append(instance_id)
         self._number_of_ongoing_calls = len(loading)
         if self._number_of_ongoing_calls > 0:
             qDebug('PluginManager.restore_settings() loading %d plugins' % self._number_of_ongoing_calls)
