@@ -180,9 +180,6 @@ class PluginHandlerXEmbedContainer(PluginHandler):
     def embed_widget(self, pid, widget_object_name):
         dock_widget = self._create_dock_widget()
         embed_container = QX11EmbedContainer(dock_widget)
-        dock_widget.setWidget(embed_container)
-        # every dock widget needs a unique name for save/restore geometry/state to work
-        dock_widget.setObjectName(self._instance_id.tidy_str() + '__' + widget_object_name)
         #embed_container.clientClosed.connect(self._emit_close_signal)
         self._add_dock_widget(dock_widget, embed_container)
         # update widget title is triggered by client after embedding

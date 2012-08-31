@@ -264,6 +264,9 @@ class PluginHandler(QObject):
         self._plugin.trigger_configuration()
 
     def _add_dock_widget(self, dock_widget, widget):
+        dock_widget.setWidget(widget)
+        # every dock widget needs a unique name for save/restore geometry/state to work
+        dock_widget.setObjectName(self._instance_id.tidy_str() + '__' + widget.objectName())
         self._add_dock_widget_to_main_window(dock_widget)
         signaler = WindowTitleChangedSignaler(widget, widget)
         signaler.window_title_changed_signal.connect(self._on_widget_title_changed)

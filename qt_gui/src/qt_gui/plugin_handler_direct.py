@@ -126,9 +126,6 @@ class PluginHandlerDirect(PluginHandler):
             qWarning('PluginHandlerDirect.add_widget() widget "%s" already added' % widget.objectName())
             return
         dock_widget = self._create_dock_widget()
-        dock_widget.setWidget(widget)
-        # every dock widget needs a unique name for save/restore geometry/state to work
-        dock_widget.setObjectName(self._instance_id.tidy_str() + '__' + widget.objectName())
         self._add_dock_widget(dock_widget, widget)
 
     # pointer to QToolBar must be used for PySide to work (at least with 1.0.1)
