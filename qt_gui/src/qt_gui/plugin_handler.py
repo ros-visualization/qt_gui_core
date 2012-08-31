@@ -294,13 +294,13 @@ class PluginHandler(QObject):
         self._widgets.pop(widget)
         if signaler is not None:
             signaler.window_title_changed_signal.disconnect(self._on_widget_title_changed)
-        # detach widget from dock widget in order to not get deleted
-        dock_widget.setWidget(None)
         # remove dock widget from parent and delete later
         if self._main_window is not None:
             dock_widget.parent().removeDockWidget(dock_widget)
+        # do not delete the widget, only the dock widget
+        widget.setParent(None)
         dock_widget.deleteLater()
-        # defer check for last widget closed to give plugin a chance to add another widget right away  
+        # defer check for last widget closed to give plugin a chance to add another widget right away
         self._defered_check_close.emit()
 
     def _add_toolbar(self, toolbar):
@@ -327,7 +327,7 @@ class PluginHandler(QObject):
         # detach toolbar from parent
         if toolbar.parent():
             toolbar.parent().removeToolBar(toolbar)
-        # defer check for last widget closed to give plugin a chance to add another widget right away  
+        # defer check for last widget closed to give plugin a chance to add another widget right away
         self._defered_check_close.emit()
 
     def _check_close(self):
