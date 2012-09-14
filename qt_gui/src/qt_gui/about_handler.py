@@ -81,7 +81,7 @@ class AboutHandler(QObject):
             text += 'PySide'
         elif QT_BINDING == 'pyqt':
             text += 'PyQt'
-        text += ' %s (%s), ' % (QT_BINDING_VERSION, ', '.join(QT_BINDING_MODULES))
+        text += ' %s (%s), ' % (QT_BINDING_VERSION, ', '.join(sorted(QT_BINDING_MODULES)))
 
         text += 'Qt %s, ' % qVersion()
 

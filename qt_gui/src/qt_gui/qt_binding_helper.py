@@ -37,3 +37,9 @@ from .ros_package_helper import get_package_path
 sys.path.append(os.path.realpath(os.path.join(get_package_path('python_qt_binding'), 'src')))
 
 from python_qt_binding.QtBindingHelper import loadUi, QT_BINDING, QT_BINDING_MODULES, QT_BINDING_VERSION  # @UnusedImport
+
+for module_name, module in QT_BINDING_MODULES.items():
+    # register module as sub module of current module (qt_binding_helper) 
+    sys.modules[__name__ + '.' + module_name] = module
+    # add module to namespace of current module (qt_binding_helper)
+    setattr(sys.modules[__name__], module_name, module)
