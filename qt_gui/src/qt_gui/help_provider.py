@@ -30,8 +30,7 @@
 
 import webbrowser
 
-from . import qt_binding_helper  # @UnusedImport
-from QtCore import QObject, Slot
+from .qt_binding_helper.QtCore import QObject, Slot
 
 from roslib.manifest import load_manifest
 

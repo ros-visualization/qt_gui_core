@@ -30,8 +30,7 @@
 # ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-import qt_gui.qt_binding_helper
-from QtCore import QThread
+from qt_gui.qt_binding_helper.QtCore import QThread
 
 class WorkerThread(QThread):
     

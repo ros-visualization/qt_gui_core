@@ -32,8 +32,8 @@
 
 import os
 from qt_gui.qt_binding_helper import loadUi
-from QtGui import QDialog, QLabel
-from QtCore import qWarning
+from qt_gui.qt_binding_helper.QtGui import QDialog, QLabel
+from qt_gui.qt_binding_helper.QtCore import qWarning
 from exclusive_options_group import ExclusiveOptionGroup
 
 class SimpleSettingsDialog(QDialog):

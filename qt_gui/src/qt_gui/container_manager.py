@@ -28,8 +28,7 @@
 # ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-from . import qt_binding_helper  # @UnusedImport
-from QtCore import qDebug, QObject, Qt
+from .qt_binding_helper.QtCore import qDebug, QObject, Qt
 
 from .dock_widget import DockWidget
 from .plugin_descriptor import PluginDescriptor

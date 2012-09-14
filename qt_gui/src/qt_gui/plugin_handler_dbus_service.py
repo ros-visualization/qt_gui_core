@@ -31,8 +31,7 @@
 from dbus.service import Object
 import dbus
 
-from . import qt_binding_helper  # @UnusedImport
-from QtCore import QObject, Qt, Signal
+from .qt_binding_helper.QtCore import QObject, Qt, Signal
 
 
 class PluginHandlerDBusService(Object):

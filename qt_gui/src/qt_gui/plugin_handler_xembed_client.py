@@ -34,8 +34,8 @@ import traceback
 from dbus import Interface
 from dbus.connection import Connection
 from .plugin_handler_direct import PluginHandlerDirect
-from QtCore import qCritical, qDebug, Qt, qWarning, Slot
-from QtGui import QVBoxLayout, QX11EmbedWidget
+from .qt_binding_helper.QtCore import qCritical, qDebug, Qt, qWarning, Slot
+from .qt_binding_helper.QtGui import QVBoxLayout, QX11EmbedWidget
 from .settings import Settings
 from .window_title_changed_signaler import WindowTitleChangedSignaler
 

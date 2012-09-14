@@ -33,8 +33,8 @@ import platform
 import sys
 
 from .qt_binding_helper import QT_BINDING, QT_BINDING_MODULES, QT_BINDING_VERSION
-from QtCore import QObject, qVersion
-from QtGui import QMessageBox
+from .qt_binding_helper.QtCore import QObject, qVersion
+from .qt_binding_helper.QtGui import QMessageBox
 
 from .ros_package_helper import get_package_path
 

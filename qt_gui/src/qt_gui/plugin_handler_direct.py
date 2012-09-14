@@ -30,8 +30,7 @@
 
 import traceback
 
-from . import qt_binding_helper  # @UnusedImport
-from QtCore import qCritical, QEvent, QObject, qWarning, Slot
+from .qt_binding_helper.QtCore import qCritical, QEvent, QObject, qWarning, Slot
 
 from .plugin_context import PluginContext
 from .plugin_handler import PluginHandler

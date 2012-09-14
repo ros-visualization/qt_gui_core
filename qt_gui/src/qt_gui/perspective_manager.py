@@ -32,8 +32,8 @@ import json
 import os
 
 from .qt_binding_helper import loadUi
-from QtCore import QByteArray, qDebug, QObject, QSignalMapper, Signal, Slot
-from QtGui import QAction, QFileDialog, QIcon, QInputDialog, QMessageBox, QValidator
+from .qt_binding_helper.QtCore import QByteArray, qDebug, QObject, QSignalMapper, Signal, Slot
+from .qt_binding_helper.QtGui import QAction, QFileDialog, QIcon, QInputDialog, QMessageBox, QValidator
 
 from .menu_manager import MenuManager
 from .settings import Settings

@@ -33,7 +33,7 @@ import sys
 import traceback
 
 from qt_gui.qt_binding_helper import QT_BINDING
-from QtCore import qWarning
+from qt_gui.qt_binding_helper.QtCore import qWarning
 
 from qt_gui.ros_package_helper import get_package_path
 sys.path.append(os.path.realpath(os.path.join(get_package_path('qt_gui_cpp'), 'lib')))

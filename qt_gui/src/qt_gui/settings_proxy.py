@@ -28,8 +28,7 @@
 # ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-from . import qt_binding_helper  # @UnusedImport
-from QtCore import QMutex, QMutexLocker, QObject
+from .qt_binding_helper.QtCore import QMutex, QMutexLocker, QObject
 
 
 class SettingsProxy(QObject):

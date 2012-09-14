@@ -28,9 +28,8 @@
 # ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-import qt_gui.qt_binding_helper  # @UnusedImport
-from QtCore import QPointF, Qt
-from QtGui import QBrush, QGraphicsPathItem, QGraphicsPolygonItem, QGraphicsSimpleTextItem, QPainterPath, QPen, QPolygonF
+from qt_gui.qt_binding_helper.QtCore import QPointF, Qt
+from qt_gui.qt_binding_helper.QtGui import QBrush, QGraphicsPathItem, QGraphicsPolygonItem, QGraphicsSimpleTextItem, QPainterPath, QPen, QPolygonF
 
 from .graph_item import GraphItem
 
