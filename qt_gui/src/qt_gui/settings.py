@@ -28,7 +28,7 @@
 # ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-from .qt_binding_helper.QtCore import QObject, Slot
+from python_qt_binding.QtCore import QObject, Slot
 
 
 class Settings(QObject):

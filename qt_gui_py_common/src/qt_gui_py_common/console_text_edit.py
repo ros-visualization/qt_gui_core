@@ -32,8 +32,8 @@
 
 import sys
 
-from qt_gui.qt_binding_helper.QtGui import QTextEdit, QFont
-from qt_gui.qt_binding_helper.QtCore import Qt
+from python_qt_binding.QtGui import QTextEdit, QFont
+from python_qt_binding.QtCore import Qt
 
 class ConsoleTextEdit(QTextEdit):
     _color_stdout = Qt.blue

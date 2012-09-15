@@ -30,8 +30,8 @@
 
 import traceback
 
-from .qt_binding_helper.QtCore import qCritical, qDebug, QObject, Qt, qWarning, Signal, Slot
-from .qt_binding_helper.QtGui import QDockWidget, QToolBar
+from python_qt_binding.QtCore import qCritical, qDebug, QObject, Qt, qWarning, Signal, Slot
+from python_qt_binding.QtGui import QDockWidget, QToolBar
 
 from .dock_widget import DockWidget
 from .dock_widget_title_bar import DockWidgetTitleBar

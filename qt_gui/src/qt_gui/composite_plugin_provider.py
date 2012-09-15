@@ -30,7 +30,7 @@
 
 import traceback
 
-from .qt_binding_helper.QtCore import qCritical
+from python_qt_binding.QtCore import qCritical
 
 from .plugin_provider import PluginProvider
 

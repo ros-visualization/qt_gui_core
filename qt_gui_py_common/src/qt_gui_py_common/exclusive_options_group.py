@@ -30,7 +30,7 @@
 # ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-from qt_gui.qt_binding_helper.QtGui import QRadioButton, QVBoxLayout, QLabel, QWidget, QButtonGroup, QGroupBox
+from python_qt_binding.QtGui import QRadioButton, QVBoxLayout, QLabel, QWidget, QButtonGroup, QGroupBox
 
 class ExclusiveOptionGroup(QGroupBox):
     

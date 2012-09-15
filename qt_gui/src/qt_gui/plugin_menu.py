@@ -30,8 +30,8 @@
 
 import os
 
-from .qt_binding_helper.QtCore import QObject, QSignalMapper, Signal
-from .qt_binding_helper.QtGui import QAction, QIcon, QMenu
+from python_qt_binding.QtCore import QObject, QSignalMapper, Signal
+from python_qt_binding.QtGui import QAction, QIcon, QMenu
 
 from .menu_manager import MenuManager
 

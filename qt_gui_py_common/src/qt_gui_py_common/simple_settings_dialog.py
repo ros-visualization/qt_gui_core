@@ -31,9 +31,9 @@
 # POSSIBILITY OF SUCH DAMAGE.
 
 import os
-from qt_gui.qt_binding_helper import loadUi
-from qt_gui.qt_binding_helper.QtGui import QDialog, QLabel
-from qt_gui.qt_binding_helper.QtCore import qWarning
+from python_qt_binding import loadUi
+from python_qt_binding.QtGui import QDialog, QLabel
+from python_qt_binding.QtCore import qWarning
 from exclusive_options_group import ExclusiveOptionGroup
 
 class SimpleSettingsDialog(QDialog):

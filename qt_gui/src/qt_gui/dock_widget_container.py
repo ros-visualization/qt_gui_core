@@ -28,7 +28,7 @@
 # ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-from .qt_binding_helper.QtGui import QMainWindow
+from python_qt_binding.QtGui import QMainWindow
 
 from .dock_widget import DockWidget
 

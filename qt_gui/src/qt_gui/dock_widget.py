@@ -28,8 +28,8 @@
 # ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-from .qt_binding_helper.QtCore import qDebug, QEvent, QPoint, QRect, Qt
-from .qt_binding_helper.QtGui import QApplication, QDockWidget, QMainWindow, QMouseEvent
+from python_qt_binding.QtCore import qDebug, QEvent, QPoint, QRect, Qt
+from python_qt_binding.QtGui import QApplication, QDockWidget, QMainWindow, QMouseEvent
 
 from .reparent_event import ReparentEvent
 

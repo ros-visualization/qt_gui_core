@@ -33,9 +33,9 @@ import sys
 from dbus.server import Server
 from .plugin_handler import PluginHandler
 from .plugin_handler_dbus_service import PluginHandlerDBusService
-from .qt_binding_helper import QT_BINDING
-from .qt_binding_helper.QtCore import qDebug, QProcess, QSignalMapper, Qt, qWarning
-from .qt_binding_helper.QtGui import QToolBar, QX11EmbedContainer
+from python_qt_binding import QT_BINDING
+from python_qt_binding.QtCore import qDebug, QProcess, QSignalMapper, Qt, qWarning
+from python_qt_binding.QtGui import QToolBar, QX11EmbedContainer
 from .main import Main
 from .settings_proxy_dbus_service import SettingsProxyDBusService
 

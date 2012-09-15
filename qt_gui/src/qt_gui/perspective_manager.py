@@ -31,9 +31,9 @@
 import json
 import os
 
-from .qt_binding_helper import loadUi
-from .qt_binding_helper.QtCore import QByteArray, qDebug, QObject, QSignalMapper, Signal, Slot
-from .qt_binding_helper.QtGui import QAction, QFileDialog, QIcon, QInputDialog, QMessageBox, QValidator
+from python_qt_binding import loadUi
+from python_qt_binding.QtCore import QByteArray, qDebug, QObject, QSignalMapper, Signal, Slot
+from python_qt_binding.QtGui import QAction, QFileDialog, QIcon, QInputDialog, QMessageBox, QValidator
 
 from .menu_manager import MenuManager
 from .settings import Settings

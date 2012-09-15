@@ -233,10 +233,10 @@ class Main(object):
 
         # choose selected or default qt binding
         setattr(sys, 'SELECT_QT_BINDING', self._options.qt_binding)
-        from .qt_binding_helper import QT_BINDING
+        from python_qt_binding import QT_BINDING
 
-        from .qt_binding_helper.QtCore import qDebug, qInstallMsgHandler, QSettings, Qt, QtCriticalMsg, QtDebugMsg, QtFatalMsg, QTimer, QtWarningMsg
-        from .qt_binding_helper.QtGui import QAction, QApplication, QIcon, QMenuBar
+        from python_qt_binding.QtCore import qDebug, qInstallMsgHandler, QSettings, Qt, QtCriticalMsg, QtDebugMsg, QtFatalMsg, QTimer, QtWarningMsg
+        from python_qt_binding.QtGui import QAction, QApplication, QIcon, QMenuBar
 
         from .about_handler import AboutHandler
         from .composite_plugin_provider import CompositePluginProvider

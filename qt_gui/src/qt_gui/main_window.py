@@ -28,8 +28,8 @@
 # ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-from .qt_binding_helper.QtCore import qDebug, Qt, Signal
-from .qt_binding_helper.QtGui import QMainWindow, QToolBar
+from python_qt_binding.QtCore import qDebug, Qt, Signal
+from python_qt_binding.QtGui import QMainWindow, QToolBar
 
 from .settings import Settings
 

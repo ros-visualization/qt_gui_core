@@ -30,7 +30,7 @@
 
 import traceback
 
-from .qt_binding_helper.QtCore import qCritical, QEvent, QObject, qWarning, Slot
+from python_qt_binding.QtCore import qCritical, QEvent, QObject, qWarning, Slot
 
 from .plugin_context import PluginContext
 from .plugin_handler import PluginHandler

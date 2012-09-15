@@ -30,9 +30,9 @@
 
 import os
 
-from .qt_binding_helper import loadUi
-from .qt_binding_helper.QtCore import QEvent, QObject, Qt, qWarning
-from .qt_binding_helper.QtGui import QDockWidget, QIcon, QWidget
+from python_qt_binding import loadUi
+from python_qt_binding.QtCore import QEvent, QObject, Qt, qWarning
+from python_qt_binding.QtGui import QDockWidget, QIcon, QWidget
 
 
 class DockWidgetTitleBar(QWidget):
@@ -141,7 +141,7 @@ class DockWidgetTitleBar(QWidget):
 
 if __name__ == '__main__':
     import sys
-    from .qt_binding_helper.QtGui import QApplication, QMainWindow
+    from python_qt_binding.QtGui import QApplication, QMainWindow
 
     app = QApplication(sys.argv)
 
