@@ -113,6 +113,12 @@ class Main(object):
     def _add_reload_paths(self, reload_importer):
         reload_importer.add_reload_path(os.path.join(os.path.dirname(__file__), *('..',) * 4))
 
+    def _check_icon_theme_compliance(self):
+        from python_qt_binding.QtGui import QIcon
+        if QIcon.themeName == '' or QIcon.fromTheme('document-save').isNull() or QIcon.fromTheme('document-open').isNull() or QIcon.fromTheme('edit-cut').isNull() or QIcon.fromTheme('object-flip-horizontal').isNull():
+            QIcon.setThemeName('gnome')
+            QIcon.setThemeSearchPaths(QIcon.themeSearchPaths() + [os.path.realpath(os.path.join(os.path.dirname(__file__), '..', '..', 'icons', ''))])
+
     def main(self, argv=None):
         # check if DBus is available
         try:
@@ -264,6 +270,8 @@ class Main(object):
 
         app = QApplication(argv)
         app.setAttribute(Qt.AA_DontShowIconsInMenus, False)
+
+        self._check_icon_theme_compliance()
 
         if len(embed_options_set) == 0:
             settings = QSettings(QSettings.IniFormat, QSettings.UserScope, 'ros.org', self._settings_filename)
