@@ -109,13 +109,17 @@ class Main(object):
 
     def _caching_hook(self):
         pass
-    
+
     def _add_reload_paths(self, reload_importer):
         reload_importer.add_reload_path(os.path.join(os.path.dirname(__file__), *('..',) * 4))
 
     def _check_icon_theme_compliance(self):
         from python_qt_binding.QtGui import QIcon
-        if QIcon.themeName == '' or QIcon.fromTheme('document-save').isNull() or QIcon.fromTheme('document-open').isNull() or QIcon.fromTheme('edit-cut').isNull() or QIcon.fromTheme('object-flip-horizontal').isNull():
+        if QIcon.themeName() == '' or \
+           QIcon.fromTheme('document-save').isNull() or \
+           QIcon.fromTheme('document-open').isNull() or \
+           QIcon.fromTheme('edit-cut').isNull() or \
+           QIcon.fromTheme('object-flip-horizontal').isNull():
             QIcon.setThemeName('Tango')
 
     def main(self, argv=None):
