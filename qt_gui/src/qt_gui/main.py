@@ -116,8 +116,7 @@ class Main(object):
     def _check_icon_theme_compliance(self):
         from python_qt_binding.QtGui import QIcon
         if QIcon.themeName == '' or QIcon.fromTheme('document-save').isNull() or QIcon.fromTheme('document-open').isNull() or QIcon.fromTheme('edit-cut').isNull() or QIcon.fromTheme('object-flip-horizontal').isNull():
-            QIcon.setThemeName('gnome')
-            QIcon.setThemeSearchPaths(QIcon.themeSearchPaths() + [os.path.realpath(os.path.join(os.path.dirname(__file__), '..', '..', 'icons', ''))])
+            QIcon.setThemeName('Tango')
 
     def main(self, argv=None):
         # check if DBus is available
