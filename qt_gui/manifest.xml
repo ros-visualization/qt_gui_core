@@ -11,6 +11,7 @@
 
   <depend package="python_qt_binding"/>
   <rosdep name="python-qt-bindings"/>
+  <rosdep name="tango-icon-theme"/>
 </package>
 
 
