@@ -69,6 +69,8 @@ class Main(object):
                           help='start only this plugin (implies -l)')
         parser.add_option('-v', '--verbose', dest='verbose', default=False, action='store_true',
                           help='output qDebug messages')
+        parser.add_option('--args', dest='plugin_args', default=False, action='store_true',
+                          help='all options after this are passed as plugin options (only valid when using standalone mode(-s)')
 
         group = OptionGroup(parser, 'Options to query information without starting a GUI instance',
                             'These options can be used to query information about valid arguments for various options.')
@@ -133,6 +135,12 @@ class Main(object):
 
         if argv is None:
             argv = sys.argv
+
+        if '--args' in argv:
+            #  Construct an argv for the stand alone plugin
+            self._plugin_argv = [argv[0]] + argv[argv.index('--args') + 1:]
+            #  Trim the --args tag and everything after it so it is not parsed at the application level
+            argv = argv[:argv.index('--args')]
 
         parser = OptionParser('usage: %prog [options]')
         self._add_options(parser)
