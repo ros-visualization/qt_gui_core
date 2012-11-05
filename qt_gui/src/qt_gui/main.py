@@ -35,7 +35,7 @@ from __future__ import print_function
 import os
 import signal
 import sys
-from optparse import OptionGroup, OptionParser, SUPPRESS_HELP
+from argparse import ArgumentParser, SUPPRESS
 
 class Main(object):
 
@@ -52,59 +52,57 @@ class Main(object):
         self._dbus_available = False
         self._options = None
 
-    def _add_options(self, parser):
-        parser.add_option('-b', '--qt-binding', dest='qt_binding', type='str', metavar='BINDING',
+    def _add_arguments(self, parser):
+        parser.add_argument('-b', '--qt-binding', dest='qt_binding', type=str, metavar='BINDING',
                           help='choose Qt bindings to be used [pyqt|pyside]')
-        parser.add_option('--clear-config', dest='clear_config', default=False, action='store_true',
+        parser.add_argument('--clear-config', dest='clear_config', default=False, action='store_true',
                           help='clear the configuration (including all perspectives and plugin settings)')
-        parser.add_option('-l', '--lock-perspective', dest='lock_perspective', action='store_true',
+        parser.add_argument('-l', '--lock-perspective', dest='lock_perspective', action='store_true',
                           help='lock the GUI to the used perspective (hide menu bar and close buttons of plugins)')
-        parser.add_option('-m', '--multi-process', dest='multi_process', default=False, action='store_true',
+        parser.add_argument('-m', '--multi-process', dest='multi_process', default=False, action='store_true',
                           help='use separate processes for each plugin instance (currently only supported under X11)')
-        parser.add_option('-p', '--perspective', dest='perspective', type='str', metavar='PERSPECTIVE',
+        parser.add_argument('-p', '--perspective', dest='perspective', type=str, metavar='PERSPECTIVE',
                           help='start with this perspective')
-        parser.add_option('--reload-import', dest='reload_import', default=False, action='store_true',
+        parser.add_argument('--reload-import', dest='reload_import', default=False, action='store_true',
                           help='reload every imported module')
-        parser.add_option('-s', '--stand-alone', dest='standalone_plugin', type='str', metavar='PLUGIN',
-                          help='start only this plugin (implies -l)')
-        parser.add_option('-v', '--verbose', dest='verbose', default=False, action='store_true',
+        parser.add_argument('-s', '--stand-alone', dest='standalone_plugin', type=str, metavar='PLUGIN',
+                          help='start only this plugin (implies -l). To pass arguments to the plugin use --args')
+        parser.add_argument('-v', '--verbose', dest='verbose', default=False, action='store_true',
                           help='output qDebug messages')
-        parser.add_option('--args', dest='plugin_args', default=False, action='store_true',
-                          help='all options after this are passed as plugin options (only valid when using standalone mode(-s)')
 
-        group = OptionGroup(parser, 'Options to query information without starting a GUI instance',
+        group = parser.add_argument_group('Options to query information without starting a GUI instance',
                             'These options can be used to query information about valid arguments for various options.')
-        group.add_option('--list-perspectives', dest='list_perspectives', action='store_true',
+        group.add_argument('--list-perspectives', dest='list_perspectives', action='store_true',
                          help='list available perspectives')
-        group.add_option('--list-plugins', dest='list_plugins', action='store_true',
+        group.add_argument('--list-plugins', dest='list_plugins', action='store_true',
                          help='list available plugins')
-        parser.add_option_group(group)
+        parser.add_argument_group(group)
 
-        group = OptionGroup(parser, 'Options to operate on a running GUI instance',
+        group = parser.add_argument_group('Options to operate on a running GUI instance',
                             'These options can be used to perform actions on a running GUI instance.')
-        group.add_option('--command-pid', dest='command_pid', type='int', metavar='PID',
+        group.add_argument('--command-pid', dest='command_pid', type=int, metavar='PID',
                          help='pid of the GUI instance to operate on, defaults to oldest running GUI instance')
-        group.add_option('--command-start-plugin', dest='command_start_plugin', type='str', metavar='PLUGIN',
+        group.add_argument('--command-start-plugin', dest='command_start_plugin', type=str, metavar='PLUGIN',
                          help='start plugin')
-        group.add_option('--command-switch-perspective', dest='command_switch_perspective', type='str', metavar='PERSPECTIVE',
+        group.add_argument('--command-switch-perspective', dest='command_switch_perspective', type=str, metavar='PERSPECTIVE',
                          help='switch perspective')
         if not self._dbus_available:
             group.description = 'These options are not available since the DBus module is not found!'
-            for o in group.option_list:
-                o.help = SUPPRESS_HELP
-        parser.add_option_group(group)
+            for o in group._group_actions:
+                o.help = SUPPRESS
+        parser.add_argument_group(group)
 
-        group = OptionGroup(parser, 'Special options for embedding widgets from separate processes',
+        group = parser.add_argument_group('Special options for embedding widgets from separate processes',
                             'These options should never be used on the CLI but only from the GUI code itself.')
-        group.add_option('--embed-plugin', dest='embed_plugin', type='str', metavar='PLUGIN',
+        group.add_argument('--embed-plugin', dest='embed_plugin', type=str, metavar='PLUGIN',
                          help='embed a plugin into an already running GUI instance (requires all other --embed-* options)')
-        group.add_option('--embed-plugin-serial', dest='embed_plugin_serial', type='int', metavar='SERIAL',
+        group.add_argument('--embed-plugin-serial', dest='embed_plugin_serial', type=int, metavar='SERIAL',
                          help='serial number of plugin to be embedded (requires all other --embed-* options)')
-        group.add_option('--embed-plugin-address', dest='embed_plugin_address', type='str', metavar='ADDRESS',
+        group.add_argument('--embed-plugin-address', dest='embed_plugin_address', type=str, metavar='ADDRESS',
                          help='dbus server address of the GUI instance to embed plugin into (requires all other --embed-* options)')
-        for o in group.option_list:
-            o.help = SUPPRESS_HELP
-        parser.add_option_group(group)
+        for o in group._group_actions:
+            o.help = SUPPRESS
+        parser.add_argument_group(group)
 
     def _add_plugin_providers(self):
         pass
@@ -136,20 +134,27 @@ class Main(object):
         if argv is None:
             argv = sys.argv
 
-        if '--args' in argv:
-            #  Construct an argv for the stand alone plugin
-            self._plugin_argv = [argv[0]] + argv[argv.index('--args') + 1:]
-            #  Trim the --args tag and everything after it so it is not parsed at the application level
-            argv = argv[:argv.index('--args')]
+        parser = ArgumentParser('usage: %prog [options]')
+        self._add_arguments(parser)
+        self._options, leftover_args = parser.parse_known_args(argv[1:])
+        self._plugin_args = None
 
-        parser = OptionParser('usage: %prog [options]')
-        self._add_options(parser)
-        self._options, _ = parser.parse_args(argv[1:])
+        if leftover_args != []:
+            #  TODO this needs to check for the dbus case
+            if (self._options.standalone_plugin and '--args' in leftover_args):
+                if leftover_args.index('--args') == 0:
+                    self._plugin_args = leftover_args[leftover_args.index('--args') + 1:]
+                else:
+                    # re-parse to display only errors before --args
+                    _ = parser.parse_args(argv[1:argv.index('--args')])
+            else:
+                # re-parse to display errors to the user
+                _ = parser.parse_args(argv[1:])
 
         # check option dependencies
         try:
             list_options = (self._options.list_perspectives, self._options.list_plugins)
-            list_options_set = [opt for opt in list_options if opt is not None]
+            list_options_set = [opt for opt in list_options if opt is not False]
             if len(list_options_set) > 1:
                 raise RuntimeError('Only one --list-* option can be used at a time')
 
@@ -197,6 +202,9 @@ class Main(object):
         from .application_context import ApplicationContext
         context = ApplicationContext()
         context.options = self._options
+        # set plugin argv
+        if self._plugin_args:
+            context.plugin_argv = [argv[0]] + list(self._plugin_args)
 
         # non-special applications provide various dbus interfaces
         if self._dbus_available:

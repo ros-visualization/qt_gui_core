@@ -45,9 +45,10 @@ class PluginHandlerDirect(PluginHandler):
         self.setObjectName('PluginHandlerDirect')
         self._context = None
         self._plugin = None
+        self._argv = application_context.plugin_argv
 
     def load(self, plugin_provider, callback=None):
-        self._context = PluginContext(self)
+        self._context = PluginContext(self, self._argv)
         super(PluginHandlerDirect, self).load(plugin_provider, callback)
 
     def _load(self):

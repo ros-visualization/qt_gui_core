@@ -48,3 +48,6 @@ class ApplicationContext():
 
         self.options = None
         """The parsed command line options."""
+
+        self.plugin_argv = None
+        """The unparsed command line for a plugin. Only valid in Stand alone or Dbus mode"""
