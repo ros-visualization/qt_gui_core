@@ -138,7 +138,6 @@ class Main(object):
         self._add_arguments(parser)
         self._options, leftover_args = parser.parse_known_args(argv[1:])
         self._plugin_args = None
-        print(self._options)
         if leftover_args != []:
             #  TODO this needs to check for the dbus case
             if (self._options.standalone_plugin is not None and '--args' in leftover_args):
