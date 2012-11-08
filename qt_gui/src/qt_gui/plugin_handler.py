@@ -221,7 +221,7 @@ class PluginHandler(QObject):
 
     def _create_dock_widget(self):
         dock_widget = DockWidget(self._container_manager)
-        if self._application_context.options.lock_perspective is not None or self._application_context.options.standalone_plugin is not None:
+        if self._application_context.options.lock_perspective is not False or self._application_context.options.standalone_plugin is not None:
             # plugins are not closable when perspective is locked or plugins is running standalone
             features = dock_widget.features()
             dock_widget.setFeatures(features ^ QDockWidget.DockWidgetClosable)

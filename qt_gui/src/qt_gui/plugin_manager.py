@@ -247,7 +247,7 @@ class PluginManager(QObject):
     @Slot(str)
     def unload_plugin(self, instance_id_str):
         # unloading a plugin with locked perspective or running standalone triggers close of application
-        if self._application_context.options.lock_perspective is not None or self._application_context.options.standalone_plugin is not None:
+        if self._application_context.options.lock_perspective is not False or self._application_context.options.standalone_plugin is not None:
             self.close_application_signal.emit()
             return
         instance_id = PluginInstanceId(instance_id=instance_id_str)
