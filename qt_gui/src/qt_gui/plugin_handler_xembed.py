@@ -39,12 +39,12 @@ class PluginHandlerXEmbed():
     The both DBus endpoints are realized by the `PluginHandlerXEmbedContainer` and the `PluginHandlerXEmbedClient`.
     """
 
-    def __init__(self, parent, main_window, instance_id, application_context, container_manager):
+    def __init__(self, parent, main_window, instance_id, application_context, container_manager, argv):
         dbus_object_path = '/PluginHandlerXEmbed/plugin/' + instance_id.tidy_str()
         if application_context.options.embed_plugin is None:
-            self._handler = PluginHandlerXEmbedContainer(parent, main_window, instance_id, application_context, container_manager, dbus_object_path)
+            self._handler = PluginHandlerXEmbedContainer(parent, main_window, instance_id, application_context, container_manager, argv, dbus_object_path)
         else:
-            self._handler = PluginHandlerXEmbedClient(parent, main_window, instance_id, application_context, container_manager, dbus_object_path)
+            self._handler = PluginHandlerXEmbedClient(parent, main_window, instance_id, application_context, container_manager, argv, dbus_object_path)
 
     def __getattr__(self, name):
         return getattr(self._handler, name)

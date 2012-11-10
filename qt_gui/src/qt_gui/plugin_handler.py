@@ -50,7 +50,7 @@ class PluginHandler(QObject):
     help_signal = Signal(str)
     _defered_check_close = Signal()
 
-    def __init__(self, parent, main_window, instance_id, application_context, container_manager):
+    def __init__(self, parent, main_window, instance_id, application_context, container_manager, argv=None):
         super(PluginHandler, self).__init__(parent)
         self.setObjectName('PluginHandler')
 
@@ -58,6 +58,7 @@ class PluginHandler(QObject):
         self._instance_id = instance_id
         self._application_context = application_context
         self._container_manager = container_manager
+        self._argv = argv
 
         self._defered_check_close.connect(self._check_close, Qt.QueuedConnection)
         self._plugin_provider = None
@@ -73,6 +74,9 @@ class PluginHandler(QObject):
 
     def instance_id(self):
         return self._instance_id
+
+    def argv(self):
+        return self._argv
 
     def load(self, plugin_provider, callback=None):
         """

@@ -47,6 +47,7 @@ class PerspectiveManager(QObject):
     perspective_changed_signal = Signal(basestring)
     save_settings_signal = Signal(Settings, Settings)
     restore_settings_signal = Signal(Settings, Settings)
+    restore_settings_without_plugin_changes_signal = Signal(Settings, Settings)
 
     HIDDEN_PREFIX = '@'
 
@@ -111,25 +112,25 @@ class PerspectiveManager(QObject):
             if not name.startswith(self.HIDDEN_PREFIX):
                 self._add_perspective_action(name)
 
-    def set_perspective(self, name, hide_perspective=False):
+    def set_perspective(self, name, hide_and_without_plugin_changes=False):
         if name is None:
             name = self._settings_proxy.value('', 'current-perspective', 'Default')
-        elif hide_perspective:
+        elif hide_and_without_plugin_changes:
             name = self.HIDDEN_PREFIX + name
-        self.switch_perspective(name)
+        self.switch_perspective(name, save_before=not hide_and_without_plugin_changes, without_plugin_changes=hide_and_without_plugin_changes)
 
     @Slot(str)
     @Slot(str, bool)
     @Slot(str, bool, bool)
-    def switch_perspective(self, name, settings_changed=True, save_before=True):
+    def switch_perspective(self, name, settings_changed=True, save_before=True, without_plugin_changes=False):
         if save_before and self._global_settings is not None and self._perspective_settings is not None:
             self._callback = self._switch_perspective
             self._callback_args = [name, settings_changed, save_before]
             self.save_settings_signal.emit(self._global_settings, self._perspective_settings)
         else:
-            self._switch_perspective(name, settings_changed, save_before)
+            self._switch_perspective(name, settings_changed, save_before, without_plugin_changes)
 
-    def _switch_perspective(self, name, settings_changed, save_before):
+    def _switch_perspective(self, name, settings_changed, save_before, without_plugin_changes=False):
         # convert from unicode
         name = str(name.replace('/', '__'))
 
@@ -154,7 +155,10 @@ class PerspectiveManager(QObject):
         # emit signals
         self.perspective_changed_signal.emit(self._current_perspective.lstrip(self.HIDDEN_PREFIX))
         if settings_changed:
-            self.restore_settings_signal.emit(self._global_settings, self._perspective_settings)
+            if not without_plugin_changes:
+                self.restore_settings_signal.emit(self._global_settings, self._perspective_settings)
+            else:
+                self.restore_settings_without_plugin_changes_signal.emit(self._global_settings, self._perspective_settings)
 
     def save_settings_completed(self):
         if self._callback is not None:

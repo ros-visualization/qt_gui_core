@@ -70,6 +70,9 @@ class Main(object):
         parser.add_argument('-v', '--verbose', dest='verbose', default=False, action='store_true',
                           help='output qDebug messages')
 
+        parser.add_argument('--args', dest='args', nargs='*', type=str,
+                          help='arbitrary arguments which are passes to the plugin (only with -s, --command-start-plugin or --embed-plugin). It must be the last option since it collects all following options.')
+
         group = parser.add_argument_group('Options to query information without starting a GUI instance',
                             'These options can be used to query information about valid arguments for various options.')
         group.add_argument('--list-perspectives', dest='list_perspectives', action='store_true',
@@ -134,24 +137,23 @@ class Main(object):
         if argv is None:
             argv = sys.argv
 
+        # extract --args and everything behind manually since argparse can not handle that
+        arguments = argv[1:]
+        args = []
+        if '--args' in arguments:
+            index = arguments.index('--args')
+            args = arguments[index + 1:]
+            arguments = arguments[0:index + 1]
         parser = ArgumentParser('usage: %prog [options]')
         self._add_arguments(parser)
-        self._options, leftover_args = parser.parse_known_args(argv[1:])
-        self._plugin_args = None
-        if leftover_args != []:
-            #  TODO this needs to check for the dbus case
-            if (self._options.standalone_plugin is not None and '--args' in leftover_args):
-                if leftover_args.index('--args') == 0:
-                    self._plugin_args = leftover_args[leftover_args.index('--args') + 1:]
-                else:
-                    # re-parse to display only errors before --args
-                    _ = parser.parse_args(argv[1:argv.index('--args')])
-            else:
-                # re-parse to display errors to the user
-                _ = parser.parse_args(argv[1:])
+        self._options = parser.parse_args(arguments)
+        self._options.args = args
 
         # check option dependencies
         try:
+            if self._options.args and not self._options.standalone_plugin and not self._options.command_start_plugin and not self._options.embed_plugin:
+                raise RuntimeError('Option --args can only be used together with either --stand-alone, --command-start-plugin or --embed-plugin option')
+
             list_options = (self._options.list_perspectives, self._options.list_plugins)
             list_options_set = [opt for opt in list_options if opt is not False]
             if len(list_options_set) > 1:
@@ -201,9 +203,6 @@ class Main(object):
         from .application_context import ApplicationContext
         context = ApplicationContext()
         context.options = self._options
-        # set plugin argv
-        if self._plugin_args:
-            context.plugin_argv = [argv[0]] + list(self._plugin_args)
 
         # non-special applications provide various dbus interfaces
         if self._dbus_available:
@@ -241,7 +240,7 @@ class Main(object):
                     (rc, msg) = (1, 'unable to communicate with GUI instance "%s"' % context.dbus_host_bus_name)
                 else:
                     remote_interface = Interface(remote_object, context.dbus_base_bus_name + '.PluginManager')
-                    (rc, msg) = remote_interface.start_plugin(self._options.command_start_plugin)
+                    (rc, msg) = remote_interface.start_plugin(self._options.command_start_plugin, ' '.join(self._options.args))
                 if rc == 0:
                     print('qt_gui_main() started plugin "%s" in GUI "%s"' % (msg, context.dbus_host_bus_name))
                 else:
@@ -367,11 +366,13 @@ class Main(object):
             # signal new settings due to changed perspective
             perspective_manager.save_settings_signal.connect(main_window.save_settings)
             perspective_manager.restore_settings_signal.connect(main_window.restore_settings)
+            perspective_manager.restore_settings_without_plugin_changes_signal.connect(main_window.restore_settings)
 
         if perspective_manager is not None and plugin_manager is not None:
             perspective_manager.save_settings_signal.connect(plugin_manager.save_settings)
             plugin_manager.save_settings_completed_signal.connect(perspective_manager.save_settings_completed)
             perspective_manager.restore_settings_signal.connect(plugin_manager.restore_settings)
+            perspective_manager.restore_settings_without_plugin_changes_signal.connect(plugin_manager.restore_settings_without_plugins)
 
         if plugin_manager is not None and main_window is not None:
             # signal before changing plugins to save window state
@@ -435,14 +436,14 @@ class Main(object):
 
         # switch perspective
         if perspective_manager is not None:
-            if plugin is not None:
-                perspective_manager.set_perspective(plugin, True)
-            else:
+            if not plugin:
                 perspective_manager.set_perspective(self._options.perspective)
+            else:
+                perspective_manager.set_perspective(plugin, hide_and_without_plugin_changes=True)
+
         # load specific plugin
-        if plugin is not None:
-            if not plugin_manager.is_plugin_running(plugin, plugin_serial):
-                plugin_manager.load_plugin(plugin, plugin_serial)
+        if plugin:
+            plugin_manager.load_plugin(plugin, plugin_serial, self._options.args)
 
         if main_window is not None:
             main_window.show()

@@ -43,8 +43,8 @@ class PluginManagerDBusInterface(Object):
         super(PluginManagerDBusInterface, self).__init__(bus_name, '/PluginManager')
         self._plugin_manager = plugin_manager
 
-    @dbus.service.method('org.ros.qt_gui.PluginManager', in_signature='s', out_signature='is')
-    def start_plugin(self, plugin_name):
+    @dbus.service.method('org.ros.qt_gui.PluginManager', in_signature='ss', out_signature='is')
+    def start_plugin(self, plugin_name, argv):
         qDebug('PluginManagerDBusInterface.start_plugin(%s)' % plugin_name)
         plugins = self._plugin_manager.find_plugins_by_name(plugin_name)
         if len(plugins) == 0:
@@ -56,5 +56,5 @@ class PluginManagerDBusInterface(Object):
             qWarning(msg)
             return (1, msg)
         plugin_id = plugins.keys()[0]
-        self._plugin_manager.load_plugin(plugin_id)
+        self._plugin_manager.load_plugin(plugin_id, argv=argv.split(' ') if argv else [])
         return (0, plugin_id)

@@ -140,14 +140,14 @@ class PluginManager(QObject):
 
     @Slot(str)
     @Slot(str, int)
-    def load_plugin(self, plugin_id, serial_number=None):
+    def load_plugin(self, plugin_id, serial_number=None, argv=None):
         qDebug('PluginManager.load_plugin(%s, %s)' % (plugin_id, str(serial_number) if serial_number is not None else ''))
         # save state of top-level widgets
         self.plugins_about_to_change_signal.emit()
         if serial_number is None:
             serial_number = self._next_serial_number(plugin_id)
         instance_id = PluginInstanceId(plugin_id, serial_number)
-        self._load_plugin_load(instance_id, self._load_plugin_restore)
+        self._load_plugin_load(instance_id, self._load_plugin_restore, argv)
 
     def _next_serial_number(self, plugin_id):
         # convert from unicode
@@ -164,7 +164,7 @@ class PluginManager(QObject):
             serial_number = serial_number + 1
         return serial_number
 
-    def _load_plugin_load(self, instance_id, callback):
+    def _load_plugin_load(self, instance_id, callback, argv=None):
         # if the requested instance is already running, do nothing
         if str(instance_id) in self._running_plugins:
             raise Exception('PluginManager._load_plugin(%s) instance already loaded' % str(instance_id))
@@ -177,14 +177,14 @@ class PluginManager(QObject):
         elif self._application_context.options.multi_process or self._application_context.options.embed_plugin:
             try:
                 from .plugin_handler_xembed import PluginHandlerXEmbed
-                handler = PluginHandlerXEmbed(self, self._main_window, instance_id, self._application_context, self._container_manager)
+                handler = PluginHandlerXEmbed(self, self._main_window, instance_id, self._application_context, self._container_manager, argv)
             except ImportError:
                 qCritical('PluginManager._load_plugin() could not load plugin in a separate process')
                 return
 
         # use direct handler for in-process plugins
         else:
-            handler = PluginHandlerDirect(self, self._main_window, instance_id, self._application_context, self._container_manager)
+            handler = PluginHandlerDirect(self, self._main_window, instance_id, self._application_context, self._container_manager, argv)
 
         self._add_running_plugin(instance_id, handler)
         handler.load(self._plugin_provider, callback)
@@ -468,6 +468,12 @@ class PluginManager(QObject):
                 qDebug('PluginManager.restore_settings() all missing plugins loaded')
             self._number_of_ongoing_calls = None
             self._restore_settings_restore()
+
+    def restore_settings_without_plugins(self, global_settings, perspective_settings):
+        qDebug('PluginManager.restore_settings_without_plugins()')
+        self._global_settings = global_settings.get_settings('pluginmanager')
+        self._perspective_settings = perspective_settings.get_settings('pluginmanager')
+        self._restore_settings_restore()
 
     def _restore_settings_restore(self):
         # trigger restore settings for all running plugins

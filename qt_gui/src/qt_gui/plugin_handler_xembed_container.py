@@ -49,8 +49,8 @@ class PluginHandlerXEmbedContainer(PluginHandler):
 
     _serial_number = 0
 
-    def __init__(self, parent, main_window, instance_id, application_context, container_manager, dbus_object_path):
-        super(PluginHandlerXEmbedContainer, self).__init__(parent, main_window, instance_id, application_context, container_manager)
+    def __init__(self, parent, main_window, instance_id, application_context, container_manager, argv, dbus_object_path):
+        super(PluginHandlerXEmbedContainer, self).__init__(parent, main_window, instance_id, application_context, container_manager, argv)
         self.setObjectName('PluginHandlerXEmbedContainer')
 
         self._dbus_object_path = dbus_object_path
@@ -85,6 +85,8 @@ class PluginHandlerXEmbedContainer(PluginHandler):
         cmd += ' %s' % Main.main_filename
         cmd += ' --qt-binding=%s' % QT_BINDING
         cmd += ' --embed-plugin=%s --embed-plugin-serial=%s --embed-plugin-address=%s' % (self.instance_id().plugin_id, self.instance_id().serial_number, self._dbus_server.address)
+        if self.argv():
+            cmd += ' --args %s' % ' '.join(self.argv())
         #qDebug('PluginHandlerXEmbedContainer._load() starting command: %s' % cmd)
         self._process.start(cmd)
         started = self._process.waitForStarted(3000)

@@ -38,12 +38,11 @@ class PluginContext(QObject):
     It relays all methods to the corresponding `PluginHandler`.
     """
 
-    def __init__(self, handler, argv=None):
+    def __init__(self, handler):
         super(PluginContext, self).__init__(handler)
         self.setObjectName('PluginContext')
 
         self._handler = handler
-        self.argv = argv
 
     def serial_number(self):
         """
@@ -53,6 +52,14 @@ class PluginContext(QObject):
         @rtype: int
         """
         return self._handler.instance_id().serial_number
+
+    def argv(self):
+        """
+        Return the command line arguments of the plugin.
+        @return: The arguments without a program name at the beginning
+        @rtype: list
+        """
+        return self._handler.argv()
 
     def add_widget(self, widget):
         """
