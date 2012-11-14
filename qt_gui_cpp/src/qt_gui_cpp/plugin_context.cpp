@@ -36,21 +36,28 @@
 
 namespace qt_gui_cpp {
 
-PluginContext::PluginContext(QObject* obj, int serial_number)
+PluginContext::PluginContext(QObject* obj, int serial_number, const QStringList& argv)
   : QObject(obj)
   , proxy_(obj)
   , serial_number_(serial_number)
+  , argv_(argv)
 {}
 
 PluginContext::PluginContext(const PluginContext& other)
   : QObject(other.parent())
   , proxy_(other.parent())
   , serial_number_(other.serial_number_)
+  , argv_(other.argv_)
 {}
 
 int PluginContext::serialNumber() const
 {
   return serial_number_;
+}
+
+const QStringList& PluginContext::argv() const
+{
+  return argv_;
 }
 
 void PluginContext::addWidget(QWidget* widget)

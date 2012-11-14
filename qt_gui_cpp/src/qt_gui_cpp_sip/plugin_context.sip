@@ -9,11 +9,13 @@ class PluginContext
 
 public:
 
-  PluginContext(QObject* obj, int serial_number);
+  PluginContext(QObject* obj, int serial_number, const QStringList& argv);
 
   PluginContext(const qt_gui_cpp::PluginContext& other);
 
   int serialNumber() const;
+
+  const QStringList& argv() const;
 
   void addWidget(QWidget* widget);
 

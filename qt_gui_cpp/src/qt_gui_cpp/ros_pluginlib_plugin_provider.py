@@ -61,7 +61,7 @@ class RosPluginlibPluginProvider(PluginProvider):
             return None
         cpp_plugin_context = None
         if plugin_context is not None:
-            cpp_plugin_context = qt_gui_cpp.PluginContext(plugin_context._handler, plugin_context.serial_number())  # @UndefinedVariable
+            cpp_plugin_context = qt_gui_cpp.PluginContext(plugin_context._handler, plugin_context.serial_number(), plugin_context.argv())
         bridge = qt_gui_cpp.PluginBridge()  # @UndefinedVariable
         loaded = bridge.load_plugin(self._plugin_provider, plugin_id, cpp_plugin_context)
         if not loaded:

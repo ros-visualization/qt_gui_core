@@ -38,6 +38,7 @@
 #include <QMap>
 #include <QObject>
 #include <QString>
+#include <QStringList>
 #include <QVariant>
 #include <QWidget>
 
@@ -54,7 +55,7 @@ class PluginContext
 
 public:
 
-  PluginContext(QObject* obj, int serial_number);
+  PluginContext(QObject* obj, int serial_number, const QStringList& argv);
 
   PluginContext(const PluginContext& other);
 
@@ -64,6 +65,12 @@ public:
    * @return The serial number
    */
   int serialNumber() const;
+
+  /**
+   * Return the command line arguments of the plugin.
+   * @return The arguments without a program name at the beginning
+   */
+  const QStringList& argv() const;
 
   /**
    * Add a widget to the UI.
@@ -97,6 +104,8 @@ protected:
   GenericProxy proxy_;
 
   int serial_number_;
+
+  QStringList argv_;
 
 };
 

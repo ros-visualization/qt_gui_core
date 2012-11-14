@@ -58,7 +58,7 @@ class PluginHandler(QObject):
         self._instance_id = instance_id
         self._application_context = application_context
         self._container_manager = container_manager
-        self._argv = argv
+        self._argv = argv if argv else []
 
         self._defered_check_close.connect(self._check_close, Qt.QueuedConnection)
         self._plugin_provider = None
