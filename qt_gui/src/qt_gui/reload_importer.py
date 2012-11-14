@@ -31,13 +31,13 @@
 # POSSIBILITY OF SUCH DAMAGE.
 
 import __builtin__
-import os 
+import os
 import sys
 
 
 class ReloadImporter:
 
-    """Overrides the builtin import and automatically reloads all modules which are imported from one 
+    """Overrides the builtin import and automatically reloads all modules which are imported from on
     of the reload paths after calling enable."""
 
     def __init__(self):
@@ -49,15 +49,15 @@ class ReloadImporter:
 
     def enable(self):
         __builtin__.__import__ = self._reimport
-        
+
     def disable(self):
         __builtin__.__import__ = self._import
-        
+
     def add_reload_path(self, path):
         if self._reload_paths is None:
             self._reload_paths = tuple()
         self._reload_paths += (os.path.abspath(path),)
-        
+
     def _reload(self, module):
         if module.__name__ not in self._import_stack and module.__name__ in sys.modules:
             if not self._import_stack:
@@ -71,7 +71,7 @@ class ReloadImporter:
 
     def _reimport(self, name, globals_=None, locals_=None, fromlist=None, level=-1):
         module = self._import(name, globals_, locals_, fromlist if not None else [], level if not None else -1)
-        
+
         if module.__name__ not in self._excluded_modules and \
             (self._reload_paths is None or \
               (hasattr(module, '__file__') and len([p for p in self._reload_paths if module.__file__.startswith(p)]) > 0) \

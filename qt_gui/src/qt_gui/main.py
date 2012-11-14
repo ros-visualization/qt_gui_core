@@ -37,6 +37,7 @@ import signal
 import sys
 from argparse import ArgumentParser, SUPPRESS
 
+
 class Main(object):
 
     main_filename = None
@@ -271,7 +272,6 @@ class Main(object):
         def message_handler(type_, msg):
             colored_output = 'TERM' in os.environ and 'ANSI_COLORS_DISABLED' not in os.environ
             cyan_color = '\033[36m' if colored_output else ''
-            yellow_color = '\033[33m' if colored_output else ''
             red_color = '\033[31m' if colored_output else ''
             reset_color = '\033[0m' if colored_output else ''
             if type_ == QtDebugMsg and self._options.verbose:

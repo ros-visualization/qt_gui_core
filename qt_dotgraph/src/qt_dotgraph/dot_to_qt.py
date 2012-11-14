@@ -35,7 +35,7 @@ import pydot
 import roslib
 roslib.load_manifest('qt_dotgraph')
 
-from python_qt_binding.QtCore import QRectF, QPointF
+from python_qt_binding.QtCore import QPointF, QRectF
 from python_qt_binding.QtGui import QColor
 
 from .edge_item import EdgeItem
