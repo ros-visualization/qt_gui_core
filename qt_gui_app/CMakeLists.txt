@@ -1,5 +1,7 @@
-cmake_minimum_required(VERSION 2.4.6)
-include($ENV{ROS_ROOT}/core/rosbuild/rosbuild.cmake)
+cmake_minimum_required(VERSION 2.8.3)
+project(qt_gui_app)
 
-rosbuild_init()
+find_package(catkin REQUIRED)
+catkin_package()
 
+catkin_python_setup()

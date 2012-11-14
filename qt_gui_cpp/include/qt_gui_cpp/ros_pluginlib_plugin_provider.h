@@ -41,7 +41,6 @@
 #include <boost/shared_ptr.hpp>
 
 #include <pluginlib/class_loader.h>
-#include <pluginlib/boost_fs_wrapper.h>
 
 #include <QCoreApplication>
 #include <QEvent>
@@ -119,7 +118,6 @@ public:
 
       // check if plugin is available
       std::string library_path = class_loader_->getClassLibraryPath(lookup_name);
-      library_path.append(Poco::SharedLibrary::suffix());
       attributes["not_available"] = !std::ifstream(library_path.c_str()) ? QString("library ").append(lookup_name.c_str()).append(" not found (may be it must be built?)") : "";
 
       PluginDescriptor* plugin_descriptor = new PluginDescriptor(lookup_name.c_str(), attributes);
@@ -337,7 +335,9 @@ private:
       if (icontype == "file")
       {
         // prepend base path
-        icon = pluginlib::joinPaths(package_path, child_element->GetText()).c_str();
+        icon = package_path.c_str();
+        icon += "/";
+        icon += child_element->GetText();
       }
       else
       {

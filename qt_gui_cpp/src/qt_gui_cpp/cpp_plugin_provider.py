@@ -30,8 +30,6 @@
 
 import os
 import sys
-# append folder of this file to module search path
-sys.path.append(os.path.realpath(os.path.dirname(__file__)))
 
 from cpp_binding_helper import qt_gui_cpp
 from ros_pluginlib_plugin_provider import RosPluginlibPluginProvider

@@ -34,7 +34,8 @@ import os
 from python_qt_binding import loadUi
 from python_qt_binding.QtGui import QDialog, QLabel
 from python_qt_binding.QtCore import qWarning
-from exclusive_options_group import ExclusiveOptionGroup
+from rospkg.rospack import ResourceNotFound, RosPack
+from .exclusive_options_group import ExclusiveOptionGroup
 
 class SimpleSettingsDialog(QDialog):
     """Simple dialog that can show multiple settings groups and returns their combined results."""
@@ -43,7 +44,11 @@ class SimpleSettingsDialog(QDialog):
         super(SimpleSettingsDialog, self).__init__()
         self.setObjectName('SimpleSettingsDialog')
 
-        ui_file = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'simple_settings_dialog.ui')
+        rp = RosPack()
+        try:
+            ui_file = os.path.join(rp.get_path('qt_gui_py_common'), 'resource', 'simple_settings_dialog.ui')
+        except ResourceNotFound:
+            ui_file = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'simple_settings_dialog.ui')
         loadUi(ui_file, self)
         
         self.setWindowTitle(title)

@@ -1,4 +1,4 @@
-set(qt_gui_cpp_HDRS_DIR ${CMAKE_SOURCE_DIR}/include/qt_gui_cpp)
+set(qt_gui_cpp_HDRS_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../../include/qt_gui_cpp)
 set(qt_gui_cpp_sip_DEPENDENT_FILES
   composite_plugin_provider.sip
   generic_proxy.sip
@@ -30,21 +30,26 @@ set(qt_gui_cpp_sip_DEPENDENT_FILES
 string(REGEX REPLACE "^([^;]*;)*([^;]+/python_qt_binding)/include(;[^;]*)*$" "\\2" python_qt_binding_SOURCE_DIR "${qt_gui_cpp_INCLUDE_DIRS}")
 
 # maintain context for different named target
-set(qt_gui_cpp_sip_INCLUDE_DIRS ${qt_gui_cpp_INCLUDE_DIRS} ${CMAKE_SOURCE_DIR}/include)
-set(qt_gui_cpp_sip_LIBRARIES ${qt_gui_cpp_LIBRARIES} ${PROJECT_NAME})
-set(qt_gui_cpp_sip_LIBRARY_DIRS ${qt_gui_cpp_LIBRARY_DIRS} ${CMAKE_SOURCE_DIR}/lib)
-set(qt_gui_cpp_sip_LDFLAGS_OTHER ${qt_gui_cpp_LDFLAGS_OTHER} -Wl,-rpath,${CMAKE_SOURCE_DIR}/lib)
+set(qt_gui_cpp_sip_INCLUDE_DIRS ${qt_gui_cpp_INCLUDE_DIRS} ${CMAKE_CURRENT_SOURCE_DIR}/../../include ${catkin_INCLUDE_DIRS})
+set(qt_gui_cpp_sip_LIBRARIES ${qt_gui_cpp_LIBRARIES} ${PROJECT_NAME} ${catkin_LIBRARIES} ${Boost_LIBRARIES})
+set(qt_gui_cpp_sip_LIBRARY_DIRS ${qt_gui_cpp_LIBRARY_DIRS} ${CATKIN_BUILD_PREFIX}/lib)
+set(qt_gui_cpp_sip_LDFLAGS_OTHER ${qt_gui_cpp_LDFLAGS_OTHER} -Wl,-rpath,${CATKIN_BUILD_PREFIX}/lib)
 
-rosbuild_include(python_qt_binding sip_helper)
+find_package(python_qt_binding REQUIRED)
+include(${python_qt_binding_EXTRAS_DIR}/sip_helper.cmake)
 
 if(sip_helper_FOUND)
   list(APPEND qt_gui_cpp_BINDINGS "sip")
   set(qt_gui_cpp_BINDINGS "${qt_gui_cpp_BINDINGS}" PARENT_SCOPE)
 
   build_sip_binding(qt_gui_cpp_sip qt_gui_cpp.sip
-    SIP_CONFIGURE ${python_qt_binding_SOURCE_DIR}/cmake/sip_configure.py
+    SIP_CONFIGURE ${python_qt_binding_EXTRAS_DIR}/sip_configure.py
     SOURCE_DIR ${PROJECT_SOURCE_DIR}/src/qt_gui_cpp_sip
+    LIBRARY_DIR ${CATKIN_BUILD_PREFIX}/${CATKIN_PACKAGE_PYTHON_DESTINATION}
     DEPENDS ${qt_gui_cpp_sip_DEPENDENT_FILES}
     DEPENDENCIES qt_gui_cpp
   )
+
+  install(FILES ${CATKIN_BUILD_PREFIX}/lib/libqt_gui_cpp_sip${CMAKE_SHARED_LIBRARY_SUFFIX}
+    DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION})
 endif()
