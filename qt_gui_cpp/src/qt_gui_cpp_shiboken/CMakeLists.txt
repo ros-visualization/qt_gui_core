@@ -61,8 +61,8 @@ if(shiboken_helper_FOUND)
     shiboken_target_link_libraries(qt_gui_cpp_shiboken "${qt_gui_cpp_shiboken_QT_COMPONENTS}")
 
     install(TARGETS qt_gui_cpp_shiboken
-      ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
-      LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION})
+      ARCHIVE DESTINATION ${CATKIN_PACKAGE_PYTHON_DESTINATION}
+      LIBRARY DESTINATION ${CATKIN_PACKAGE_PYTHON_DESTINATION})
   else()
     message(WARNING "Shiboken does not support QGenericReturnArgument - skipped building bindings")
   endif()
