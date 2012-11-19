@@ -19,5 +19,5 @@ add_subdirectory(src)
 
 install(DIRECTORY include/qt_gui_cpp/
   DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION})
-install(DIRECTORY plugin.xml
+install(FILES plugin.xml
   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION})
