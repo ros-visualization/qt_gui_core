@@ -6,5 +6,5 @@ catkin_package()
 
 catkin_python_setup()
 
-install(DIRECTORY icons
+install(DIRECTORY resource
   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION})

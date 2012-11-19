@@ -35,6 +35,7 @@ import sys
 from python_qt_binding import QT_BINDING, QT_BINDING_MODULES, QT_BINDING_VERSION
 from python_qt_binding.QtCore import QObject, qVersion
 from python_qt_binding.QtGui import QMessageBox
+from rospkg.rospack import RosPack
 
 from .ros_package_helper import get_package_path
 
@@ -60,7 +61,8 @@ class AboutHandler(QObject):
         except ImportError:
             pass
 
-        logo = os.path.realpath(os.path.join(os.path.dirname(__file__), '..', '..', 'icons', 'ros_org_vertical.png'))
+        rp = RosPack()
+        logo = os.path.join(rp.get_path('qt_gui'), 'resource', 'ros_org_vertical.png')
         text = '<img src="%s" width="56" height="200" style="float: left;"/>' % logo
 
         text += '<h3 style="margin-top: 1px;">%s</h3>' % self.tr('ROS GUI')

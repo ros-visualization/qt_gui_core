@@ -34,7 +34,7 @@ import os
 from python_qt_binding import loadUi
 from python_qt_binding.QtGui import QDialog, QLabel
 from python_qt_binding.QtCore import qWarning
-from rospkg.rospack import ResourceNotFound, RosPack
+from rospkg.rospack import RosPack
 from .exclusive_options_group import ExclusiveOptionGroup
 
 class SimpleSettingsDialog(QDialog):
@@ -45,10 +45,7 @@ class SimpleSettingsDialog(QDialog):
         self.setObjectName('SimpleSettingsDialog')
 
         rp = RosPack()
-        try:
-            ui_file = os.path.join(rp.get_path('qt_gui_py_common'), 'resource', 'simple_settings_dialog.ui')
-        except ResourceNotFound:
-            ui_file = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'simple_settings_dialog.ui')
+        ui_file = os.path.join(rp.get_path('qt_gui_py_common'), 'resource', 'simple_settings_dialog.ui')
         loadUi(ui_file, self)
         
         self.setWindowTitle(title)

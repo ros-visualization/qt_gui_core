@@ -34,6 +34,7 @@ import os
 from python_qt_binding import loadUi
 from python_qt_binding.QtCore import QByteArray, qDebug, QObject, QSignalMapper, Signal, Slot
 from python_qt_binding.QtGui import QAction, QFileDialog, QIcon, QInputDialog, QMessageBox, QValidator
+from rospkg.rospack import RosPack
 
 from .menu_manager import MenuManager
 from .settings import Settings
@@ -181,7 +182,8 @@ class PerspectiveManager(QObject):
     def _choose_new_perspective_name(self, show_cloning=True):
         # input dialog for new perspective name
         if self._create_perspective_dialog is None:
-            ui_file = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'PerspectiveCreate.ui')
+            rp = RosPack()
+            ui_file = os.path.join(rp.get_path('qt_gui'), 'resource', 'perspective_create.ui')
             self._create_perspective_dialog = loadUi(ui_file)
 
             # custom validator preventing forward slashs
