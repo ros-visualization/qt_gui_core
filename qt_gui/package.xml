@@ -1,6 +1,6 @@
 <package>
   <name>qt_gui</name>
-  <version>0.2.5</version>
+  <version>0.2.6</version>
   <description>
     qt_gui provides the infrastructure for an integrated graphical user interface based on Qt.
     It is extensible with Python- and C++-based plugins (implemented in separate packages) which can contribute arbitrary widgets.
