@@ -66,7 +66,7 @@ class DockWidgetTitleBar(QWidget):
         self.close_button.clicked.connect(self._close_clicked)
 
         self.float_button.clicked.connect(self._toggle_floating)
-        self.dockable_button.clicked.connect(self._toggle_dockable)
+        self.dockable_button.clicked[bool].connect(self._toggle_dockable)
 
         self._dock_widget.featuresChanged.connect(self._features_changed)
         self._features_changed()
