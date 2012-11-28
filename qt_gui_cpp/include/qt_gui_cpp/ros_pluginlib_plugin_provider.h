@@ -126,10 +126,7 @@ public:
       QString icon;
       QString icontype;
       std::string package_path = ros::package::getPath(class_loader_->getClassPackage(lookup_name));
-      size_t package_path_length = package_path.length();
-      assert(library_path.compare(0, package_path_length, package_path) == 0);
-      std::string relative_library_path = library_path.substr(package_path_length + 1);
-      parseManifest(lookup_name, package_path, relative_library_path, label, statustip, icon, icontype, plugin_descriptor);
+      parseManifest(lookup_name, package_path, label, statustip, icon, icontype, plugin_descriptor);
       plugin_descriptor->setActionAttributes(label, statustip, icon, icontype);
 
       // add plugin descriptor
@@ -254,9 +251,9 @@ private slots:
 
 private:
 
-  bool parseManifest(const std::string& lookup_name, const std::string& package_path, const std::string& /*relative_library_path*/, QString& label, QString& statustip, QString& icon, QString& icontype, PluginDescriptor* plugin_descriptor)
+  bool parseManifest(const std::string& lookup_name, const std::string& package_path, QString& label, QString& statustip, QString& icon, QString& icontype, PluginDescriptor* plugin_descriptor)
   {
-    //qDebug("RosPluginlibPluginProvider::parseManifest() relative_library_path \"%s\"", relative_library_path.c_str());
+    //qDebug("RosPluginlibPluginProvider::parseManifest()");
 
     std::string manifest_path = class_loader_->getPluginManifestPath(lookup_name);
     //qDebug("RosPluginlibPluginProvider::parseManifest() manifest_path \"%s\"", manifest_path.c_str());
@@ -280,8 +277,6 @@ private:
     TiXmlElement* library_element = doc.FirstChildElement("library");
     while (library_element)
     {
-//      if (relative_library_path.compare(library_element->Attribute("path")) == 0)
-//      {
         // search class-tag with specific type- and base_class_type-attribute
         TiXmlElement* class_element = library_element->FirstChildElement("class");
         while (class_element)
@@ -313,7 +308,6 @@ private:
           class_element = class_element->NextSiblingElement("class");
         }
         break;
-//      }
 
       library_element = library_element->NextSiblingElement("library");
     }
