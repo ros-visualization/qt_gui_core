@@ -141,7 +141,7 @@ class PluginManager(QObject):
     @Slot(str)
     @Slot(str, int)
     def load_plugin(self, plugin_id, serial_number=None, argv=None):
-        qDebug('PluginManager.load_plugin(%s, %s)' % (plugin_id, str(serial_number) if serial_number is not None else ''))
+        qDebug('PluginManager.load_plugin(%s, %s)' % (str(plugin_id), str(serial_number) if serial_number is not None else ''))
         # save state of top-level widgets
         self.plugins_about_to_change_signal.emit()
         if serial_number is None:
