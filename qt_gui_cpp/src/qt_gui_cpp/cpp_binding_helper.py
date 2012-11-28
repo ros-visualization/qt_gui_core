@@ -35,9 +35,6 @@ import traceback
 from python_qt_binding import QT_BINDING
 from python_qt_binding.QtCore import qWarning
 
-from qt_gui.ros_package_helper import get_package_path
-sys.path.append(os.path.realpath(os.path.join(get_package_path('qt_gui_cpp'), 'lib')))
-
 try:
     if QT_BINDING == 'pyside':
         import libqt_gui_cpp_shiboken
