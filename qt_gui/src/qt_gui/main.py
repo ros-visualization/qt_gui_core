@@ -147,8 +147,12 @@ class Main(object):
             arguments = arguments[0:index + 1]
         parser = ArgumentParser('usage: %prog [options]')
         self._add_arguments(parser)
-        self._options = parser.parse_args(arguments)
+        self._options, unknown_args = parser.parse_known_args(arguments)
         self._options.args = args
+
+        # report unknown arguments
+        for arg in unknown_args:
+            print('Unknown argument: "%s"' % arg)
 
         # check option dependencies
         try:
