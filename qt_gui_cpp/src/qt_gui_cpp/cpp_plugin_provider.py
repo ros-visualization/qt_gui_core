@@ -28,13 +28,10 @@
 # ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-import os
-import sys
-
-from cpp_binding_helper import qt_gui_cpp
-from ros_pluginlib_plugin_provider import RosPluginlibPluginProvider
-
 from qt_gui.composite_plugin_provider import CompositePluginProvider
+
+from .cpp_binding_helper import qt_gui_cpp
+from .ros_pluginlib_plugin_provider import RosPluginlibPluginProvider
 
 
 class CppPluginProvider(CompositePluginProvider):
@@ -43,7 +40,7 @@ class CppPluginProvider(CompositePluginProvider):
         plugin_providers = None
         if qt_gui_cpp is not None:
             plugin_providers = [
-                RosPluginlibPluginProvider(qt_gui_cpp.RosPluginlibPluginProvider_ForPlugins('qt_gui', 'qt_gui_cpp::Plugin')),  # @UndefinedVariable
-                RosPluginlibPluginProvider(qt_gui_cpp.RecursivePluginProvider(qt_gui_cpp.RosPluginlibPluginProvider_ForPluginProviders.create_instance('qt_gui', 'qt_gui_cpp::PluginProvider'))),  # @UndefinedVariable
+                RosPluginlibPluginProvider(qt_gui_cpp.RosPluginlibPluginProvider_ForPlugins('qt_gui', 'qt_gui_cpp::Plugin')),
+                RosPluginlibPluginProvider(qt_gui_cpp.RecursivePluginProvider(qt_gui_cpp.RosPluginlibPluginProvider_ForPluginProviders.create_instance('qt_gui', 'qt_gui_cpp::PluginProvider'))),
             ]
         super(CppPluginProvider, self).__init__(plugin_providers)

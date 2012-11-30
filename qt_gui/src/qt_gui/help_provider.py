@@ -31,7 +31,6 @@
 import webbrowser
 
 from python_qt_binding.QtCore import QObject, Slot
-
 from roslib.manifest import load_manifest
 
 

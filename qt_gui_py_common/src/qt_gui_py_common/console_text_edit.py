@@ -32,8 +32,9 @@
 
 import sys
 
-from python_qt_binding.QtGui import QTextEdit, QFont
 from python_qt_binding.QtCore import Qt
+from python_qt_binding.QtGui import QFont, QTextEdit
+
 
 class ConsoleTextEdit(QTextEdit):
     _color_stdout = Qt.blue
@@ -41,13 +42,13 @@ class ConsoleTextEdit(QTextEdit):
     _color_stdin = Qt.black
     _multi_line_char = '\\'
     _multi_line_indent = '    '
-    _prompt = ('$ ', '  ') # prompt for single and multi line
-    
+    _prompt = ('$ ', '  ')  # prompt for single and multi line
+
     class TextEditColoredWriter:
         def __init__(self, text_edit, color):
             self._text_edit = text_edit
             self._color = color
-            
+
         def write(self, line):
             old_color = self._text_edit.textColor()
             self._text_edit.setTextColor(self._color)
@@ -64,16 +65,16 @@ class ConsoleTextEdit(QTextEdit):
         self._command = ''
         self._history = []
         self._history_index = -1
-        
+
         # init colored writers
         self._stdout = self.TextEditColoredWriter(self, self._color_stdout)
         self._stderr = self.TextEditColoredWriter(self, self._color_stderr)
         self._comment_writer = self.TextEditColoredWriter(self, self._color_stdin)
-        
+
     def print_message(self, msg):
         self._clear_current_line(clear_prompt=True)
         self._comment_writer.write(msg + '\n')
-        self._add_prompt()  
+        self._add_prompt()
 
     def _add_prompt(self):
         self._comment_writer.write(self._prompt[self._multi_line] + self._multi_line_indent * self._multi_line_level)
@@ -88,7 +89,8 @@ class ConsoleTextEdit(QTextEdit):
             return None
         else:
             # should have a better way of doing this but I can't find it
-            [self.textCursor().deletePreviousChar() for x in xrange(length)]
+            for _ in xrange(length):
+                self.textCursor().deletePreviousChar()
         return True
 
     def _move_in_history(self, delta):
@@ -99,7 +101,7 @@ class ConsoleTextEdit(QTextEdit):
         if self._history_index >= 0:
             self.insertPlainText(self._history[self._history_index])
         return True
-    
+
     def _exec_code(self, code):
         raise NotImplementedError
 
@@ -123,50 +125,50 @@ class ConsoleTextEdit(QTextEdit):
                     self._history_index -= 1
                 self._move_in_history(-1)
                 return None
-    
+
             if event.key() == Qt.Key_Up:
                 self._move_in_history(1)
                 return None
-    
+
             if event.key() in [Qt.Key_Backspace]:
                 # don't allow cursor to delete into prompt
                 if self.textCursor().positionInBlock() == prompt_length and not self.textCursor().hasSelection():
                     return None
-    
+
             if event.key() in [Qt.Key_Return, Qt.Key_Enter]:
                 # set cursor to end of line to avoid line splitting
                 cursor = self.textCursor()
                 cursor.setPosition(document_length - 1)
                 self.setTextCursor(cursor)
-    
+
                 self._history_index = -1
-                line = str(self.document().lastBlock().text())[prompt_length:].rstrip() # remove prompt and trailing spaces
-    
+                line = str(self.document().lastBlock().text())[prompt_length:].rstrip()  # remove prompt and trailing spaces
+
                 self.insertPlainText('\n')
                 if len(line) > 0:
                     if line[-1] == self._multi_line_char:
                         self._multi_line = True
                         self._multi_line_level += 1
                     self._history.insert(0, line)
-    
-                    if self._multi_line: # multi line command
+
+                    if self._multi_line:  # multi line command
                         self._command += line + '\n'
-                    
-                    else: # single line command
+
+                    else:  # single line command
                         self._exec_with_captured_output(line)
                         self._command = ''
-                
-                else: # new line was is empty
-                    
-                    if self._multi_line: #  multi line done
+
+                else:  # new line was is empty
+
+                    if self._multi_line:  # multi line done
                         self._exec_with_captured_output(self._command)
                         self._command = ''
                         self._multi_line = False
                         self._multi_line_level = 0
-    
+
                 self._add_prompt()
                 return None
-        
+
         # allow all other key events
         super(ConsoleTextEdit, self).keyPressEvent(event)
 

@@ -31,7 +31,7 @@
 from qt_gui.plugin_descriptor import PluginDescriptor
 from qt_gui.plugin_provider import PluginProvider
 
-from cpp_binding_helper import qt_gui_cpp
+from .cpp_binding_helper import qt_gui_cpp
 
 
 class RosPluginlibPluginProvider(PluginProvider):

@@ -28,12 +28,11 @@
 # ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-import os
-import sys
 import traceback
 
 from python_qt_binding import QT_BINDING
 from python_qt_binding.QtCore import qWarning
+
 
 try:
     if QT_BINDING == 'pyside':

@@ -30,9 +30,9 @@
 # ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
+from distutils.version import LooseVersion
 import pydot
 import urllib
-from distutils.version import LooseVersion
 
 
 # Reference implementation for a dotcode factory

@@ -31,11 +31,14 @@
 # POSSIBILITY OF SUCH DAMAGE.
 
 import os
+
 from python_qt_binding import loadUi
-from python_qt_binding.QtGui import QDialog, QLabel
 from python_qt_binding.QtCore import qWarning
+from python_qt_binding.QtGui import QDialog, QLabel
 from rospkg.rospack import RosPack
+
 from .exclusive_options_group import ExclusiveOptionGroup
+
 
 class SimpleSettingsDialog(QDialog):
     """Simple dialog that can show multiple settings groups and returns their combined results."""
@@ -47,20 +50,20 @@ class SimpleSettingsDialog(QDialog):
         rp = RosPack()
         ui_file = os.path.join(rp.get_path('qt_gui_py_common'), 'resource', 'simple_settings_dialog.ui')
         loadUi(ui_file, self)
-        
+
         self.setWindowTitle(title)
         self._settings_groups = []
 
         if description is not None:
             self.add_label(description)
-        
+
     def add_label(self, text):
         self.group_area.layout().addWidget(QLabel(text))
 
     def add_exclusive_option_group(self, *args, **kwargs):
         """Convenience method to add an ExclusiveOptionGroup."""
         self.add_settings_group(ExclusiveOptionGroup(*args, **kwargs))
-        
+
     def add_settings_group(self, settings_group):
         """Adds a settings group, which is any widget with a get_settings method."""
         if not hasattr(settings_group, 'get_settings'):
