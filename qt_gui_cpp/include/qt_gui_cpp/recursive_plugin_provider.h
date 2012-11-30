@@ -37,7 +37,6 @@
 #include "ros_pluginlib_plugin_provider_for_plugin_providers.h"
 
 #include <QMap>
-#include <QSet>
 #include <QString>
 
 namespace qt_gui_cpp
@@ -58,8 +57,6 @@ public:
 private:
 
   RosPluginlibPluginProvider_ForPluginProviders* plugin_provider_;
-
-  QSet<PluginProvider*> plugin_providers_;
 
 };
 
