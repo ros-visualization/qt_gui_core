@@ -54,6 +54,9 @@ public:
 
   virtual ~CompositePluginProvider();
 
+  /**
+   * @note The ownership of the plugin providers is transferred to the callee.
+   */
   virtual void set_plugin_providers(const QList<PluginProvider*>& plugin_providers);
 
   virtual QList<PluginDescriptor*> discover_descriptors();

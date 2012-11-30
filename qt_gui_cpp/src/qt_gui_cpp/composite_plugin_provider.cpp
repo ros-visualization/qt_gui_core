@@ -51,6 +51,11 @@ CompositePluginProvider::~CompositePluginProvider()
 
 void CompositePluginProvider::set_plugin_providers(const QList<PluginProvider*>& plugin_providers)
 {
+  // garbage old plugin providers
+  for (QList<PluginProvider*>::iterator it = plugin_providers_.begin(); it != plugin_providers_.end(); it++)
+  {
+    delete *it;
+  }
   plugin_providers_ = plugin_providers;
 }
 
