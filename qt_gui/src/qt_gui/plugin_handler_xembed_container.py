@@ -70,6 +70,9 @@ class PluginHandlerXEmbedContainer(PluginHandler):
         self._signal_mapper_toolbars.mapped[str].connect(self._on_toolbar_orientation_changed)
 
     def _load(self):
+        if not Main.main_filename:
+            raise RuntimeError('PluginHandlerXEmbedContainer._load() filename of initially started script is unknown')
+
         self._dbus_server = Server('tcp:bind=*')
         self._dbus_server.on_connection_added.append(self._add_dbus_connection)
         self._dbus_container_service = PluginHandlerDBusService(self, self._dbus_object_path)
