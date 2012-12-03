@@ -20,4 +20,5 @@
   <build_depend>tango-icon-theme</build_depend>
 
   <run_depend>python_qt_binding</run_depend>
+  <run_depend>tango-icon-theme</run_depend>
 </package>
