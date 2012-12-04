@@ -119,12 +119,16 @@ class Main(object):
 
     def _check_icon_theme_compliance(self):
         from python_qt_binding.QtGui import QIcon
+        # TODO find a better way to verify Theme standard compliance
         if QIcon.themeName() == '' or \
            QIcon.fromTheme('document-save').isNull() or \
            QIcon.fromTheme('document-open').isNull() or \
            QIcon.fromTheme('edit-cut').isNull() or \
            QIcon.fromTheme('object-flip-horizontal').isNull():
+            original_theme = QIcon.themeName()
             QIcon.setThemeName('Tango')
+            if QIcon.fromTheme('document-save').isNull():
+                QIcon.setThemeName(original_theme)
 
     def main(self, argv=None):
         # check if DBus is available
