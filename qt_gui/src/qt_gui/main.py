@@ -66,7 +66,7 @@ class Main(object):
                           help='start with this perspective')
         parser.add_argument('--reload-import', dest='reload_import', default=False, action='store_true',
                           help='reload every imported module')
-        parser.add_argument('-s', '--stand-alone', dest='standalone_plugin', type=str, metavar='PLUGIN',
+        parser.add_argument('-s', '--standalone', dest='standalone_plugin', type=str, metavar='PLUGIN',
                           help='start only this plugin (implies -l). To pass arguments to the plugin use --args')
         parser.add_argument('-v', '--verbose', dest='verbose', default=False, action='store_true',
                           help='output qDebug messages')
@@ -130,7 +130,7 @@ class Main(object):
             if QIcon.fromTheme('document-save').isNull():
                 QIcon.setThemeName(original_theme)
 
-    def main(self, argv=None):
+    def main(self, argv=None, standalone=None):
         # check if DBus is available
         try:
             import dbus
@@ -149,6 +149,10 @@ class Main(object):
             index = arguments.index('--args')
             args = arguments[index + 1:]
             arguments = arguments[0:index + 1]
+
+        if standalone:
+            arguments += ['-s', standalone]
+
         parser = ArgumentParser('usage: %prog [options]')
         self._add_arguments(parser)
         self._options = parser.parse_args(arguments)
@@ -157,7 +161,7 @@ class Main(object):
         # check option dependencies
         try:
             if self._options.args and not self._options.standalone_plugin and not self._options.command_start_plugin and not self._options.embed_plugin:
-                raise RuntimeError('Option --args can only be used together with either --stand-alone, --command-start-plugin or --embed-plugin option')
+                raise RuntimeError('Option --args can only be used together with either --standalone, --command-start-plugin or --embed-plugin option')
 
             list_options = (self._options.list_perspectives, self._options.list_plugins)
             list_options_set = [opt for opt in list_options if opt is not False]
