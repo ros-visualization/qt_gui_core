@@ -12,7 +12,7 @@
   <url type="bugtracker">https://github.com/ros-visualization/qt_gui_app/issues</url>
   <author>Dirk Thomas</author>
 
-  <build_depend>catkin</build_depend>
+  <buildtool_depend>catkin</buildtool_depend>
 
   <run_depend>qt_gui</run_depend>
 </package>
