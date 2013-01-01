@@ -115,7 +115,7 @@ class PydotFactory():
         """
         if subgraphlabel is None or subgraphlabel == '':
             raise ValueError('Empty subgraph label')
-        g = pydot.Cluster(self.escape_name(subgraphlabel), rank=rank, rankdir=rankdir, simplify=simplify)
+        g = pydot.Cluster(self.escape_name(subgraphlabel), rank=rank, rankdir=rankdir, simplify=simplify, color=color)
         if 'set_style' in g.__dict__:
             g.set_style(style)
         if 'set_shape' in g.__dict__:
