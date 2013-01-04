@@ -67,6 +67,7 @@ class PygraphvizFactory():
                               graph,
                               subgraphlabel,
                               rank='same',
+                              simplify=True,
                               rankdir='TB',
                               ranksep=0.2,
                               compound=True,
@@ -86,7 +87,12 @@ class PygraphvizFactory():
         return sg
 
     def add_edge_to_graph(self, graph, nodename1, nodename2, label=None, url=None, simplify=True, style=None):
-        graph.add_edge(nodename1, nodename2, label=label, url=url, style=style)
+        kwargs = {'url': url}
+        if label is not None:
+            kwargs['label'] = label
+        if style is not None:
+            kwargs['style'] = style
+        graph.add_edge(nodename1, nodename2, **kwargs)
 
     def create_dot(self, graph):
         graph.layout('dot')
