@@ -69,6 +69,8 @@ class Main(object):
             help='clear the configuration (including all perspectives and plugin settings)')
         common_group.add_argument('-h', '--help', action='help',
             help='show this help message and exit')
+        common_group.add_argument('-t', '--on-top', dest='on_top', default=False, action='store_true',
+            help='set window mode to always on top')
         if not standalone:
             common_group.add_argument('-l', '--lock-perspective', dest='lock_perspective', action='store_true',
                 help='lock the GUI to the used perspective (hide menu bar and close buttons of plugins)')
@@ -335,7 +337,8 @@ class Main(object):
             if self._options.clear_config:
                 settings.clear()
 
-            main_window = MainWindow()
+            main_window = MainWindow(self._options.on_top)
+
             main_window.setDockNestingEnabled(True)
             main_window.statusBar()
 

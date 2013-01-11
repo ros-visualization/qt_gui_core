@@ -40,8 +40,11 @@ class MainWindow(QMainWindow):
 
     save_settings_before_close_signal = Signal(Settings, Settings)
 
-    def __init__(self):
-        super(MainWindow, self).__init__()
+    def __init__(self, ontop=None):
+        if ontop:
+            super(MainWindow, self).__init__(None, Qt.WindowStaysOnTopHint)
+        else:
+            super(MainWindow, self).__init__()
         self.setObjectName('MainWindow')
 
         self._save_on_close_signaled = False
