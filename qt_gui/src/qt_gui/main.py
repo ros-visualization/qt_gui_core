@@ -50,21 +50,23 @@ class Main(object):
             settings_filename = 'qt_gui'
         self._settings_filename = settings_filename
         self.plugin_providers = []
+        self._options = None
 
         # check if DBus is available
         self._dbus_available = False
         try:
+            # use qt/glib mainloop integration to get dbus mainloop working
+            from dbus.mainloop.glib import DBusGMainLoop
+            DBusGMainLoop(set_as_default=True)
             import dbus
             try:
+                # before being able to check if a session bus is available the dbus mainloop must be set up
                 dbus.SessionBus()
                 self._dbus_available = True
             except dbus.exceptions.DBusException:
                 pass
-            del dbus
         except ImportError:
             pass
-
-        self._options = None
 
     def add_arguments(self, parser, standalone=False, plugin_argument_provider=None):
         common_group = parser.add_argument_group('Options for GUI instance')
@@ -112,7 +114,7 @@ class Main(object):
             group.add_argument('--command-switch-perspective', dest='command_switch_perspective', type=str, metavar='PERSPECTIVE',
                 help='switch perspective')
             if not self._dbus_available:
-                group.description = 'These options are not available since the DBus module is not found!'
+                group.description = 'These options are not available since DBus is available!'
                 for o in group._group_actions:
                     o.help = SUPPRESS
             parser.add_argument_group(group)
@@ -241,16 +243,13 @@ class Main(object):
         if self._options.standalone_plugin is not None:
             self._options.lock_perspective = True
 
-        # use qt/glib mainloop integration to get dbus mainloop working
-        if self._dbus_available:
-            from dbus.mainloop.glib import DBusGMainLoop
-            from dbus import DBusException, Interface, SessionBus
-            DBusGMainLoop(set_as_default=True)
-
         # create application context containing various relevant information
         from .application_context import ApplicationContext
         context = ApplicationContext()
         context.options = self._options
+
+        if self._dbus_available:
+            from dbus import DBusException, Interface, SessionBus
 
         # non-special applications provide various dbus interfaces
         if self._dbus_available:
