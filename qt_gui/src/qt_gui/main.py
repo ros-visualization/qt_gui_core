@@ -52,12 +52,17 @@ class Main(object):
         self.plugin_providers = []
 
         # check if DBus is available
+        self._dbus_available = False
         try:
             import dbus
+            try:
+                dbus.SessionBus()
+                self._dbus_available = True
+            except dbus.exceptions.DBusException:
+                pass
             del dbus
-            self._dbus_available = True
         except ImportError:
-            self._dbus_available = False
+            pass
 
         self._options = None
 
