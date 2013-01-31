@@ -41,29 +41,22 @@ find_package(python_qt_binding REQUIRED)
 include(${python_qt_binding_EXTRAS_DIR}/shiboken_helper.cmake)
 
 if(shiboken_helper_FOUND)
-  include(${python_qt_binding_EXTRAS_DIR}/shiboken_check_qgenericreturnargument.cmake)
+  list(APPEND qt_gui_cpp_BINDINGS "shiboken")
+  set(qt_gui_cpp_BINDINGS "${qt_gui_cpp_BINDINGS}" PARENT_SCOPE)
 
-  shiboken_check_qgenericreturnargument(SHIBOKEN_SUPPORTS_QGENERICRETURNARGUMENT)
-  if(${SHIBOKEN_SUPPORTS_QGENERICRETURNARGUMENT})
-    list(APPEND qt_gui_cpp_BINDINGS "shiboken")
-    set(qt_gui_cpp_BINDINGS "${qt_gui_cpp_BINDINGS}" PARENT_SCOPE)
+  shiboken_generator(libqt_gui_cpp global.h typesystem.xml ${PROJECT_SOURCE_DIR}/src/qt_gui_cpp_shiboken "${qt_gui_cpp_shiboken_SRCS}" "${qt_gui_cpp_HDRS}" "${qt_gui_cpp_INCLUDE_PATH}" "${CMAKE_CURRENT_BINARY_DIR}")
 
-    shiboken_generator(libqt_gui_cpp global.h typesystem.xml ${PROJECT_SOURCE_DIR}/src/qt_gui_cpp_shiboken "${qt_gui_cpp_shiboken_SRCS}" "${qt_gui_cpp_HDRS}" "${qt_gui_cpp_INCLUDE_PATH}" "${CMAKE_CURRENT_BINARY_DIR}")
+  include_directories(qt_gui_cpp_shiboken ${qt_gui_cpp_INCLUDE_PATH}/qt_gui_cpp)
+  shiboken_include_directories(qt_gui_cpp_shiboken "${qt_gui_cpp_shiboken_QT_COMPONENTS}")
+  add_library(qt_gui_cpp_shiboken ${qt_gui_cpp_shiboken_SRCS})
+  set_target_properties(qt_gui_cpp_shiboken PROPERTIES
+    ARCHIVE_OUTPUT_DIRECTORY ${CATKIN_DEVEL_PREFIX}/${CATKIN_PACKAGE_PYTHON_DESTINATION}
+    LIBRARY_OUTPUT_DIRECTORY ${CATKIN_DEVEL_PREFIX}/${CATKIN_PACKAGE_PYTHON_DESTINATION}
+  )
+  target_link_libraries(qt_gui_cpp_shiboken ${PROJECT_NAME} ${catkin_LIBRARIES} ${Boost_LIBRARIES})
+  shiboken_target_link_libraries(qt_gui_cpp_shiboken "${qt_gui_cpp_shiboken_QT_COMPONENTS}")
 
-    include_directories(qt_gui_cpp_shiboken ${qt_gui_cpp_INCLUDE_PATH}/qt_gui_cpp)
-    shiboken_include_directories(qt_gui_cpp_shiboken "${qt_gui_cpp_shiboken_QT_COMPONENTS}")
-    add_library(qt_gui_cpp_shiboken ${qt_gui_cpp_shiboken_SRCS})
-    set_target_properties(qt_gui_cpp_shiboken PROPERTIES
-      ARCHIVE_OUTPUT_DIRECTORY ${CATKIN_DEVEL_PREFIX}/${CATKIN_PACKAGE_PYTHON_DESTINATION}
-      LIBRARY_OUTPUT_DIRECTORY ${CATKIN_DEVEL_PREFIX}/${CATKIN_PACKAGE_PYTHON_DESTINATION}
-    )
-    target_link_libraries(qt_gui_cpp_shiboken ${PROJECT_NAME} ${catkin_LIBRARIES} ${Boost_LIBRARIES})
-    shiboken_target_link_libraries(qt_gui_cpp_shiboken "${qt_gui_cpp_shiboken_QT_COMPONENTS}")
-
-    install(TARGETS qt_gui_cpp_shiboken
-      ARCHIVE DESTINATION ${CATKIN_PACKAGE_PYTHON_DESTINATION}
-      LIBRARY DESTINATION ${CATKIN_PACKAGE_PYTHON_DESTINATION})
-  else()
-    message(WARNING "Shiboken does not support QGenericReturnArgument - skipped building bindings")
-  endif()
+  install(TARGETS qt_gui_cpp_shiboken
+    ARCHIVE DESTINATION ${CATKIN_PACKAGE_PYTHON_DESTINATION}
+    LIBRARY DESTINATION ${CATKIN_PACKAGE_PYTHON_DESTINATION})
 endif()
