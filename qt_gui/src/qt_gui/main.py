@@ -34,6 +34,7 @@ from __future__ import print_function
 
 from argparse import ArgumentParser, SUPPRESS
 import os
+import platform
 import signal
 import sys
 
@@ -359,7 +360,10 @@ class Main(object):
 
             # create own menu bar to share one menu bar on Mac
             menu_bar = QMenuBar()
-            menu_bar.setNativeMenuBar(False)
+            if 'darwin' in platform.platform().lower():
+                menu_bar.setNativeMenuBar(True)
+            else:
+                menu_bar.setNativeMenuBar(False)
             if not self._options.lock_perspective:
                 main_window.setMenuBar(menu_bar)
 
