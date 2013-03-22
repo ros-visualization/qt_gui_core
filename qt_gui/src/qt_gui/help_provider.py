@@ -31,8 +31,11 @@
 import webbrowser
 
 from python_qt_binding.QtCore import QObject, Slot
-from roslib.manifest import load_manifest
-
+try:
+    import rospkg
+    load_manifest = rospkg.RosPack().get_manifest
+except ImportError:
+    from roslib.manifest import load_manifest
 
 class HelpProvider(QObject):
 
