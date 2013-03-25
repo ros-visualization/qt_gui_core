@@ -59,7 +59,7 @@ class PluginMenu(QObject):
         self._instances = {}
 
     def add_plugin(self, plugin_descriptor):
-        base_path = plugin_descriptor.attributes().get('plugin_path')
+        base_path = plugin_descriptor.attributes().get('package_path')
 
         menu_manager = self._plugin_menu_manager
         # create submenus
@@ -104,7 +104,7 @@ class PluginMenu(QObject):
         if instance_id.serial_number != 1:
             label = label + ' (%s)' % str(instance_id.serial_number)
         action = QAction(label, self._running_menu_manager.menu)
-        base_path = plugin_descriptor.attributes().get('plugin_path')
+        base_path = plugin_descriptor.attributes().get('package_path')
         self._enrich_action(action, action_attributes, base_path)
 
         self._running_mapper.setMapping(action, str(instance_id))
