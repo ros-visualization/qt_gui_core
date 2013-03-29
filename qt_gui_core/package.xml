@@ -4,7 +4,8 @@
   <description>
     Integration of the ROS package system and ROS-specific plugins for a Qt-based GUI.
   </description>
-  <maintainer email="dthomas@willowgarage.com">Dirk Thomas</maintainer>
+  <maintainer email="dthomas@osrfoundation.org">Dirk Thomas</maintainer>
+  <maintainer email="isao.saito@mavs.uta.edu">Isaac Saito</maintainer>
   <license>BSD</license>
 
   <url type="website">http://ros.org/wiki/qt_gui_core</url>
