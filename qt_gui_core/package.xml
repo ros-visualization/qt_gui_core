@@ -13,6 +13,8 @@
   <url type="bugtracker">https://github.com/ros-visualization/qt_gui_core/issues</url>
   <author>Dirk Thomas</author>
 
+  <buildtool_depend>catkin</buildtool_depend>
+
   <run_depend>qt_dotgraph</run_depend>
   <run_depend>qt_gui</run_depend>
   <run_depend>qt_gui_app</run_depend>
