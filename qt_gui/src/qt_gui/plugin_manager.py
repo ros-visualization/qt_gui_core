@@ -125,9 +125,9 @@ class PluginManager(QObject):
         plugins = {}
         for plugin_id, plugin_descriptor in self._plugin_descriptors.items():
             plugin_name_parts = []
-            package_name = plugin_descriptor.attributes().get('package_name', None)
-            if package_name is not None:
-                plugin_name_parts.append(package_name)
+            plugin_name = plugin_descriptor.attributes().get('plugin_name', None)
+            if plugin_name is not None:
+                plugin_name_parts.append(plugin_name)
             plugin_name_parts += plugin_descriptor.attributes().get('class_type', 'unknown').split('::')
             plugin_full_name = '/'.join(plugin_name_parts)
             plugins[plugin_id] = plugin_full_name

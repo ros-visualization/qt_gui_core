@@ -107,18 +107,13 @@ public:
     {
       std::string lookup_name = *it;
 
-      std::string package_name = class_loader_->getClassPackage(lookup_name);
-      std::string package_path = ros::package::getPath(package_name);
-      std::string class_name = class_loader_->getName(lookup_name);
-      std::string class_type = class_loader_->getClassType(lookup_name);
+      std::string name = class_loader_->getName(lookup_name);
+      std::string type = class_loader_->getClassType(lookup_name);
       std::string base_class_type = class_loader_->getBaseClassType();
 
       QMap<QString, QString> attributes;
-      attributes["plugin_id"] = lookup_name.c_str();
-      attributes["package_name"] = package_name.c_str();
-      attributes["package_path"] = package_path.c_str();
-      attributes["class_name"] = class_name.c_str();
-      attributes["class_type"] = class_type.c_str();
+      attributes["class_name"] = name.c_str();
+      attributes["class_type"] = type.c_str();
       attributes["class_base_class_type"] = base_class_type.c_str();
 
       // check if plugin is available
@@ -126,10 +121,11 @@ public:
       attributes["not_available"] = !std::ifstream(library_path.c_str()) ? QString("library ").append(lookup_name.c_str()).append(" not found (may be it must be built?)") : "";
 
       PluginDescriptor* plugin_descriptor = new PluginDescriptor(lookup_name.c_str(), attributes);
-      QString label = class_name.c_str();
+      QString label = name.c_str();
       QString statustip = class_loader_->getClassDescription(lookup_name).c_str();
       QString icon;
       QString icontype;
+      std::string package_path = ros::package::getPath(class_loader_->getClassPackage(lookup_name));
       parseManifest(lookup_name, package_path, label, statustip, icon, icontype, plugin_descriptor);
       plugin_descriptor->setActionAttributes(label, statustip, icon, icontype);
 

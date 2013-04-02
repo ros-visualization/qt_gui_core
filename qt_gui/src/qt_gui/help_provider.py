@@ -43,6 +43,6 @@ class HelpProvider(QObject):
 
     @Slot(object)
     def plugin_help_request(self, plugin_descriptor):
-        package_name = plugin_descriptor.attributes()['package_name']
-        manifest = load_manifest(package_name)
+        plugin_name = plugin_descriptor.attributes()['plugin_name']
+        manifest = load_manifest(plugin_name)
         webbrowser.open(manifest.url)
