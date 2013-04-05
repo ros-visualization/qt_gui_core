@@ -5,7 +5,6 @@
     qt_dotgraph provides helpers to work with dot graphs.
   </description>
   <maintainer email="tkruse@willowgarage.com">Thibault Kruse</maintainer>
-  <maintainer email="isao.saito@mavs.uta.edu">Isaac Saito</maintainer>
   <license>BSD</license>
 
   <url type="website">http://ros.org/wiki/qt_dotgraph</url>
