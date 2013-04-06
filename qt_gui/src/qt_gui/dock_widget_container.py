@@ -28,9 +28,8 @@
 # ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-from python_qt_binding.QtGui import QMainWindow
-
 from .dock_widget import DockWidget
+from .dockable_main_window import DockableMainWindow
 
 
 class DockWidgetContainer(DockWidget):
@@ -42,8 +41,7 @@ class DockWidgetContainer(DockWidget):
         self._serial_number = serial_number
         self._settings = None
 
-        self.main_window = QMainWindow()
-        self.main_window.setDockNestingEnabled(True)
+        self.main_window = DockableMainWindow()
         self.setWidget(self.main_window)
 
     def serial_number(self):

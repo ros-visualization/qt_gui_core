@@ -29,8 +29,9 @@
 # POSSIBILITY OF SUCH DAMAGE.
 
 from python_qt_binding.QtCore import qDebug, QEvent, QPoint, QRect, Qt
-from python_qt_binding.QtGui import QApplication, QDockWidget, QMainWindow, QMouseEvent
+from python_qt_binding.QtGui import QApplication, QDockWidget, QMouseEvent
 
+from .dockable_main_window import DockableMainWindow
 from .reparent_event import ReparentEvent
 
 
@@ -131,7 +132,7 @@ class DockWidget(QDockWidget):
                 return None
             widget = widget.parent()
         while widget is not None:
-            if isinstance(widget, QMainWindow):
+            if isinstance(widget, DockableMainWindow):
                 break
             widget = widget.parent()
         return widget

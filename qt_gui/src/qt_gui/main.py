@@ -346,7 +346,6 @@ class Main(object):
             if self._options.on_top:
                 main_window.setWindowFlags(Qt.WindowStaysOnTopHint)
 
-            main_window.setDockNestingEnabled(True)
             main_window.statusBar()
 
             def sigint_handler(*args):

@@ -143,11 +143,12 @@ class DockWidgetTitleBar(QWidget):
 
 if __name__ == '__main__':
     import sys
-    from python_qt_binding.QtGui import QApplication, QMainWindow
+    from python_qt_binding.QtGui import QApplication
+    from .dockable_main_window import DockableMainWindow
 
     app = QApplication(sys.argv)
 
-    win = QMainWindow()
+    win = DockableMainWindow()
 
     dock1 = QDockWidget('dockwidget1', win)
     win.addDockWidget(Qt.LeftDockWidgetArea, dock1)
