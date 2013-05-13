@@ -83,7 +83,9 @@ class Main(object):
             common_group.add_argument('-m', '--multi-process', dest='multi_process', default=False, action='store_true',
                 help='use separate processes for each plugin instance (currently only supported under X11)')
             common_group.add_argument('-p', '--perspective', dest='perspective', type=str, metavar='PERSPECTIVE',
-                help='start with this perspective')
+                help='start with this named perspective')
+            common_group.add_argument('--perspective-file', dest='perspective_file', type=str, metavar='PERSPECTIVE_FILE',
+                help='start with a perspective loaded from a file')
         common_group.add_argument('--reload-import', dest='reload_import', default=False, action='store_true',
             help='reload every imported module')
         if not standalone:
@@ -192,6 +194,7 @@ class Main(object):
             self._options.lock_perspective = False
             self._options.multi_process = False
             self._options.perspective = None
+            self._options.perspective_file = None
             self._options.standalone_plugin = standalone
             self._options.list_perspectives = False
             self._options.list_plugins = False
@@ -235,6 +238,14 @@ class Main(object):
             groups_set = [opt for opt in groups if len(opt) > 0]
             if len(groups_set) > 1:
                 raise RuntimeError('Options from different groups (--list, --command, --embed) can not be used together')
+
+            perspective_options = (self._options.perspective, self._options.perspective_file)
+            perspective_options_set = [opt for opt in perspective_options if opt is not None]
+            if len(perspective_options_set) > 1:
+                raise RuntimeError('Only one --perspective-* option can be used at a time')
+
+            if self._options.perspective_file is not None and not os.path.isfile(self._options.perspective_file):
+                raise RuntimeError('Option --perspective-file must reference existing file')
 
         except RuntimeError as e:
             print(str(e))
@@ -490,10 +501,12 @@ class Main(object):
 
         # switch perspective
         if perspective_manager is not None:
-            if not plugin:
-                perspective_manager.set_perspective(self._options.perspective)
-            else:
+            if plugin:
                 perspective_manager.set_perspective(plugin, hide_and_without_plugin_changes=True)
+            elif self._options.perspective_file:
+                perspective_manager.import_perspective_from_file(self._options.perspective_file, perspective_manager.HIDDEN_PREFIX + '__cli_perspective_from_file')
+            else:
+                perspective_manager.set_perspective(self._options.perspective)
 
         # load specific plugin
         if plugin:

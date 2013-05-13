@@ -251,7 +251,8 @@ class PerspectiveManager(QObject):
                 new_settings.set_value(key, value)
 
         # add and switch to perspective
-        self._add_perspective_action(name)
+        if not name.startswith(self.HIDDEN_PREFIX):
+            self._add_perspective_action(name)
 
     def _add_perspective_action(self, name):
         if self._menu_manager is not None:
@@ -276,9 +277,12 @@ class PerspectiveManager(QObject):
         name = str(name)
         if return_value == QInputDialog.Rejected:
             return
+        self._remove_perspective(name)
+
+    def _remove_perspective(self, name):
         if name not in self.perspectives:
             raise UserWarning('unknown perspective: %s' % name)
-        qDebug('PerspectiveManager._on_remove_perspective(%s)' % str(name))
+        qDebug('PerspectiveManager._remove_perspective(%s)' % str(name))
 
         # remove from list of perspectives
         self.perspectives.remove(name)
@@ -309,10 +313,16 @@ class PerspectiveManager(QObject):
             if perspective_name is None:
                 return
 
+        self.import_perspective_from_file(file_name, perspective_name)
+
+    def import_perspective_from_file(self, path, perspective_name):
+        # create clean perspective
+        if perspective_name in self.perspectives:
+            self._remove_perspective(perspective_name)
         self._create_perspective(perspective_name, clone_perspective=False)
 
         # read perspective from file
-        file_handle = open(file_name, 'r')
+        file_handle = open(path, 'r')
         #data = eval(file_handle.read())
         data = json.loads(file_handle.read())
         self._convert_values(data, self._import_value)
