@@ -71,10 +71,12 @@ class DockWidgetTitleBar(QWidget):
         self._dock_widget.featuresChanged.connect(self._features_changed)
         self._features_changed()
 
+        self._update_icon()
         self._update_title()
 
         self._close_callbacks = []
         self._event_callbacks = {
+            QEvent.WindowIconChange: self._update_icon,
             QEvent.WindowTitleChange: self._update_title,
         }
         self._dock_widget.installEventFilter(self)
@@ -112,6 +114,12 @@ class DockWidgetTitleBar(QWidget):
             if ret_val is not None:
                 return ret_val
         return QObject.eventFilter(self, obj, event)
+
+    def _update_icon(self, *args):
+        pixmap = None
+        if self.parentWidget().windowIcon():
+            pixmap = self.parentWidget().windowIcon().pixmap(self.close_button.iconSize())
+        self.icon_label.setPixmap(pixmap)
 
     def _update_title(self, *args):
         self.title_label.setText(self.parentWidget().windowTitle())

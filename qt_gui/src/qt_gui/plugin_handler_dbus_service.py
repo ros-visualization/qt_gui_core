@@ -65,6 +65,10 @@ class PluginHandlerDBusService(Object):
         return self._plugin_handler.embed_widget(pid, widget_object_name)
 
     @dbus.service.method('org.ros.qt_gui.PluginHandlerContainer', in_signature='ss', out_signature='')
+    def update_embedded_widget_icon(self, widget_object_name, icon):
+        self._plugin_handler.update_embedded_widget_icon(widget_object_name, icon)
+
+    @dbus.service.method('org.ros.qt_gui.PluginHandlerContainer', in_signature='ss', out_signature='')
     def update_embedded_widget_title(self, widget_object_name, title):
         self._plugin_handler.update_embedded_widget_title(widget_object_name, title)
 

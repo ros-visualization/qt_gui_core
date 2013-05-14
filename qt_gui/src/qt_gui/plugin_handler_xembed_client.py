@@ -33,12 +33,12 @@ import traceback
 
 from dbus import Interface
 from dbus.connection import Connection
-from python_qt_binding.QtCore import qCritical, qDebug, Qt, qWarning, Slot
+from python_qt_binding.QtCore import QByteArray, qCritical, QDataStream, qDebug, QIODevice, Qt, qWarning, Slot
 from python_qt_binding.QtGui import QVBoxLayout, QX11EmbedWidget
 
 from .plugin_handler_direct import PluginHandlerDirect
 from .settings import Settings
-from .window_title_changed_signaler import WindowTitleChangedSignaler
+from .window_changed_signaler import WindowChangedSignaler
 
 
 class PluginHandlerXEmbedClient(PluginHandlerDirect):
@@ -55,7 +55,7 @@ class PluginHandlerXEmbedClient(PluginHandlerDirect):
         self._remote_container = None
         self._remote_plugin_settings = None
         self._remote_instance_settings = None
-        # mapping of added widgets to their embed widget and WindowTitleChangedSignaler
+        # mapping of added widgets to their embed widget and WindowChangedSignaler
         self._embed_widgets = {}
 
     def _load(self):
@@ -144,13 +144,23 @@ class PluginHandlerXEmbedClient(PluginHandlerDirect):
         embed_container_window_id = self._remote_container.embed_widget(os.getpid(), widget.objectName())
         embed_widget.embedInto(embed_container_window_id)
 
-        signaler = WindowTitleChangedSignaler(widget, widget)
+        signaler = WindowChangedSignaler(widget, widget)
+        signaler.window_icon_changed_signal.connect(self._on_embed_widget_icon_changed)
         signaler.window_title_changed_signal.connect(self._on_embed_widget_title_changed)
         self._embed_widgets[widget] = embed_widget, signaler
-        # trigger to update initial window title
+        # trigger to update initial window icon and title
+        signaler.window_icon_changed_signal.emit(widget)
         signaler.window_title_changed_signal.emit(widget)
 
         embed_widget.show()
+
+    def _on_embed_widget_icon_changed(self, widget):
+        # serialize icon base64-encoded string
+        ba = QByteArray()
+        s = QDataStream(ba, QIODevice.WriteOnly)
+        s << widget.windowIcon()
+        icon_str = str(ba.toBase64())
+        self._remote_container.update_embedded_widget_icon(widget.objectName(), icon_str)
 
     def _on_embed_widget_title_changed(self, widget):
         self._remote_container.update_embedded_widget_title(widget.objectName(), widget.windowTitle())
@@ -160,6 +170,7 @@ class PluginHandlerXEmbedClient(PluginHandlerDirect):
     def remove_widget(self, widget):
         embed_widget, signaler = self._embed_widgets[widget]
         del self._embed_widgets[widget]
+        signaler.window_icon_changed_signal.disconnect(self._on_embed_widget_icon_changed)
         signaler.window_title_changed_signal.disconnect(self._on_embed_widget_title_changed)
         self._remote_container.unembed_widget(widget.objectName())
         # do not delete the widget, only the embed widget

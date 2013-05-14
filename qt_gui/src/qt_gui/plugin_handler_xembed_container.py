@@ -32,8 +32,8 @@ import sys
 
 from dbus.server import Server
 from python_qt_binding import QT_BINDING
-from python_qt_binding.QtCore import qDebug, QProcess, QSignalMapper, Qt, qWarning
-from python_qt_binding.QtGui import QToolBar, QX11EmbedContainer
+from python_qt_binding.QtCore import QByteArray, QDataStream, qDebug, QIODevice, QProcess, QSignalMapper, Qt, qWarning
+from python_qt_binding.QtGui import QIcon, QToolBar, QX11EmbedContainer
 
 from .main import Main
 from .plugin_handler import PluginHandler
@@ -191,6 +191,15 @@ class PluginHandlerXEmbedContainer(PluginHandler):
         # update widget title is triggered by client after embedding
         self._embed_containers[widget_object_name] = embed_container
         return embed_container.winId()
+
+    def update_embedded_widget_icon(self, widget_object_name, icon_str):
+        embed_container = self._embed_containers[widget_object_name]
+        # deserialize icon base64-encoded string
+        ba = QByteArray.fromBase64(icon_str)
+        s = QDataStream(ba, QIODevice.ReadOnly)
+        icon = QIcon()
+        s >> icon
+        embed_container.setWindowIcon(icon)
 
     def update_embedded_widget_title(self, widget_object_name, title):
         embed_container = self._embed_containers[widget_object_name]
