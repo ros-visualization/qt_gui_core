@@ -63,6 +63,7 @@ class PluginManager(QObject):
         self._main_window = None
         self._container_manager = None
         self._plugin_menu = None
+        self._minimized_dock_widgets_toolbar = None
 
         self._global_settings = None
         self._perspective_settings = None
@@ -93,6 +94,9 @@ class PluginManager(QObject):
             self._plugin_menu = PluginMenu(menu_bar, self)
             self._plugin_menu.load_plugin_signal.connect(self.load_plugin)
             self._plugin_menu.unload_plugin_signal.connect(self.unload_plugin)
+
+    def set_minimized_dock_widgets_toolbar(self, toolbar):
+        self._minimized_dock_widgets_toolbar = toolbar
 
     def discover(self):
         # skip discover if called multiple times
@@ -185,6 +189,8 @@ class PluginManager(QObject):
         # use direct handler for in-process plugins
         else:
             handler = PluginHandlerDirect(self, self._main_window, instance_id, self._application_context, self._container_manager, argv)
+
+        handler.set_minimized_dock_widgets_toolbar(self._minimized_dock_widgets_toolbar)
 
         self._add_running_plugin(instance_id, handler)
         handler.load(self._plugin_provider, callback)

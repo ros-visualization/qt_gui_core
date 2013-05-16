@@ -74,6 +74,31 @@
     </spacer>
    </item>
    <item>
+    <widget class="QPushButton" name="minimize_button">
+     <property name="minimumSize">
+      <size>
+       <width>16</width>
+       <height>16</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>16</width>
+       <height>16</height>
+      </size>
+     </property>
+     <property name="toolTip">
+      <string>Minimize</string>
+     </property>
+     <property name="text">
+      <string>M</string>
+     </property>
+     <property name="flat">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item>
     <widget class="QPushButton" name="dockable_button">
      <property name="minimumSize">
       <size>

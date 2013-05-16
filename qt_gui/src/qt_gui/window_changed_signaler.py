@@ -37,28 +37,46 @@ class WindowChangedSignaler(QObject):
 
     """Signaler for for filtered events of an icon or title change of a widget."""
 
+    hide_signal = Signal(object)
+    show_signal = Signal(object)
+
     window_icon_changed_signal = Signal(object)
     window_title_changed_signal = Signal(object)
 
     def __init__(self, widget, parent=None):
         super(WindowChangedSignaler, self).__init__(parent)
-        self.setObjectName('WindowChangedSignaler__' + widget.objectName())
+        self._widget = widget
+        self.setObjectName('WindowChangedSignaler__' + self._widget.objectName())
         self._recursive_invocation = False
-        widget.installEventFilter(self)
+        self._widget.installEventFilter(self)
+
+    def emit_all(self):
+        if self._widget.isVisible():
+            self.show_signal.emit(self._widget)
+        else:
+            self.hide_signal.emit(self._widget)
+        self.window_icon_changed_signal.emit(self._widget)
+        self.window_title_changed_signal.emit(self._widget)
 
     def eventFilter(self, watched, event):
+        if event.type() == QEvent.Hide:
+            self.hide_signal.emit(watched)
+
+        if event.type() == QEvent.Show:
+            self.show_signal.emit(watched)
+
         if event.type() == QEvent.WindowIconChange:
             # prevent emitting recursive event when emitted signal will trigger another event
             if not self._recursive_invocation:
                 self._recursive_invocation = True
                 self.window_icon_changed_signal.emit(watched)
                 self._recursive_invocation = False
-            return True
+
         if event.type() == QEvent.WindowTitleChange:
             # prevent emitting recursive event when emitted signal will trigger another event
             if not self._recursive_invocation:
                 self._recursive_invocation = True
                 self.window_title_changed_signal.emit(watched)
                 self._recursive_invocation = False
-            return True
+
         return QObject.eventFilter(self, watched, event)

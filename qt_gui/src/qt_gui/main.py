@@ -326,6 +326,7 @@ class Main(object):
         from .composite_plugin_provider import CompositePluginProvider
         from .help_provider import HelpProvider
         from .main_window import MainWindow
+        from .minimized_dock_widgets_toolbar import MinimizedDockWidgetsToolbar
         from .perspective_manager import PerspectiveManager
         from .plugin_manager import PluginManager
 
@@ -419,6 +420,10 @@ class Main(object):
 
         if main_window is not None:
             plugin_manager.set_main_window(main_window, menu_bar)
+
+            minimized_dock_widgets_toolbar = MinimizedDockWidgetsToolbar(main_window)
+            main_window.addToolBar(Qt.BottomToolBarArea, minimized_dock_widgets_toolbar)
+            plugin_manager.set_minimized_dock_widgets_toolbar(minimized_dock_widgets_toolbar)
 
         if settings is not None and menu_bar is not None:
             perspective_menu = menu_bar.addMenu(menu_bar.tr('Perspectives'))

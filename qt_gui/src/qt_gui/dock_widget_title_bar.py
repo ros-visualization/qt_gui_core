@@ -67,6 +67,7 @@ class DockWidgetTitleBar(QWidget):
 
         self.float_button.clicked.connect(self._toggle_floating)
         self.dockable_button.clicked[bool].connect(self._toggle_dockable)
+        self.minimize_button.clicked.connect(self._minimize_dock_widget)
 
         self._dock_widget.featuresChanged.connect(self._features_changed)
         self._features_changed()
@@ -134,6 +135,10 @@ class DockWidgetTitleBar(QWidget):
     def _toggle_floating(self):
         dock_widget = self.parentWidget()
         dock_widget.setFloating(not dock_widget.isFloating())
+
+    def _minimize_dock_widget(self):
+        dock_widget = self.parentWidget()
+        dock_widget.hide()
 
     def _features_changed(self, features=None):
         if features is None:

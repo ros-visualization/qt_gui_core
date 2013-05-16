@@ -59,6 +59,7 @@ class PluginHandler(QObject):
         self._application_context = application_context
         self._container_manager = container_manager
         self._argv = argv if argv else []
+        self._minimized_dock_widgets_toolbar = None
 
         self._defered_check_close.connect(self._check_close, Qt.QueuedConnection)
         self._plugin_provider = None
@@ -77,6 +78,9 @@ class PluginHandler(QObject):
 
     def argv(self):
         return self._argv
+
+    def set_minimized_dock_widgets_toolbar(self, toolbar):
+        self._minimized_dock_widgets_toolbar = toolbar
 
     def load(self, plugin_provider, callback=None):
         """
@@ -187,7 +191,7 @@ class PluginHandler(QObject):
             callback(self._instance_id)
 
     def _call_method_on_all_dock_widgets(self, method_name, instance_settings):
-        for dock_widget, _ in self._widgets.values():
+        for dock_widget, _, _ in self._widgets.values():
             name = 'dock_widget' + dock_widget.objectName().replace(self._instance_id.tidy_str(), '', 1)
             settings = instance_settings.get_settings(name)
             method = getattr(dock_widget, method_name)
@@ -249,12 +253,12 @@ class PluginHandler(QObject):
 
     def _update_title_bars(self):
         if self._plugin_has_configuration:
-            for dock_widget, _ in self._widgets.values():
+            for dock_widget, _, _ in self._widgets.values():
                 title_bar = dock_widget.titleBarWidget()
                 title_bar.show_button('configuration')
 
     def _remove_widget_by_dock_widget(self, dock_widget):
-        widget = [key for key, value in self._widgets.iteritems() if value[0] == dock_widget][0]
+        widget = [key for key, value, _ in self._widgets.iteritems() if value[0] == dock_widget][0]
         self.remove_widget(widget)
 
     def _emit_help_signal(self):
@@ -274,10 +278,14 @@ class PluginHandler(QObject):
         signaler = WindowChangedSignaler(widget, widget)
         signaler.window_icon_changed_signal.connect(self._on_widget_icon_changed)
         signaler.window_title_changed_signal.connect(self._on_widget_title_changed)
-        self._widgets[widget] = [dock_widget, signaler]
-        # trigger to update initial window title
-        signaler.window_icon_changed_signal.emit(widget)
-        signaler.window_title_changed_signal.emit(widget)
+        signaler2 = WindowChangedSignaler(dock_widget, dock_widget)
+        signaler2.hide_signal.connect(self._on_dock_widget_hide)
+        signaler2.show_signal.connect(self._on_dock_widget_show)
+        self._widgets[widget] = [dock_widget, signaler, signaler2]
+        # trigger to update initial window icon and title
+        signaler.emit_all()
+        # trigger to update initial window state
+        signaler2.emit_all()
 
     def _add_dock_widget_to_main_window(self, dock_widget):
         if self._main_window is not None:
@@ -288,21 +296,34 @@ class PluginHandler(QObject):
             self._main_window.addDockWidget(Qt.BottomDockWidgetArea, dock_widget)
 
     def _on_widget_icon_changed(self, widget):
-        dock_widget, _ = self._widgets[widget]
+        dock_widget, _, _ = self._widgets[widget]
         dock_widget.setWindowIcon(widget.windowIcon())
 
     def _on_widget_title_changed(self, widget):
-        dock_widget, _ = self._widgets[widget]
+        dock_widget, _, _ = self._widgets[widget]
         dock_widget.setWindowTitle(widget.windowTitle())
+
+    def _on_dock_widget_hide(self, dock_widget):
+        if self._minimized_dock_widgets_toolbar:
+            self._minimized_dock_widgets_toolbar.addDockWidget(dock_widget)
+
+    def _on_dock_widget_show(self, dock_widget):
+        if self._minimized_dock_widgets_toolbar:
+            self._minimized_dock_widgets_toolbar.removeDockWidget(dock_widget)
 
     # pointer to QWidget must be used for PySide to work (at least with 1.0.1)
     @Slot('QWidget*')
     def remove_widget(self, widget):
-        dock_widget, signaler = self._widgets[widget]
+        dock_widget, signaler, signaler2 = self._widgets[widget]
         self._widgets.pop(widget)
         if signaler is not None:
             signaler.window_icon_changed_signal.disconnect(self._on_widget_icon_changed)
             signaler.window_title_changed_signal.disconnect(self._on_widget_title_changed)
+        if signaler2 is not None:
+            # emit show signal to remove dock widget from minimized toolbar before removal
+            signaler2.show_signal.emit(dock_widget)
+            signaler2.hide_signal.disconnect(self._on_dock_widget_hide)
+            signaler2.show_signal.disconnect(self._on_dock_widget_show)
         # remove dock widget from parent and delete later
         if self._main_window is not None:
             dock_widget.parent().removeDockWidget(dock_widget)
