@@ -37,7 +37,8 @@ class MinimizedDockWidgetsToolbar(QToolBar):
     max_label_length = 15
 
     def __init__(self, parent=None):
-        super(MinimizedDockWidgetsToolbar, self).__init__(self.tr('Minimized dock widgets'), parent=parent)
+        super(MinimizedDockWidgetsToolbar, self).__init__(parent=parent)
+        self.setWindowTitle(self.tr('Minimized dock widgets'))
         self.setObjectName('MinimizedDockWidgetsToolbar')
         self.setToolButtonStyle(Qt.ToolButtonTextBesideIcon)
         self._signal_mapper = QSignalMapper(self)
