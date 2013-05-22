@@ -229,12 +229,15 @@ class PluginHandler(QObject):
 
     def _create_dock_widget(self):
         dock_widget = DockWidget(self._container_manager)
-        if self._application_context.options.lock_perspective or self._application_context.options.standalone_plugin:
-            # plugins are not closable when perspective is locked or plugins is running standalone
-            features = dock_widget.features()
-            dock_widget.setFeatures(features ^ QDockWidget.DockWidgetClosable)
+        self._update_dock_widget_features(dock_widget)
         self._update_title_bar(dock_widget)
         return dock_widget
+
+    def _update_dock_widget_features(self, dock_widget):
+        if self._application_context.options.lock_perspective or self._application_context.options.standalone_plugin:
+            # dock widgets are not closable when perspective is locked or plugin is running standalone
+            features = dock_widget.features()
+            dock_widget.setFeatures(features ^ QDockWidget.DockWidgetClosable)
 
     def _update_title_bar(self, dock_widget, hide_help=False, hide_reload=False):
         title_bar = dock_widget.titleBarWidget()

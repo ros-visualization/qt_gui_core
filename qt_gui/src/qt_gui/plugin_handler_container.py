@@ -48,6 +48,7 @@ class PluginHandlerContainer(PluginHandler):
         if self._instance_id.serial_number > 1:
             title += ' (%d)' % self._instance_id.serial_number
         self._container.setWindowTitle(title)
+        self._update_dock_widget_features(self._container)
         self._add_dock_widget_to_main_window(self._container)
         self._update_title_bar(self._container, True, True)
         self._widgets[self._container.main_window] = [self._container, None, None]
