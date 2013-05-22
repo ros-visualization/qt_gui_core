@@ -78,6 +78,8 @@ class Main(object):
         common_group.add_argument('-h', '--help', action='help',
             help='show this help message and exit')
         if not standalone:
+            common_group.add_argument('-f', '--freeze-layout', dest='freeze_layout', action='store_true',
+                help='freeze the layout of the GUI (prevent rearranging widgets, disable undock/redock)')
             common_group.add_argument('-l', '--lock-perspective', dest='lock_perspective', action='store_true',
                 help='lock the GUI to the used perspective (hide menu bar and close buttons of plugins)')
             common_group.add_argument('-m', '--multi-process', dest='multi_process', default=False, action='store_true',
@@ -191,6 +193,7 @@ class Main(object):
 
         # set default values for options not available in standalone mode
         if standalone:
+            self._options.freeze_layout = False
             self._options.lock_perspective = False
             self._options.multi_process = False
             self._options.perspective = None
@@ -209,6 +212,9 @@ class Main(object):
         try:
             if self._options.plugin_args and not self._options.standalone_plugin and not self._options.command_start_plugin and not self._options.embed_plugin:
                 raise RuntimeError('Option --args can only be used together with either --standalone, --command-start-plugin or --embed-plugin option')
+
+            if self._options.freeze_layout and not self._options.lock_perspective:
+                raise RuntimeError('Option --freeze_layout can only be used together with the --lock_perspective option')
 
             list_options = (self._options.list_perspectives, self._options.list_plugins)
             list_options_set = [opt for opt in list_options if opt is not False]
@@ -421,9 +427,10 @@ class Main(object):
         if main_window is not None:
             plugin_manager.set_main_window(main_window, menu_bar)
 
-            minimized_dock_widgets_toolbar = MinimizedDockWidgetsToolbar(main_window)
-            main_window.addToolBar(Qt.BottomToolBarArea, minimized_dock_widgets_toolbar)
-            plugin_manager.set_minimized_dock_widgets_toolbar(minimized_dock_widgets_toolbar)
+            if not self._options.freeze_layout:
+                minimized_dock_widgets_toolbar = MinimizedDockWidgetsToolbar(main_window)
+                main_window.addToolBar(Qt.BottomToolBarArea, minimized_dock_widgets_toolbar)
+                plugin_manager.set_minimized_dock_widgets_toolbar(minimized_dock_widgets_toolbar)
 
         if settings is not None and menu_bar is not None:
             perspective_menu = menu_bar.addMenu(menu_bar.tr('Perspectives'))

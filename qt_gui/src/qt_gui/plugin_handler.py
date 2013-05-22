@@ -238,6 +238,10 @@ class PluginHandler(QObject):
             # dock widgets are not closable when perspective is locked or plugin is running standalone
             features = dock_widget.features()
             dock_widget.setFeatures(features ^ QDockWidget.DockWidgetClosable)
+        if self._application_context.options.freeze_layout:
+            # dock widgets are not closable when perspective is locked or plugin is running standalone
+            features = dock_widget.features()
+            dock_widget.setFeatures(features ^ QDockWidget.DockWidgetMovable)
 
     def _update_title_bar(self, dock_widget, hide_help=False, hide_reload=False):
         title_bar = dock_widget.titleBarWidget()
@@ -248,9 +252,11 @@ class PluginHandler(QObject):
             # connect extra buttons
             title_bar.connect_close_button(self._remove_widget_by_dock_widget)
             title_bar.connect_button('help', self._emit_help_signal)
-            title_bar.show_button('help', not hide_help)
+            if hide_help:
+                title_bar.show_button('help', not hide_help)
             title_bar.connect_button('reload', self._emit_reload_signal)
-            title_bar.show_button('reload', not hide_reload)
+            if hide_reload:
+                title_bar.show_button('reload', not hide_reload)
             title_bar.connect_button('configuration', self._trigger_configuration)
             title_bar.show_button('configuration', self._plugin_has_configuration)
 
@@ -344,6 +350,9 @@ class PluginHandler(QObject):
         if not toolbar_object_name.startswith(prefix):
             toolbar_object_name = prefix + toolbar_object_name
         toolbar.setObjectName(toolbar_object_name)
+
+        if self._application_context.options.freeze_layout:
+            toolbar.setMovable(False)
 
         self._toolbars.append(toolbar)
         if self._main_window is not None:

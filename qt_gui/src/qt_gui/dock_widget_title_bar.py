@@ -143,14 +143,29 @@ class DockWidgetTitleBar(QWidget):
     def _features_changed(self, features=None):
         if features is None:
             features = self.parentWidget().features()
-        self.close_button.setVisible(bool(features & QDockWidget.DockWidgetClosable))
-        self.float_button.setVisible(bool(features & QDockWidget.DockWidgetFloatable))
+
+        closable = bool(features & QDockWidget.DockWidgetClosable)
+        self.close_button.setVisible(closable)
+        self.reload_button.setVisible(closable)
+
+        movable = bool(features & QDockWidget.DockWidgetMovable)
+        self.dockable_button.setChecked(movable)
+        self._toggle_dockable(self.dockable_button.isChecked())
+        self.dockable_button.setVisible(movable)
+        self.float_button.setVisible(movable)
+        self.minimize_button.setVisible(movable)
 
     def save_settings(self, settings):
-        settings.set_value('dockable', self.dockable_button.isChecked())
+        # skip saving dockable flag when layout is frozen
+        movable = bool(self.parentWidget().features() & QDockWidget.DockWidgetMovable)
+        if movable:
+            settings.set_value('dockable', self.dockable_button.isChecked())
 
     def restore_settings(self, settings):
-        self.dockable_button.setChecked(settings.value('dockable', True) in [True, 'true'])
+        dockable = settings.value('dockable', True) in [True, 'true']
+        # only allow dockable when layout is not frozen
+        movable = bool(self.parentWidget().features() & QDockWidget.DockWidgetMovable)
+        self.dockable_button.setChecked(dockable and movable)
         self._toggle_dockable(self.dockable_button.isChecked())
 
 
