@@ -128,13 +128,7 @@ class PluginManager(QObject):
         self.discover()
         plugins = {}
         for plugin_id, plugin_descriptor in self._plugin_descriptors.items():
-            plugin_name_parts = []
-            plugin_name = plugin_descriptor.attributes().get('plugin_name', None)
-            if plugin_name is not None:
-                plugin_name_parts.append(plugin_name)
-            plugin_name_parts += plugin_descriptor.attributes().get('class_type', 'unknown').split('::')
-            plugin_full_name = '/'.join(plugin_name_parts)
-            plugins[plugin_id] = plugin_full_name
+            plugins[plugin_id] = '/'.join(plugin_descriptor.attributes().get('class_type', 'unknown').split('::'))
         return plugins
 
     def is_plugin_running(self, plugin_id, serial_number):
