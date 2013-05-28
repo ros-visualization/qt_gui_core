@@ -267,7 +267,7 @@ class PluginHandler(QObject):
                 title_bar.show_button('configuration')
 
     def _remove_widget_by_dock_widget(self, dock_widget):
-        widget = [key for key, value, _ in self._widgets.iteritems() if value[0] == dock_widget][0]
+        widget = [key for key, value in self._widgets.iteritems() if value[0] == dock_widget][0]
         self.remove_widget(widget)
 
     def _emit_help_signal(self):
