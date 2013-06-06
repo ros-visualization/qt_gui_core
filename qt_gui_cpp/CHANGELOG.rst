@@ -16,8 +16,8 @@ Forthcoming
 
 0.2.13 (2013-03-28 18:08)
 -------------------------
-* work around for broken QGenericReturnArgument constuctor with shiboken (`ros-visualization/rqt#7 <https://github.com/ros-visualization/rqt/issues/7>`_)
-* modified help_provider
+* work around for broken QGenericReturnArgument constuctor with shiboken, make it build on Ubuntu precise (`ros-visualization/rqt#7 <https://github.com/ros-visualization/rqt/issues/7>`_)
+* modify help_provider
 
 0.2.12 (2013-01-17)
 -------------------

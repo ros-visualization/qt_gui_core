@@ -23,7 +23,7 @@ Forthcoming
 
 0.2.13 (2013-03-28 18:08)
 -------------------------
-* modified help_provider
+* modify help_provider
 * fix menu bar visibility on OS X
 
 0.2.12 (2013-01-17)
