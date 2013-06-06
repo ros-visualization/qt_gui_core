@@ -2,8 +2,8 @@
 Changelog for package qt_gui
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.2.16 (2013-06-06)
+-------------------
 * make plugin resources relative to plugin.xml (instead of package.xml) (`#16 <https://github.com/ros-visualization/qt_gui_core/issues/16>`_)
 * add feature to minimize dock widgets (`#13 <https://github.com/ros-visualization/qt_gui_core/issues/13>`_)
 * add feature that each each dock widget can show its own window icon (`#19 <https://github.com/ros-visualization/qt_gui_core/issues/19>`_)
