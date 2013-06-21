@@ -165,6 +165,13 @@ class Main(object):
             if QIcon.fromTheme('document-save').isNull():
                 QIcon.setThemeName(original_theme)
 
+    def create_application(self, argv):
+        from python_qt_binding.QtCore import Qt
+        from python_qt_binding.QtGui import QApplication
+        app = QApplication(argv)
+        app.setAttribute(Qt.AA_DontShowIconsInMenus, False)
+        return app
+
     def main(self, argv=None, standalone=None, plugin_argument_provider=None):
         if argv is None:
             argv = sys.argv
@@ -326,7 +333,7 @@ class Main(object):
         from python_qt_binding import QT_BINDING
 
         from python_qt_binding.QtCore import qDebug, qInstallMsgHandler, QSettings, Qt, QtCriticalMsg, QtDebugMsg, QtFatalMsg, QTimer, QtWarningMsg
-        from python_qt_binding.QtGui import QAction, QApplication, QIcon, QMenuBar
+        from python_qt_binding.QtGui import QAction, QIcon, QMenuBar
 
         from .about_handler import AboutHandler
         from .composite_plugin_provider import CompositePluginProvider
@@ -352,8 +359,7 @@ class Main(object):
                 sys.exit(1)
         qInstallMsgHandler(message_handler)
 
-        app = QApplication(argv)
-        app.setAttribute(Qt.AA_DontShowIconsInMenus, False)
+        app = self.create_application(argv)
 
         self._check_icon_theme_compliance()
 

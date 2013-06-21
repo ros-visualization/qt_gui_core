@@ -35,6 +35,7 @@ from python_qt_binding.QtGui import QDockWidget, QToolBar
 
 from .dock_widget import DockWidget
 from .dock_widget_title_bar import DockWidgetTitleBar
+from .icon_loader import get_icon
 from .window_changed_signaler import WindowChangedSignaler
 
 
@@ -60,6 +61,7 @@ class PluginHandler(QObject):
         self._container_manager = container_manager
         self._argv = argv if argv else []
         self._minimized_dock_widgets_toolbar = None
+        self._plugin_descriptor = None
 
         self._defered_check_close.connect(self._check_close, Qt.QueuedConnection)
         self._plugin_provider = None
@@ -81,6 +83,9 @@ class PluginHandler(QObject):
 
     def set_minimized_dock_widgets_toolbar(self, toolbar):
         self._minimized_dock_widgets_toolbar = toolbar
+
+    def set_plugin_descriptor(self, plugin_descriptor):
+        self._plugin_descriptor = plugin_descriptor
 
     def load(self, plugin_provider, callback=None):
         """
@@ -231,6 +236,7 @@ class PluginHandler(QObject):
         dock_widget = DockWidget(self._container_manager)
         self._update_dock_widget_features(dock_widget)
         self._update_title_bar(dock_widget)
+        self._set_window_icon(dock_widget)
         return dock_widget
 
     def _update_dock_widget_features(self, dock_widget):
@@ -259,6 +265,14 @@ class PluginHandler(QObject):
                 title_bar.show_button('reload', not hide_reload)
             title_bar.connect_button('configuration', self._trigger_configuration)
             title_bar.show_button('configuration', self._plugin_has_configuration)
+
+    def _set_window_icon(self, widget):
+        if self._plugin_descriptor:
+            action_attributes = self._plugin_descriptor.action_attributes()
+            if 'icon' in action_attributes and action_attributes['icon'] is not None:
+                base_path = self._plugin_descriptor.attributes().get('plugin_path')
+                icon = get_icon(action_attributes['icon'], action_attributes.get('icontype', None), base_path)
+                widget.setWindowIcon(icon)
 
     def _update_title_bars(self):
         if self._plugin_has_configuration:

@@ -33,6 +33,7 @@ import os
 from python_qt_binding.QtCore import QObject, QSignalMapper, Signal
 from python_qt_binding.QtGui import QAction, QIcon, QMenu
 
+from .icon_loader import get_icon
 from .menu_manager import MenuManager
 
 
@@ -119,24 +120,8 @@ class PluginMenu(QObject):
         self._running_menu_manager.remove_item(action)
 
     def _enrich_action(self, action, action_attributes, base_path=None):
-        icontype = action_attributes.get('icontype', 'file')
         if 'icon' in action_attributes and action_attributes['icon'] is not None:
-            if icontype == 'file':
-                path = action_attributes['icon']
-                if base_path is not None:
-                    path = os.path.join(base_path, path)
-                icon = QIcon(path)
-                if len(icon.availableSizes()) == 0:
-                    raise UserWarning('icon "%s" not found' % str(path))
-            elif icontype == 'resource':
-                icon = QIcon(action_attributes['icon'])
-                if len(icon.availableSizes()) == 0:
-                    raise UserWarning('icon "%s" not found' % str(path))
-            elif icontype == 'theme':
-                # see http://standards.freedesktop.org/icon-naming-spec/icon-naming-spec-latest.html
-                icon = QIcon.fromTheme(action_attributes['icon'])
-            else:
-                raise UserWarning('unknown icon type "%s"' % str(icontype))
+            icon = get_icon(action_attributes['icon'], action_attributes.get('icontype', None), base_path)
             action.setIcon(icon)
 
         if 'statustip' in action_attributes:

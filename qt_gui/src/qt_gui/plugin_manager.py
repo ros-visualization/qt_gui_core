@@ -186,6 +186,9 @@ class PluginManager(QObject):
 
         handler.set_minimized_dock_widgets_toolbar(self._minimized_dock_widgets_toolbar)
 
+        plugin_descriptor = self._plugin_descriptors[instance_id.plugin_id]
+        handler.set_plugin_descriptor(plugin_descriptor)
+
         self._add_running_plugin(instance_id, handler)
         handler.load(self._plugin_provider, callback)
 
