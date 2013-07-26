@@ -55,13 +55,13 @@ class PygraphvizFactory():
         Node name can vary from label but must always be same for the same node label
         """
         if nodename is None or nodename == '':
-            raise ValueError('Empty Node label')
+            raise ValueError('Empty Node name')
         if nodelabel is None:
             nodelabel = nodename
         if color is not None:
-            graph.add_node(nodelabel, label=str(nodelabel), shape=shape, url=url, color=color)
+            graph.add_node(nodename, label=str(nodelabel), shape=shape, url=url, color=color)
         else:
-            graph.add_node(nodelabel, label=str(nodelabel), shape=shape, url=url)
+            graph.add_node(nodename, label=str(nodelabel), shape=shape, url=url)
 
     def add_subgraph_to_graph(self,
                               graph,
