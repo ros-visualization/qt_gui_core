@@ -85,10 +85,10 @@ class PydotFactory():
         Node name can vary from label but must always be same for the same node label
         """
         if nodename is None or nodename == '':
-            raise ValueError('Empty Node label')
+            raise ValueError('Empty Node name')
         if nodelabel is None:
             nodelabel = nodename
-        node = pydot.Node(self.escape_name(nodelabel))
+        node = pydot.Node(self.escape_name(nodename))
         node.set_shape(shape)
         node.set_label(self.escape_label(nodelabel))
         if url is not None:
