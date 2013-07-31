@@ -293,11 +293,11 @@ class PluginHandler(QObject):
     def _trigger_configuration(self):
         self._plugin.trigger_configuration()
 
-    def _add_dock_widget(self, dock_widget, widget):
+    def _add_dock_widget(self, dock_widget, widget, orientation):
         dock_widget.setWidget(widget)
         # every dock widget needs a unique name for save/restore geometry/state to work
         dock_widget.setObjectName(self._instance_id.tidy_str() + '__' + widget.objectName())
-        self._add_dock_widget_to_main_window(dock_widget)
+        self._add_dock_widget_to_main_window(dock_widget, orientation)
         signaler = WindowChangedSignaler(widget, widget)
         signaler.window_icon_changed_signal.connect(self._on_widget_icon_changed)
         signaler.window_title_changed_signal.connect(self._on_widget_title_changed)
@@ -310,13 +310,13 @@ class PluginHandler(QObject):
         # trigger to update initial window state
         signaler2.emit_all()
 
-    def _add_dock_widget_to_main_window(self, dock_widget):
+    def _add_dock_widget_to_main_window(self, dock_widget, orientation=None):
         if self._main_window is not None:
             # warn about dock_widget with same object name
             old_dock_widget = self._main_window.findChild(DockWidget, dock_widget.objectName())
             if old_dock_widget is not None:
                 qWarning('PluginHandler._add_dock_widget_to_main_window() duplicate object name "%s", assign unique object names before adding widgets!' % dock_widget.objectName())
-            self._main_window.addDockWidget(Qt.BottomDockWidgetArea, dock_widget)
+            self._main_window.addDockWidget(Qt.BottomDockWidgetArea, dock_widget, orientation or self._application_context.options.orientation or Qt.Horizontal)
 
     def _on_widget_icon_changed(self, widget):
         dock_widget, _, _ = self._widgets[widget]

@@ -126,8 +126,8 @@ class PluginHandlerXEmbedClient(PluginHandlerDirect):
         self._remote_container.restore_settings_completed()
 
     # pointer to QWidget must be used for PySide to work (at least with 1.0.1)
-    @Slot('QWidget*')
-    def add_widget(self, widget):
+    @Slot('QWidget*', int)
+    def add_widget(self, widget, orientation):
         if widget in self._embed_widgets:
             qWarning('PluginHandlerXEmbedClient.add_widget() widget "%s" already added' % widget.objectName())
             return
@@ -141,7 +141,7 @@ class PluginHandlerXEmbedClient(PluginHandlerDirect):
         # TODO necessary?
         #embed_widget.containerClosed.connect(embed_widget.close)
 
-        embed_container_window_id = self._remote_container.embed_widget(os.getpid(), widget.objectName())
+        embed_container_window_id = self._remote_container.embed_widget(os.getpid(), widget.objectName(), orientation or self._application_context.options.orientation)
         embed_widget.embedInto(embed_container_window_id)
 
         signaler = WindowChangedSignaler(widget, widget)

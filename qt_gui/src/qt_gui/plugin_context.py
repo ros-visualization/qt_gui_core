@@ -61,7 +61,7 @@ class PluginContext(QObject):
         """
         return self._handler.argv()
 
-    def add_widget(self, widget):
+    def add_widget(self, widget, orientation=None):
         """
         Add a widget to the UI.
         The widget is embedded into a new QDockWidget which itself is added to the QMainWindow.
@@ -69,8 +69,10 @@ class PluginContext(QObject):
         Note: The ownership of the widget is transferred to the callee which will delete it when the plugin is shut down.
         @param widget: The widget to add
         @type widget: QWidget
+        @param orientation: The orientation in which the widget is added
+        @type orientation: Qt.Orientation
         """
-        self._handler.add_widget(widget)
+        self._handler.add_widget(widget, orientation)
 
     def remove_widget(self, widget):
         """

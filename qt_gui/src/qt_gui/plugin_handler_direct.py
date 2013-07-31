@@ -119,13 +119,13 @@ class PluginHandlerDirect(PluginHandler):
         self.emit_restore_settings_completed()
 
     # pointer to QWidget must be used for PySide to work (at least with 1.0.1)
-    @Slot('QWidget*')
-    def add_widget(self, widget):
+    @Slot('QWidget*', int)
+    def add_widget(self, widget, orientation):
         if widget in self._widgets:
             qWarning('PluginHandlerDirect.add_widget() widget "%s" already added' % widget.objectName())
             return
         dock_widget = self._create_dock_widget()
-        self._add_dock_widget(dock_widget, widget)
+        self._add_dock_widget(dock_widget, widget, orientation or self._application_context.options.orientation)
 
     # pointer to QToolBar must be used for PySide to work (at least with 1.0.1)
     @Slot('QToolBar*')

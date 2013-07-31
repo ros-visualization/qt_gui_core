@@ -60,9 +60,9 @@ class PluginHandlerDBusService(Object):
     def load_completed(self, loaded, has_configuration):
         self._plugin_handler.load_completed(loaded, has_configuration)
 
-    @dbus.service.method('org.ros.qt_gui.PluginHandlerContainer', in_signature='is', out_signature='i')
-    def embed_widget(self, pid, widget_object_name):
-        return self._plugin_handler.embed_widget(pid, widget_object_name)
+    @dbus.service.method('org.ros.qt_gui.PluginHandlerContainer', in_signature='isi', out_signature='i')
+    def embed_widget(self, pid, widget_object_name, orientation):
+        return self._plugin_handler.embed_widget(pid, widget_object_name, orientation)
 
     @dbus.service.method('org.ros.qt_gui.PluginHandlerContainer', in_signature='ss', out_signature='')
     def update_embedded_widget_icon(self, widget_object_name, icon):

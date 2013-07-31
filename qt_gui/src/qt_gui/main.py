@@ -88,6 +88,8 @@ class Main(object):
                 help='start with this named perspective')
             common_group.add_argument('--perspective-file', dest='perspective_file', type=str, metavar='PERSPECTIVE_FILE',
                 help='start with a perspective loaded from a file')
+        common_group.add_argument('-o', '--orientation', choices=('horizontal', 'vertical'), default='horizontal',
+            help='default orientation to arrange widgets (default: %(default)s)')
         common_group.add_argument('--reload-import', dest='reload_import', default=False, action='store_true',
             help='reload every imported module')
         if not standalone:
@@ -358,6 +360,11 @@ class Main(object):
                 print(red_color + msg + reset_color, file=sys.stderr)
                 sys.exit(1)
         qInstallMsgHandler(message_handler)
+
+        # map options to Qt values
+        if self._options.orientation is not None:
+            orientations = {'horizontal': Qt.Horizontal, 'vertical': Qt.Vertical}
+            self._options.orientation = orientations[self._options.orientation]
 
         app = self.create_application(argv)
 

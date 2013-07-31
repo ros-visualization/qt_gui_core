@@ -88,6 +88,9 @@ class PluginHandlerXEmbedContainer(PluginHandler):
         cmd = sys.executable + ' -u'
         cmd += ' %s' % Main.main_filename
         cmd += ' --qt-binding=%s' % QT_BINDING
+        if self._application_context.options.orientation:
+            orientations = {Qt.Horizontal: 'horizontal', Qt.Vertical: 'vertical'}
+            cmd += ' --orientation=%s' % orientations[self._application_context.options.orientation]
         cmd += ' --embed-plugin=%s --embed-plugin-serial=%s --embed-plugin-address=%s' % (self.instance_id().plugin_id, self.instance_id().serial_number, self._dbus_server.address)
         if self.argv():
             cmd += ' --args %s' % ' '.join(self.argv())
@@ -183,11 +186,11 @@ class PluginHandlerXEmbedContainer(PluginHandler):
     def _trigger_configuration(self):
         self._dbus_container_service.trigger_configuration()
 
-    def embed_widget(self, pid, widget_object_name):
+    def embed_widget(self, pid, widget_object_name, orientation):
         dock_widget = self._create_dock_widget()
         embed_container = QX11EmbedContainer(dock_widget)
         #embed_container.clientClosed.connect(self._emit_close_signal)
-        self._add_dock_widget(dock_widget, embed_container)
+        self._add_dock_widget(dock_widget, embed_container, orientation)
         # update widget title is triggered by client after embedding
         self._embed_containers[widget_object_name] = embed_container
         return embed_container.winId()
