@@ -93,6 +93,12 @@
      <property name="text">
       <string>D</string>
      </property>
+     <property name="iconSize">
+      <size>
+       <width>16</width>
+       <height>16</height>
+      </size>
+     </property>
      <property name="checkable">
       <bool>true</bool>
      </property>
@@ -124,6 +130,12 @@
      <property name="text">
       <string>C</string>
      </property>
+     <property name="iconSize">
+      <size>
+       <width>16</width>
+       <height>16</height>
+      </size>
+     </property>
      <property name="flat">
       <bool>true</bool>
      </property>
@@ -148,6 +160,12 @@
      </property>
      <property name="text">
       <string>R</string>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>16</width>
+       <height>16</height>
+      </size>
      </property>
      <property name="flat">
       <bool>true</bool>
@@ -232,6 +250,12 @@
      </property>
      <property name="text">
       <string>_</string>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>16</width>
+       <height>16</height>
+      </size>
      </property>
      <property name="flat">
       <bool>true</bool>
