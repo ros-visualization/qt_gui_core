@@ -532,6 +532,8 @@ class Main(object):
 
         if main_window is not None:
             main_window.show()
+            if sys.platform == 'darwin':
+                main_window.raise_()
 
         return app.exec_()
 
