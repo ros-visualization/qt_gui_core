@@ -99,4 +99,5 @@ class AboutHandler(QObject):
 
         text += '.</p>'
 
-        QMessageBox.about(self.parent(), self.tr('About ROS GUI'), text)
+        mb = QMessageBox(QMessageBox.NoIcon, self.tr('About ROS GUI'), text, QMessageBox.Ok, self.parent())
+        mb.exec_()
