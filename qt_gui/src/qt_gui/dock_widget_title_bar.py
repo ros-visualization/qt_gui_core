@@ -54,15 +54,23 @@ class DockWidgetTitleBar(QWidget):
             'close': self.close_button,
         }
 
-        self.configuration_button.setIcon(QIcon.fromTheme('emblem-system'))
-        self.configuration_button.setText("")
-        self.reload_button.setIcon(QIcon.fromTheme('view-refresh'))
-        self.reload_button.setText("")
-        self.help_button.setIcon(QIcon.fromTheme('help-browser'))
-        self.help_button.setText("")
+        icon = QIcon.fromTheme('emblem-system')
+        if not icon.isNull():
+            self.configuration_button.setIcon(icon)
+            self.configuration_button.setText("")
+        icon = QIcon.fromTheme('view-refresh')
+        if not icon.isNull():
+            self.reload_button.setIcon(icon)
+            self.reload_button.setText("")
+        icon = QIcon.fromTheme('help-browser')
+        if not icon.isNull():
+            self.help_button.setIcon(icon)
+            self.help_button.setText("")
 
-        self.close_button.setIcon(QIcon.fromTheme('window-close'))
-        self.close_button.setText("")
+        icon = QIcon.fromTheme('window-close')
+        if not icon.isNull():
+            self.close_button.setIcon(icon)
+            self.close_button.setText("")
         self.close_button.clicked.connect(self._close_clicked)
 
         self.float_button.clicked.connect(self._toggle_floating)
