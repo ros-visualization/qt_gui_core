@@ -249,7 +249,7 @@
       <string>Minimize</string>
      </property>
      <property name="text">
-      <string>_</string>
+      <string>-</string>
      </property>
      <property name="iconSize">
       <size>
