@@ -28,6 +28,7 @@
 # ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
+from qt_gui.errors import PluginLoadError
 from qt_gui.plugin_descriptor import PluginDescriptor
 from qt_gui.plugin_provider import PluginProvider
 
@@ -65,7 +66,7 @@ class RosPluginlibPluginProvider(PluginProvider):
         bridge = qt_gui_cpp.PluginBridge()  # @UndefinedVariable
         loaded = bridge.load_plugin(self._plugin_provider, plugin_id, cpp_plugin_context)
         if not loaded:
-            raise ImportError('RosPluginlibPluginProvider.load() could not load plugin "%s"' % plugin_id)
+            raise PluginLoadError('RosPluginlibPluginProvider.load() could not load plugin "%s"' % plugin_id)
         return bridge
 
     def unload(self, bridge):
