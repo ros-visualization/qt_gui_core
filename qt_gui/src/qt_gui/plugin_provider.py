@@ -50,6 +50,7 @@ class PluginProvider(QObject):
         """
         Load a plugin and pass the `PluginContext`.
         @return: The created plugin instance
+        @raise PluginLoadError
         """
         raise NotImplementedError
 
