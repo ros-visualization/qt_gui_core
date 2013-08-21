@@ -30,9 +30,10 @@
 
 import traceback
 
-from python_qt_binding.QtCore import qCritical, qDebug, QObject, Qt, Signal, Slot
+from python_qt_binding.QtCore import qCritical, qDebug, QObject, Qt, qWarning, Signal, Slot
 
 from .container_manager import ContainerManager
+from .errors import PluginLoadError
 from .plugin_handler_container import PluginHandlerContainer
 from .plugin_handler_direct import PluginHandlerDirect
 from .plugin_instance_id import PluginInstanceId
@@ -213,7 +214,10 @@ class PluginManager(QObject):
     def _load_plugin_completed(self, handler, exception):
         instance_id = handler.instance_id()
         if exception is not None:
-            qCritical('PluginManager._load_plugin() could not load plugin "%s"%s' % (instance_id.plugin_id, (':\n%s' % traceback.format_exc() if exception != True else '')))
+            if isinstance(exception, PluginLoadError):
+                qWarning('PluginManager._load_plugin() could not load plugin "%s": %s' % (instance_id.plugin_id, exception))
+            else:
+                qCritical('PluginManager._load_plugin() could not load plugin "%s"%s' % (instance_id.plugin_id, (':\n%s' % traceback.format_exc() if exception != True else '')))
             self._remove_running_plugin(instance_id)
             # quit embed application
             if self._application_context.options.embed_plugin:
