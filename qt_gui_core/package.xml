@@ -1,6 +1,6 @@
 <package>
   <name>qt_gui_core</name>
-  <version>0.2.16</version>
+  <version>0.2.17</version>
   <description>
     Integration of the ROS package system and ROS-specific plugins for a Qt-based GUI.
   </description>

@@ -1,6 +1,6 @@
 <package>
   <name>qt_gui_app</name>
-  <version>0.2.16</version>
+  <version>0.2.17</version>
   <description>
     qt_gui_app provides the main to start an instance of the integrated graphical user interface provided by qt_gui.
   </description>
