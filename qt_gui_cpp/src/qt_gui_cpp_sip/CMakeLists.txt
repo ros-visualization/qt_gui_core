@@ -43,7 +43,6 @@ if(sip_helper_FOUND)
   set(qt_gui_cpp_BINDINGS "${qt_gui_cpp_BINDINGS}" PARENT_SCOPE)
 
   build_sip_binding(qt_gui_cpp_sip qt_gui_cpp.sip
-    SIP_CONFIGURE ${python_qt_binding_EXTRAS_DIR}/sip_configure.py
     SOURCE_DIR ${PROJECT_SOURCE_DIR}/src/qt_gui_cpp_sip
     LIBRARY_DIR ${CATKIN_DEVEL_PREFIX}/${CATKIN_PACKAGE_PYTHON_DESTINATION}
     DEPENDS ${qt_gui_cpp_sip_DEPENDENT_FILES}
