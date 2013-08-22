@@ -2,6 +2,10 @@
 Changelog for package qt_dotgraph
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.2.17 (2013-08-21)
+-------------------
+* fix the name/label issue with pygraphviz
+
 0.2.16 (2013-06-06)
 -------------------
 

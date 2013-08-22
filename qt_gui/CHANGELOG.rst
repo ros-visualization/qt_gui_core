@@ -2,6 +2,13 @@
 Changelog for package qt_gui
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.2.17 (2013-08-21)
+-------------------
+* add PluginLoadError for know errors to avoid printing stacktraces (`ros-visualization/rqt#85 <https://github.com/ros-visualization/rqt/issues/85>`_)
+* inherit icons from plugin menu for dock widgets
+* fix several OS X related rendering issues, mostly icons and bring the window to front on startup (`ros-visualization/rqt#83 <https://github.com/ros-visualization/rqt/issues/83>`_)
+* fix about dialog to not show application icon
+
 0.2.16 (2013-06-06)
 -------------------
 * make plugin resources relative to plugin.xml (instead of package.xml) (`#16 <https://github.com/ros-visualization/qt_gui_core/issues/16>`_)
