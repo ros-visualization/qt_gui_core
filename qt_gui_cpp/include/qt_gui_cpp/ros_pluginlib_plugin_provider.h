@@ -124,8 +124,9 @@ public:
       attributes["plugin_path"] = plugin_path.c_str();
 
       // check if plugin is available
-      std::string library_path = class_loader_->getClassLibraryPath(lookup_name);
-      attributes["not_available"] = !std::ifstream(library_path.c_str()) ? QString("library ").append(lookup_name.c_str()).append(" not found (may be it must be built?)") : "";
+      //std::string library_path = class_loader_->getClassLibraryPath(lookup_name);
+      //attributes["not_available"] = !std::ifstream(library_path.c_str()) ? QString("library ").append(lookup_name.c_str()).append(" not found (may be it must be built?)") : "";
+      attributes["not_available"] = "";
 
       PluginDescriptor* plugin_descriptor = new PluginDescriptor(lookup_name.c_str(), attributes);
       QString label = name.c_str();
