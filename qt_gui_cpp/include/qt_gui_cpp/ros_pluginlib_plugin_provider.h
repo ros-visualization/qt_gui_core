@@ -232,6 +232,16 @@ public:
     QCoreApplication::postEvent(this, new QEvent(static_cast<QEvent::Type>(unload_libraries_event_)));
   }
 
+  bool event(QEvent* e)
+  {
+    if (e->type() == unload_libraries_event_)
+    {
+      libraries_to_unload_.clear();
+      return true;
+    }
+    return QObject::event(e);
+  }
+
 protected:
 
   virtual boost::shared_ptr<T> create_plugin(const std::string& lookup_name, PluginContext* /*plugin_context*/ = 0)
@@ -242,18 +252,6 @@ protected:
   virtual void init_plugin(const QString& /*plugin_id*/, PluginContext* plugin_context, Plugin* plugin)
   {
     plugin->initPlugin(*plugin_context);
-  }
-
-private slots:
-
-  bool event(QEvent* e)
-  {
-    if (e->type() == unload_libraries_event_)
-    {
-      libraries_to_unload_.clear();
-      return true;
-    }
-    return QObject::event(e);
   }
 
 private:
