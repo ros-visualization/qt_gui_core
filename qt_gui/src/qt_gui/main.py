@@ -529,6 +529,9 @@ class Main(object):
         # load specific plugin
         if plugin:
             plugin_manager.load_plugin(plugin, plugin_serial, self._options.plugin_args)
+            running = plugin_manager.is_plugin_running(plugin, plugin_serial)
+            if not running:
+                return 1
 
         if main_window is not None:
             main_window.show()
