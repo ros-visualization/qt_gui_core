@@ -30,11 +30,7 @@
 
 
 def get_package_path(name):
-    """Helper function to determine the path of a ROS package either using rospkg or roslib."""
-    try:
-        import rospkg
-        r = rospkg.RosPack()
-        return r.get_path(name)
-    except ImportError:
-        import roslib
-        return roslib.packages.get_pkg_dir(name)
+    """Helper function to determine the path of a ROS package using rospkg."""
+    import rospkg
+    r = rospkg.RosPack()
+    return r.get_path(name)

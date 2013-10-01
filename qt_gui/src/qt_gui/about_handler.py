@@ -54,12 +54,8 @@ class AboutHandler(QObject):
         sys.path.append(os.path.join(qt_gui_cpp_path, 'src'))
         from qt_gui_cpp.cpp_binding_helper import qt_gui_cpp
 
-        _rospkg_version = None
-        try:
-            import rospkg
-            _rospkg_version = getattr(rospkg, '__version__', '&lt; 0.2.4')
-        except ImportError:
-            pass
+        import rospkg
+        _rospkg_version = getattr(rospkg, '__version__', '&lt; 0.2.4')
 
         rp = RosPack()
         logo = os.path.join(rp.get_path('qt_gui'), 'resource', 'ros_org_vertical.png')
@@ -74,10 +70,7 @@ class AboutHandler(QObject):
 
         text += 'Python %s, ' % platform.python_version()
 
-        if _rospkg_version is not None:
-            text += 'rospkg %s, ' % _rospkg_version
-        else:
-            text += '%s, ' % self.tr('rospkg not found - using roslib')
+        text += 'rospkg %s, ' % _rospkg_version
 
         if QT_BINDING == 'pyside':
             text += 'PySide'
