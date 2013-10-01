@@ -43,13 +43,15 @@ class Main(object):
 
     main_filename = None
 
-    def __init__(self, invoked_filename=None, settings_filename=None):
+    def __init__(self, qtgui_path, invoked_filename=None, settings_filename=None):
+        self._qtgui_path = qtgui_path
         if invoked_filename is None:
             invoked_filename = os.path.abspath(__file__)
         Main.main_filename = invoked_filename
         if settings_filename is None:
             settings_filename = 'qt_gui'
         self._settings_filename = settings_filename
+
         self.plugin_providers = []
         self._options = None
 
@@ -273,6 +275,7 @@ class Main(object):
         # create application context containing various relevant information
         from .application_context import ApplicationContext
         context = ApplicationContext()
+        context.qtgui_path = self._qtgui_path
         context.options = self._options
 
         if self._dbus_available:
@@ -468,7 +471,7 @@ class Main(object):
             plugin_manager.close_application_signal.connect(main_window.close, type=Qt.QueuedConnection)
 
         if main_window is not None and menu_bar is not None:
-            about_handler = AboutHandler(main_window)
+            about_handler = AboutHandler(context.qtgui_path, main_window)
             help_menu = menu_bar.addMenu(menu_bar.tr('Help'))
             action = QAction(file_menu.tr('About'), help_menu)
             action.setIcon(QIcon.fromTheme('help-about'))

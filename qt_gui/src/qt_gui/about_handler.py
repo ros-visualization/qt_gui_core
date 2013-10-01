@@ -35,7 +35,6 @@ import sys
 from python_qt_binding import QT_BINDING, QT_BINDING_MODULES, QT_BINDING_VERSION
 from python_qt_binding.QtCore import QObject, qVersion
 from python_qt_binding.QtGui import QMessageBox
-from rospkg.rospack import RosPack
 
 from .ros_package_helper import get_package_path
 
@@ -44,8 +43,9 @@ class AboutHandler(QObject):
 
     """Handler for the about action in the menu bar showing a message box with details on the used libraries and their versions."""
 
-    def __init__(self, parent=None):
+    def __init__(self, qtgui_path, parent=None):
         super(AboutHandler, self).__init__(parent)
+        self._qtgui_path = qtgui_path
 
     def show(self):
         # append folder of 'qt_gui_cpp/lib' to module search path
@@ -57,8 +57,7 @@ class AboutHandler(QObject):
         import rospkg
         _rospkg_version = getattr(rospkg, '__version__', '&lt; 0.2.4')
 
-        rp = RosPack()
-        logo = os.path.join(rp.get_path('qt_gui'), 'resource', 'ros_org_vertical.png')
+        logo = os.path.join(self._qtgui_path, 'resource', 'ros_org_vertical.png')
         text = '<img src="%s" width="56" height="200" style="float: left;"/>' % logo
 
         text += '<h3 style="margin-top: 1px;">%s</h3>' % self.tr('ROS GUI')
