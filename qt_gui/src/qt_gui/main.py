@@ -146,9 +146,6 @@ class Main(object):
     def _add_plugin_providers(self):
         pass
 
-    def _caching_hook(self):
-        pass
-
     def _add_reload_paths(self, reload_importer):
         reload_importer.add_reload_path(os.path.join(os.path.dirname(__file__), *('..',) * 4))
 
@@ -510,8 +507,6 @@ class Main(object):
         qDebug('QtBindingHelper using %s' % QT_BINDING)
 
         plugin_manager.discover()
-
-        self._caching_hook()
 
         if self._options.reload_import:
             qDebug('ReloadImporter() automatically reload all subsequent imports')
