@@ -53,12 +53,12 @@ public:
 
   virtual ~PluginProvider();
 
-  virtual QMap<QString, QString> discover();
+  virtual QMap<QString, QString> discover(QObject* discovery_data);
 
   /**
    * @attention Ownership of returned PluginDescriptor's is transfered to the caller
    */
-  virtual QList<PluginDescriptor*> discover_descriptors();
+  virtual QList<PluginDescriptor*> discover_descriptors(QObject* discovery_data);
 
   virtual void* load(const QString& plugin_id, PluginContext* plugin_context);
 

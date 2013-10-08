@@ -13,12 +13,12 @@ public:
 
   virtual ~PluginProvider();
 
-  virtual QMap<QString, QString> discover();
+  virtual QMap<QString, QString> discover(QObject* discovery_data);
 
   /**
    * @attention Ownership of returned PluginDescriptor's is transfered to the caller
    */
-  virtual QList<qt_gui_cpp::PluginDescriptor*> discover_descriptors();
+  virtual QList<qt_gui_cpp::PluginDescriptor*> discover_descriptors(QObject* discovery_data);
 
   virtual void* load(const QString& plugin_id, qt_gui_cpp::PluginContext* plugin_context);
 

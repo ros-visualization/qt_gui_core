@@ -52,7 +52,7 @@ public:
 
   virtual ~RecursivePluginProvider();
 
-  virtual QMap<QString, QString> discover();
+  virtual QMap<QString, QString> discover(QObject* discovery_data);
 
 private:
 

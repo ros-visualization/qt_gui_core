@@ -77,11 +77,14 @@ class Main(object):
             help='choose Qt bindings to be used [pyqt|pyside]')
         common_group.add_argument('--clear-config', dest='clear_config', default=False, action='store_true',
             help='clear the configuration (including all perspectives and plugin settings)')
-        common_group.add_argument('-h', '--help', action='help',
-            help='show this help message and exit')
         if not standalone:
             common_group.add_argument('-f', '--freeze-layout', dest='freeze_layout', action='store_true',
                 help='freeze the layout of the GUI (prevent rearranging widgets, disable undock/redock)')
+        common_group.add_argument('--force-discover', dest='force_discover', default=False, action='store_true',
+            help='force a rediscover of plugins')
+        common_group.add_argument('-h', '--help', action='help',
+            help='show this help message and exit')
+        if not standalone:
             common_group.add_argument('-l', '--lock-perspective', dest='lock_perspective', action='store_true',
                 help='lock the GUI to the used perspective (hide menu bar and close buttons of plugins)')
             common_group.add_argument('-m', '--multi-process', dest='multi_process', default=False, action='store_true',
@@ -363,8 +366,8 @@ class Main(object):
 
         self._check_icon_theme_compliance()
 
+        settings = QSettings(QSettings.IniFormat, QSettings.UserScope, 'ros.org', self._settings_filename)
         if len(embed_options_set) == 0:
-            settings = QSettings(QSettings.IniFormat, QSettings.UserScope, 'ros.org', self._settings_filename)
             if self._options.clear_config:
                 settings.clear()
 
@@ -401,7 +404,6 @@ class Main(object):
         else:
             app.setQuitOnLastWindowClosed(False)
 
-            settings = None
             main_window = None
             menu_bar = None
 
@@ -409,7 +411,7 @@ class Main(object):
 
         # setup plugin manager
         plugin_provider = CompositePluginProvider(self.plugin_providers)
-        plugin_manager = PluginManager(plugin_provider, context)
+        plugin_manager = PluginManager(plugin_provider, settings, context)
 
         if self._options.list_plugins:
             # output available plugins
@@ -420,7 +422,7 @@ class Main(object):
         plugin_manager.plugin_help_signal.connect(help_provider.plugin_help_request)
 
         # setup perspective manager
-        if settings is not None:
+        if main_window is not None:
             perspective_manager = PerspectiveManager(settings, context)
 
             if self._options.list_perspectives:
@@ -438,7 +440,7 @@ class Main(object):
                 main_window.addToolBar(Qt.BottomToolBarArea, minimized_dock_widgets_toolbar)
                 plugin_manager.set_minimized_dock_widgets_toolbar(minimized_dock_widgets_toolbar)
 
-        if settings is not None and menu_bar is not None:
+        if menu_bar is not None:
             perspective_menu = menu_bar.addMenu(menu_bar.tr('Perspectives'))
             perspective_manager.set_menu(perspective_menu)
 
