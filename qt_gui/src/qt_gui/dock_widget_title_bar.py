@@ -33,19 +33,17 @@ import os
 from python_qt_binding import loadUi
 from python_qt_binding.QtCore import QEvent, QObject, Qt, qWarning
 from python_qt_binding.QtGui import QDockWidget, QIcon, QWidget
-from rospkg.rospack import RosPack
 
 
 class DockWidgetTitleBar(QWidget):
 
     """Title bar for dock widgets providing custom actions."""
 
-    def __init__(self, dock_widget):
+    def __init__(self, dock_widget, qtgui_path):
         super(DockWidgetTitleBar, self).__init__(dock_widget)
         self._dock_widget = dock_widget
 
-        rp = RosPack()
-        ui_file = os.path.join(rp.get_path('qt_gui'), 'resource', 'dock_widget_title_bar.ui')
+        ui_file = os.path.join(qtgui_path, 'resource', 'dock_widget_title_bar.ui')
         loadUi(ui_file, self)
         self._extra_buttons = {
             'configuration': self.configuration_button,

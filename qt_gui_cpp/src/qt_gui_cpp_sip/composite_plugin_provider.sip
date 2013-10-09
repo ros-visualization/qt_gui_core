@@ -16,7 +16,7 @@ public:
 
   virtual void set_plugin_providers(const QList<qt_gui_cpp::PluginProvider*>& plugin_providers);
 
-  virtual QList<qt_gui_cpp::PluginDescriptor*> discover_descriptors();
+  virtual QList<qt_gui_cpp::PluginDescriptor*> discover_descriptors(QObject* discovery_data);
 
   virtual void* load(const QString& plugin_id, qt_gui_cpp::PluginContext* plugin_context);
 

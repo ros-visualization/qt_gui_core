@@ -28,9 +28,11 @@
 # ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
+import os
+import time
 import traceback
 
-from python_qt_binding.QtCore import qCritical, qDebug, QObject, Qt, qWarning, Signal, Slot
+from python_qt_binding.QtCore import qCritical, qDebug, QObject, QSettings, Qt, qWarning, Signal, Slot
 
 from .container_manager import ContainerManager
 from .errors import PluginLoadError
@@ -38,6 +40,8 @@ from .plugin_handler_container import PluginHandlerContainer
 from .plugin_handler_direct import PluginHandlerDirect
 from .plugin_instance_id import PluginInstanceId
 from .plugin_menu import PluginMenu
+from .settings import Settings
+from .settings_proxy import SettingsProxy
 
 
 class PluginManager(QObject):
@@ -54,11 +58,14 @@ class PluginManager(QObject):
     close_application_signal = Signal()
     _deferred_reload_plugin_signal = Signal(str)
 
-    def __init__(self, plugin_provider, application_context):
+    discovery_cache_max_age = 60 * 60 * 24  # one day
+
+    def __init__(self, plugin_provider, settings, application_context):
         super(PluginManager, self).__init__()
         self.setObjectName('PluginManager')
 
         self._plugin_provider = plugin_provider
+        self._settings = Settings(SettingsProxy(settings), 'plugin_manager')
         self._application_context = application_context
 
         self._main_window = None
@@ -104,8 +111,9 @@ class PluginManager(QObject):
         if self._plugin_descriptors is not None:
             return
         self._plugin_descriptors = {}
+
         # register discovered plugins
-        plugin_descriptors = self._plugin_provider.discover()
+        plugin_descriptors = self._discover()
         for plugin_descriptor in plugin_descriptors:
             self._plugin_descriptors[plugin_descriptor.plugin_id()] = plugin_descriptor
 
@@ -117,6 +125,30 @@ class PluginManager(QObject):
             self._plugin_descriptors[descriptor.plugin_id()] = descriptor
             if self._plugin_menu is not None:
                 self._container_manager.add_to_plugin_menu(self._plugin_menu)
+
+    def _discover(self):
+        discovery_data = self._settings.get_settings('discovery_data')
+        # check timestamp of the cached discovery data
+        cache_stamp = self._settings.value('discovery_timestamp', default_value=None)
+        if cache_stamp:
+            cache_stamp = float(cache_stamp)
+
+        # wipe cached data when forcing discovery or when cache is to old (or from the future)
+        now = time.time()
+        if self._application_context.options.force_discover or not cache_stamp or cache_stamp > now or cache_stamp + PluginManager.discovery_cache_max_age < now:
+            qDebug('PluginManager._discover() force discovery of plugins')
+            for k in discovery_data.all_keys():
+                discovery_data.remove(k)
+        else:
+            qDebug('PluginManager._discover() using cached plugin discovery information')
+
+        plugin_descriptors = self._plugin_provider.discover(discovery_data)
+
+        # store timestamp and newly discovered data
+        if not cache_stamp:
+            self._settings.set_value('discovery_timestamp', now)
+
+        return plugin_descriptors
 
     def find_plugins_by_name(self, lookup_name):
         plugins = {}
