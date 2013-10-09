@@ -60,10 +60,10 @@ class AboutHandler(QObject):
         logo = os.path.join(self._qtgui_path, 'resource', 'ros_org_vertical.png')
         text = '<img src="%s" width="56" height="200" style="float: left;"/>' % logo
 
-        text += '<h3 style="margin-top: 1px;">%s</h3>' % self.tr('ROS GUI')
+        text += '<h3 style="margin-top: 1px;">%s</h3>' % self.tr('rqt')
 
-        text += '<p>%s %s</p>' % (self.tr('ROS GUI is a framework for graphical user interfaces.'), self.tr('It is extensible with plugins which can be written in either Python or C++.'))
-        text += '<p>%s</p>' % (self.tr('Please see the <a href="%s">Wiki</a> for more information on ROS GUI and available plugins.' % 'http://www.ros.org/wiki/rqt'))
+        text += '<p>%s %s</p>' % (self.tr('rqt is a framework for graphical user interfaces.'), self.tr('It is extensible with plugins which can be written in either Python or C++.'))
+        text += '<p>%s</p>' % (self.tr('Please see the <a href="%s">Wiki</a> for more information on rqt and available plugins.' % 'http://wiki.ros.org/rqt'))
 
         text += '<p>%s: ' % self.tr('Utilized libraries:')
 
@@ -91,5 +91,5 @@ class AboutHandler(QObject):
 
         text += '.</p>'
 
-        mb = QMessageBox(QMessageBox.NoIcon, self.tr('About ROS GUI'), text, QMessageBox.Ok, self.parent())
+        mb = QMessageBox(QMessageBox.NoIcon, self.tr('About rqt'), text, QMessageBox.Ok, self.parent())
         mb.exec_()

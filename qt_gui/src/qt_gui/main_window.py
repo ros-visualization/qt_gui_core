@@ -91,7 +91,7 @@ class MainWindow(DockableMainWindow):
         self._restore_state_from_perspective()
 
     def perspective_changed(self, name):
-        self.setWindowTitle('%s - RosGui' % str(name))
+        self.setWindowTitle('%s - rqt' % str(name))
 
     def _save_geometry_to_perspective(self):
         if self._settings is not None:
