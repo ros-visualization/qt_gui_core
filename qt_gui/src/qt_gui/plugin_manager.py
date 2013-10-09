@@ -137,6 +137,7 @@ class PluginManager(QObject):
         now = time.time()
         if self._application_context.options.force_discover or not cache_stamp or cache_stamp > now or cache_stamp + PluginManager.discovery_cache_max_age < now:
             qDebug('PluginManager._discover() force discovery of plugins')
+            cache_stamp = None
             for k in discovery_data.all_keys():
                 discovery_data.remove(k)
         else:
