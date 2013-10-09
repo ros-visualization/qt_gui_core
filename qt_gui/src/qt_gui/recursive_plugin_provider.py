@@ -45,9 +45,9 @@ class RecursivePluginProvider(CompositePluginProvider):
 
         self._plugin_provider = plugin_provider
 
-    def discover(self):
+    def discover(self, discovery_data):
         # discover plugins, which are providers themselves
-        plugin_descriptors = self._plugin_provider.discover()
+        plugin_descriptors = self._plugin_provider.discover(discovery_data)
 
         # instantiate plugins
         plugin_providers = []
@@ -63,4 +63,4 @@ class RecursivePluginProvider(CompositePluginProvider):
 
         # delegate discovery through instantiated plugin providers to base class
         self.set_plugin_providers(plugin_providers)
-        return CompositePluginProvider.discover(self)
+        return CompositePluginProvider.discover(self, discovery_data)

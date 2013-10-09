@@ -59,7 +59,7 @@ void CompositePluginProvider::set_plugin_providers(const QList<PluginProvider*>&
   plugin_providers_ = plugin_providers;
 }
 
-QList<PluginDescriptor*> CompositePluginProvider::discover_descriptors()
+QList<PluginDescriptor*> CompositePluginProvider::discover_descriptors(QObject* discovery_data)
 {
   // discover plugins from all providers
   QList<PluginDescriptor*> descriptors;
@@ -68,7 +68,7 @@ QList<PluginDescriptor*> CompositePluginProvider::discover_descriptors()
     QList<PluginDescriptor*> sub_descriptors;
     try
     {
-      sub_descriptors = (*it)->discover_descriptors();
+      sub_descriptors = (*it)->discover_descriptors(discovery_data);
     }
     catch (std::runtime_error e)
     {

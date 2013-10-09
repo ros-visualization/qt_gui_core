@@ -41,8 +41,8 @@ class RosPluginlibPluginProvider(PluginProvider):
         super(RosPluginlibPluginProvider, self).__init__()
         self._plugin_provider = plugin_provider
 
-    def discover(self):
-        discovered_plugins = self._unfold(self._plugin_provider.discover())
+    def discover(self, discovery_data):
+        discovered_plugins = self._unfold(self._plugin_provider.discover(discovery_data))
         plugin_descriptors = []
         for plugin in discovered_plugins.values():
             plugin_descriptor = PluginDescriptor(plugin['plugin_id'], plugin['attributes'])

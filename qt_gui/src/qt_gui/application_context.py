@@ -29,7 +29,7 @@
 # POSSIBILITY OF SUCH DAMAGE.
 
 
-class ApplicationContext():
+class ApplicationContext(object):
 
     """Application wide context containing variables used in various places."""
 
@@ -48,3 +48,6 @@ class ApplicationContext():
 
         self.options = None
         """The parsed command line options."""
+
+        self.qtgui_path = None
+        """The path of the qt_gui package."""

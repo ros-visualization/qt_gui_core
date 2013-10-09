@@ -40,10 +40,10 @@ PluginProvider::PluginProvider()
 PluginProvider::~PluginProvider()
 {}
 
-QMap<QString, QString> PluginProvider::discover()
+QMap<QString, QString> PluginProvider::discover(QObject* discovery_data)
 {
   QMap<QString, QString> plugins;
-  QList<PluginDescriptor*> descriptors = discover_descriptors();
+  QList<PluginDescriptor*> descriptors = discover_descriptors(discovery_data);
   for (QList<PluginDescriptor*>::iterator it = descriptors.begin(); it != descriptors.end(); it++)
   {
     // extract plugin descriptor dictionary
@@ -55,7 +55,7 @@ QMap<QString, QString> PluginProvider::discover()
   return plugins;
 }
 
-QList<PluginDescriptor*> PluginProvider::discover_descriptors()
+QList<PluginDescriptor*> PluginProvider::discover_descriptors(QObject* discovery_data)
 {
   return QList<PluginDescriptor*>();
 }

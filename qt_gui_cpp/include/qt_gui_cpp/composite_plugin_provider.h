@@ -59,7 +59,7 @@ public:
    */
   virtual void set_plugin_providers(const QList<PluginProvider*>& plugin_providers);
 
-  virtual QList<PluginDescriptor*> discover_descriptors();
+  virtual QList<PluginDescriptor*> discover_descriptors(QObject* discovery_data);
 
   virtual void* load(const QString& plugin_id, PluginContext* plugin_context);
 

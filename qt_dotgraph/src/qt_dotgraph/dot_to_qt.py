@@ -32,9 +32,6 @@
 
 import pydot
 
-import roslib
-roslib.load_manifest('qt_dotgraph')
-
 from python_qt_binding.QtCore import QPointF, QRectF
 from python_qt_binding.QtGui import QColor
 

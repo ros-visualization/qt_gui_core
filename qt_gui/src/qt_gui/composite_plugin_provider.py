@@ -50,12 +50,12 @@ class CompositePluginProvider(PluginProvider):
     def set_plugin_providers(self, plugin_providers):
         self._plugin_providers = plugin_providers
 
-    def discover(self):
+    def discover(self, discovery_data):
         # discover plugins from all providers
         discovered_plugins = []
         for plugin_provider in self._plugin_providers:
             try:
-                plugin_descriptors = plugin_provider.discover()
+                plugin_descriptors = plugin_provider.discover(discovery_data)
             except Exception:
                 qCritical('CompositePluginProvider.discover() could not discover plugins from provider "%s":\n%s' % (type(plugin_provider), traceback.format_exc()))
             else:
