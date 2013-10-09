@@ -99,7 +99,7 @@ class PydotFactory():
 
     def add_subgraph_to_graph(self,
                               graph,
-                              subgraphlabel,
+                              subgraphname,
                               rank='same',
                               simplify=True,
                               rankdir='TB',
@@ -107,15 +107,16 @@ class PydotFactory():
                               compound=True,
                               color=None,
                               shape='box',
-                              style='bold'):
+                              style='bold',
+                              subgraphlabel=None):
         """
         creates a cluster subgraph  item for this factory, adds it to the graph.
         cluster name can vary from label but must always be same for the same node label.
         Most layouters require cluster names to start with cluster.
         """
-        if subgraphlabel is None or subgraphlabel == '':
-            raise ValueError('Empty subgraph label')
-        g = pydot.Cluster(self.escape_name(subgraphlabel), rank=rank, rankdir=rankdir, simplify=simplify, color=color)
+        if subgraphname is None or subgraphname == '':
+            raise ValueError('Empty subgraph name')
+        g = pydot.Cluster(self.escape_name(subgraphname), rank=rank, rankdir=rankdir, simplify=simplify, color=color)
         if 'set_style' in g.__dict__:
             g.set_style(style)
         if 'set_shape' in g.__dict__:
@@ -123,7 +124,10 @@ class PydotFactory():
         if LooseVersion(pydot.__version__) > LooseVersion('1.0.10'):
             g.set_compound(compound)
             g.set_ranksep(ranksep)
-        g.set_label(subgraphlabel)
+        subgraphlabel = subgraphname if subgraphlabel is None else subgraphlabel
+        subgraphlabel = self.escape_label(subgraphlabel)
+        if subgraphlabel:
+            g.set_label(subgraphlabel)
         if 'set_color' in g.__dict__:
             if color is not None:
                 g.set_color(color)
