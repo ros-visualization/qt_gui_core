@@ -2,8 +2,8 @@
 Changelog for package qt_gui_cpp
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.2.18 (2013-10-09)
+-------------------
 * improve startup time (`#28 <https://github.com/ros-visualization/qt_gui_core/issues/28>`_)
 * disabled check for existance of library for cpp plugins
 * fix build on OS X with new version of SIP (`#26 <https://github.com/ros-visualization/qt_gui_core/issues/26>`_)

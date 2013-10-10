@@ -2,8 +2,8 @@
 Changelog for package qt_gui
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.2.18 (2013-10-09)
+-------------------
 * improve startup time (`#28 <https://github.com/ros-visualization/qt_gui_core/issues/28>`_)
 * rename rqt window title
 * exit application when standalone plugin fails to load

@@ -2,8 +2,8 @@
 Changelog for package qt_dotgraph
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.2.18 (2013-10-09)
+-------------------
 * improve startup time (`#28 <https://github.com/ros-visualization/qt_gui_core/issues/28>`_)
 * added kwarg for subgraphlabel
 * change maintainer of qt_dotgraph (`#27 <https://github.com/ros-visualization/qt_gui_core/issues/27>`_)
