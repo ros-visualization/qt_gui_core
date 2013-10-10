@@ -2,6 +2,12 @@
 Changelog for package qt_gui
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* improve startup time (`#28 <https://github.com/ros-visualization/qt_gui_core/issues/28>`_)
+* rename rqt window title
+* exit application when standalone plugin fails to load
+
 0.2.17 (2013-08-21)
 -------------------
 * add PluginLoadError for know errors to avoid printing stacktraces (`ros-visualization/rqt#85 <https://github.com/ros-visualization/rqt/issues/85>`_)

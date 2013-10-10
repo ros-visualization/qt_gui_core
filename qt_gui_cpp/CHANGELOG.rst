@@ -2,6 +2,12 @@
 Changelog for package qt_gui_cpp
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* improve startup time (`#28 <https://github.com/ros-visualization/qt_gui_core/issues/28>`_)
+* disabled check for existance of library for cpp plugins
+* fix build on OS X with new version of SIP (`#26 <https://github.com/ros-visualization/qt_gui_core/issues/26>`_)
+
 0.2.17 (2013-08-21)
 -------------------
 * add PluginLoadError for know errors to avoid printing stacktraces (`ros-visualization/rqt#85 <https://github.com/ros-visualization/rqt/issues/85>`_)
