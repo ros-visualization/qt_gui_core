@@ -28,6 +28,8 @@
 # ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
+from python_qt_binding.QtGui import QIcon
+
 from .dock_widget import DockWidget
 from .dockable_main_window import DockableMainWindow
 
@@ -43,6 +45,7 @@ class DockWidgetContainer(DockWidget):
 
         self.main_window = DockableMainWindow()
         self.setWidget(self.main_window)
+        self.setWindowIcon(QIcon.fromTheme('folder'))
 
     def serial_number(self):
         return self._serial_number
