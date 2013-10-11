@@ -340,6 +340,7 @@ class Main(object):
 
         from .about_handler import AboutHandler
         from .composite_plugin_provider import CompositePluginProvider
+        from .container_manager import ContainerManager
         from .help_provider import HelpProvider
         from .main_window import MainWindow
         from .minimized_dock_widgets_toolbar import MinimizedDockWidgetsToolbar
@@ -433,10 +434,11 @@ class Main(object):
             perspective_manager = None
 
         if main_window is not None:
-            plugin_manager.set_main_window(main_window, menu_bar)
+            container_manager = ContainerManager(main_window, plugin_manager)
+            plugin_manager.set_main_window(main_window, menu_bar, container_manager)
 
             if not self._options.freeze_layout:
-                minimized_dock_widgets_toolbar = MinimizedDockWidgetsToolbar(main_window)
+                minimized_dock_widgets_toolbar = MinimizedDockWidgetsToolbar(container_manager, main_window)
                 main_window.addToolBar(Qt.BottomToolBarArea, minimized_dock_widgets_toolbar)
                 plugin_manager.set_minimized_dock_widgets_toolbar(minimized_dock_widgets_toolbar)
 
