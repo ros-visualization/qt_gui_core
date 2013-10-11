@@ -43,7 +43,7 @@ class ContainerManager(QObject):
         super(ContainerManager, self).__init__(parent)
         self._root_main_window = root_main_window
         self._container_descriptor = PluginDescriptor('__DockWidgetContainer')
-        self._container_descriptor.set_action_attributes(self.tr('Container'), self.tr('Container for other dock widgets'))
+        self._container_descriptor.set_action_attributes(self.tr('Container'), self.tr('Container for other dock widgets'), 'folder', 'theme')
         self._containers = {}
 
     def get_root_main_window(self):
@@ -77,6 +77,13 @@ class ContainerManager(QObject):
                 container.parent().addDockWidget(area, child)
                 if floating:
                     child.setFloating(floating)
+
+    def get_container_of_dock_widget(self, dock_widget):
+        for container in self._containers.values():
+            for child in container.main_window.children():
+                if child == dock_widget:
+                    return container
+        return None
 
     def restore_state_of_containers(self):
         for container in self._containers.values():

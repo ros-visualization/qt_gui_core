@@ -36,11 +36,12 @@ class MinimizedDockWidgetsToolbar(QToolBar):
 
     max_label_length = 15
 
-    def __init__(self, parent=None):
+    def __init__(self, container_manager, parent=None):
         super(MinimizedDockWidgetsToolbar, self).__init__(parent=parent)
         self.setWindowTitle(self.tr('Minimized dock widgets'))
         self.setObjectName('MinimizedDockWidgetsToolbar')
         self.setToolButtonStyle(Qt.ToolButtonTextBesideIcon)
+        self._container_manager = container_manager
         self._signal_mapper = QSignalMapper(self)
         self._signal_mapper.mapped[QWidget].connect(self._on_action_triggered)
         self._dock_widgets = {}
@@ -78,4 +79,12 @@ class MinimizedDockWidgetsToolbar(QToolBar):
             self.hide()
 
     def _on_action_triggered(self, dock_widget):
+        # if the dock widget is nested inside a container also show the container
+        # do this recursively for nested containers
+        while True:
+            parent = self._container_manager.get_container_of_dock_widget(dock_widget)
+            if parent is None:
+                break
+            dock_widget.show()
+            dock_widget = parent
         dock_widget.show()

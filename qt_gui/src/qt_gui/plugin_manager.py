@@ -34,7 +34,6 @@ import traceback
 
 from python_qt_binding.QtCore import qCritical, qDebug, QObject, QSettings, Qt, qWarning, Signal, Slot
 
-from .container_manager import ContainerManager
 from .errors import PluginLoadError
 from .plugin_handler_container import PluginHandlerContainer
 from .plugin_handler_direct import PluginHandlerDirect
@@ -94,9 +93,9 @@ class PluginManager(QObject):
             from .plugin_manager_dbus_interface import PluginManagerDBusInterface
             self._dbus_service = PluginManagerDBusInterface(self, self._application_context)
 
-    def set_main_window(self, main_window, menu_bar):
+    def set_main_window(self, main_window, menu_bar, container_manager):
         self._main_window = main_window
-        self._container_manager = ContainerManager(self._main_window, self)
+        self._container_manager = container_manager
         self.plugins_changed_signal.connect(self._container_manager.restore_state_of_containers)
         if menu_bar is not None:
             self._plugin_menu = PluginMenu(menu_bar, self)
