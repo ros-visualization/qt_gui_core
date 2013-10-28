@@ -36,7 +36,7 @@ from .graph_item import GraphItem
 
 class EdgeItem(GraphItem):
 
-    def __init__(self, highlight_level, spline, label_center, label, from_node, to_node, parent=None):
+    def __init__(self, highlight_level, spline, label_center, label, from_node, to_node, parent=None, penwidth=1):
         super(EdgeItem, self).__init__(highlight_level, parent)
 
         self.from_node = from_node
@@ -50,7 +50,7 @@ class EdgeItem(GraphItem):
         self._label_pen.setColor(self._default_color)
         self._label_pen.setJoinStyle(Qt.RoundJoin)
         self._edge_pen = QPen(self._label_pen)
-        self._edge_pen.setWidth(1)
+        self._edge_pen.setWidth(penwidth)
 
         self._sibling_edges = set()
 

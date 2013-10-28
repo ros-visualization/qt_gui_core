@@ -200,7 +200,8 @@ class DotToQtGenerator():
                              label_center=label_center,
                              label=label,
                              from_node=nodes[source_node],
-                             to_node=nodes[destination_node])
+                             to_node=nodes[destination_node],
+			     penwidth=int(edge.attr['penwidth']))
 
         if same_label_siblings:
             if label is None:
