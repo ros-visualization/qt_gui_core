@@ -124,6 +124,6 @@ class MainWindow(DockableMainWindow):
             # restore area for all toolbars
             toolbar_settings = self._settings.get_settings('toolbar_areas')
             for toolbar in self.findChildren(QToolBar):
-                area = toolbar_settings.value(toolbar.objectName(), Qt.NoToolBarArea)
+                area = Qt.ToolBarArea(toolbar_settings.value(toolbar.objectName(), Qt.NoToolBarArea))
                 if area in [Qt.LeftToolBarArea, Qt.RightToolBarArea, Qt.TopToolBarArea, Qt.BottomToolBarArea]:
                     self.addToolBar(area, toolbar)
