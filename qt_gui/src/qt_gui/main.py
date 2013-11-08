@@ -174,7 +174,7 @@ class Main(object):
         app.setAttribute(Qt.AA_DontShowIconsInMenus, False)
         return app
 
-    def main(self, argv=None, standalone=None, plugin_argument_provider=None):
+    def main(self, argv=None, standalone=None, plugin_argument_provider=None, plugin_manager_settings_prefix=''):
         if argv is None:
             argv = sys.argv
 
@@ -412,7 +412,7 @@ class Main(object):
 
         # setup plugin manager
         plugin_provider = CompositePluginProvider(self.plugin_providers)
-        plugin_manager = PluginManager(plugin_provider, settings, context)
+        plugin_manager = PluginManager(plugin_provider, settings, context, settings_prefix=plugin_manager_settings_prefix)
 
         if self._options.list_plugins:
             # output available plugins
