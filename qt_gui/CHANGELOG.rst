@@ -2,8 +2,8 @@
 Changelog for package qt_gui
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.2.19 (2014-01-08)
+-------------------
 * added prefix for the plugin managers settings to allow for multiple caches
 * support minimize for containers (`#30 <https://github.com/ros-visualization/qt_gui_core/issues/30>`_)
 * fix stacktrace when closing container via 'x' in title bar (`#32 <https://github.com/ros-visualization/qt_gui_core/issues/32>`_)
