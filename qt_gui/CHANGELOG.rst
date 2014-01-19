@@ -2,6 +2,9 @@
 Changelog for package qt_gui
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+
 0.2.19 (2014-01-08)
 -------------------
 * added prefix for the plugin managers settings to allow for multiple caches
