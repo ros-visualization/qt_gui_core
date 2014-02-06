@@ -48,8 +48,8 @@ class PluginMenu(QObject):
         super(PluginMenu, self).__init__()
         self.setObjectName('PluginMenu')
 
-        plugin_menu = menu_bar.addMenu(menu_bar.tr('Plugins'))
-        running_menu = menu_bar.addMenu(menu_bar.tr('Running'))
+        plugin_menu = menu_bar.addMenu(menu_bar.tr('&Plugins'))
+        running_menu = menu_bar.addMenu(menu_bar.tr('&Running'))
         self._plugin_menu_manager = MenuManager(plugin_menu)
         self._plugin_mapper = QSignalMapper(plugin_menu)
         self._plugin_mapper.mapped[str].connect(self.load_plugin_signal)

@@ -396,8 +396,8 @@ class Main(object):
             if not self._options.lock_perspective:
                 main_window.setMenuBar(menu_bar)
 
-            file_menu = menu_bar.addMenu(menu_bar.tr('File'))
-            action = QAction(file_menu.tr('Quit'), file_menu)
+            file_menu = menu_bar.addMenu(menu_bar.tr('&File'))
+            action = QAction(file_menu.tr('&Quit'), file_menu)
             action.setIcon(QIcon.fromTheme('application-exit'))
             action.triggered.connect(main_window.close)
             file_menu.addAction(action)
@@ -443,7 +443,7 @@ class Main(object):
                 plugin_manager.set_minimized_dock_widgets_toolbar(minimized_dock_widgets_toolbar)
 
         if menu_bar is not None:
-            perspective_menu = menu_bar.addMenu(menu_bar.tr('Perspectives'))
+            perspective_menu = menu_bar.addMenu(menu_bar.tr('P&erspectives'))
             perspective_manager.set_menu(perspective_menu)
 
         # connect various signals and slots
@@ -473,8 +473,8 @@ class Main(object):
 
         if main_window is not None and menu_bar is not None:
             about_handler = AboutHandler(context.qtgui_path, main_window)
-            help_menu = menu_bar.addMenu(menu_bar.tr('Help'))
-            action = QAction(file_menu.tr('About'), help_menu)
+            help_menu = menu_bar.addMenu(menu_bar.tr('&Help'))
+            action = QAction(file_menu.tr('&About'), help_menu)
             action.setIcon(QIcon.fromTheme('help-about'))
             action.triggered.connect(about_handler.show)
             help_menu.addAction(action)

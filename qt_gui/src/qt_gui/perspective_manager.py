@@ -86,12 +86,12 @@ class PerspectiveManager(QObject):
         self._perspective_mapper.mapped[str].connect(self.switch_perspective)
 
         # generate menu
-        create_action = QAction('Create perspective...', self._menu_manager.menu)
+        create_action = QAction('&Create perspective...', self._menu_manager.menu)
         create_action.setIcon(QIcon.fromTheme('list-add'))
         create_action.triggered.connect(self._on_create_perspective)
         self._menu_manager.add_suffix(create_action)
 
-        self._remove_action = QAction('Remove perspective...', self._menu_manager.menu)
+        self._remove_action = QAction('&Remove perspective...', self._menu_manager.menu)
         self._remove_action.setEnabled(False)
         self._remove_action.setIcon(QIcon.fromTheme('list-remove'))
         self._remove_action.triggered.connect(self._on_remove_perspective)
@@ -99,12 +99,12 @@ class PerspectiveManager(QObject):
 
         self._menu_manager.add_suffix(None)
 
-        import_action = QAction('Import...', self._menu_manager.menu)
+        import_action = QAction('&Import...', self._menu_manager.menu)
         import_action.setIcon(QIcon.fromTheme('document-open'))
         import_action.triggered.connect(self._on_import_perspective)
         self._menu_manager.add_suffix(import_action)
 
-        export_action = QAction('Export...', self._menu_manager.menu)
+        export_action = QAction('&Export...', self._menu_manager.menu)
         export_action.setIcon(QIcon.fromTheme('document-save-as'))
         export_action.triggered.connect(self._on_export_perspective)
         self._menu_manager.add_suffix(export_action)
