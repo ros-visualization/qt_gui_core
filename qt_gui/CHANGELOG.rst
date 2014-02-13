@@ -2,6 +2,10 @@
 Changelog for package qt_gui
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* add keyboard shortcuts for static menu entries
+
 0.2.20 (2014-01-19)
 -------------------
 
