@@ -83,7 +83,7 @@ class PyDotFactoryTest(unittest.TestCase):
         fac.add_subgraph_to_graph(g, 'graph')
         self.assertEqual(1, len(g.get_subgraph_list()))
         self.assertEqual('cluster_graph_', g.get_subgraph_list()[0].get_name())
-        self.assertEqual('graph', g.get_subgraph_list()[0].get_label())
+        self.assertEqual('graph_', g.get_subgraph_list()[0].get_label())
 
     def test_create_dot(self):
         fac = PydotFactory()
@@ -92,7 +92,7 @@ class PyDotFactoryTest(unittest.TestCase):
         fac.add_node_to_graph(g, 'edge')
         fac.add_edge_to_graph(g, 'foo', 'edge')
         fac.add_subgraph_to_graph(g, 'foo')
-        snippets = ['digraph graphname {\n\tgraph [rankdir=TB, ranksep="0.2", rank=same, compound=True];\n\tnode [label="\\N"];\n\tgraph [bb="', '"];\n\tsubgraph cluster_foo {\n\t\tgraph [',
+        snippets = ['digraph graphname {\n\tgraph [rankdir=TB, rank=same];\n\tnode [label="\\N"];\n\tgraph [bb="', '"];\n\tsubgraph cluster_foo {\n\t\tgraph [',
                     '];\n\t}\n\tfoo [label=foo, shape=box, pos="',
                     'edge_ [label=edge_, shape=box, pos="',
                     'foo -> edge_',
