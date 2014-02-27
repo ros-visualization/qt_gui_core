@@ -67,6 +67,8 @@ public:
 
   virtual void unload(void* plugin_instance);
 
+  virtual void shutdown();
+
 private:
 
   QList<PluginProvider*> plugin_providers_;

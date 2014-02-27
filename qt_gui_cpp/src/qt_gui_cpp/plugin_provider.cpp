@@ -78,4 +78,7 @@ void PluginProvider::unload_plugin(Plugin* plugin_instance)
   unload(plugin_instance);
 }
 
+void PluginProvider::shutdown()
+{}
+
 } // namespace

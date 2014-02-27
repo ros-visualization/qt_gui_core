@@ -155,4 +155,12 @@ void CompositePluginProvider::unload(void* plugin_instance)
   throw std::runtime_error("plugin_instance not found");
 }
 
+void CompositePluginProvider::shutdown()
+{
+  for (QList<PluginProvider*>::iterator it = plugin_providers_.begin(); it != plugin_providers_.end(); it++)
+  {
+    (*it)->shutdown();
+  }
+}
+
 } // namespace
