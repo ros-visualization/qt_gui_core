@@ -36,7 +36,7 @@ from .graph_item import GraphItem
 
 class EdgeItem(GraphItem):
 
-    def __init__(self, highlight_level, spline, label_center, label, from_node, to_node, parent=None, penwidth=1):
+    def __init__(self, highlight_level, spline, label_center, label, from_node, to_node, parent=None, penwidth=1, color=None):
         super(EdgeItem, self).__init__(highlight_level, parent)
 
         self.from_node = from_node
@@ -44,13 +44,17 @@ class EdgeItem(GraphItem):
         self.to_node = to_node
         self.to_node.add_incoming_edge(self)
 
+        self._default_text_color = self._COLOR_BLACK
         self._default_color = self._COLOR_BLACK
         self._brush = QBrush(self._default_color)
         self._label_pen = QPen()
-        self._label_pen.setColor(self._default_color)
+        self._label_pen.setColor(self._default_text_color)
         self._label_pen.setJoinStyle(Qt.RoundJoin)
         self._edge_pen = QPen(self._label_pen)
         self._edge_pen.setWidth(penwidth)
+
+	if color is not None:
+	    self._default_color = color
 
         self._sibling_edges = set()
 
@@ -132,11 +136,16 @@ class EdgeItem(GraphItem):
 
     def set_color(self, color=None):
         if color is None:
+            self._label_pen.setColor(self._default_text_color)
+    	    self._brush.setColor(self._default_text_color)
+	else:
+            self._label_pen.setColor(color)
+            self._brush.setColor(color)
+
+        if color is None:
             color = self._default_color
 
-        self._brush.setColor(color)
         self._edge_pen.setColor(color)
-        self._label_pen.setColor(color)
 
         self._path.setPen(self._edge_pen)
         if self._arrow is not None:

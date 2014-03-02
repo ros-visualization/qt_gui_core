@@ -134,7 +134,7 @@ class PydotFactory():
         graph.add_subgraph(g)
         return g
 
-    def add_edge_to_graph(self, graph, nodename1, nodename2, label=None, url=None, simplify=True, style=None, penwidth=1):
+    def add_edge_to_graph(self, graph, nodename1, nodename2, label=None, url=None, simplify=True, style=None, penwidth=1, heat=None):
         if simplify and LooseVersion(pydot.__version__) < LooseVersion('1.0.10'):
             if graph.get_edge(self.escape_name(nodename1), self.escape_name(nodename2)) != []:
                 return
@@ -146,6 +146,10 @@ class PydotFactory():
         if style is not None:
             edge.set_style(style)
 	edge.obj_dict['attributes']['penwidth'] = str(penwidth)
+	if heat is not None:
+	    edge.obj_dict['attributes']['heat'] = str(heat)
+	else:
+	    edge.obj_dict['attributes']['heat'] = str(-1)
         graph.add_edge(edge)
 
     def create_dot(self, graph):
