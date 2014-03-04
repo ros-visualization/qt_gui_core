@@ -24,6 +24,8 @@ public:
 
   virtual void unload(void* plugin_instance);
 
+  virtual void shutdown();
+
 };
 
 };

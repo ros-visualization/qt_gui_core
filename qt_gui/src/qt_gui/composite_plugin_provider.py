@@ -80,3 +80,7 @@ class CompositePluginProvider(PluginProvider):
             self._running_plugins.pop(plugin_instance)
             return
         raise UserWarning('plugin_instance not found')
+
+    def shutdown(self):
+        for plugin_provider in self._plugin_providers:
+            plugin_provider.shutdown()

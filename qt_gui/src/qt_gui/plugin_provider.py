@@ -58,3 +58,7 @@ class PluginProvider(QObject):
     def unload(self, plugin_instance):
         """Unload a plugin."""
         raise NotImplementedError
+
+    def shutdown(self):
+        """Notify of shutdown."""
+        pass

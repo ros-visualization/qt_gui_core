@@ -28,6 +28,8 @@ public:
 
   virtual void unload_plugin(qt_gui_cpp::Plugin* plugin_instance);
 
+  virtual void shutdown();
+
 };
 
 };

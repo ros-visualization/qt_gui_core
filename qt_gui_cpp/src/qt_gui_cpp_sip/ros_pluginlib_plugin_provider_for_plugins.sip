@@ -29,6 +29,8 @@ public:
 
   virtual void unload(void* instance);
 
+  virtual void shutdown();
+
 };
 
 };

@@ -287,7 +287,7 @@ class PluginManager(QObject):
     def unload_plugin(self, instance_id_str):
         # unloading a plugin with locked perspective or running standalone triggers close of application
         if self._application_context.options.lock_perspective or self._application_context.options.standalone_plugin:
-            self.close_application_signal.emit()
+            self._close_application_signal()
             return
         instance_id = PluginInstanceId(instance_id=instance_id_str)
         qDebug('PluginManager.unload_plugin(%s)' % str(instance_id))
@@ -435,7 +435,11 @@ class PluginManager(QObject):
         if self._number_of_ongoing_calls == 0:
             qDebug('PluginManager.close_application() completed')
             self._number_of_ongoing_calls = None
-            self.close_application_signal.emit()
+            self._close_application_signal()
+
+    def _close_application_signal(self):
+        self._plugin_provider.shutdown()
+        self.close_application_signal.emit()
 
 
     def restore_settings(self, global_settings, perspective_settings):

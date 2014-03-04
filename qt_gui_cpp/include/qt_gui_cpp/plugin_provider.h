@@ -68,6 +68,8 @@ public:
 
   virtual void unload_plugin(Plugin* plugin_instance);
 
+  virtual void shutdown();
+
 };
 
 } // namespace

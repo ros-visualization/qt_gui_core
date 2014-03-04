@@ -83,3 +83,6 @@ class RosPluginlibPluginProvider(PluginProvider):
                 current_level = current_level[i]
             current_level[keys[-1]] = str(value) if value != '' else None
         return dictionary
+
+    def shutdown(self):
+        self._plugin_provider.shutdown()
