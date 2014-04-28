@@ -36,13 +36,17 @@ from .graph_item import GraphItem
 
 class EdgeItem(GraphItem):
 
-    def __init__(self, highlight_level, spline, label_center, label, from_node, to_node, parent=None, penwidth=1, color=None):
+    def __init__(self, highlight_level, spline, label_center, label, from_node, to_node, parent=None, penwidth=1, edge_color=None):
         super(EdgeItem, self).__init__(highlight_level, parent)
 
         self.from_node = from_node
         self.from_node.add_outgoing_edge(self)
         self.to_node = to_node
         self.to_node.add_incoming_edge(self)
+
+        self._default_edge_color = self._COLOR_BLACK
+        if edge_color is not None:
+            self._default_edge_color = edge_color
 
         self._default_text_color = self._COLOR_BLACK
         self._default_color = self._COLOR_BLACK
@@ -52,9 +56,7 @@ class EdgeItem(GraphItem):
         self._label_pen.setJoinStyle(Qt.RoundJoin)
         self._edge_pen = QPen(self._label_pen)
         self._edge_pen.setWidth(penwidth)
-
-	if color is not None:
-	    self._default_color = color
+        self._edge_pen.setColor(self._default_edge_color)
 
         self._sibling_edges = set()
 
@@ -115,7 +117,8 @@ class EdgeItem(GraphItem):
         self._path.setPath(path)
         self.addToGroup(self._path)
 
-        self.set_color()
+        self.set_node_color()
+        self.set_label_color()
 
     def add_to_scene(self, scene):
         scene.addItem(self)
@@ -134,51 +137,55 @@ class EdgeItem(GraphItem):
     def add_sibling_edge(self, edge):
         self._sibling_edges.add(edge)
 
-    def set_color(self, color=None):
+    def set_node_color(self, color=None):
         if color is None:
             self._label_pen.setColor(self._default_text_color)
-    	    self._brush.setColor(self._default_text_color)
-	else:
+            self._brush.setColor(self._default_color)
+            self._edge_pen.setColor(self._default_edge_color)
+        else:
             self._label_pen.setColor(color)
             self._brush.setColor(color)
-
-        if color is None:
-            color = self._default_color
-
-        self._edge_pen.setColor(color)
+            self._edge_pen.setColor(color)
 
         self._path.setPen(self._edge_pen)
         if self._arrow is not None:
             self._arrow.setBrush(self._brush)
             self._arrow.setPen(self._edge_pen)
+
+    def set_label_color(self, color=None):
+        if color is None:
+            self._label_pen.setColor(self._default_text_color)
+        else:
+            self._label_pen.setColor(color)
+
         if self._label is not None:
             self._label.setBrush(self._brush)
             self._label.setPen(self._label_pen)
 
     def _handle_hoverEnterEvent(self, event):
         # hovered edge item in red
-        self.set_color(self._COLOR_RED)
+        self.set_node_color(self._COLOR_RED)
 
         if self._highlight_level > 1:
             if self.from_node != self.to_node:
                 # from-node in blue
-                self.from_node.set_color(self._COLOR_BLUE)
+                self.from_node.set_node_color(self._COLOR_BLUE)
                 # to-node in green
-                self.to_node.set_color(self._COLOR_GREEN)
+                self.to_node.set_node_color(self._COLOR_GREEN)
             else:
                 # from-node/in-node in teal
-                self.from_node.set_color(self._COLOR_TEAL)
-                self.to_node.set_color(self._COLOR_TEAL)
+                self.from_node.set_node_color(self._COLOR_TEAL)
+                self.to_node.set_node_color(self._COLOR_TEAL)
         if self._highlight_level > 2:
             # sibling edges in orange
             for sibling_edge in self._sibling_edges:
-                sibling_edge.set_color(self._COLOR_ORANGE)
+                sibling_edge.set_node_color(self._COLOR_ORANGE)
 
     def _handle_hoverLeaveEvent(self, event):
-        self.set_color()
+        self.set_node_color()
         if self._highlight_level > 1:
-            self.from_node.set_color()
-            self.to_node.set_color()
+            self.from_node.set_node_color()
+            self.to_node.set_node_color()
         if self._highlight_level > 2:
             for sibling_edge in self._sibling_edges:
-                sibling_edge.set_color()
+                sibling_edge.set_node_color()

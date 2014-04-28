@@ -196,22 +196,12 @@ class DotToQtGenerator():
         if label is not None:
             label = label.decode('string_escape')
 
-	color = None
-	if edge.attr['heat'] is not None:
-	    # we assume that heat is normalized between 0.0 (green) and 1.0 (red)
-	    # 0.0->green(0,255,0) to 0.5->yellow (255,255,0) to red 1.0(255,0,0)
-	    heat = float(edge.attr['heat'])
-
-	    if heat < 0:
-		red = 0
-		green = 0
-	    elif heat <= 0.5:
-		red = int(heat*255*2)
-		green = 255
-	    elif heat > 0.5:
-		red = 255
-		green = 255-int((heat-0.5)*255*2)
-	    color = QColor(red,green,0)
+        color = None
+        if 'colorR' in edge.attr and 'colorG' in edge.attr and 'colorB' in edge.attr:
+            r = edge.attr['colorR']
+            g = edge.attr['colorG']
+            b = edge.attr['colorB']
+            color = QColor(float(r), float(g), float(b))
 
         edge_item = EdgeItem(highlight_level=highlight_level,
                              spline=edge_pos,
@@ -219,8 +209,8 @@ class DotToQtGenerator():
                              label=label,
                              from_node=nodes[source_node],
                              to_node=nodes[destination_node],
-			     penwidth=int(edge.attr['penwidth']),
-			     color=color)
+                             penwidth=int(edge.attr['penwidth']),
+                             edge_color=color)
 
         if same_label_siblings:
             if label is None:
