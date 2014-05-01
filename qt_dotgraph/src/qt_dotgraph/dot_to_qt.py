@@ -195,12 +195,22 @@ class DotToQtGenerator():
             edge_pos = edge.attr['pos']
         if label is not None:
             label = label.decode('string_escape')
+
+        color = None
+        if 'colorR' in edge.attr and 'colorG' in edge.attr and 'colorB' in edge.attr:
+            r = edge.attr['colorR']
+            g = edge.attr['colorG']
+            b = edge.attr['colorB']
+            color = QColor(float(r), float(g), float(b))
+
         edge_item = EdgeItem(highlight_level=highlight_level,
                              spline=edge_pos,
                              label_center=label_center,
                              label=label,
                              from_node=nodes[source_node],
-                             to_node=nodes[destination_node])
+                             to_node=nodes[destination_node],
+                             penwidth=int(edge.attr['penwidth']),
+                             edge_color=color)
 
         if same_label_siblings:
             if label is None:

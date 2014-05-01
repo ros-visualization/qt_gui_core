@@ -94,7 +94,7 @@ class PydotFactory():
         if url is not None:
             node.set_URL(self.escape_name(url))
         if color is not None:
-            node.set_color(color)
+            node.set_node_color(color)
         graph.add_node(node)
 
     def add_subgraph_to_graph(self,
@@ -128,13 +128,13 @@ class PydotFactory():
         subgraphlabel = self.escape_label(subgraphlabel)
         if subgraphlabel:
             g.set_label(subgraphlabel)
-        if 'set_color' in g.__dict__:
+        if 'set_node_color' in g.__dict__:
             if color is not None:
-                g.set_color(color)
+                g.set_node_color(color)
         graph.add_subgraph(g)
         return g
 
-    def add_edge_to_graph(self, graph, nodename1, nodename2, label=None, url=None, simplify=True, style=None):
+    def add_edge_to_graph(self, graph, nodename1, nodename2, label=None, url=None, simplify=True, style=None, penwidth=1, color=None):
         if simplify and LooseVersion(pydot.__version__) < LooseVersion('1.0.10'):
             if graph.get_edge(self.escape_name(nodename1), self.escape_name(nodename2)) != []:
                 return
@@ -145,6 +145,11 @@ class PydotFactory():
             edge.set_URL(self.escape_name(url))
         if style is not None:
             edge.set_style(style)
+        edge.obj_dict['attributes']['penwidth'] = str(penwidth)
+        if color is not None:
+            edge.obj_dict['attributes']['colorR'] = str(color[0])
+            edge.obj_dict['attributes']['colorG'] = str(color[1])
+            edge.obj_dict['attributes']['colorB'] = str(color[2])
         graph.add_edge(edge)
 
     def create_dot(self, graph):
