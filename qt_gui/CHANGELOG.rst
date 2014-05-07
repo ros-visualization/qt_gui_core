@@ -2,8 +2,8 @@
 Changelog for package qt_gui
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.2.23 (2014-05-07)
+-------------------
 * fix ToolBarArea type with PySide
 
 0.2.22 (2014-03-04)
