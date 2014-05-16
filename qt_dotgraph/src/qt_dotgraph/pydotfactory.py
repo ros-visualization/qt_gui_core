@@ -94,7 +94,7 @@ class PydotFactory():
         if url is not None:
             node.set_URL(self.escape_name(url))
         if color is not None:
-            node.set_node_color(color)
+            node.set_color(color)
         graph.add_node(node)
 
     def add_subgraph_to_graph(self,
