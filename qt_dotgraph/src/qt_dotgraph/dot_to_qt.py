@@ -30,6 +30,9 @@
 # ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
+# work around for https://bugs.launchpad.net/ubuntu/+source/pydot/+bug/1321135
+import pyparsing
+pyparsing._noncomma = "".join([c for c in pyparsing.printables if c != ","])
 import pydot
 
 from python_qt_binding.QtCore import QPointF, QRectF

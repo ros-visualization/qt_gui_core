@@ -31,8 +31,12 @@
 # POSSIBILITY OF SUCH DAMAGE.
 
 from distutils.version import LooseVersion
-import pydot
 import urllib
+
+# work around for https://bugs.launchpad.net/ubuntu/+source/pydot/+bug/1321135
+import pyparsing
+pyparsing._noncomma = "".join([c for c in pyparsing.printables if c != ","])
+import pydot
 
 
 # Reference implementation for a dotcode factory
