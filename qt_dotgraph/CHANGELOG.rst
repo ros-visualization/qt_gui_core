@@ -2,8 +2,8 @@
 Changelog for package qt_dotgraph
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.2.24 (2014-05-21)
+-------------------
 * add work around for pydot bug in Saucy (`#42 <https://github.com/ros-visualization/qt_gui_core/issues/42>`_)
 * fix regression 0.2.23 (`#41 <https://github.com/ros-visualization/qt_gui_core/issues/41>`_)
 
