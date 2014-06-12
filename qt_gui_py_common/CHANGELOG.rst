@@ -2,6 +2,10 @@
 Changelog for package qt_gui_py_common
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-------------------
+* added CheckBoxGroup class
+
 0.2.24 (2014-05-21)
 -------------------
 

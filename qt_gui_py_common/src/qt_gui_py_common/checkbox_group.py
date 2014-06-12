@@ -1,5 +1,6 @@
 # Software License Agreement (BSD License)
 #
+# Copyright (c) 2014, Andrew Wilson
 # Copyright (c) 2012, Dorian Scholz
 # All rights reserved.
 #
