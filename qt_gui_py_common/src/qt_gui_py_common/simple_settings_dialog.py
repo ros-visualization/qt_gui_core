@@ -38,6 +38,7 @@ from python_qt_binding.QtGui import QDialog, QLabel
 from rospkg.rospack import RosPack
 
 from .exclusive_options_group import ExclusiveOptionGroup
+from .checkbox_group import CheckBoxGroup
 
 
 class SimpleSettingsDialog(QDialog):
@@ -63,6 +64,10 @@ class SimpleSettingsDialog(QDialog):
     def add_exclusive_option_group(self, *args, **kwargs):
         """Convenience method to add an ExclusiveOptionGroup."""
         self.add_settings_group(ExclusiveOptionGroup(*args, **kwargs))
+
+    def add_checkbox_group(self, *args, **kwargs):
+        """Convenience method to add an CheckBoxGroup."""
+        self.add_settings_group(CheckBoxGroup(*args, **kwargs))
 
     def add_settings_group(self, settings_group):
         """Adds a settings group, which is any widget with a get_settings method."""
