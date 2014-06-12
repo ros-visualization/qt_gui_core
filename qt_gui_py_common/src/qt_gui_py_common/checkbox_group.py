@@ -1,5 +1,6 @@
 # Software License Agreement (BSD License)
 #
+# Copyright (c) 2014, Andrew Wilson
 # Copyright (c) 2012, Dorian Scholz
 # All rights reserved.
 #
@@ -30,41 +31,44 @@
 # ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-from python_qt_binding.QtGui import QButtonGroup, QGroupBox, QLabel, QRadioButton, QVBoxLayout, QWidget
+from python_qt_binding.QtGui import QButtonGroup, QGroupBox, QLabel, QCheckBox, QVBoxLayout, QWidget
 
 
-class ExclusiveOptionGroup(QGroupBox):
+class CheckBoxGroup(QGroupBox):
     """
-    Creates a button group of exclusive radio options. 
+    Creates a button group of non-exclusive checkbox options. 
 
-    Options must be a dict with following keys: 'enabled','selected','title','description','tooltip'
+    Options must be a dict with following keys: 'enabled','title','description','tooltip'
     """
 
-    def __init__(self, options, title='Exclusive Options', selected_index=None, parent=None):
-        super(ExclusiveOptionGroup, self).__init__()
+    def __init__(self, options, title='Checkboxes', selected_indexes=[], parent=None):
+        super(CheckBoxGroup, self).__init__()
         self.setTitle(title)
         self.setLayout(QVBoxLayout())
         self._button_group = QButtonGroup()
-        self._button_group.setExclusive(True)
+        self._button_group.setExclusive(False)
         self._options = options
         if parent == None:
             parent = self
-
+        
         for (button_id, option) in enumerate(self._options):
 
-            radio_button = QRadioButton(option.get('title', 'option %d' % button_id))
-            radio_button.setEnabled(option.get('enabled', True))
-            radio_button.setChecked(option.get('selected', False) or button_id == selected_index)
-            radio_button.setToolTip(option.get('tooltip', ''))
+            checkbox = QCheckBox(option.get('title', 'option %d' % button_id))
+            checkbox.setEnabled(option.get('enabled', True))
+            checkbox.setChecked(button_id in selected_indexes)
+            checkbox.setToolTip(option.get('tooltip', ''))
 
-            self._button_group.addButton(radio_button, button_id)
-            parent.layout().addWidget(radio_button)
+            self._button_group.addButton(checkbox, button_id)
+            parent.layout().addWidget(checkbox)
             if 'description' in option:
                 parent.layout().addWidget(QLabel(option['description']))
 
     def get_settings(self):
-        """Returns dictionary with selected_index (int) and selected_option (dict) keys."""
-        selected_index = self._button_group.checkedId()
-        if selected_index >= 0:
-            return {'selected_index': selected_index, 'selected_option': self._options[selected_index]}
-        return {'selected_index': None, 'selected_option': None}
+        """Returns dictionary with selected_indexes (array) and selected_options (array) keys."""
+        selected_indexes = []
+        selected_options = []
+        for button in self._button_group.buttons():
+            if button.isChecked():
+                selected_indexes.append(self._button_group.id(button))
+                selected_options.append(self._options[self._button_group.id(button)])
+        return {'selected_indexes': selected_indexes, 'selected_options': selected_options}
