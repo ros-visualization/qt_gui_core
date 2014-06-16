@@ -35,34 +35,36 @@ from python_qt_binding.QtGui import QButtonGroup, QGroupBox, QLabel, QCheckBox, 
 
 
 class CheckBoxGroup(QGroupBox):
+    """
+    Creates a button group of non-exclusive checkbox options. 
 
-    def __init__(self, options, title='Checkboxes', selected_indexes=[]):
+    Options must be a dict with following keys: 'enabled','title','description','tooltip'
+    """
+
+    def __init__(self, options, title='Checkboxes', selected_indexes=[], parent=None):
         super(CheckBoxGroup, self).__init__()
         self.setTitle(title)
         self.setLayout(QVBoxLayout())
         self._button_group = QButtonGroup()
         self._button_group.setExclusive(False)
         self._options = options
-
-        button_id = 0
-        for option in self._options:
+        if parent == None:
+            parent = self
+        
+        for (button_id, option) in enumerate(self._options):
 
             checkbox = QCheckBox(option.get('title', 'option %d' % button_id))
             checkbox.setEnabled(option.get('enabled', True))
-            checkbox.setChecked(option.get('selected', False) or button_id in selected_indexes)
+            checkbox.setChecked(button_id in selected_indexes)
             checkbox.setToolTip(option.get('tooltip', ''))
 
-            widget = QWidget()
-            widget.setLayout(QVBoxLayout())
-            widget.layout().addWidget(checkbox)
-            if 'description' in option:
-                widget.layout().addWidget(QLabel(option['description']))
-
             self._button_group.addButton(checkbox, button_id)
-            self.layout().addWidget(widget)
-            button_id += 1
+            parent.layout().addWidget(checkbox)
+            if 'description' in option:
+                parent.layout().addWidget(QLabel(option['description']))
 
     def get_settings(self):
+        """Returns dictionary with selected_indexes (array) and selected_options (array) keys."""
         selected_indexes = []
         selected_options = []
         for button in self._button_group.buttons():

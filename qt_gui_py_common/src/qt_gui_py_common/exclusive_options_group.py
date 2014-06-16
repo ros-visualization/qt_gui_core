@@ -34,35 +34,37 @@ from python_qt_binding.QtGui import QButtonGroup, QGroupBox, QLabel, QRadioButto
 
 
 class ExclusiveOptionGroup(QGroupBox):
+    """
+    Creates a button group of exclusive radio options. 
 
-    def __init__(self, options, title='Exclusive Options', selected_index=None):
+    Options must be a dict with following keys: 'enabled','selected','title','description','tooltip'
+    """
+
+    def __init__(self, options, title='Exclusive Options', selected_index=None, parent=None):
         super(ExclusiveOptionGroup, self).__init__()
         self.setTitle(title)
         self.setLayout(QVBoxLayout())
         self._button_group = QButtonGroup()
         self._button_group.setExclusive(True)
         self._options = options
+        if parent == None:
+            parent = self
 
-        button_id = 0
-        for option in self._options:
-            button_id += 1
+        for (button_id, option) in enumerate(self._options):
 
             radio_button = QRadioButton(option.get('title', 'option %d' % button_id))
             radio_button.setEnabled(option.get('enabled', True))
-            radio_button.setChecked(option.get('selected', False) or (button_id - 1) == selected_index)
+            radio_button.setChecked(option.get('selected', False) or button_id == selected_index)
             radio_button.setToolTip(option.get('tooltip', ''))
 
-            widget = QWidget()
-            widget.setLayout(QVBoxLayout())
-            widget.layout().addWidget(radio_button)
-            if 'description' in option:
-                widget.layout().addWidget(QLabel(option['description']))
-
             self._button_group.addButton(radio_button, button_id)
-            self.layout().addWidget(widget)
+            parent.layout().addWidget(radio_button)
+            if 'description' in option:
+                parent.layout().addWidget(QLabel(option['description']))
 
     def get_settings(self):
-        selected_index = self._button_group.checkedId() - 1
+        """Returns dictionary with selected_index (int) and selected_option (dict) keys."""
+        selected_index = self._button_group.checkedId()
         if selected_index >= 0:
             return {'selected_index': selected_index, 'selected_option': self._options[selected_index]}
         return {'selected_index': None, 'selected_option': None}
