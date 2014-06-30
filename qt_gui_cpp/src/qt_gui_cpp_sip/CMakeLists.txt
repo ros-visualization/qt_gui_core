@@ -1,3 +1,5 @@
+find_package(PythonLibs "${PYTHON_VERSION_MAJOR}.${PYTHON_VERSION_MINOR}" REQUIRED)
+
 set(qt_gui_cpp_HDRS_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../../include/qt_gui_cpp)
 set(qt_gui_cpp_sip_DEPENDENT_FILES
   composite_plugin_provider.sip
@@ -27,7 +29,7 @@ set(qt_gui_cpp_sip_DEPENDENT_FILES
 )
 
 # maintain context for different named target
-set(qt_gui_cpp_sip_INCLUDE_DIRS ${qt_gui_cpp_INCLUDE_DIRS} "${CMAKE_CURRENT_SOURCE_DIR}/../../include" ${catkin_INCLUDE_DIRS})
+set(qt_gui_cpp_sip_INCLUDE_DIRS ${qt_gui_cpp_INCLUDE_DIRS} "${CMAKE_CURRENT_SOURCE_DIR}/../../include" ${catkin_INCLUDE_DIRS} ${PYTHON_INCLUDE_DIRS})
 set(qt_gui_cpp_sip_LIBRARIES ${qt_gui_cpp_LIBRARIES} ${PROJECT_NAME} ${catkin_LIBRARIES} ${Boost_LIBRARIES})
 set(qt_gui_cpp_sip_LIBRARY_DIRS ${qt_gui_cpp_LIBRARY_DIRS} ${CATKIN_DEVEL_PREFIX}/lib)
 set(qt_gui_cpp_sip_LDFLAGS_OTHER ${qt_gui_cpp_LDFLAGS_OTHER} -Wl,-rpath,\\"${CATKIN_DEVEL_PREFIX}/lib\\")
