@@ -4,7 +4,7 @@ Changelog for package qt_gui_py_common
 
 Forthcoming
 -------------------
-* added CheckBoxGroup class
+* add CheckBoxGroup class (`#44 <https://github.com/ros-visualization/qt_gui_core/issues/44>`_)
 
 0.2.24 (2014-05-21)
 -------------------
