@@ -247,7 +247,7 @@ class PluginHandler(QObject):
         if self._application_context.options.freeze_layout:
             # dock widgets are not closable when perspective is locked or plugin is running standalone
             features = dock_widget.features()
-            dock_widget.setFeatures(features ^ QDockWidget.DockWidgetMovable)
+            dock_widget.setFeatures(features ^ (QDockWidget.DockWidgetMovable | QDockWidget.DockWidgetFloatable))
 
     def _update_title_bar(self, dock_widget, hide_help=False, hide_reload=False):
         title_bar = dock_widget.titleBarWidget()
