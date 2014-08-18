@@ -2,6 +2,9 @@
 Changelog for package qt_gui_cpp
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+
 0.2.25 (2014-07-10)
 -------------------
 * fix finding specific version of PythonLibs with CMake 3 (`#45 <https://github.com/ros-visualization/qt_gui_core/issues/45>`_)
