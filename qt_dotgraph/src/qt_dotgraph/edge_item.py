@@ -36,7 +36,13 @@ from .graph_item import GraphItem
 
 class EdgeItem(GraphItem):
 
-    def __init__(self, highlight_level, spline, label_center, label, from_node, to_node, parent=None, penwidth=1, edge_color=None):
+    _qt_pen_styles = {
+        'dashed': Qt.DashLine,
+        'dotted': Qt.DotLine,
+        'solid': Qt.SolidLine,
+    }
+
+    def __init__(self, highlight_level, spline, label_center, label, from_node, to_node, parent=None, penwidth=1, edge_color=None, style='solid'):
         super(EdgeItem, self).__init__(highlight_level, parent)
 
         self.from_node = from_node
@@ -50,13 +56,17 @@ class EdgeItem(GraphItem):
 
         self._default_text_color = self._COLOR_BLACK
         self._default_color = self._COLOR_BLACK
-        self._brush = QBrush(self._default_color)
+        self._text_brush = QBrush(self._default_color)
+        self._shape_brush = QBrush(self._default_color)
+        if style in ['dashed', 'dotted']:
+            self._shape_brush = QBrush(Qt.transparent)
         self._label_pen = QPen()
         self._label_pen.setColor(self._default_text_color)
         self._label_pen.setJoinStyle(Qt.RoundJoin)
         self._edge_pen = QPen(self._label_pen)
         self._edge_pen.setWidth(penwidth)
         self._edge_pen.setColor(self._default_edge_color)
+        self._edge_pen.setStyle(self._qt_pen_styles.get(style, Qt.SolidLine))
 
         self._sibling_edges = set()
 
@@ -140,16 +150,20 @@ class EdgeItem(GraphItem):
     def set_node_color(self, color=None):
         if color is None:
             self._label_pen.setColor(self._default_text_color)
-            self._brush.setColor(self._default_color)
+            self._text_brush.setColor(self._default_color)
+            if self._shape_brush.isOpaque():
+                self._shape_brush.setColor(self._default_color)
             self._edge_pen.setColor(self._default_edge_color)
         else:
             self._label_pen.setColor(color)
-            self._brush.setColor(color)
+            self._text_brush.setColor(color)
+            if self._shape_brush.isOpaque():
+                self._shape_brush.setColor(color)
             self._edge_pen.setColor(color)
 
         self._path.setPen(self._edge_pen)
         if self._arrow is not None:
-            self._arrow.setBrush(self._brush)
+            self._arrow.setBrush(self._shape_brush)
             self._arrow.setPen(self._edge_pen)
 
     def set_label_color(self, color=None):
@@ -159,7 +173,7 @@ class EdgeItem(GraphItem):
             self._label_pen.setColor(color)
 
         if self._label is not None:
-            self._label.setBrush(self._brush)
+            self._label.setBrush(self._text_brush)
             self._label.setPen(self._label_pen)
 
     def _handle_hoverEnterEvent(self, event):
