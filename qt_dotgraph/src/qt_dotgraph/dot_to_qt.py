@@ -180,6 +180,7 @@ class DotToQtGenerator():
         if 'style' in edge.attr:
             if edge.attr['style'] == 'invis':
                 return
+        style = edge.attr.get('style', None)
 
         label = edge.attr.get('label', None)
         label_pos = edge.attr.get('lp', None)
@@ -213,7 +214,8 @@ class DotToQtGenerator():
                              from_node=nodes[source_node],
                              to_node=nodes[destination_node],
                              penwidth=int(edge.attr['penwidth']),
-                             edge_color=color)
+                             edge_color=color,
+                             style=style)
 
         if same_label_siblings:
             if label is None:
