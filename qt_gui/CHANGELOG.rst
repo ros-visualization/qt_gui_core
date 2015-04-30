@@ -2,6 +2,9 @@
 Changelog for package qt_gui
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+
 0.2.26 (2014-08-18)
 -------------------
 * prevent floating of plugins via double-click when -f flag is set (`#48 <https://github.com/ros-visualization/qt_gui_core/issues/48>`_)
