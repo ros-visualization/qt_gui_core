@@ -2,8 +2,8 @@
 Changelog for package qt_dotgraph
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.2.27 (2015-04-29)
+-------------------
 * add optional style argument for edges (`#51 <https://github.com/ros-visualization/qt_gui_core/pull/51>`_)
 * fix tests (`#53 <https://github.com/ros-visualization/qt_gui_core/pull/53>`_)
 
