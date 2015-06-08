@@ -80,7 +80,11 @@ class DotToQtGenerator():
                     attr[key] = get_unquoted(obj_dic['nodes']['graph'][0]['attributes'], key)
         subgraph.attr = attr
 
-        bb = subgraph.attr['bb'].strip('"').split(',')
+        bb = subgraph.attr.get('bb', None)
+        if bb is None:
+            # no bounding box
+            return None
+        bb = bb.strip('"').split(',')
         if len(bb) < 4:
             # bounding box is empty
             return None
