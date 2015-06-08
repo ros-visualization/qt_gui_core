@@ -2,6 +2,10 @@
 Changelog for package qt_dotgraph
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* skip subgraphs without a bounding box (`ros-visualization/rqt_common_plugins#321 <https://github.com/ros-visualization/rqt_common_plugins/issues/321>`_)
+
 0.2.27 (2015-04-29)
 -------------------
 * add optional style argument for edges (`#51 <https://github.com/ros-visualization/qt_gui_core/pull/51>`_)
