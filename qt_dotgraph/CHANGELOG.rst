@@ -2,8 +2,8 @@
 Changelog for package qt_dotgraph
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.2.28 (2015-06-08)
+-------------------
 * skip subgraphs without a bounding box (`ros-visualization/rqt_common_plugins#321 <https://github.com/ros-visualization/rqt_common_plugins/issues/321>`_)
 
 0.2.27 (2015-04-29)
