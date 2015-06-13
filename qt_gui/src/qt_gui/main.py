@@ -342,6 +342,7 @@ class Main(object):
         from .composite_plugin_provider import CompositePluginProvider
         from .container_manager import ContainerManager
         from .help_provider import HelpProvider
+        from .icon_loader import get_icon
         from .main_window import MainWindow
         from .minimized_dock_widgets_toolbar import MinimizedDockWidgetsToolbar
         from .perspective_manager import PerspectiveManager
@@ -534,6 +535,18 @@ class Main(object):
             running = plugin_manager.is_plugin_running(plugin, plugin_serial)
             if not running:
                 return 1
+            if self._options.standalone_plugin:
+                # use icon of standalone plugin (if available) for application
+                plugin_descriptor = plugin_manager.get_plugin_descriptor(plugin)
+                action_attributes = plugin_descriptor.action_attributes()
+                if 'icon' in action_attributes and action_attributes['icon'] is not None:
+                    base_path = plugin_descriptor.attributes().get('plugin_path')
+                    try:
+                        icon = get_icon(action_attributes['icon'], action_attributes.get('icontype', None), base_path)
+                    except UserWarning:
+                        pass
+                    else:
+                        app.setWindowIcon(icon)
 
         if main_window is not None:
             main_window.show()
