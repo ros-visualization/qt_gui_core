@@ -164,6 +164,9 @@ class PluginManager(QObject):
             plugins[plugin_id] = '/'.join(plugin_descriptor.attributes().get('class_type', 'unknown').split('::'))
         return plugins
 
+    def get_plugin_descriptor(self, plugin_id):
+        return self._plugin_descriptors.get(plugin_id, None)
+
     def is_plugin_running(self, plugin_id, serial_number):
         instance_id = PluginInstanceId(plugin_id, serial_number)
         return str(instance_id) in self._running_plugins
