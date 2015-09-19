@@ -2,8 +2,8 @@
 Changelog for package qt_gui
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.2.29 (2015-09-19)
+-------------------
 * use icon of standalone plugin for app (`#54 <https://github.com/ros-visualization/qt_gui_core/pull/54>`_)
 
 0.2.28 (2015-06-08)
