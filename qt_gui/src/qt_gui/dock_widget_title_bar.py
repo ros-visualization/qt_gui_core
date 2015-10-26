@@ -31,17 +31,20 @@
 import os
 
 from python_qt_binding import loadUi
-from python_qt_binding.QtCore import QEvent, QObject, Qt, qWarning
-from python_qt_binding.QtGui import QDockWidget, QIcon, QWidget
+from python_qt_binding.QtCore import QEvent, QObject, Qt, qWarning, Signal
+from python_qt_binding.QtGui import QDockWidget, QIcon, QWidget, QLineEdit, QLabel, QMenu
 
 
 class DockWidgetTitleBar(QWidget):
 
     """Title bar for dock widgets providing custom actions."""
 
+    title_label_updated = Signal(str)
+
     def __init__(self, dock_widget, qtgui_path):
         super(DockWidgetTitleBar, self).__init__(dock_widget)
         self._dock_widget = dock_widget
+        self._widget_title = None
 
         ui_file = os.path.join(qtgui_path, 'resource', 'dock_widget_title_bar.ui')
         loadUi(ui_file, self)
@@ -88,6 +91,10 @@ class DockWidgetTitleBar(QWidget):
         }
         self._dock_widget.installEventFilter(self)
 
+        self.title_label.installEventFilter(self)
+        self.title_edit.hide()
+        self.title_edit.returnPressed.connect(self._update_title_label)
+
     def __del__(self):
         self._dock_widget.removeEventFilter(self)
 
@@ -120,6 +127,16 @@ class DockWidgetTitleBar(QWidget):
             ret_val = self._event_callbacks[event.type()](obj, event)
             if ret_val is not None:
                 return ret_val
+        if event.type() == event.ContextMenu and obj == self.title_label:
+            menu = QMenu(self)
+            rename_action = menu.addAction("Rename dock widget")
+            action = menu.exec_(self.mapToGlobal(event.pos()))
+            if action == rename_action:
+                self.title_label.hide()
+                self.title_edit.setText(self.title_label.text())
+                self.title_edit.show()
+                self.title_edit.setFocus()
+            return True
         return QObject.eventFilter(self, obj, event)
 
     def _update_icon(self, *args):
@@ -166,6 +183,9 @@ class DockWidgetTitleBar(QWidget):
         movable = bool(self.parentWidget().features() & QDockWidget.DockWidgetMovable)
         if movable:
             settings.set_value('dockable', self.dockable_button.isChecked())
+        # save title
+        if self._widget_title is not None:
+            settings.set_value('widget_title', self.title_label.text())
 
     def restore_settings(self, settings):
         dockable = settings.value('dockable', True) in [True, 'true']
@@ -173,6 +193,22 @@ class DockWidgetTitleBar(QWidget):
         movable = bool(self.parentWidget().features() & QDockWidget.DockWidgetMovable)
         self.dockable_button.setChecked(dockable and movable)
         self._toggle_dockable(self.dockable_button.isChecked())
+        # restore title
+        self._widget_title = settings.value('widget_title', None)
+        if self._widget_title is not None:
+            self.title_label.setText(self._widget_title)
+            self.title_label_updated.emit(self._widget_title)
+
+    def _update_title_label(self):
+        if self.title_edit.text():
+            self.title_edit.hide()
+            self._widget_title = self.title_edit.text()
+            self.title_label.setText(self._widget_title)
+            self.title_label.show()
+            self.title_label_updated.emit(self._widget_title)
+        else:
+            self.title_edit.hide()
+            self.title_label.show()
 
 
 if __name__ == '__main__':
