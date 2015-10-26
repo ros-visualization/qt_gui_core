@@ -108,3 +108,4 @@ class DockWidgetContainer(DockWidget):
 
     def title_updated(self, title):
         self._window_title = title
+        self.setWindowTitle(title)
