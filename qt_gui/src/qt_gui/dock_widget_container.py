@@ -28,10 +28,13 @@
 # ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-from python_qt_binding.QtGui import QIcon
+from python_qt_binding.QtGui import QHeaderView, QIcon, QMenu, QTreeWidgetItem, QWidget, QTextEdit, QDialog, QLabel
+from python_qt_binding.QtCore import Qt, QTimer, Signal, Slot
+from rospkg.rospack import RosPack
 
 from .dock_widget import DockWidget
 from .dockable_main_window import DockableMainWindow
+from .container_title_bar import ContainerTitleBar
 
 
 class DockWidgetContainer(DockWidget):
@@ -47,6 +50,13 @@ class DockWidgetContainer(DockWidget):
         self.setWidget(self.main_window)
         self.setWindowIcon(QIcon.fromTheme('folder'))
 
+        # custom title bar (editable title)
+        self._window_title = None
+        self._qtgui_path = RosPack().get_path('qt_gui')
+        self._title_bar = ContainerTitleBar(self, self._qtgui_path)
+        self.setTitleBarWidget(self._title_bar)
+        self._title_bar.title_label_updated.connect(self.title_updated)
+
     def serial_number(self):
         return self._serial_number
 
@@ -58,6 +68,9 @@ class DockWidgetContainer(DockWidget):
         mw_settings = settings.get_settings('mainwindow')
         self._save_geometry(mw_settings)
         self._save_state(mw_settings)
+        # save window title if set
+        if self._window_title is not None:
+            settings.set_value('window_title', self._window_title)
         super(DockWidgetContainer, self).save_settings(settings)
 
     def _save_geometry(self, settings):
@@ -80,6 +93,10 @@ class DockWidgetContainer(DockWidget):
         self._settings = mw_settings
         # only restore geometry, restoring state is triggered after PluginManager has been updated
         self._restore_geometry(mw_settings)
+        # set window title if stored
+        if settings.contains('window_title'):
+            self._window_title = settings.value('window_title')
+            self.setWindowTitle(self._window_title)
 
     def _restore_geometry(self, settings):
         if settings.contains('geometry'):
@@ -88,3 +105,6 @@ class DockWidgetContainer(DockWidget):
     def restore_state(self):
         if self._settings.contains('state'):
             self.main_window.restoreState(self._settings.value('state'))
+
+    def title_updated(self, title):
+        self._window_title = title
