@@ -1,4 +1,4 @@
-# Copyright (c) 2011, Dirk Thomas, Dorian Scholz, TU Darmstadt, Samuel Bachmann
+# Copyright (c) 2011, Dirk Thomas, Dorian Scholz, TU Darmstadt
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
