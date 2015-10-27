@@ -84,7 +84,7 @@ class ContainerTitleBar(QWidget):
     def connect_button(self, button_id, callback):
         button = self._extra_buttons.get(button_id, None)
         if button is None:
-            qWarning('DockWidgetTitleBar.connect_button(): unknown button_id: %s' % button_id)
+            qWarning('ContainerTitleBar.connect_button(): unknown button_id: %s' % button_id)
             return
         button.clicked.connect(callback)
 
@@ -98,7 +98,7 @@ class ContainerTitleBar(QWidget):
     def show_button(self, button_id, visibility=True):
         button = self._extra_buttons.get(button_id, None)
         if button is None:
-            qWarning('DockWidgetTitleBar.show_button(): unknown button_id: %s' % button_id)
+            qWarning('ContainerTitleBar.show_button(): unknown button_id: %s' % button_id)
             return
         button.setVisible(visibility)
 
