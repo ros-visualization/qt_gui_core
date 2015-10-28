@@ -44,6 +44,7 @@ class DockWidgetTitleBar(QWidget):
     def __init__(self, dock_widget, qtgui_path):
         super(DockWidgetTitleBar, self).__init__(dock_widget)
         self._dock_widget = dock_widget
+        self._widget_title = None
 
         ui_file = os.path.join(qtgui_path, 'resource', 'dock_widget_title_bar.ui')
         loadUi(ui_file, self)
@@ -179,7 +180,8 @@ class DockWidgetTitleBar(QWidget):
         if movable:
             settings.set_value('dockable', self.dockable_button.isChecked())
         # save title
-        settings.set_value('widget_title', self.title_label.text())
+        if self._widget_title is not None:
+            settings.set_value('widget_title', self.title_label.text())
 
     def restore_settings(self, settings):
         dockable = settings.value('dockable', True) in [True, 'true']
@@ -188,17 +190,18 @@ class DockWidgetTitleBar(QWidget):
         self.dockable_button.setChecked(dockable and movable)
         self._toggle_dockable(self.dockable_button.isChecked())
         # restore title
-        title = settings.value('widget_title', None)
-        if title is not None:
-            self.title_label.setText(title)
-            self.title_label_updated.emit(title)
+        self._widget_title = settings.value('widget_title', None)
+        if self._widget_title is not None:
+            self.title_label.setText(self._widget_title)
+            self.title_label_updated.emit(self._widget_title)
 
     def _update_title_label(self):
         if self.title_edit.text():
             self.title_edit.hide()
-            self.title_label.setText(self.title_edit.text())
+            self._widget_title = self.title_edit.text()
+            self.title_label.setText(self._widget_title)
             self.title_label.show()
-            self.title_label_updated.emit(self.title_edit.text())
+            self.title_label_updated.emit(self._widget_title)
         else:
             self.title_edit.hide()
             self.title_label.show()
