@@ -32,7 +32,7 @@ import os
 
 from python_qt_binding import loadUi
 from python_qt_binding.QtCore import QEvent, QObject, Qt, qWarning
-from python_qt_binding.QtGui import QDockWidget, QIcon, QWidget
+from python_qt_binding.QtGui import QDockWidget, QIcon, QWidget, QLineEdit, QLabel
 
 
 class DockWidgetTitleBar(QWidget):
@@ -88,6 +88,10 @@ class DockWidgetTitleBar(QWidget):
         }
         self._dock_widget.installEventFilter(self)
 
+        self.title_label.installEventFilter(self)
+        self.title_edit.hide()
+        self.title_edit.returnPressed.connect(self._update_title_label)
+
     def __del__(self):
         self._dock_widget.removeEventFilter(self)
 
@@ -120,6 +124,12 @@ class DockWidgetTitleBar(QWidget):
             ret_val = self._event_callbacks[event.type()](obj, event)
             if ret_val is not None:
                 return ret_val
+        if event.type() == event.MouseButtonDblClick and isinstance(obj, QLabel):
+            self.title_label.hide()
+            self.title_edit.setText(self.title_label.text())
+            self.title_edit.show()
+            self.title_edit.setFocus()
+            return True
         return QObject.eventFilter(self, obj, event)
 
     def _update_icon(self, *args):
@@ -166,6 +176,8 @@ class DockWidgetTitleBar(QWidget):
         movable = bool(self.parentWidget().features() & QDockWidget.DockWidgetMovable)
         if movable:
             settings.set_value('dockable', self.dockable_button.isChecked())
+        # save title
+        settings.set_value('widget_title', self.title_label.text())
 
     def restore_settings(self, settings):
         dockable = settings.value('dockable', True) in [True, 'true']
@@ -173,6 +185,19 @@ class DockWidgetTitleBar(QWidget):
         movable = bool(self.parentWidget().features() & QDockWidget.DockWidgetMovable)
         self.dockable_button.setChecked(dockable and movable)
         self._toggle_dockable(self.dockable_button.isChecked())
+        # restore title
+        title = settings.value('widget_title', None)
+        if title is not None:
+            self.title_label.setText(title)
+
+    def _update_title_label(self):
+        if self.title_edit.text():
+            self.title_edit.hide()
+            self.title_label.setText(self.title_edit.text())
+            self.title_label.show()
+        else:
+            self.title_edit.hide()
+            self.title_label.show()
 
 
 if __name__ == '__main__':

@@ -31,7 +31,6 @@
 from .dock_widget_container import DockWidgetContainer
 from .plugin_handler import PluginHandler
 from .window_changed_signaler import WindowChangedSignaler
-from .container_title_bar import ContainerTitleBar
 
 
 class PluginHandlerContainer(PluginHandler):
@@ -42,26 +41,14 @@ class PluginHandlerContainer(PluginHandler):
         super(PluginHandlerContainer, self).__init__(parent, main_window, instance_id, application_context, container_manager)
         self.setObjectName('PluginHandlerContainer')
         self._container = None
-        self._window_title = None
-        self._title_bar = None
 
     def _load(self):
         self._container = DockWidgetContainer(self._container_manager, self._instance_id.serial_number)
         self._container.setObjectName(self._instance_id.tidy_str())
-        if self._window_title is not None:
-            title = self._window_title
-        else:
-            title = self.tr('Container')
-            if self._instance_id.serial_number > 1:
-                title += ' (%d)' % self._instance_id.serial_number
-
-        # custom title bar (editable title)
-        self._title_bar = ContainerTitleBar(self._container, self._application_context.qtgui_path)
-        self._container.setTitleBarWidget(self._title_bar)
-        self._title_bar.title_label_updated.connect(self._title_updated)
-        self._title_bar.connect_close_button(self._close_dock_widget)
+        title = self.tr('Container')
+        if self._instance_id.serial_number > 1:
+            title += ' (%d)' % self._instance_id.serial_number
         self._container.setWindowTitle(title)
-
         self._update_dock_widget_features(self._container)
         self._add_dock_widget_to_main_window(self._container)
         self._update_title_bar(self._container, True, True)
@@ -87,21 +74,10 @@ class PluginHandlerContainer(PluginHandler):
         self._emit_unload_completed()
 
     def _save_settings(self, plugin_settings, instance_settings):
-        # save window title if set
-        if self._window_title is not None:
-            instance_settings.set_value('window_title', self._window_title)
         self.emit_save_settings_completed()
 
     def _restore_settings(self, plugin_settings, instance_settings):
-        # set window title if stored
-        if instance_settings.contains('window_title'):
-            self._window_title = instance_settings.value('window_title')
-            self._container.setWindowTitle(self._window_title)
         self.emit_restore_settings_completed()
 
     def _close_dock_widget(self, dock_widget):
         self._emit_close_plugin()
-
-    def _title_updated(self, title):
-        self._window_title = title
-        self._container.setWindowTitle(title)
