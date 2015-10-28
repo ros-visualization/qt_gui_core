@@ -32,7 +32,7 @@ import os
 
 from python_qt_binding import loadUi
 from python_qt_binding.QtCore import QEvent, QObject, Qt, qWarning, Signal
-from python_qt_binding.QtGui import QDockWidget, QIcon, QWidget, QLineEdit, QLabel
+from python_qt_binding.QtGui import QDockWidget, QIcon, QWidget, QLineEdit, QLabel, QMenu
 
 
 class DockWidgetTitleBar(QWidget):
@@ -127,11 +127,21 @@ class DockWidgetTitleBar(QWidget):
             ret_val = self._event_callbacks[event.type()](obj, event)
             if ret_val is not None:
                 return ret_val
-        if event.type() == event.MouseButtonDblClick and isinstance(obj, QLabel):
+        if event.type() == event.MouseButtonDblClick and obj == self.title_label:
             self.title_label.hide()
             self.title_edit.setText(self.title_label.text())
             self.title_edit.show()
             self.title_edit.setFocus()
+            return True
+        if event.type() == event.ContextMenu and obj == self.title_label:
+            menu = QMenu(self)
+            rename_action = menu.addAction("rename dock widget")
+            action = menu.exec_(self.mapToGlobal(event.pos()))
+            if action == rename_action:
+                self.title_label.hide()
+                self.title_edit.setText(self.title_label.text())
+                self.title_edit.show()
+                self.title_edit.setFocus()
             return True
         return QObject.eventFilter(self, obj, event)
 
