@@ -304,7 +304,6 @@ class PluginHandler(QObject):
         signaler2 = WindowChangedSignaler(dock_widget, dock_widget)
         signaler2.hide_signal.connect(self._on_dock_widget_hide)
         signaler2.show_signal.connect(self._on_dock_widget_show)
-        signaler2.window_title_changed_signal_dock_widget.connect(self._on_widget_title_changed_dock_widget)
         self._widgets[widget] = [dock_widget, signaler, signaler2]
         # trigger to update initial window icon and title
         signaler.emit_all()
@@ -326,9 +325,6 @@ class PluginHandler(QObject):
     def _on_widget_title_changed(self, widget):
         dock_widget, _, _ = self._widgets[widget]
         dock_widget.setWindowTitle(widget.windowTitle())
-
-    def _on_widget_title_changed_dock_widget(self, dock_widget, title):
-        dock_widget.setWindowTitle(title)
 
     def _on_dock_widget_hide(self, dock_widget):
         if self._minimized_dock_widgets_toolbar:
