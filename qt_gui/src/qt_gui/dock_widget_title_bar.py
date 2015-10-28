@@ -31,13 +31,15 @@
 import os
 
 from python_qt_binding import loadUi
-from python_qt_binding.QtCore import QEvent, QObject, Qt, qWarning
+from python_qt_binding.QtCore import QEvent, QObject, Qt, qWarning, Signal
 from python_qt_binding.QtGui import QDockWidget, QIcon, QWidget, QLineEdit, QLabel
 
 
 class DockWidgetTitleBar(QWidget):
 
     """Title bar for dock widgets providing custom actions."""
+
+    title_label_updated = Signal(str)
 
     def __init__(self, dock_widget, qtgui_path):
         super(DockWidgetTitleBar, self).__init__(dock_widget)
@@ -189,12 +191,14 @@ class DockWidgetTitleBar(QWidget):
         title = settings.value('widget_title', None)
         if title is not None:
             self.title_label.setText(title)
+            self.title_label_updated.emit(title)
 
     def _update_title_label(self):
         if self.title_edit.text():
             self.title_edit.hide()
             self.title_label.setText(self.title_edit.text())
             self.title_label.show()
+            self.title_label_updated.emit(self.title_edit.text())
         else:
             self.title_edit.hide()
             self.title_label.show()

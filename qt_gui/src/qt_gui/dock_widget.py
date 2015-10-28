@@ -28,7 +28,7 @@
 # ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-from python_qt_binding.QtCore import qDebug, QEvent, QPoint, QRect, Qt
+from python_qt_binding.QtCore import qDebug, QEvent, QPoint, QRect, Qt, Signal
 from python_qt_binding.QtGui import QApplication, QDockWidget, QMouseEvent
 
 from .dockable_main_window import DockableMainWindow
@@ -38,6 +38,8 @@ from .reparent_event import ReparentEvent
 class DockWidget(QDockWidget):
 
     """Dock widget with the capability to be reparented via drag-and-drop to any other main window."""
+
+    dock_widget_title_updated = Signal(str)
 
     def __init__(self, container_manager):
         super(DockWidget, self).__init__()
@@ -235,6 +237,7 @@ class DockWidget(QDockWidget):
                 self.move(pos)
 
         title_bar = self.titleBarWidget()
+        title_bar.title_label_updated.connect(self._title_updated)
         title_bar.restore_settings(settings)
 
     def _parent_container(self, dock_widget):
@@ -252,3 +255,8 @@ class DockWidget(QDockWidget):
         if parent is not None:
             serial_number = parent.serial_number()
         return serial_number
+
+    def _title_updated(self, title):
+        self.dock_widget_title_updated.emit(title)
+        title_bar = self.titleBarWidget()
+        title_bar.setWindowTitle(title)

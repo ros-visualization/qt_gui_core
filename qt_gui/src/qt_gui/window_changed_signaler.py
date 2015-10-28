@@ -31,7 +31,7 @@
 # POSSIBILITY OF SUCH DAMAGE.
 
 from python_qt_binding.QtCore import QEvent, QObject, Signal
-
+from .dock_widget import DockWidget
 
 class WindowChangedSignaler(QObject):
 
@@ -42,6 +42,7 @@ class WindowChangedSignaler(QObject):
 
     window_icon_changed_signal = Signal(object)
     window_title_changed_signal = Signal(object)
+    window_title_changed_signal_dock_widget = Signal(object, str)
 
     def __init__(self, widget, parent=None):
         super(WindowChangedSignaler, self).__init__(parent)
@@ -49,6 +50,12 @@ class WindowChangedSignaler(QObject):
         self.setObjectName('WindowChangedSignaler__' + self._widget.objectName())
         self._recursive_invocation = False
         self._widget.installEventFilter(self)
+
+        if isinstance(self._widget, DockWidget):
+            self._widget.dock_widget_title_updated.connect(self.update_title_dock_widget)
+
+    def update_title_dock_widget(self, title):
+        self.window_title_changed_signal_dock_widget.emit(self._widget, title)
 
     def emit_all(self):
         if self._widget.isVisible():
