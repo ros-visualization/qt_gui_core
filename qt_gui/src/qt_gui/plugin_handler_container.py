@@ -45,6 +45,7 @@ class PluginHandlerContainer(PluginHandler):
     def _load(self):
         self._container = DockWidgetContainer(self._container_manager, self._instance_id.serial_number)
         self._container.setObjectName(self._instance_id.tidy_str())
+        self._container.dock_widget_title_updated.connect(self._update_title)
         title = self.tr('Container')
         if self._instance_id.serial_number > 1:
             title += ' (%d)' % self._instance_id.serial_number
@@ -81,3 +82,6 @@ class PluginHandlerContainer(PluginHandler):
 
     def _close_dock_widget(self, dock_widget):
         self._emit_close_plugin()
+
+    def _update_title(self, title):
+        self._container.setWindowTitle(title)
