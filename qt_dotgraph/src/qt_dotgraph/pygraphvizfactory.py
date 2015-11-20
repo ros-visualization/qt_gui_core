@@ -49,7 +49,8 @@ class PygraphvizFactory():
                           nodelabel=None,
                           shape='box',
                           color=None,
-                          url=None):
+                          url=None,
+                          tooltip=None):
         """
         creates a node item for this factory, adds it to the graph.
         Node name can vary from label but must always be same for the same node label
@@ -58,10 +59,14 @@ class PygraphvizFactory():
             raise ValueError('Empty Node name')
         if nodelabel is None:
             nodelabel = nodename
+
+        kwargs = {}
+        if tooltip is not None:
+            kwargs['tooltip'] = tooltip
         if color is not None:
-            graph.add_node(nodename, label=str(nodelabel), shape=shape, url=url, color=color)
-        else:
-            graph.add_node(nodename, label=str(nodelabel), shape=shape, url=url)
+            kwargs['color'] = color
+
+        graph.add_node(nodename, label=str(nodelabel), shape=shape, url=url, **kwargs)
 
     def add_subgraph_to_graph(self,
                               graph,

@@ -83,7 +83,8 @@ class PydotFactory():
                           nodelabel=None,
                           shape='box',
                           color=None,
-                          url=None):
+                          url=None,
+                          tooltip=None):
         """
         creates a node item for this factory, adds it to the graph.
         Node name can vary from label but must always be same for the same node label
@@ -95,6 +96,8 @@ class PydotFactory():
         node = pydot.Node(self.escape_name(nodename))
         node.set_shape(shape)
         node.set_label(self.escape_label(nodelabel))
+        if tooltip is not None:
+            node.set_tooltip(tooltip)
         if url is not None:
             node.set_URL(self.escape_name(url))
         if color is not None:

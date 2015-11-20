@@ -163,6 +163,7 @@ class DotToQtGenerator():
                              label=name,
                              shape=node.attr.get('shape', 'ellipse'),
                              color=color,
+                             tooltip=node.attr.get('tooltip', None)
                              #parent=None,
                              #label_pos=None
                              )
