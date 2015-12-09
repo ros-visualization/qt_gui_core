@@ -36,7 +36,7 @@ from .graph_item import GraphItem
 
 class NodeItem(GraphItem):
 
-    def __init__(self, highlight_level, bounding_box, label, shape, color=None, parent=None, label_pos=None):
+    def __init__(self, highlight_level, bounding_box, label, shape, color=None, parent=None, label_pos=None, tooltip=None):
         super(NodeItem, self).__init__(highlight_level, parent)
 
         self._default_color = self._COLOR_BLACK if color is None else color
@@ -64,6 +64,8 @@ class NodeItem(GraphItem):
             label_rect.moveCenter(label_pos)
         self._label.setPos(label_rect.x(), label_rect.y())
         self.addToGroup(self._label)
+        if tooltip is not None:
+            self.setToolTip(tooltip)
 
         self.set_node_color()
 
