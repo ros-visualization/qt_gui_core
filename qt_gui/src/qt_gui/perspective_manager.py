@@ -33,7 +33,8 @@ import os
 
 from python_qt_binding import loadUi
 from python_qt_binding.QtCore import QByteArray, qDebug, QObject, QSignalMapper, Signal, Slot
-from python_qt_binding.QtGui import QAction, QFileDialog, QIcon, QInputDialog, QMessageBox, QValidator
+from python_qt_binding.QtGui import QIcon, QValidator
+from python_qt_binding.QtWidgets import QAction, QFileDialog, QInputDialog, QMessageBox
 
 from .menu_manager import MenuManager
 from .settings import Settings

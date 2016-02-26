@@ -149,7 +149,7 @@ void CompositePluginProvider::unload(void* plugin_instance)
   if (it != running_plugins_.end())
   {
     (*it)->unload(plugin_instance);
-    running_plugins_.remove(it);
+    running_plugins_.remove(it.key());
     return;
   }
   throw std::runtime_error("plugin_instance not found");

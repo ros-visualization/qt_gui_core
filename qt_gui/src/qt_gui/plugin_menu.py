@@ -31,7 +31,8 @@
 import os
 
 from python_qt_binding.QtCore import QObject, QSignalMapper, Signal, Slot
-from python_qt_binding.QtGui import QAction, QIcon, QMenu
+from python_qt_binding.QtGui import QIcon
+from python_qt_binding.QtWidgets import QAction, QMenu
 
 from .icon_loader import get_icon
 from .menu_manager import MenuManager

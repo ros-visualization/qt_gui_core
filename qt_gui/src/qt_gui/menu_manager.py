@@ -29,7 +29,7 @@
 # POSSIBILITY OF SUCH DAMAGE.
 
 from python_qt_binding.QtCore import QObject
-from python_qt_binding.QtGui import QAction, QMenu
+from python_qt_binding.QtWidgets import QAction, QMenu
 
 
 class MenuManager(QObject):
