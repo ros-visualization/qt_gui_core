@@ -152,7 +152,7 @@ class EdgeItem(GraphItem):
             self._label_pen.setColor(self._default_text_color)
             self._text_brush.setColor(self._default_color)
             if self._shape_brush.isOpaque():
-                self._shape_brush.setColor(self._default_color)
+                self._shape_brush.setColor(self._default_edge_color)
             self._edge_pen.setColor(self._default_edge_color)
         else:
             self._label_pen.setColor(color)
