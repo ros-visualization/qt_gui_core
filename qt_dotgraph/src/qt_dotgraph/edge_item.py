@@ -51,8 +51,10 @@ class EdgeItem(GraphItem):
         self.to_node.add_incoming_edge(self)
 
         self._default_edge_color = self._COLOR_BLACK
+        self._default_shape_color = self._COLOR_BLACK
         if edge_color is not None:
             self._default_edge_color = edge_color
+            self._default_shape_color = edge_color
 
         self._default_text_color = self._COLOR_BLACK
         self._default_color = self._COLOR_BLACK
@@ -67,7 +69,6 @@ class EdgeItem(GraphItem):
         self._edge_pen.setWidth(penwidth)
         self._edge_pen.setColor(self._default_edge_color)
         self._edge_pen.setStyle(self._qt_pen_styles.get(style, Qt.SolidLine))
-
         self._sibling_edges = set()
 
         self._label = None
@@ -152,7 +153,7 @@ class EdgeItem(GraphItem):
             self._label_pen.setColor(self._default_text_color)
             self._text_brush.setColor(self._default_color)
             if self._shape_brush.isOpaque():
-                self._shape_brush.setColor(self._default_color)
+                self._shape_brush.setColor(self._default_shape_color)
             self._edge_pen.setColor(self._default_edge_color)
         else:
             self._label_pen.setColor(color)
