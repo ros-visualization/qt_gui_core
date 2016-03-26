@@ -55,6 +55,7 @@ class PluginHandlerContainer(PluginHandler):
         signaler2 = WindowChangedSignaler(self._container, self._container)
         signaler2.hide_signal.connect(self._on_dock_widget_hide)
         signaler2.show_signal.connect(self._on_dock_widget_show)
+        signaler2.window_title_changed_signal.connect(self._on_dock_widget_title_changed)
         # trigger to update initial window state
         signaler2.emit_all()
         self._widgets[self._container.main_window] = [self._container, None, signaler2]

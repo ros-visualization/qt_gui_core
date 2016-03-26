@@ -30,11 +30,12 @@
 
 import os
 
-from python_qt_binding.QtCore import QObject, QSignalMapper, Signal
+from python_qt_binding.QtCore import QObject, QSignalMapper, Signal, Slot
 from python_qt_binding.QtGui import QAction, QIcon, QMenu
 
 from .icon_loader import get_icon
 from .menu_manager import MenuManager
+from .plugin_instance_id import PluginInstanceId
 
 
 class PluginMenu(QObject):
@@ -100,11 +101,7 @@ class PluginMenu(QObject):
 
     def add_instance(self, plugin_descriptor, instance_id):
         action_attributes = plugin_descriptor.action_attributes()
-        # create action
-        label = self.tr('Close:') + ' ' + action_attributes['label']
-        if instance_id.serial_number != 1:
-            label = label + ' (%s)' % str(instance_id.serial_number)
-        action = QAction(label, self._running_menu_manager.menu)
+        action = QAction(self._get_instance_label(str(instance_id)), self._running_menu_manager.menu)
         base_path = plugin_descriptor.attributes().get('plugin_path')
         self._enrich_action(action, action_attributes, base_path)
 
@@ -118,6 +115,15 @@ class PluginMenu(QObject):
         action = self._instances[instance_id]
         self._running_mapper.removeMappings(action)
         self._running_menu_manager.remove_item(action)
+
+    @Slot(str, str)
+    def update_plugin_instance_label(self, instance_id_str, label):
+        instance_id = PluginInstanceId(instance_id=instance_id_str)
+        action = self._instances[instance_id]
+        action.setText(self._get_instance_label(label))
+
+    def _get_instance_label(self, label):
+        return self.tr('Close:') + ' ' + label
 
     def _enrich_action(self, action, action_attributes, base_path=None):
         if 'icon' in action_attributes and action_attributes['icon'] is not None:

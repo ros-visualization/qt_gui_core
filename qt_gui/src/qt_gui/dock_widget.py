@@ -235,7 +235,6 @@ class DockWidget(QDockWidget):
                 self.move(pos)
 
         title_bar = self.titleBarWidget()
-        title_bar.title_label_updated.connect(self._title_updated)
         title_bar.restore_settings(settings)
 
     def _parent_container(self, dock_widget):
@@ -253,6 +252,3 @@ class DockWidget(QDockWidget):
         if parent is not None:
             serial_number = parent.serial_number()
         return serial_number
-
-    def _title_updated(self, title):
-        self.setWindowTitle(title)

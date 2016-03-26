@@ -232,6 +232,7 @@ class PluginManager(QObject):
         if self._plugin_menu is not None:
             plugin_descriptor = self._plugin_descriptors[instance_id.plugin_id]
             self._plugin_menu.add_instance(plugin_descriptor, instance_id)
+            handler.label_updated.connect(self._plugin_menu.update_plugin_instance_label)
 
         info = {
             'handler': handler,
@@ -335,9 +336,10 @@ class PluginManager(QObject):
         self._remove_running_plugin(instance_id)
 
     def _remove_running_plugin(self, instance_id):
+        info = self._running_plugins[str(instance_id)]
         if self._plugin_menu is not None:
             self._plugin_menu.remove_instance(instance_id)
-        info = self._running_plugins[str(instance_id)]
+            info['handler'].label_updated.disconnect(self._plugin_menu.update_plugin_instance_label)
         self._running_plugins.pop(str(instance_id))
 
 

@@ -46,6 +46,7 @@ class PluginHandler(QObject):
     It utilizes a `PluginProvider` to load/unload the plugin and provides callbacks for the `PluginContext`.
     """
 
+    label_updated = Signal(str, str)
     close_signal = Signal(str)
     reload_signal = Signal(str)
     help_signal = Signal(str)
@@ -304,6 +305,7 @@ class PluginHandler(QObject):
         signaler2 = WindowChangedSignaler(dock_widget, dock_widget)
         signaler2.hide_signal.connect(self._on_dock_widget_hide)
         signaler2.show_signal.connect(self._on_dock_widget_show)
+        signaler2.window_title_changed_signal.connect(self._on_dock_widget_title_changed)
         self._widgets[widget] = [dock_widget, signaler, signaler2]
         # trigger to update initial window icon and title
         signaler.emit_all()
@@ -333,6 +335,9 @@ class PluginHandler(QObject):
     def _on_dock_widget_show(self, dock_widget):
         if self._minimized_dock_widgets_toolbar:
             self._minimized_dock_widgets_toolbar.removeDockWidget(dock_widget)
+
+    def _on_dock_widget_title_changed(self, dock_widget):
+        self.label_updated.emit(str(self._instance_id), dock_widget.windowTitle())
 
     # pointer to QWidget must be used for PySide to work (at least with 1.0.1)
     @Slot('QWidget*')
