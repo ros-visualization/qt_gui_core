@@ -31,8 +31,8 @@
 import os
 
 from python_qt_binding import loadUi
-from python_qt_binding.QtCore import QEvent, QObject, Qt, qWarning
-from python_qt_binding.QtGui import QDockWidget, QIcon, QWidget
+from python_qt_binding.QtCore import QEvent, QObject, Qt, qWarning, Signal
+from python_qt_binding.QtGui import QDockWidget, QIcon, QMenu, QWidget
 
 
 class DockWidgetTitleBar(QWidget):
@@ -88,6 +88,11 @@ class DockWidgetTitleBar(QWidget):
         }
         self._dock_widget.installEventFilter(self)
 
+        self.title_label.installEventFilter(self)
+        self.title_edit.hide()
+        self.title_edit.editingFinished.connect(self._finished_editing)
+        self.title_edit.returnPressed.connect(self._update_title_label)
+
     def __del__(self):
         self._dock_widget.removeEventFilter(self)
 
@@ -120,6 +125,16 @@ class DockWidgetTitleBar(QWidget):
             ret_val = self._event_callbacks[event.type()](obj, event)
             if ret_val is not None:
                 return ret_val
+        if event.type() == event.ContextMenu and obj == self.title_label:
+            menu = QMenu(self)
+            rename_action = menu.addAction(self.tr('Rename dock widget'))
+            action = menu.exec_(self.mapToGlobal(event.pos()))
+            if action == rename_action:
+                self.title_label.hide()
+                self.title_edit.setText(self.title_label.text())
+                self.title_edit.show()
+                self.title_edit.setFocus()
+            return True
         return QObject.eventFilter(self, obj, event)
 
     def _update_icon(self, *args):
@@ -162,17 +177,33 @@ class DockWidgetTitleBar(QWidget):
         self.minimize_button.setVisible(movable)
 
     def save_settings(self, settings):
+        settings.set_value('dock_widget_title', self._dock_widget.windowTitle())
+
         # skip saving dockable flag when layout is frozen
         movable = bool(self.parentWidget().features() & QDockWidget.DockWidgetMovable)
         if movable:
             settings.set_value('dockable', self.dockable_button.isChecked())
 
     def restore_settings(self, settings):
+        dock_widget_title = settings.value('dock_widget_title', None)
+        if dock_widget_title is not None:
+            self.title_label.setText(dock_widget_title)
+            self._dock_widget.setWindowTitle(dock_widget_title)
+
         dockable = settings.value('dockable', True) in [True, 'true']
         # only allow dockable when layout is not frozen
         movable = bool(self.parentWidget().features() & QDockWidget.DockWidgetMovable)
         self.dockable_button.setChecked(dockable and movable)
         self._toggle_dockable(self.dockable_button.isChecked())
+
+    def _finished_editing(self):
+        self.title_edit.hide()
+        self.title_label.show()
+
+    def _update_title_label(self):
+        if self.title_edit.text():
+            self.title_label.setText(self.title_edit.text())
+            self._dock_widget.setWindowTitle(self.title_edit.text())
 
 
 if __name__ == '__main__':

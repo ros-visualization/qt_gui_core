@@ -45,6 +45,12 @@ class PluginInstanceId():
             self.plugin_id = str(plugin_id)
             self.serial_number = int(serial_number) if serial_number is not None else None
 
+    def __eq__(self, other):
+        return self.plugin_id == other.plugin_id and self.serial_number == other.serial_number
+
+    def __hash__(self):
+        return hash(str(self))
+
     def __str__(self):
         return self.plugin_id + '#' + str(self.serial_number)
 
