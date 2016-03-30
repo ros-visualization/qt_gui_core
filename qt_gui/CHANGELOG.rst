@@ -2,8 +2,8 @@
 Changelog for package qt_gui
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.2.30 (2016-03-30)
+-------------------
 * add X11 threading for ssh display (`#62 <https://github.com/ros-visualization/qt_gui_core/pull/62>`_)
 * allow renaming dock widgets (`#63 <https://github.com/ros-visualization/qt_gui_core/pull/63>`_)
 

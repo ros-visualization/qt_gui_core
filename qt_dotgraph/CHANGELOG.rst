@@ -2,8 +2,8 @@
 Changelog for package qt_dotgraph
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.2.30 (2016-03-30)
+-------------------
 * use same color for arrows as for the edge (`#60 <https://github.com/ros-visualization/qt_gui_core/issues/60>`_)
 * add ability to specify tooltips for nodes (`#61 <https://github.com/ros-visualization/qt_gui_core/pull/61>`_)
 
