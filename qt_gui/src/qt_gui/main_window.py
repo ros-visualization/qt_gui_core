@@ -29,7 +29,7 @@
 # POSSIBILITY OF SUCH DAMAGE.
 
 from python_qt_binding.QtCore import qDebug, Qt, Signal
-from python_qt_binding.QtGui import QToolBar
+from python_qt_binding.QtWidgets import QToolBar
 
 from .dockable_main_window import DockableMainWindow
 from .settings import Settings

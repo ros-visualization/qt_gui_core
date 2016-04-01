@@ -34,7 +34,7 @@ import sys
 
 from python_qt_binding import QT_BINDING, QT_BINDING_MODULES, QT_BINDING_VERSION
 from python_qt_binding.QtCore import QObject, qVersion
-from python_qt_binding.QtGui import QMessageBox
+from python_qt_binding.QtWidgets import QMessageBox
 
 from .ros_package_helper import get_package_path
 
@@ -48,11 +48,15 @@ class AboutHandler(QObject):
         self._qtgui_path = qtgui_path
 
     def show(self):
-        # append folder of 'qt_gui_cpp/lib' to module search path
-        qt_gui_cpp_path = os.path.realpath(get_package_path('qt_gui_cpp'))
-        sys.path.append(os.path.join(qt_gui_cpp_path, 'lib'))
-        sys.path.append(os.path.join(qt_gui_cpp_path, 'src'))
-        from qt_gui_cpp.cpp_binding_helper import qt_gui_cpp
+        try:
+            # append folder of 'qt_gui_cpp/lib' to module search path
+            qt_gui_cpp_path = os.path.realpath(get_package_path('qt_gui_cpp'))
+        except Exception:
+            qt_gui_cpp = None
+        else:
+            sys.path.append(os.path.join(qt_gui_cpp_path, 'lib'))
+            sys.path.append(os.path.join(qt_gui_cpp_path, 'src'))
+            from qt_gui_cpp.cpp_binding_helper import qt_gui_cpp
 
         import rospkg
         _rospkg_version = getattr(rospkg, '__version__', '&lt; 0.2.4')

@@ -34,7 +34,7 @@ import os
 
 from python_qt_binding import loadUi
 from python_qt_binding.QtCore import qWarning
-from python_qt_binding.QtGui import QDialog, QLabel
+from python_qt_binding.QtWidgets import QDialog, QLabel
 from rospkg.rospack import RosPack
 
 from .exclusive_options_group import ExclusiveOptionGroup

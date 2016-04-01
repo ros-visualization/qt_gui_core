@@ -31,7 +31,7 @@
 # ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-from python_qt_binding.QtGui import QButtonGroup, QGroupBox, QLabel, QCheckBox, QVBoxLayout, QWidget
+from python_qt_binding.QtWidgets import QButtonGroup, QGroupBox, QLabel, QCheckBox, QVBoxLayout, QWidget
 
 
 class CheckBoxGroup(QGroupBox):
