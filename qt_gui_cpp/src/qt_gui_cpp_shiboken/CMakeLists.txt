@@ -2,6 +2,7 @@ find_package(Qt5Widgets REQUIRED)
 set(qt_gui_cpp_shiboken_QT_COMPONENTS
   QtCore
   QtGui
+  QtWidgets
 )
 
 set(qt_gui_cpp_shiboken_SRCS

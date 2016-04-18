@@ -49,6 +49,8 @@ class Plugin
   : public QObject
 {
 
+  Q_OBJECT
+
 public:
 
   /**
