@@ -2,6 +2,11 @@
 Changelog for package qt_gui_cpp
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* more fixes for shiboken 2
+* add missing Qt include directories
+
 0.3.0 (2016-04-01)
 ------------------
 * switch to Qt5 (`#64 <https://github.com/ros-visualization/qt_gui_core/pull/64>`_)

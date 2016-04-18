@@ -2,6 +2,9 @@
 Changelog for package qt_gui_py_common
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+
 0.3.0 (2016-04-01)
 ------------------
 * switch to Qt5 (`#64 <https://github.com/ros-visualization/qt_gui_core/pull/64>`_)

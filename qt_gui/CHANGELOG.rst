@@ -2,6 +2,10 @@
 Changelog for package qt_gui
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* workaround bug (QTBUG-52582) in QMenu with Qt 5 (`ros-visualization/python_qt_binding#33 <https://github.com/ros-visualization/python_qt_binding/issues/33>`_)
+
 0.3.0 (2016-04-01)
 ------------------
 * switch to Qt5 (`#64 <https://github.com/ros-visualization/qt_gui_core/pull/64>`_)
