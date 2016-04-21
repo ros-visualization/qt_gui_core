@@ -2,6 +2,10 @@
 Changelog for package qt_gui_py_common
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* fix another import to work with Qt 5 (`#65 <https://github.com/ros-visualization/qt_gui_core/pull/65>`_)
+
 0.3.1 (2016-04-18)
 ------------------
 
