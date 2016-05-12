@@ -205,6 +205,10 @@ class DotToQtGenerator():
         if label is not None:
             label = label.decode('string_escape')
 
+        penwidth = 1
+        if 'penwidth' in edge.attr:
+            penwidth = int(edge.attr['penwidth'])
+
         color = None
         if 'colorR' in edge.attr and 'colorG' in edge.attr and 'colorB' in edge.attr:
             r = edge.attr['colorR']
@@ -218,7 +222,7 @@ class DotToQtGenerator():
                              label=label,
                              from_node=nodes[source_node],
                              to_node=nodes[destination_node],
-                             penwidth=int(edge.attr['penwidth']),
+                             penwidth=penwidth,
                              edge_color=color,
                              style=style)
 
