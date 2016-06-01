@@ -170,7 +170,6 @@ class Main(object):
     def create_application(self, argv):
         from python_qt_binding.QtCore import Qt
         from python_qt_binding.QtWidgets import QApplication
-        QApplication.setAttribute(Qt.AA_X11InitThreads, True)
         app = QApplication(argv)
         app.setAttribute(Qt.AA_DontShowIconsInMenus, False)
         return app
