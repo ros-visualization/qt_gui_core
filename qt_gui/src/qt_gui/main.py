@@ -88,7 +88,7 @@ class Main(object):
             common_group.add_argument('-l', '--lock-perspective', dest='lock_perspective', action='store_true',
                 help='lock the GUI to the used perspective (hide menu bar and close buttons of plugins)')
             common_group.add_argument('-m', '--multi-process', dest='multi_process', default=False, action='store_true',
-                help='use separate processes for each plugin instance (currently only supported under X11)')
+                help='use separate processes for each plugin instance (currently only supported under X11, not working together with Putty)')
             common_group.add_argument('-p', '--perspective', dest='perspective', type=str, metavar='PERSPECTIVE',
                 help='start with this named perspective')
             common_group.add_argument('--perspective-file', dest='perspective_file', type=str, metavar='PERSPECTIVE_FILE',
@@ -170,7 +170,6 @@ class Main(object):
     def create_application(self, argv):
         from python_qt_binding.QtCore import Qt
         from python_qt_binding.QtGui import QApplication
-        QApplication.setAttribute(Qt.AA_X11InitThreads, True)
         app = QApplication(argv)
         app.setAttribute(Qt.AA_DontShowIconsInMenus, False)
         return app
@@ -337,7 +336,7 @@ class Main(object):
         from python_qt_binding import QT_BINDING
 
         from python_qt_binding.QtCore import qDebug, qInstallMsgHandler, QSettings, Qt, QtCriticalMsg, QtDebugMsg, QtFatalMsg, QTimer, QtWarningMsg
-        from python_qt_binding.QtGui import QAction, QIcon, QMenuBar
+        from python_qt_binding.QtGui import QAction, QApplication, QIcon, QMenuBar
 
         from .about_handler import AboutHandler
         from .composite_plugin_provider import CompositePluginProvider
@@ -365,6 +364,10 @@ class Main(object):
                 sys.exit(1)
         qInstallMsgHandler(message_handler)
 
+        # the following attribute would break X11Embed
+        if not self.multi_process:
+            # this is necessary for running rqt through Putty
+            QApplication.setAttribute(Qt.AA_X11InitThreads, True)
         app = self.create_application(argv)
 
         self._check_icon_theme_compliance()
