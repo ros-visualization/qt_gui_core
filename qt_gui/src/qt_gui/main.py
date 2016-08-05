@@ -77,6 +77,8 @@ class Main(object):
             help='choose Qt bindings to be used [pyqt|pyside]')
         common_group.add_argument('--clear-config', dest='clear_config', default=False, action='store_true',
             help='clear the configuration (including all perspectives and plugin settings)')
+        common_group.add_argument('-d', '--disable-init-threads', dest='disable_init_threads', default=False, action='store_true',
+            help='do not set Qt.AA_X11InitThreads')
         if not standalone:
             common_group.add_argument('-f', '--freeze-layout', dest='freeze_layout', action='store_true',
                 help='freeze the layout of the GUI (prevent rearranging widgets, disable undock/redock)')
@@ -170,7 +172,8 @@ class Main(object):
     def create_application(self, argv):
         from python_qt_binding.QtCore import Qt
         from python_qt_binding.QtGui import QApplication
-        QApplication.setAttribute(Qt.AA_X11InitThreads, True)
+        if not self._options.disable_init_threads:
+            QApplication.setAttribute(Qt.AA_X11InitThreads, True)
         app = QApplication(argv)
         app.setAttribute(Qt.AA_DontShowIconsInMenus, False)
         return app
