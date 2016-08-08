@@ -232,6 +232,8 @@ class DotToQtGenerator():
         if dotcode is None:
             return {}, {}
         graph = pydot.graph_from_dot_data(dotcode.encode("ascii", "ignore"))
+        if isinstance(graph, list):
+            graph = graph[0]
 
         #graph = pygraphviz.AGraph(string=self._current_dotcode, strict=False, directed=True)
         #graph.layout(prog='dot')
