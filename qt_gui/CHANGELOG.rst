@@ -2,8 +2,8 @@
 Changelog for package qt_gui
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.3.3 (2016-09-19)
+------------------
 * remove attribute AA_X11InitThreads which is obsolete in Qt 5
 
 0.3.2 (2016-04-21)

@@ -2,8 +2,8 @@
 Changelog for package qt_dotgraph
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.3.3 (2016-09-19)
+------------------
 * work with newer pydot versions (`#70 <https://github.com/ros-visualization/qt_gui_core/pull/70>`_)
 * make penwidth attribute optional
 
