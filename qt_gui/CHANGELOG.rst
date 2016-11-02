@@ -2,8 +2,8 @@
 Changelog for package qt_gui
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.2.31 (2016-11-02)
+-------------------
 * add cli option to disable Qt.AA_X11InitThreads (`#69 <https://github.com/ros-visualization/qt_gui_core/pull/69>`_)
 
 0.2.30 (2016-03-30)

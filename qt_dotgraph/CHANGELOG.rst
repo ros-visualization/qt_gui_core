@@ -2,8 +2,8 @@
 Changelog for package qt_dotgraph
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.2.31 (2016-11-02)
+-------------------
 * make penwidth attribute optional
 
 0.2.30 (2016-03-30)
