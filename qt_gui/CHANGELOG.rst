@@ -2,6 +2,10 @@
 Changelog for package qt_gui
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* add cli option to disable Qt.AA_X11InitThreads (`#69 <https://github.com/ros-visualization/qt_gui_core/pull/69>`_)
+
 0.2.30 (2016-03-30)
 -------------------
 * add X11 threading for ssh display (`#62 <https://github.com/ros-visualization/qt_gui_core/pull/62>`_)
