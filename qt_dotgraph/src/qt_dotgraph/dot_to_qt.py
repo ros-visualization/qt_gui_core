@@ -250,13 +250,11 @@ class DotToQtGenerator():
         graph.subgraphs_iter = graph.get_subgraph_list
 
         num_subgraphs = len(graph.get_subgraph_list())
-        print('outer subgraphs: {}'.format(num_subgraphs))
 
         nodes = {}
         for subgraph in graph.subgraphs_iter():
             subgraph_nodeitem = self.getNodeItemForSubgraph(subgraph, highlight_level)
             num_subgraphs = len(subgraph.get_subgraph_list())
-            print('inner subgraphs: {}'.format(num_subgraphs))
 
             nodes = dict(nodes, **self.parse_nodes(subgraph, highlight_level))
 
