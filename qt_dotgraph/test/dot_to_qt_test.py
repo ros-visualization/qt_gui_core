@@ -59,15 +59,18 @@ class DotToQtGeneratorTest(unittest.TestCase):
             label=barbarbarbarbarbarbarbar,
             pos="77,18",
             shape=box,
-            width=1.65];
+            width=2.25];
         foo -> bar	 [pos="e,77,36.104 77,71.697 77,63.983 77,54.712 77,46.112"];
     }
     '''
 
+    _Q_APP = None
+
     def __init__(self, *args):
         super(DotToQtGeneratorTest, self).__init__(*args)
         # needed for creation of QtGraphic items in NodeItem.__init__
-        self._app = QApplication([])
+        if DotToQtGeneratorTest._Q_APP is None:
+            DotToQtGeneratorTest._Q_APP = QApplication([])
 
     def test_simple_integration(self):
         (nodes, edges) = DotToQtGenerator().dotcode_to_qt_items(DotToQtGeneratorTest.DOT_CODE, 1)
