@@ -98,6 +98,8 @@ class PydotFactory():
         node.set_label(self.escape_label(nodelabel))
         if tooltip is not None:
             node.set_tooltip(tooltip)
+        elif url is not None:
+            node.set_tooltip(url)
         if url is not None:
             node.set_URL(self.escape_name(url))
         if color is not None:
