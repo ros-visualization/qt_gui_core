@@ -135,6 +135,8 @@ class DockWidget(QDockWidget):
         while widget is not None:
             if isinstance(widget, DockableMainWindow):
                 break
+            if not callable(widget.parent):
+                return None
             widget = widget.parent()
         return widget
 
