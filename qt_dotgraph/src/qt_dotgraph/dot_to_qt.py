@@ -226,6 +226,10 @@ class DotToQtGenerator():
                              edge_color=color,
                              style=style)
 
+        edge_name = source_node.strip('"\n"') + '_TO_' + destination_node.strip('"\n"')
+        if label is not None:
+          edge_name = edge_name + '_' + label
+
         if same_label_siblings:
             if label is None:
                 # for sibling detection
@@ -237,8 +241,8 @@ class DotToQtGenerator():
                     sibling.add_sibling_edge(edge_item)
 
         if label not in edges:
-            edges[label] = []
-        edges[label].append(edge_item)
+            edges[edge_name] = []
+        edges[edge_name].append(edge_item)
 
     def parse_nodes(self, graph, highlight_level):
         '''
