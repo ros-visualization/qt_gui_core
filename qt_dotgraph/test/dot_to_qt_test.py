@@ -33,8 +33,23 @@
 
 import unittest
 
-from python_qt_binding.QtGui import QApplication
 from qt_dotgraph.dot_to_qt import DotToQtGenerator, get_unquoted
+from python_qt_binding.QtWidgets import QApplication
+import sys
+import subprocess
+
+
+def check_x_server():
+    p = subprocess.Popen(sys.executable, stdin=subprocess.PIPE)
+    p.stdin.write('from python_qt_binding.QtWidgets import QApplication\n')
+    p.stdin.write('app = QApplication([])\n')
+    p.stdin.close()
+    p.communicate()
+
+    print(p.returncode)
+
+    return p.returncode == 0
+
 
 
 class DotToQtGeneratorTest(unittest.TestCase):
@@ -70,14 +85,22 @@ class DotToQtGeneratorTest(unittest.TestCase):
         super(DotToQtGeneratorTest, self).__init__(*args)
         # needed for creation of QtGraphic items in NodeItem.__init__
         if DotToQtGeneratorTest._Q_APP is None:
-            DotToQtGeneratorTest._Q_APP = QApplication([])
+            if check_x_server():
+                DotToQtGeneratorTest._Q_APP = QApplication([])
 
     def test_simple_integration(self):
-        (nodes, edges) = DotToQtGenerator().dotcode_to_qt_items(DotToQtGeneratorTest.DOT_CODE, 1)
+        if DotToQtGeneratorTest._Q_APP is None:
+            raise unittest.case.SkipTest
+
+        (nodes, edges) = DotToQtGenerator().dotcode_to_qt_items(
+            DotToQtGeneratorTest.DOT_CODE, 1)
         self.assertEqual(3, len(nodes))  # cluster_foo, foo and bar
         self.assertEqual(1, len(edges))  # foo -> bar
 
     def test_label_sizes(self):
+        if DotToQtGeneratorTest._Q_APP is None:
+            raise unittest.case.SkipTest
+
         (nodes, edges) = DotToQtGenerator().dotcode_to_qt_items(DotToQtGeneratorTest.DOT_CODE, 1)
 
         self.longMessage = True
