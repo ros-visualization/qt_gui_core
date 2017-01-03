@@ -318,8 +318,11 @@ class PluginManager(QObject):
         # shutdown plugin before unloading
         info = self._running_plugins[str(instance_id)]
         handler = info['handler']
-        handler.close_signal.disconnect(self.unload_plugin)
-        handler.shutdown_plugin(callback)
+        try:
+            handler.close_signal.disconnect(self.unload_plugin)
+            handler.shutdown_plugin(callback)
+        except TypeError:
+            qDebug('PluginManager._shutdown_plugin({0}, {1})'.format(instance_id, callback))
 
     def _unload_plugin_unload(self, instance_id):
         qDebug('PluginManager._unload_plugin_unload(%s)' % str(instance_id))
