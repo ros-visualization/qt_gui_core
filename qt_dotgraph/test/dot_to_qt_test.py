@@ -99,3 +99,112 @@ class DotToQtGeneratorTest(unittest.TestCase):
 
     def test_unquoted(self):
         self.assertEqual("foo", get_unquoted({'bar': 'foo'}, 'bar'))
+
+    def test_recursive(self):
+        if DotToQtGeneratorTest._Q_APP is None:
+            raise unittest.case.SkipTest
+
+        gen = DotToQtGenerator()
+        dotcode = '''
+        strict digraph {
+            graph [bb="0,0,249,541",
+                    compound=True,
+                    rank=same,
+                    rankdir=TB,
+                    ranksep=0.2,
+                    simplify=True
+            ];
+            node [label="\N"];
+            subgraph "/Container" {
+                    graph [bb="8,67,241,321",
+                            color=None,
+                            compound=True,
+                            label="/Container",
+                            lheight=0.21,
+                            lp="124.5,309.5",
+                            lwidth=0.81,
+                            rank=same,
+                            rankdir=TB,
+                            ranksep=0.2,
+                            style=bold
+                    ];
+                    subgraph "/Container/Subcontainer" {
+                            graph [bb="84,142,233,287",
+                                    color=None,
+                                    compound=True,
+                                    label="/Container/Subcontainer",
+                                    lheight=0.21,
+                                    lp="158.5,275.5",
+                                    lwidth=1.85,
+                                    rank=same,
+                                    rankdir=TB,
+                                    ranksep=0.2,
+                                    style=bold
+                            ];
+                            "/Container/Subcontainer/logstate1"                      [height=0.5,
+                                    label=logstate1,
+                                    pos="133,235",
+                                    shape=box,
+                                    url=None,
+                                    width=0.90278];
+                            "/Container/Subcontainer/finished"                       [color=blue,
+                                    height=0.5,
+                                    label=finished,
+                                    pos="133,168",
+                                    shape=ellipse,
+                                    url=None,
+                                    width=1.0833];
+                            "/Container/Subcontainer/logstate1" -> "/Container/Subcontainer/finished"                        [label=done,
+                                    lp="146.5,201.5",
+                                    pos="e,133,186.19 133,216.92 133,210.7 133,203.5 133,196.6",
+                                    url=None];
+                    }
+                    "/Container/finished"            [color=blue,
+                            height=0.5,
+                            label=finished,
+                            pos="86,93",
+                            shape=ellipse,
+                            url=None,
+                            width=1.0833];
+                    "/Container/Subcontainer/finished" -> "/Container/finished"              [label=finished,
+                            lp="132,126.5",
+                            pos="e,96.623,110.5 122.33,150.44 116.39,141.19 108.85,129.5 102.19,119.15",
+                            url=None];
+                    "/Container/logstate"            [height=0.5,
+                            label=logstate,
+                            pos="46,168",
+                            shape=box,
+                            url=None,
+                            width=0.81944];
+                    "/Container/logstate" -> "/Container/finished"           [label=done,
+                            lp="82.5,126.5",
+                            pos="e,74.304,110.45 53.482,149.8 57.712,140.5 63.287,128.93 69,119 69.051,118.91 69.102,118.82 69.153,118.74",
+                            url=None];
+            }
+            "/finished"      [height=0.5,
+                    pos="86,18",
+                    width=1.1555];
+            "/Container/finished" -> "/finished"     [label=finished,
+                    lp="108,51.5",
+                    pos="e,86,36.176 86,74.7 86,66.245 86,55.869 86,46.373",
+                    url=None];
+            "/start" -> "/Container/Subcontainer/logstate1"   [
+                    lp="146.5,436.5",
+                    pos="e,133,250.01 133,355.84 133,337.5 133,316.81 133,260.22",
+                    url=None];
+            "/start" -> "/Container/logstate"   [
+                    lp="146.5,436.5",
+                    pos="e,46,185.01 133,355.84 46,337.5 46,316.81 46,192.22",
+                    url=None];
+            "/start"         [height=0.5,
+                    pos="133,373",
+                    width=0.79437];
+        }
+        '''
+
+        (nodes, edges) = gen.dotcode_to_qt_items(dotcode, 1)
+
+        expected_nodes = ['"/Container/Subcontainer"', '"/Container/finished"', '"/start"', '"/Container"', '"/Container/Subcontainer/logstate1"', '"/Container/Subcontainer/finished"', '"/Container/logstate"', '"/finished"']
+        expected_edges = ['/Container/logstate_TO_/Container/finished_done', '/Container/Subcontainer/finished_TO_/Container/finished_finished', '/start_TO_/Container/Subcontainer/logstate1', '/Container/finished_TO_/finished_finished', '/start_TO_/Container/logstate', '/Container/Subcontainer/logstate1_TO_/Container/Subcontainer/finished_done']
+        self.assertEqual(expected_nodes, nodes.keys())
+        self.assertEqual(expected_edges, edges.keys())
