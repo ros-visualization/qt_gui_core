@@ -75,6 +75,7 @@ class EdgeItem(GraphItem):
         self._label = None
         if label is not None:
             self._label = QGraphicsSimpleTextItem(label)
+            self._label.setFont(GraphItem._LABEL_FONT)
             label_rect = self._label.boundingRect()
             label_rect.moveCenter(label_center)
             self._label.setPos(label_rect.x(), label_rect.y())

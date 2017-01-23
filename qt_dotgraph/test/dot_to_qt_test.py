@@ -97,5 +97,24 @@ class DotToQtGeneratorTest(unittest.TestCase):
         self.assertEqual(3, len(nodes))  # cluster_foo, foo and bar
         self.assertEqual(1, len(edges))  # foo -> bar
 
+    def test_label_sizes(self):
+        if DotToQtGeneratorTest._Q_APP is None:
+            raise unittest.case.SkipTest
+
+        (nodes, edges) = DotToQtGenerator().dotcode_to_qt_items(DotToQtGeneratorTest.DOT_CODE, 1)
+
+        self.longMessage = True
+        for name, node in nodes.items():
+            shape_rect = node._graphics_item.sceneBoundingRect()
+            label_rect = node._label.sceneBoundingRect()
+            self.assertLess(
+                label_rect.width(),
+                shape_rect.width(),
+                "Label text for '%s' is wider than surrounding shape." % name)
+            self.assertLess(
+                label_rect.height(),
+                shape_rect.height(),
+                "Label text for '%s' is higher than surrounding shape." % name)
+
     def test_unquoted(self):
         self.assertEqual("foo", get_unquoted({'bar': 'foo'}, 'bar'))
