@@ -57,6 +57,7 @@ class NodeItem(GraphItem):
         self.addToGroup(self._graphics_item)
 
         self._label = QGraphicsSimpleTextItem(label)
+        self._label.setFont(GraphItem._LABEL_FONT)
         label_rect = self._label.boundingRect()
         if label_pos is None:
             label_rect.moveCenter(bounding_box.center())

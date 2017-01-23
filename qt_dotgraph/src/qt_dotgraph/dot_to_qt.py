@@ -126,36 +126,22 @@ class DotToQtGenerator():
                 attr[name] = get_unquoted(obj_dic, name)
         node.attr = attr
 
-        if 'style' in node.attr:
-            if node.attr['style'] == 'invis':
-                return None
+        if node.attr.get('style') == 'invis':
+            return None
 
         color = QColor(node.attr['color']) if 'color' in node.attr else None
-        name = None
-        if 'label' in node.attr:
-            name = node.attr['label']
-        elif 'name' in node.attr:
-            name = node.attr['name']
-        else:
+
+        name = node.attr.get('label', node.attr.get('name'))
+        if name is None:
             print("Error, no label defined for node with attr: %s" % node.attr)
             return None
-        if name is None:
-            # happens on Lucid pygraphviz version
-            print("Error, label is None for node %s, pygraphviz version may be too old." % node)
-        else:
-            name = name.decode('string_escape')
+        name = name.decode('string_escape')
 
         # decrease rect by one so that edges do not reach inside
-        bb_width = len(name) / 5
-        if 'width' in node.attr:
-            bb_width = node.attr['width']
-        bb_height = 1.0
-        if 'width' in node.attr:
-            bb_height = node.attr['height']
+        bb_width = node.attr.get('width', len(name) / 5)
+        bb_height = node.attr.get('height', 1.0)
         bounding_box = QRectF(0, 0, POINTS_PER_INCH * float(bb_width) - 1.0, POINTS_PER_INCH * float(bb_height) - 1.0)
-        pos = (0, 0)
-        if 'pos' in node.attr:
-            pos = node.attr['pos'].split(',')
+        pos = node.attr.get('pos', '0,0').split(',')
         bounding_box.moveCenter(QPointF(float(pos[0]), -float(pos[1])))
 
         node_item = NodeItem(highlight_level=highlight_level,
@@ -163,11 +149,10 @@ class DotToQtGenerator():
                              label=name,
                              shape=node.attr.get('shape', 'ellipse'),
                              color=color,
-                             tooltip=node.attr.get('tooltip', None)
+                             tooltip=node.attr.get('tooltip')
                              #parent=None,
                              #label_pos=None
                              )
-        #node_item.setToolTip(self._generate_tool_tip(node.attr.get('URL', None)))
         return node_item
 
     def addEdgeItem(self, edge, nodes, edges, highlight_level, same_label_siblings=False):
@@ -182,10 +167,9 @@ class DotToQtGenerator():
             attr[name] = value
         edge.attr = attr
 
-        if 'style' in edge.attr:
-            if edge.attr['style'] == 'invis':
-                return
-        style = edge.attr.get('style', None)
+        style = edge.attr.get('style')
+        if style == 'invis':
+            return
 
         label = edge.attr.get('label', None)
         label_pos = edge.attr.get('lp', None)
@@ -199,15 +183,13 @@ class DotToQtGenerator():
         destination_node = edge.get_destination() if hasattr(edge, 'get_destination') else edge[1]
 
         # create edge with from-node and to-node
-        edge_pos = (0, 0)
-        if 'pos' in edge.attr:
-            edge_pos = edge.attr['pos']
+        edge_pos = edge.attr.get('pos')
+        if edge_pos is None:
+            return
         if label is not None:
             label = label.decode('string_escape')
 
-        penwidth = 1
-        if 'penwidth' in edge.attr:
-            penwidth = int(edge.attr['penwidth'])
+        penwidth = int(edge.attr.get('penwidth', 1))
 
         color = None
         if 'colorR' in edge.attr and 'colorG' in edge.attr and 'colorB' in edge.attr:

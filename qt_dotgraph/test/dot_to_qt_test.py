@@ -34,16 +34,87 @@
 import unittest
 
 from qt_dotgraph.dot_to_qt import DotToQtGenerator, get_unquoted
+from python_qt_binding.QtWidgets import QApplication
+import sys
+import subprocess
+
+
+def check_x_server():
+    p = subprocess.Popen(sys.executable, stdin=subprocess.PIPE)
+    p.stdin.write('from python_qt_binding.QtWidgets import QApplication\n')
+    p.stdin.write('app = QApplication([])\n')
+    p.stdin.close()
+    p.communicate()
+
+    print(p.returncode)
+
+    return p.returncode == 0
+
+
 
 class DotToQtGeneratorTest(unittest.TestCase):
 
-    @unittest.skip("fails with Segfault in Nodeitem.__init__()")
-    def test_simpleIntegration(self):
-        gen = DotToQtGenerator()
-        dotcode = 'digraph graphname {\n\tgraph [rank=same];\n\tnode [label="\\N"];\n\tgraph [bb="0,0,56,116"];\n\tsubgraph cluster_foo {\n\t\tgraph [label=foo,\n\t\t\tbb="1,1,100,101"];\n\t}\n\tfoo [label=foo, shape=box, pos="28,98", width="0.75", height="0.50"];\n\tedge_ [label=edge_, shape=box, pos="28,26", width="0.78", height="0.50"];\n\tfoo -> edge_ [pos="e,28,44 28,80 28,72 28,63 28,54"];\n}\n'
-        (nodes, edges) = gen.dotcode_to_qt_items(dotcode, 1)
-        self.assertEqual(3, len(nodes)) # also for stack
-        self.assertEqual(1, len(nodes))
+    DOT_CODE = '''
+    digraph graph_name {
+        graph [bb="0,0,154,108",
+            rank=same
+        ];
+        node [label="\N"];
+        subgraph cluster_foo {
+            graph [bb="1,1,100,101",
+                label=cluster_foo
+            ];
+        }
+        foo	 [height=0.5,
+            label=foo,
+            pos="77,90",
+            shape=box,
+            width=0.75];
+        bar	 [height=0.5,
+            label=barbarbarbarbarbarbarbar,
+            pos="77,18",
+            shape=box,
+            width=2.25];
+        foo -> bar	 [pos="e,77,36.104 77,71.697 77,63.983 77,54.712 77,46.112"];
+    }
+    '''
+
+    _Q_APP = None
+
+    def __init__(self, *args):
+        super(DotToQtGeneratorTest, self).__init__(*args)
+        # needed for creation of QtGraphic items in NodeItem.__init__
+        if DotToQtGeneratorTest._Q_APP is None:
+            if check_x_server():
+                DotToQtGeneratorTest._Q_APP = QApplication([])
+
+    def test_simple_integration(self):
+        if DotToQtGeneratorTest._Q_APP is None:
+            raise unittest.case.SkipTest
+
+        (nodes, edges) = DotToQtGenerator().dotcode_to_qt_items(
+            DotToQtGeneratorTest.DOT_CODE, 1)
+        self.assertEqual(3, len(nodes))  # cluster_foo, foo and bar
+        self.assertEqual(1, len(edges))  # foo -> bar
+
+    def test_label_sizes(self):
+        if DotToQtGeneratorTest._Q_APP is None:
+            raise unittest.case.SkipTest
+
+        (nodes, edges) = DotToQtGenerator().dotcode_to_qt_items(DotToQtGeneratorTest.DOT_CODE, 1)
+
+        self.longMessage = True
+        for name, node in nodes.items():
+            shape_rect = node._graphics_item.sceneBoundingRect()
+            label_rect = node._label.sceneBoundingRect()
+            self.assertLess(
+                label_rect.width(),
+                shape_rect.width(),
+                "Label text for '%s' is wider than surrounding shape." % name)
+            self.assertLess(
+                label_rect.height(),
+                shape_rect.height(),
+                "Label text for '%s' is higher than surrounding shape." % name)
 
     def test_unquoted(self):
         self.assertEqual("foo", get_unquoted({'bar': 'foo'}, 'bar'))
