@@ -356,6 +356,7 @@ class PluginHandler(QObject):
         if self._main_window is not None:
             dock_widget.parent().removeDockWidget(dock_widget)
         # do not delete the widget, only the dock widget
+        dock_widget.setParent(None)
         widget.setParent(None)
         dock_widget.deleteLater()
         # defer check for last widget closed to give plugin a chance to add another widget right away
