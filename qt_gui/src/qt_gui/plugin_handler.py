@@ -114,10 +114,10 @@ class PluginHandler(QObject):
             qCritical('PluginHandler.load() failed%s' % (':\n%s' % str(exception) if exception != True else ''))
 
     def _garbage_widgets_and_toolbars(self):
-        for widget in self._widgets.keys():
+        for widget in list(self._widgets.keys()):
             self.remove_widget(widget)
             self._delete_widget(widget)
-        for toolbar in self._toolbars:
+        for toolbar in list(self._toolbars):
             self.remove_toolbar(toolbar)
             self._delete_toolbar(toolbar)
 
@@ -282,7 +282,7 @@ class PluginHandler(QObject):
                 title_bar.show_button('configuration')
 
     def _remove_widget_by_dock_widget(self, dock_widget):
-        widget = [key for key, value in self._widgets.iteritems() if value[0] == dock_widget][0]
+        widget = [key for key, value in self._widgets.items() if value[0] == dock_widget][0]
         self.remove_widget(widget)
 
     def _emit_help_signal(self):

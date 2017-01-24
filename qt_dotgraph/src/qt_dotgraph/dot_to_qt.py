@@ -68,7 +68,7 @@ class DotToQtGenerator():
     def getNodeItemForSubgraph(self, subgraph, highlight_level):
         # let pydot imitate pygraphviz api
         attr = {}
-        for name in subgraph.get_attributes().iterkeys():
+        for name in subgraph.get_attributes().keys():
             value = get_unquoted(subgraph, name)
             attr[name] = value
         obj_dic = subgraph.__getattribute__("obj_dict")
@@ -117,7 +117,7 @@ class DotToQtGenerator():
         """
         # let pydot imitate pygraphviz api
         attr = {}
-        for name in node.get_attributes().iterkeys():
+        for name in node.get_attributes().keys():
             value = get_unquoted(node, name)
             attr[name] = value
         obj_dic = node.__getattribute__("obj_dict")
@@ -162,7 +162,7 @@ class DotToQtGenerator():
         """
         # let pydot imitate pygraphviz api
         attr = {}
-        for name in edge.get_attributes().iterkeys():
+        for name in edge.get_attributes().keys():
             value = get_unquoted(edge, name)
             attr[name] = value
         edge.attr = attr

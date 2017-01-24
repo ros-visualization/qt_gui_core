@@ -90,7 +90,7 @@ class ConsoleTextEdit(QTextEdit):
             return None
         else:
             # should have a better way of doing this but I can't find it
-            for _ in xrange(length):
+            for _ in range(length):
                 self.textCursor().deletePreviousChar()
         return True
 
