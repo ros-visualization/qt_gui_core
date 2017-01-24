@@ -2,6 +2,10 @@
 Changelog for package qt_gui_py_common
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* use Python 3 compatible syntax (`#81 <https://github.com/ros-visualization/qt_gui_core/pull/81>`_)
+
 0.3.3 (2016-09-19)
 ------------------
 

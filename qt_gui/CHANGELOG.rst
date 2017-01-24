@@ -2,6 +2,12 @@
 Changelog for package qt_gui
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* use Python 3 compatible syntax (`#81 <https://github.com/ros-visualization/qt_gui_core/pull/81>`_)
+* fix leftover dock widgets when using --command-switch-perspective (`#80 <https://github.com/ros-visualization/qt_gui_core/pull/80>`_)
+* make finding new parent logic more robust (`#76 <https://github.com/ros-visualization/qt_gui_core/pull/76>`_)
+
 0.3.3 (2016-09-19)
 ------------------
 * remove attribute AA_X11InitThreads which is obsolete in Qt 5
