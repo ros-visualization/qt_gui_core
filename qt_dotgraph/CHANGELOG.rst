@@ -2,8 +2,8 @@
 Changelog for package qt_dotgraph
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.3.4 (2017-01-24)
+------------------
 * use Python 3 compatible syntax (`#81 <https://github.com/ros-visualization/qt_gui_core/pull/81>`_)
 * fix label size in dot graphs (`#75 <https://github.com/ros-visualization/qt_gui_core/pull/75>`_)
 
