@@ -41,11 +41,19 @@ from .settings import Settings
 from .settings_proxy import SettingsProxy
 
 
+def is_string(s):
+    """Check if the argument is a string which works for both Python 2 and 3."""
+    try:
+        return isinstance(s, basestring)
+    except NameError:
+        return isinstance(s, str)
+
+
 class PerspectiveManager(QObject):
 
     """Manager for perspectives associated with specific sets of `Settings`."""
 
-    perspective_changed_signal = Signal(basestring)
+    perspective_changed_signal = Signal(str)
     save_settings_signal = Signal(Settings, Settings)
     restore_settings_signal = Signal(Settings, Settings)
     restore_settings_without_plugin_changes_signal = Signal(Settings, Settings)
@@ -68,7 +76,7 @@ class PerspectiveManager(QObject):
 
         # get perspective list from settings
         self.perspectives = self._settings_proxy.value('', 'perspectives', [])
-        if isinstance(self.perspectives, basestring):
+        if is_string(self.perspectives):
             self.perspectives = [self.perspectives]
 
         self._current_perspective = None
