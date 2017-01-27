@@ -2,6 +2,11 @@
 Changelog for package qt_gui
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* fix leftover dock widgets when using --command-switch-perspective (`#80 <https://github.com/ros-visualization/qt_gui_core/pull/80>`_)
+* make finding new parent logic more robust (`#76 <https://github.com/ros-visualization/qt_gui_core/pull/76>`_)
+
 0.2.31 (2016-11-02)
 -------------------
 * add cli option to disable Qt.AA_X11InitThreads (`#69 <https://github.com/ros-visualization/qt_gui_core/pull/69>`_)
