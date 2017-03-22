@@ -39,7 +39,7 @@ class DockWidgetTitleBar(QWidget):
 
     """Title bar for dock widgets providing custom actions."""
 
-    def __init__(self, dock_widget, qtgui_path):
+    def __init__(self, dock_widget, qtgui_path, hide_title=False):
         super(DockWidgetTitleBar, self).__init__(dock_widget)
         self._dock_widget = dock_widget
 
@@ -92,6 +92,11 @@ class DockWidgetTitleBar(QWidget):
         self.title_edit.hide()
         self.title_edit.editingFinished.connect(self._finished_editing)
         self.title_edit.returnPressed.connect(self._update_title_label)
+
+        if hide_title:
+            self.icon_label.hide()
+            self.title_label.hide()
+            self.help_button.hide()
 
     def __del__(self):
         self._dock_widget.removeEventFilter(self)
