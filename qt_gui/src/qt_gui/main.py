@@ -529,7 +529,7 @@ class Main(object):
             if plugin:
                 perspective_manager.set_perspective(plugin, hide_and_without_plugin_changes=True)
             elif self._options.perspective_file:
-                perspective_manager.import_perspective_from_file(self._options.perspective_file, perspective_manager.HIDDEN_PREFIX + '__cli_perspective_from_file')
+                perspective_manager.import_perspective_from_file(self._options.perspective_file, perspective_manager.HIDDEN_PREFIX + os.path.basename(self._options.perspective_file))
             else:
                 perspective_manager.set_perspective(self._options.perspective)
 
