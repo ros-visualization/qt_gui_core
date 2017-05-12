@@ -240,7 +240,7 @@ class DotToQtGenerator():
         if label is not None:
             edge_name = edge_name + '_' + label
 
-        if label not in edges:
+        if edge_name not in edges:
             edges[edge_name] = []
         edges[edge_name].append(edge_item)
 
