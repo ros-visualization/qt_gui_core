@@ -244,6 +244,26 @@ class DotToQtGenerator():
             edges[edge_name] = []
         edges[edge_name].append(edge_item)
 
+    def dotcode_to_qt_items(self, dotcode, highlight_level, same_label_siblings=False):
+        """
+        takes dotcode, runs layout, and creates qt items based on the dot layout.
+        returns two dicts, one mapping node names to Node_Item, one mapping edge names to lists of Edge_Item
+        :param same_label_siblings: if true, edges with same label will be considered siblings (collective highlighting)
+        """
+        # layout graph
+        if dotcode is None:
+            return {}, {}
+        graph = pydot.graph_from_dot_data(dotcode.encode("ascii", "ignore"))
+        if isinstance(graph, list):
+            graph = graph[0]
+
+        #graph = pygraphviz.AGraph(string=self._current_dotcode, strict=False, directed=True)
+        #graph.layout(prog='dot')
+
+        nodes = self.parse_nodes(graph, highlight_level)
+        edges = self.parse_edges(graph, nodes, highlight_level, same_label_siblings)
+        return nodes, edges
+
     def parse_nodes(self, graph, highlight_level):
         '''
         Recursively searches all nodes inside the graph and all subgraphs
@@ -306,24 +326,3 @@ class DotToQtGenerator():
                              same_label_siblings=same_label_siblings)
         return edges
 
-    def dotcode_to_qt_items(self, dotcode, highlight_level, same_label_siblings=False):
-        """
-        takes dotcode, runs layout, and creates qt items based on the dot layout.
-        returns two dicts, one mapping node names to Node_Item, one mapping edge names to lists of Edge_Item
-        :param same_label_siblings: if true, edges with same label will be considered siblings (collective highlighting)
-        """
-        # layout graph
-        if dotcode is None:
-            return {}, {}
-        graph = pydot.graph_from_dot_data(dotcode.encode("ascii", "ignore"))
-        if isinstance(graph, list):
-            graph = graph[0]
-
-        #graph = pygraphviz.AGraph(string=self._current_dotcode, strict=False, directed=True)
-        #graph.layout(prog='dot')
-
-        nodes = self.parse_nodes(graph, highlight_level)
-
-        edges = self.parse_edges(graph, nodes, highlight_level, same_label_siblings)
-
-        return nodes, edges
