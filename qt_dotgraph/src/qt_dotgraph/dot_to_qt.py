@@ -273,14 +273,11 @@ class DotToQtGenerator():
         graph.nodes_iter = graph.get_node_list
         graph.subgraphs_iter = graph.get_subgraph_list
 
-        num_subgraphs = len(graph.get_subgraph_list())
-
         nodes = {}
         for subgraph in graph.subgraphs_iter():
             subgraph_nodeitem = self.getNodeItemForSubgraph(subgraph, highlight_level)
-            num_subgraphs = len(subgraph.get_subgraph_list())
 
-            nodes = dict(nodes, **self.parse_nodes(subgraph, highlight_level))
+            nodes.update(self.parse_nodes(subgraph, highlight_level))
 
             # skip subgraphs with empty bounding boxes
             if subgraph_nodeitem is None:
@@ -313,7 +310,7 @@ class DotToQtGenerator():
         for subgraph in graph.subgraphs_iter():
             subgraph.edges_iter = subgraph.get_edge_list
 
-            edges = dict(edges, **self.parse_edges(subgraph, nodes, highlight_level, same_label_siblings))
+            edges.update(self.parse_edges(subgraph, nodes, highlight_level, same_label_siblings))
 
             for edge in subgraph.edges_iter():
                 self.addEdgeItem(edge, nodes, edges,
@@ -324,5 +321,5 @@ class DotToQtGenerator():
             self.addEdgeItem(edge, nodes, edges,
                              highlight_level=highlight_level,
                              same_label_siblings=same_label_siblings)
-        return edges
 
+        return edges
