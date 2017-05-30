@@ -104,9 +104,9 @@ class PluginHandlerDirect(PluginHandler):
             instance_settings_plugin = instance_settings.get_settings('plugin')
             try:
                 self._plugin.save_settings(plugin_settings_plugin, instance_settings_plugin)
+                self.emit_save_settings_completed()
             except Exception:
                 qCritical('PluginHandlerDirect._save_settings() plugin "%s" raised an exception:\n%s' % (str(self._instance_id), traceback.format_exc()))
-        self.emit_save_settings_completed()
 
     def _restore_settings(self, plugin_settings, instance_settings):
         if hasattr(self._plugin, 'restore_settings'):
@@ -114,9 +114,9 @@ class PluginHandlerDirect(PluginHandler):
             instance_settings_plugin = instance_settings.get_settings('plugin')
             try:
                 self._plugin.restore_settings(plugin_settings_plugin, instance_settings_plugin)
+                self.emit_restore_settings_completed()
             except Exception:
                 qCritical('PluginHandlerDirect._restore_settings() plugin "%s" raised an exception:\n%s' % (str(self._instance_id), traceback.format_exc()))
-        self.emit_restore_settings_completed()
 
     # pointer to QWidget must be used for PySide to work (at least with 1.0.1)
     @Slot('QWidget*')

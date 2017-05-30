@@ -109,7 +109,10 @@ class PluginHandler(QObject):
         if self.__callback is not None:
             callback = self.__callback
             self.__callback = None
-            callback(self, exception)
+            try:
+                callback(self, exception)
+            except TypeError:
+                qDebug('PluginHandler._emit_load_completed({0})'.format(exception))
         elif exception is not None:
             qCritical('PluginHandler.load() failed%s' % (':\n%s' % str(exception) if exception != True else ''))
 
