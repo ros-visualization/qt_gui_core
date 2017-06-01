@@ -32,6 +32,7 @@ from python_qt_binding.QtCore import Qt
 from python_qt_binding.QtGui import QBrush, QPainterPath, QPen
 from python_qt_binding.QtWidgets import QGraphicsEllipseItem, QGraphicsRectItem, QGraphicsSimpleTextItem
 
+from .dot_shapes import QGraphicsBox3dItem
 from .graph_item import GraphItem
 
 
@@ -51,10 +52,7 @@ class NodeItem(GraphItem):
         self._incoming_edges = set()
         self._outgoing_edges = set()
 
-        if shape == 'box':
-            self._graphics_item = QGraphicsRectItem(bounding_box)
-        else:
-            self._graphics_item = QGraphicsEllipseItem(bounding_box)
+        self.parse_shape(shape, bounding_box)
         self.addToGroup(self._graphics_item)
 
         self._label = QGraphicsSimpleTextItem(label)
@@ -74,6 +72,18 @@ class NodeItem(GraphItem):
         self.setAcceptHoverEvents(True)
 
         self.hovershape = None
+
+    def parse_shape(self, shape, bounding_box):
+        if shape == 'box' or shape == 'rect' or shape == 'rectangle':
+            self._graphics_item = QGraphicsRectItem(bounding_box)
+        elif shape == 'ellipse' or shape == 'oval' or shape == 'circle':
+            self._graphics_item = QGraphicsEllipseItem(bounding_box)
+        elif shape == 'box3d':
+            self._graphics_item = QGraphicsBox3dItem(bounding_box)
+        else:
+            #raise ValueError("Invalid shape '"+shape+"'")
+            print("Invalid shape '"+shape+"', defaulting to ellipse")
+            self._graphics_item = QGraphicsEllipseItem(bounding_box)
 
     def set_hovershape(self, newhovershape):
         self.hovershape = newhovershape

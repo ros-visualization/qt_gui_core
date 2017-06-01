@@ -127,6 +127,7 @@ class EdgeItem(GraphItem):
             self._arrow.setAcceptHoverEvents(True)
 
         self._path = QGraphicsPathItem()
+        self._path = QGraphicsPathItem(parent)
         self._path.setPath(path)
         self.addToGroup(self._path)
 
