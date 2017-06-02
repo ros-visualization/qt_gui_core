@@ -135,7 +135,9 @@ class DotToQtGenerator():
         if name is None:
             print("Error, no label defined for node with attr: %s" % node.attr)
             return None
-        name = name.decode('string_escape')
+
+        import codecs # To work with Python 2 and 3 (https://stackoverflow.com/a/23151714)
+        name = codecs.escape_decode(name)[0].decode('utf-8')
 
         # decrease rect by one so that edges do not reach inside
         bb_width = node.attr.get('width', len(name) / 5)
@@ -231,7 +233,7 @@ class DotToQtGenerator():
         # layout graph
         if dotcode is None:
             return {}, {}
-        graph = pydot.graph_from_dot_data(dotcode.encode("ascii", "ignore"))
+        graph = pydot.graph_from_dot_data(dotcode.decode("ascii", "ignore"))
         if isinstance(graph, list):
             graph = graph[0]
 

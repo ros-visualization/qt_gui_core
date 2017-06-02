@@ -167,4 +167,4 @@ class PydotFactory():
     def create_dot(self, graph):
         dot = graph.create_dot()
         # sadly pydot generates line wraps cutting between numbers
-        return dot.replace("\\\n", "")
+        return dot.replace(b"\\\n", b"")
