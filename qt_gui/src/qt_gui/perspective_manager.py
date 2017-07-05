@@ -368,7 +368,7 @@ class PerspectiveManager(QObject):
 
         # write perspective data to file
         file_handle = open(file_name, 'w')
-        file_handle.write(json.dumps(data, indent=2))
+        file_handle.write(json.dumps(data, indent=2, separators=(',', ': ')))
         file_handle.close()
 
     def _get_dict_from_settings(self, settings):
