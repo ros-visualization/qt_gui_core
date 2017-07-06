@@ -408,11 +408,14 @@ class PerspectiveManager(QObject):
             # add pretty print for better readability
             characters = ''
             for i in range(1, value.size(), 2):
-                character = value.at(i)
-                # output all non-control characters
-                if character >= ' ' and character <= '~':
-                    characters += character
-                else:
+                try:
+                    character = value.at(i)
+                    # output all non-control characters
+                    if character >= ' ' and character <= '~':
+                        characters += character
+                    else:
+                        characters += ' '
+                except UnicodeDecodeError:
                     characters += ' '
             data['pretty-print'] = characters
 
