@@ -265,10 +265,7 @@ class DotToQtGenerator():
         return nodes, edges
 
     def parse_nodes(self, graph, highlight_level):
-        '''
-        Recursively searches all nodes inside the graph and all subgraphs
-        '''
-
+        """Recursively searches all nodes inside the graph and all subgraphs."""
         # let pydot imitate pygraphviz api
         graph.nodes_iter = graph.get_node_list
         graph.subgraphs_iter = graph.get_subgraph_list
@@ -276,9 +273,7 @@ class DotToQtGenerator():
         nodes = {}
         for subgraph in graph.subgraphs_iter():
             subgraph_nodeitem = self.getNodeItemForSubgraph(subgraph, highlight_level)
-
             nodes.update(self.parse_nodes(subgraph, highlight_level))
-
             # skip subgraphs with empty bounding boxes
             if subgraph_nodeitem is None:
                 continue
@@ -298,10 +293,7 @@ class DotToQtGenerator():
         return nodes
 
     def parse_edges(self, graph, nodes, highlight_level, same_label_siblings):
-        '''
-        Recursively searches all edges inside the graph and all subgraphs
-        '''
-
+        """Recursively searches all edges inside the graph and all subgraphs."""
         # let pydot imitate pygraphviz api
         graph.subgraphs_iter = graph.get_subgraph_list
         graph.edges_iter = graph.get_edge_list
@@ -309,9 +301,7 @@ class DotToQtGenerator():
         edges = {}
         for subgraph in graph.subgraphs_iter():
             subgraph.edges_iter = subgraph.get_edge_list
-
             edges.update(self.parse_edges(subgraph, nodes, highlight_level, same_label_siblings))
-
             for edge in subgraph.edges_iter():
                 self.addEdgeItem(edge, nodes, edges,
                                  highlight_level=highlight_level,
