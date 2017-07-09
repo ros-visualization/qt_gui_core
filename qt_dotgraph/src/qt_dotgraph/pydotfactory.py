@@ -57,7 +57,6 @@ class PydotFactory():
 
     def escape_name(self, name):
         ret = quote(name.strip())
-        ret = ret.replace('/', '_')
         ret = ret.replace('%', '_')
         ret = ret.replace('-', '_')
         return self.escape_label(ret)
