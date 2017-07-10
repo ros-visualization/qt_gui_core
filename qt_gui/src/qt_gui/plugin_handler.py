@@ -255,7 +255,7 @@ class PluginHandler(QObject):
         if title_bar is None:
             title_bar = DockWidgetTitleBar(
                 dock_widget, self._application_context.qtgui_path,
-                self._application_context.options.hide_title)
+                hide_title=self._application_context.options.hide_title)
             dock_widget.setTitleBarWidget(title_bar)
 
             # connect extra buttons
