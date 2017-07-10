@@ -95,9 +95,15 @@ class DockWidgetTitleBar(QWidget):
         self.title_edit.returnPressed.connect(self._update_title_label)
 
         if hide_title:
+            # hide all except the configuration button if present
             self.icon_label.hide()
             self.title_label.hide()
+            self.dockable_button.hide()
+            self.reload_button.hide()
             self.help_button.hide()
+            self.minimize_button.hide()
+            self.float_button.hide()
+            self.close_button.hide()
 
     def __del__(self):
         self._dock_widget.removeEventFilter(self)
