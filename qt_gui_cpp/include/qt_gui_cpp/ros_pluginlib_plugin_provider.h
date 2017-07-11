@@ -43,6 +43,7 @@
 //#include <boost/shared_ptr.hpp>
 
 #include <pluginlib/class_loader.h>
+#include <tinyxml.h>
 
 #include <QCoreApplication>
 #include <QEvent>
