@@ -35,6 +35,8 @@ import pyparsing
 pyparsing._noncomma = "".join([c for c in pyparsing.printables if c != ","])
 import pydot
 
+import codecs
+
 from python_qt_binding.QtCore import QPointF, QRectF
 from python_qt_binding.QtGui import QColor
 
@@ -136,7 +138,6 @@ class DotToQtGenerator():
             print("Error, no label defined for node with attr: %s" % node.attr)
             return None
 
-        import codecs # To work with Python 2 and 3 (https://stackoverflow.com/a/23151714)
         name = codecs.escape_decode(name)[0].decode('utf-8')
 
         # decrease rect by one so that edges do not reach inside
@@ -233,7 +234,7 @@ class DotToQtGenerator():
         # layout graph
         if dotcode is None:
             return {}, {}
-        graph = pydot.graph_from_dot_data(dotcode.decode("ascii", "ignore"))
+        graph = pydot.graph_from_dot_data(dotcode)
         if isinstance(graph, list):
             graph = graph[0]
 
