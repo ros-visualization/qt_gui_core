@@ -41,8 +41,8 @@ import subprocess
 
 def check_x_server():
     p = subprocess.Popen(sys.executable, stdin=subprocess.PIPE)
-    p.stdin.write('from python_qt_binding.QtWidgets import QApplication\n')
-    p.stdin.write('app = QApplication([])\n')
+    p.stdin.write(b'from python_qt_binding.QtWidgets import QApplication\n')
+    p.stdin.write(b'app = QApplication([])\n')
     p.stdin.close()
     p.communicate()
 
@@ -53,7 +53,7 @@ def check_x_server():
 
 class DotToQtGeneratorTest(unittest.TestCase):
 
-    DOT_CODE = '''
+    DOT_CODE = r'''
     digraph graph_name {
         graph [bb="0,0,154,108",
             rank=same
