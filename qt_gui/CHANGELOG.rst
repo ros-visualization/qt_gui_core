@@ -2,8 +2,8 @@
 Changelog for package qt_gui
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.3.5 (2017-07-27)
+------------------
 * remove trailing spaces from exported perspective files (`#92 <https://github.com/ros-visualization/qt_gui_core/issues/92>`_)
 * fix perspective export with Python3 (`#91 <https://github.com/ros-visualization/qt_gui_core/pull/91>`_)
 * hide the remaining title bar elements not disabled by -l and -f (`#90 <https://github.com/ros-visualization/qt_gui_core/issues/90>`_)

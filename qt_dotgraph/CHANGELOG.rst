@@ -2,8 +2,8 @@
 Changelog for package qt_dotgraph
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.3.5 (2017-07-27)
+------------------
 * avoid collision of topic nodes with / and \_ (`#95 <https://github.com/ros-visualization/qt_gui_core/pull/95>`_)
 * small fixes for Python3 compatibility (`#88 <https://github.com/ros-visualization/qt_gui_core/pull/88>`_)
 * remove color item added unintentionally (`#86 <https://github.com/ros-visualization/qt_gui_core/pull/86>`_)
