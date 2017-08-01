@@ -57,7 +57,7 @@ class PygraphvizFactoryTest(unittest.TestCase):
         self.assertEqual(1, len(g.nodes()))
         self.assertEqual('graph', g.nodes()[0].get_name())
         self.assertEqual('graph', g.nodes()[0].attr['label'])
-        
+
     def test_add_edge(self):
         fac = PygraphvizFactory()
         g = fac.get_graph()

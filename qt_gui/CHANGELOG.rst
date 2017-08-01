@@ -2,6 +2,13 @@
 Changelog for package qt_gui
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.3.5 (2017-07-27)
+------------------
+* remove trailing spaces from exported perspective files (`#92 <https://github.com/ros-visualization/qt_gui_core/issues/92>`_)
+* fix perspective export with Python3 (`#91 <https://github.com/ros-visualization/qt_gui_core/pull/91>`_)
+* hide the remaining title bar elements not disabled by -l and -f (`#90 <https://github.com/ros-visualization/qt_gui_core/issues/90>`_)
+* use file name for rqt window title when loading a .perspective (`#84 <https://github.com/ros-visualization/qt_gui_core/pull/84>`_)
+
 0.3.4 (2017-01-24)
 ------------------
 * use Python 3 compatible syntax (`#81 <https://github.com/ros-visualization/qt_gui_core/pull/81>`_)
