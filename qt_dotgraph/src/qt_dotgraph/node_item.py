@@ -28,6 +28,10 @@
 # ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
+from __future__ import print_function
+
+import sys
+
 from python_qt_binding.QtCore import Qt
 from python_qt_binding.QtGui import QBrush, QPainterPath, QPen
 from python_qt_binding.QtWidgets import QGraphicsEllipseItem, QGraphicsRectItem, QGraphicsSimpleTextItem
@@ -81,8 +85,7 @@ class NodeItem(GraphItem):
         elif shape == 'box3d':
             self._graphics_item = QGraphicsBox3dItem(bounding_box)
         else:
-            #raise ValueError("Invalid shape '"+shape+"'")
-            print("Invalid shape '"+shape+"', defaulting to ellipse")
+            print("Invalid shape '%s', defaulting to ellipse" % shape, file=sys.stderr)
             self._graphics_item = QGraphicsEllipseItem(bounding_box)
 
     def set_hovershape(self, newhovershape):
