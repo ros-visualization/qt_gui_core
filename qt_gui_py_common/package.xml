@@ -4,6 +4,7 @@
   <description>
     qt_gui_py_common provides common functionality for GUI plugins written in Python.
   </description>
+  <maintainer email="dhood@osrfoundation.org">D. Hood</maintainer>
   <maintainer email="scholz@sim.tu-darmstadt.de">Dorian Scholz</maintainer>
   <license>BSD</license>
 
