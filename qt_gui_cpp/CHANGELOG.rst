@@ -2,8 +2,8 @@
 Changelog for package qt_gui_cpp
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.3.6 (2017-08-03)
+------------------
 * add dhood as maintainer (`#101 <https://github.com/ros-visualization/qt_gui_core/issues/101>`_)
 * add missing run_depend on TinyXML (`#100 <https://github.com/ros-visualization/qt_gui_core/issues/100>`_)
 * add TinyXML to target_link_libraries (`#99 <https://github.com/ros-visualization/qt_gui_core/issues/99>`_)
