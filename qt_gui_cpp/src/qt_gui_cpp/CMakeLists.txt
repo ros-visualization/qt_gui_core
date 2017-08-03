@@ -36,7 +36,7 @@ qt5_wrap_cpp(qt_gui_cpp_MOCS ${qt_gui_cpp_HDRS})
 
 include_directories(${PROJECT_NAME} ${qt_gui_cpp_INCLUDE_DIRECTORIES})
 add_library(${PROJECT_NAME} ${qt_gui_cpp_SRCS} ${qt_gui_cpp_MOCS})
-target_link_libraries(${PROJECT_NAME} ${qt_gui_cpp_LINK_LIBRARIES} ${catkin_LIBRARIES} ${Boost_LIBRARIES} Qt5::Widgets)
+target_link_libraries(${PROJECT_NAME} ${qt_gui_cpp_LINK_LIBRARIES} ${catkin_LIBRARIES} ${Boost_LIBRARIES} Qt5::Widgets ${TinyXML_LIBRARIES})
 
 install(TARGETS ${PROJECT_NAME}
   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
