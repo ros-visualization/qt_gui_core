@@ -4,6 +4,7 @@
   <description>
     Integration of the ROS package system and ROS-specific plugins for a Qt-based GUI.
   </description>
+  <maintainer email="dhood@osrfoundation.org">D. Hood</maintainer>
   <maintainer email="dthomas@osrfoundation.org">Dirk Thomas</maintainer>
   <license>BSD</license>
 
