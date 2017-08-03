@@ -25,6 +25,7 @@
 
   <run_depend version_gte="1.9.23">pluginlib</run_depend>
   <run_depend version_gte="0.3.0">qt_gui</run_depend>
+  <run_depend>tinyxml</run_depend>
 
   <export>
     <qt_gui plugin="${prefix}/plugin.xml"/>
