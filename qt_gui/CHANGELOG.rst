@@ -2,6 +2,10 @@
 Changelog for package qt_gui
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* add dhood as maintainer (`#101 <https://github.com/ros-visualization/qt_gui_core/issues/101>`_)
+
 0.3.5 (2017-07-27)
 ------------------
 * remove trailing spaces from exported perspective files (`#92 <https://github.com/ros-visualization/qt_gui_core/issues/92>`_)
