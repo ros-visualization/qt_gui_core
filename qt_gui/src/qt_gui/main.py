@@ -395,12 +395,15 @@ class Main(object):
             timer.start(500)
             timer.timeout.connect(lambda: None)
 
-            menu_bar = main_window.menuBar()
-            file_menu = menu_bar.addMenu(menu_bar.tr('&File'))
-            action = QAction(file_menu.tr('&Quit'), file_menu)
-            action.setIcon(QIcon.fromTheme('application-exit'))
-            action.triggered.connect(main_window.close)
-            file_menu.addAction(action)
+            if not self._options.lock_perspective:
+                menu_bar = main_window.menuBar()
+                file_menu = menu_bar.addMenu(menu_bar.tr('&File'))
+                action = QAction(file_menu.tr('&Quit'), file_menu)
+                action.setIcon(QIcon.fromTheme('application-exit'))
+                action.triggered.connect(main_window.close)
+                file_menu.addAction(action)
+            else:
+                menu_bar = None
 
         else:
             app.setQuitOnLastWindowClosed(False)
