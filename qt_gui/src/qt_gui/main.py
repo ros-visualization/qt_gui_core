@@ -506,7 +506,7 @@ class Main(object):
             elif len(plugins) > 1:
                 print('qt_gui_main() found multiple plugins matching "%s"\n%s' % (plugin, '\n'.join(plugins.values())))
                 return 1
-            plugin = plugins.keys()[0]
+            plugin = list(plugins.keys())[0]
 
         qDebug('QtBindingHelper using %s' % QT_BINDING)
 
