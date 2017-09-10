@@ -190,7 +190,7 @@ class DotToQtGenerator():
         if edge_pos is None:
             return
         if label is not None:
-            label = label.decode('string_escape')
+            label = codecs.escape_decode(label)[0].decode('utf-8')
 
         penwidth = int(edge.attr.get('penwidth', 1))
 
