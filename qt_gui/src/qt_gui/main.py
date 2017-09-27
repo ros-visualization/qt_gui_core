@@ -477,7 +477,7 @@ class Main(object):
         if main_window is not None and menu_bar is not None:
             about_handler = AboutHandler(context.qtgui_path, main_window)
             help_menu = menu_bar.addMenu(menu_bar.tr('&Help'))
-            action = QAction(file_menu.tr('&About'), help_menu)
+            action = QAction(help_menu.tr('&About'), help_menu)
             action.setIcon(QIcon.fromTheme('help-about'))
             action.triggered.connect(about_handler.show)
             help_menu.addAction(action)
