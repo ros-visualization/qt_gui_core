@@ -438,14 +438,14 @@ class Main(object):
 
         if main_window is not None:
             container_manager = ContainerManager(main_window, plugin_manager)
-            plugin_manager.set_main_window(main_window, menu_bar if not self._options.lock_perspective else None, container_manager)
+            plugin_manager.set_main_window(main_window, menu_bar, container_manager)
 
             if not self._options.freeze_layout:
                 minimized_dock_widgets_toolbar = MinimizedDockWidgetsToolbar(container_manager, main_window)
                 main_window.addToolBar(Qt.BottomToolBarArea, minimized_dock_widgets_toolbar)
                 plugin_manager.set_minimized_dock_widgets_toolbar(minimized_dock_widgets_toolbar)
 
-        if menu_bar is not None and not self._options.lock_perspective:
+        if menu_bar is not None:
             perspective_menu = menu_bar.addMenu(menu_bar.tr('P&erspectives'))
             perspective_manager.set_menu(perspective_menu)
 
