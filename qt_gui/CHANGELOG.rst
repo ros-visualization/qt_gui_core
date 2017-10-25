@@ -2,8 +2,8 @@
 Changelog for package qt_gui
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.3.7 (2017-10-25)
+------------------
 * Hide the menu bar when using lock perspective (`#103 <https://github.com/ros-visualization/qt_gui_core/issues/103>`_)
 * Fix for Python 3 compatibility (`#104 <https://github.com/ros-visualization/qt_gui_core/issues/104>`_)
 
