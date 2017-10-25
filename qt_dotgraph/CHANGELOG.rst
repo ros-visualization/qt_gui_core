@@ -2,9 +2,12 @@
 Changelog for package qt_dotgraph
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Fix for Python 3 compatibility (`#106 <https://github.com/ros-visualization/qt_gui_core/issues/106>`_)
+
 0.3.6 (2017-08-03)
 ------------------
-* add dhood as maintainer (`#101 <https://github.com/ros-visualization/qt_gui_core/issues/101>`_)
 
 0.3.5 (2017-07-27)
 ------------------
