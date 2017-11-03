@@ -82,7 +82,7 @@ class NodeItem(GraphItem):
             self._graphics_item = QGraphicsRectItem(bounding_box)
         elif shape in ('ellipse', 'oval', 'circle'):
             self._graphics_item = QGraphicsEllipseItem(bounding_box)
-        elif shape in ('box3d'):
+        elif shape in ('box3d', ):
             self._graphics_item = QGraphicsBox3dItem(bounding_box)
         else:
             print("Invalid shape '%s', defaulting to ellipse" % shape, file=sys.stderr)
