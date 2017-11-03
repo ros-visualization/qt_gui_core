@@ -265,7 +265,6 @@ class DotToQtGenerator():
         graph.subgraphs_iter = graph.get_subgraph_list
 
         nodes = {}
-        edges = {}
         for subgraph in graph.subgraphs_iter():
             subgraph_nodeitem = self.getNodeItemForSubgraph(subgraph, highlight_level, scene=scene)
             nodes.update(self.parse_nodes(subgraph, highlight_level, scene=scene))

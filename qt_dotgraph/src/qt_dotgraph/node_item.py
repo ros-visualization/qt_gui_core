@@ -78,11 +78,11 @@ class NodeItem(GraphItem):
         self.hovershape = None
 
     def parse_shape(self, shape, bounding_box):
-        if shape == 'box' or shape == 'rect' or shape == 'rectangle':
+        if shape in ('box', 'rect', 'rectangle'):
             self._graphics_item = QGraphicsRectItem(bounding_box)
-        elif shape == 'ellipse' or shape == 'oval' or shape == 'circle':
+        elif shape in ('ellipse', 'oval', 'circle'):
             self._graphics_item = QGraphicsEllipseItem(bounding_box)
-        elif shape == 'box3d':
+        elif shape in ('box3d'):
             self._graphics_item = QGraphicsBox3dItem(bounding_box)
         else:
             print("Invalid shape '%s', defaulting to ellipse" % shape, file=sys.stderr)

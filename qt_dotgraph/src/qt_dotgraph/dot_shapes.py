@@ -1,5 +1,4 @@
 from python_qt_binding.QtCore import QRectF
-from python_qt_binding.QtGui import QColor
 from python_qt_binding.QtWidgets import QAbstractGraphicsShapeItem
 
 class QGraphicsBox3dItem(QAbstractGraphicsShapeItem):
@@ -13,9 +12,9 @@ class QGraphicsBox3dItem(QAbstractGraphicsShapeItem):
     def paint(self, painter, option, widget):
         # Main rectangle
         rectangle = QRectF(self._bounding_box.topLeft().x(),
-                         self._bounding_box.topLeft().y() + self._bounding_box.height() * 0.1,
-                         self._bounding_box.width() - self._bounding_box.height() * 0.1,
-                         self._bounding_box.height() - self._bounding_box.height() * 0.1)
+                           self._bounding_box.topLeft().y() + self._bounding_box.height() * 0.1,
+                           self._bounding_box.width() - self._bounding_box.height() * 0.1,
+                           self._bounding_box.height() - self._bounding_box.height() * 0.1)
         painter.drawRect(rectangle)
         # Top line
         painter.drawLine(rectangle.topLeft().x() + self._bounding_box.height() * 0.1,
