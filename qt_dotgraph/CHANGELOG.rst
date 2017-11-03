@@ -2,8 +2,8 @@
 Changelog for package qt_dotgraph
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.3.8 (2017-11-03)
+------------------
 * add recursive subgraph parsing, box3d shape, graphics items now immediately parented (`#87 <https://github.com/ros-visualization/qt_gui_core/issues/87>`_)
 
 0.3.7 (2017-10-25)
