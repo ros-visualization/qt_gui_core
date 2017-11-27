@@ -28,9 +28,14 @@
 # ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
+from __future__ import print_function
+
+import sys
+
 from python_qt_binding.QtCore import Qt
 from python_qt_binding.QtGui import QBrush, QGraphicsEllipseItem, QGraphicsRectItem, QGraphicsSimpleTextItem, QPainterPath, QPen
 
+from .dot_shapes import QGraphicsBox3dItem
 from .graph_item import GraphItem
 
 
@@ -50,10 +55,7 @@ class NodeItem(GraphItem):
         self._incoming_edges = set()
         self._outgoing_edges = set()
 
-        if shape == 'box':
-            self._graphics_item = QGraphicsRectItem(bounding_box)
-        else:
-            self._graphics_item = QGraphicsEllipseItem(bounding_box)
+        self.parse_shape(shape, bounding_box)
         self.addToGroup(self._graphics_item)
 
         self._label = QGraphicsSimpleTextItem(label)
@@ -73,6 +75,17 @@ class NodeItem(GraphItem):
         self.setAcceptHoverEvents(True)
 
         self.hovershape = None
+
+    def parse_shape(self, shape, bounding_box):
+        if shape in ('box', 'rect', 'rectangle'):
+            self._graphics_item = QGraphicsRectItem(bounding_box)
+        elif shape in ('ellipse', 'oval', 'circle'):
+            self._graphics_item = QGraphicsEllipseItem(bounding_box)
+        elif shape in ('box3d', ):
+            self._graphics_item = QGraphicsBox3dItem(bounding_box)
+        else:
+            print("Invalid shape '%s', defaulting to ellipse" % shape, file=sys.stderr)
+            self._graphics_item = QGraphicsEllipseItem(bounding_box)
 
     def set_hovershape(self, newhovershape):
         self.hovershape = newhovershape
