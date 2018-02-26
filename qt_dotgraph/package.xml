@@ -4,6 +4,7 @@
   <description>
     qt_dotgraph provides helpers to work with dot graphs.
   </description>
+  <maintainer email="dhood@osrfoundation.org">D. Hood</maintainer>
   <maintainer email="dthomas@osrfoundation.org">Dirk Thomas</maintainer>
   <license>BSD</license>
 
@@ -15,7 +16,7 @@
   <buildtool_depend>catkin</buildtool_depend>
 
   <run_depend>python-pydot</run_depend>
-  <run_depend>python_qt_binding</run_depend>
+  <run_depend version_gte="0.3.0">python_qt_binding</run_depend>
 
   <test_depend>python-pygraphviz</test_depend>
 </package>

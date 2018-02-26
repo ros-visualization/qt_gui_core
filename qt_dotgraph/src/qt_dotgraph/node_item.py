@@ -28,9 +28,15 @@
 # ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-from python_qt_binding.QtCore import Qt
-from python_qt_binding.QtGui import QBrush, QGraphicsEllipseItem, QGraphicsRectItem, QGraphicsSimpleTextItem, QPainterPath, QPen
+from __future__ import print_function
 
+import sys
+
+from python_qt_binding.QtCore import Qt
+from python_qt_binding.QtGui import QBrush, QPainterPath, QPen
+from python_qt_binding.QtWidgets import QGraphicsEllipseItem, QGraphicsRectItem, QGraphicsSimpleTextItem
+
+from .dot_shapes import QGraphicsBox3dItem
 from .graph_item import GraphItem
 
 
@@ -50,10 +56,7 @@ class NodeItem(GraphItem):
         self._incoming_edges = set()
         self._outgoing_edges = set()
 
-        if shape == 'box':
-            self._graphics_item = QGraphicsRectItem(bounding_box)
-        else:
-            self._graphics_item = QGraphicsEllipseItem(bounding_box)
+        self.parse_shape(shape, bounding_box)
         self.addToGroup(self._graphics_item)
 
         self._label = QGraphicsSimpleTextItem(label)
@@ -73,6 +76,17 @@ class NodeItem(GraphItem):
         self.setAcceptHoverEvents(True)
 
         self.hovershape = None
+
+    def parse_shape(self, shape, bounding_box):
+        if shape in ('box', 'rect', 'rectangle'):
+            self._graphics_item = QGraphicsRectItem(bounding_box)
+        elif shape in ('ellipse', 'oval', 'circle'):
+            self._graphics_item = QGraphicsEllipseItem(bounding_box)
+        elif shape in ('box3d', ):
+            self._graphics_item = QGraphicsBox3dItem(bounding_box)
+        else:
+            print("Invalid shape '%s', defaulting to ellipse" % shape, file=sys.stderr)
+            self._graphics_item = QGraphicsEllipseItem(bounding_box)
 
     def set_hovershape(self, newhovershape):
         self.hovershape = newhovershape
@@ -113,12 +127,14 @@ class NodeItem(GraphItem):
             incoming_nodes = set()
             for incoming_edge in self._incoming_edges.difference(cyclic_edges):
                 incoming_edge.set_node_color(self._COLOR_BLUE)
+                incoming_edge.set_label_color(self._COLOR_BLUE)
                 if incoming_edge.from_node != self:
                     incoming_nodes.add(incoming_edge.from_node)
             # outgoing edges in green
             outgoing_nodes = set()
             for outgoing_edge in self._outgoing_edges.difference(cyclic_edges):
                 outgoing_edge.set_node_color(self._COLOR_GREEN)
+                outgoing_edge.set_label_color(self._COLOR_GREEN)
                 if outgoing_edge.to_node != self:
                     outgoing_nodes.add(outgoing_edge.to_node)
             # incoming/outgoing edges in teal
@@ -142,9 +158,11 @@ class NodeItem(GraphItem):
         if self._highlight_level > 1:
             for incoming_edge in self._incoming_edges:
                 incoming_edge.set_node_color()
+                incoming_edge.set_label_color()
                 if self._highlight_level > 2 and incoming_edge.from_node != self:
                     incoming_edge.from_node.set_node_color()
             for outgoing_edge in self._outgoing_edges:
                 outgoing_edge.set_node_color()
+                outgoing_edge.set_label_color()
                 if self._highlight_level > 2 and outgoing_edge.to_node != self:
                     outgoing_edge.to_node.set_node_color()

@@ -4,6 +4,7 @@
   <description>
     qt_gui_py_common provides common functionality for GUI plugins written in Python.
   </description>
+  <maintainer email="dhood@osrfoundation.org">D. Hood</maintainer>
   <maintainer email="scholz@sim.tu-darmstadt.de">Dorian Scholz</maintainer>
   <license>BSD</license>
 
@@ -14,6 +15,6 @@
 
   <buildtool_depend>catkin</buildtool_depend>
 
-  <run_depend>python_qt_binding</run_depend>
+  <run_depend version_gte="0.3.0">python_qt_binding</run_depend>
   <run_depend>python-rospkg</run_depend>
 </package>

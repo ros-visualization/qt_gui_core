@@ -31,15 +31,16 @@
 import os
 
 from python_qt_binding import loadUi
-from python_qt_binding.QtCore import QEvent, QObject, Qt, qWarning, Signal
-from python_qt_binding.QtGui import QDockWidget, QIcon, QMenu, QWidget
+from python_qt_binding.QtCore import QEvent, QObject, Qt, qWarning
+from python_qt_binding.QtGui import QIcon
+from python_qt_binding.QtWidgets import QDockWidget, QMenu, QWidget
 
 
 class DockWidgetTitleBar(QWidget):
 
     """Title bar for dock widgets providing custom actions."""
 
-    def __init__(self, dock_widget, qtgui_path):
+    def __init__(self, dock_widget, qtgui_path, hide_title=False):
         super(DockWidgetTitleBar, self).__init__(dock_widget)
         self._dock_widget = dock_widget
 
@@ -92,6 +93,17 @@ class DockWidgetTitleBar(QWidget):
         self.title_edit.hide()
         self.title_edit.editingFinished.connect(self._finished_editing)
         self.title_edit.returnPressed.connect(self._update_title_label)
+
+        if hide_title:
+            # hide all except the configuration button if present
+            self.icon_label.hide()
+            self.title_label.hide()
+            self.dockable_button.hide()
+            self.reload_button.hide()
+            self.help_button.hide()
+            self.minimize_button.hide()
+            self.float_button.hide()
+            self.close_button.hide()
 
     def __del__(self):
         self._dock_widget.removeEventFilter(self)

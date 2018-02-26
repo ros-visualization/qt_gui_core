@@ -2,6 +2,7 @@
 <typesystem package="libqt_gui_cpp_shiboken">
   <load-typesystem name="typesystem_core.xml" generate="no"/>
   <load-typesystem name="typesystem_gui.xml" generate="no"/>
+  <load-typesystem name="typesystem_widgets.xml" generate="no"/>
   <namespace-type name="qt_gui_cpp"/>
   <object-type name="qt_gui_cpp::CompositePluginProvider"/>
   <object-type name="qt_gui_cpp::GenericProxy"/>

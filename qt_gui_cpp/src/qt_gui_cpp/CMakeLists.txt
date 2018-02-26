@@ -1,7 +1,6 @@
 set(Python_ADDITIONAL_VERSIONS "${PYTHON_VERSION_MAJOR}.${PYTHON_VERSION_MINOR}")
 find_package(PythonLibs "${PYTHON_VERSION_MAJOR}.${PYTHON_VERSION_MINOR}" REQUIRED)
-find_package(Qt4 COMPONENTS QtCore QtGui REQUIRED)
-include(${QT_USE_FILE})
+find_package(Qt5Widgets REQUIRED)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC")
 
@@ -17,7 +16,9 @@ set(qt_gui_cpp_SRCS
 )
 
 set(qt_gui_cpp_HDRS
+  ../../include/qt_gui_cpp/plugin.h
   ../../include/qt_gui_cpp/plugin_bridge.h
+  ../../include/qt_gui_cpp/plugin_context.h
 )
 
 set(qt_gui_cpp_INCLUDE_DIRECTORIES
@@ -31,11 +32,11 @@ set(qt_gui_cpp_LINK_LIBRARIES
   ${QT_QTGUI_LIBRARY}
 )
 
-qt4_wrap_cpp(qt_gui_cpp_MOCS ${qt_gui_cpp_HDRS})
+qt5_wrap_cpp(qt_gui_cpp_MOCS ${qt_gui_cpp_HDRS})
 
 include_directories(${PROJECT_NAME} ${qt_gui_cpp_INCLUDE_DIRECTORIES})
 add_library(${PROJECT_NAME} ${qt_gui_cpp_SRCS} ${qt_gui_cpp_MOCS})
-target_link_libraries(${PROJECT_NAME} ${qt_gui_cpp_LINK_LIBRARIES} ${catkin_LIBRARIES} ${Boost_LIBRARIES})
+target_link_libraries(${PROJECT_NAME} ${qt_gui_cpp_LINK_LIBRARIES} ${catkin_LIBRARIES} ${Boost_LIBRARIES} Qt5::Widgets ${TinyXML_LIBRARIES})
 
 install(TARGETS ${PROJECT_NAME}
   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}

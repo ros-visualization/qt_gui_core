@@ -29,7 +29,7 @@
 # POSSIBILITY OF SUCH DAMAGE.
 
 from python_qt_binding.QtCore import qDebug, Qt, Signal
-from python_qt_binding.QtGui import QToolBar
+from python_qt_binding.QtWidgets import QToolBar
 
 from .dockable_main_window import DockableMainWindow
 from .settings import Settings
@@ -124,6 +124,8 @@ class MainWindow(DockableMainWindow):
             # restore area for all toolbars
             toolbar_settings = self._settings.get_settings('toolbar_areas')
             for toolbar in self.findChildren(QToolBar):
+                if not toolbar.objectName():
+                    continue
                 area = Qt.ToolBarArea(int(toolbar_settings.value(toolbar.objectName(), Qt.NoToolBarArea)))
                 if area in [Qt.LeftToolBarArea, Qt.RightToolBarArea, Qt.TopToolBarArea, Qt.BottomToolBarArea]:
                     self.addToolBar(area, toolbar)

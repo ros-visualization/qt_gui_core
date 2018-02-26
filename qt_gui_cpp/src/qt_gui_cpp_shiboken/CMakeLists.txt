@@ -1,8 +1,8 @@
-find_package(Qt4 COMPONENTS QtCore QtGui REQUIRED)
-include(${QT_USE_FILE})
+find_package(Qt5Widgets REQUIRED)
 set(qt_gui_cpp_shiboken_QT_COMPONENTS
   QtCore
   QtGui
+  QtWidgets
 )
 
 set(qt_gui_cpp_shiboken_SRCS
@@ -48,6 +48,7 @@ if(shiboken_helper_FOUND)
     list(APPEND qt_gui_cpp_BINDINGS "shiboken")
     set(qt_gui_cpp_BINDINGS "${qt_gui_cpp_BINDINGS}" PARENT_SCOPE)
 
+    set(QT_INCLUDE_DIR "${Qt5Widgets_INCLUDE_DIRS}")
     shiboken_generator(libqt_gui_cpp global.h typesystem.xml ${PROJECT_SOURCE_DIR}/src/qt_gui_cpp_shiboken "${qt_gui_cpp_shiboken_SRCS}" "${qt_gui_cpp_HDRS}" "${qt_gui_cpp_INCLUDE_PATH}" "${CMAKE_CURRENT_BINARY_DIR}")
 
     include_directories(qt_gui_cpp_shiboken ${qt_gui_cpp_INCLUDE_PATH}/qt_gui_cpp)

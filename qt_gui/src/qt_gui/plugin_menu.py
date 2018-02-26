@@ -31,7 +31,8 @@
 import os
 
 from python_qt_binding.QtCore import QObject, QSignalMapper, Signal, Slot
-from python_qt_binding.QtGui import QAction, QIcon, QMenu
+from python_qt_binding.QtGui import QIcon
+from python_qt_binding.QtWidgets import QAction, QMenu
 
 from .icon_loader import get_icon
 from .menu_manager import MenuManager
@@ -55,6 +56,9 @@ class PluginMenu(QObject):
         self._plugin_mapper = QSignalMapper(plugin_menu)
         self._plugin_mapper.mapped[str].connect(self.load_plugin_signal)
         self._running_menu_manager = MenuManager(running_menu)
+        action = QAction(' Hidden action to work around QTBUG-52582', self._running_menu_manager.menu)
+        action.setVisible(False)
+        self._running_menu_manager.add_item(action)
         self._running_mapper = QSignalMapper(running_menu)
         self._running_mapper.mapped[str].connect(self.unload_plugin_signal)
 
