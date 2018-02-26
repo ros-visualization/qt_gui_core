@@ -1,1 +1,1 @@
-set(qt_gui_cpp_USE_QT_MAJOR_VERSION 5)
+set(qt_gui_cpp_USE_QT_MAJOR_VERSION 4)

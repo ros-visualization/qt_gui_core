@@ -15,11 +15,11 @@
 
   <buildtool_depend>catkin</buildtool_depend>
 
-  <run_depend version_gte="0.3.0">qt_dotgraph</run_depend>
-  <run_depend version_gte="0.3.0">qt_gui</run_depend>
-  <run_depend version_gte="0.3.0">qt_gui_app</run_depend>
-  <run_depend version_gte="0.3.0">qt_gui_cpp</run_depend>
-  <run_depend version_gte="0.3.0">qt_gui_py_common</run_depend>
+  <run_depend version_gte="0.2.31">qt_dotgraph</run_depend>
+  <run_depend version_gte="0.2.31">qt_gui</run_depend>
+  <run_depend version_gte="0.2.31">qt_gui_app</run_depend>
+  <run_depend version_gte="0.2.31">qt_gui_cpp</run_depend>
+  <run_depend version_gte="0.2.31">qt_gui_py_common</run_depend>
 
   <export>
     <metapackage/>

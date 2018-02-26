@@ -17,10 +17,10 @@
 
   <buildtool_depend>catkin</buildtool_depend>
 
-  <build_depend>qt5-qmake</build_depend>
-  <build_depend>python-qt5-bindings</build_depend>
+  <build_depend>qt4-qmake</build_depend>
+  <build_depend>python-qt-bindings</build_depend>
 
-  <run_depend version_gte="0.3.0">python_qt_binding</run_depend>
+  <run_depend version_gte="0.2.19">python_qt_binding</run_depend>
   <run_depend>python-rospkg</run_depend>
   <run_depend>tango-icon-theme</run_depend>
 </package>

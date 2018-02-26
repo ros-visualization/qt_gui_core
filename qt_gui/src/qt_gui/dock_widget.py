@@ -29,8 +29,7 @@
 # POSSIBILITY OF SUCH DAMAGE.
 
 from python_qt_binding.QtCore import qDebug, QEvent, QPoint, QRect, Qt
-from python_qt_binding.QtGui import QMouseEvent
-from python_qt_binding.QtWidgets import QApplication, QDockWidget
+from python_qt_binding.QtGui import QMouseEvent, QApplication, QDockWidget
 
 from .dockable_main_window import DockableMainWindow
 from .reparent_event import ReparentEvent

@@ -1,4 +1,5 @@
-find_package(Qt5Widgets REQUIRED)
+find_package(Qt4 COMPONENTS QtCore QtGui REQUIRED)
+include(${QT_USE_FILE})
 set(qt_gui_cpp_shiboken_QT_COMPONENTS
   QtCore
   QtGui

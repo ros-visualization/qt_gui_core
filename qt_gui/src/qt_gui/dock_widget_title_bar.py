@@ -31,9 +31,8 @@
 import os
 
 from python_qt_binding import loadUi
-from python_qt_binding.QtCore import QEvent, QObject, Qt, qWarning
-from python_qt_binding.QtGui import QIcon
-from python_qt_binding.QtWidgets import QDockWidget, QMenu, QWidget
+from python_qt_binding.QtCore import QEvent, QObject, Qt, qWarning, Signal
+from python_qt_binding.QtGui import QIcon, QDockWidget, QMenu, QWidget
 
 
 class DockWidgetTitleBar(QWidget):

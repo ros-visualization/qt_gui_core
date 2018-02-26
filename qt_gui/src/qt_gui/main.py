@@ -343,9 +343,8 @@ class Main(object):
         setattr(sys, 'SELECT_QT_BINDING', self._options.qt_binding)
         from python_qt_binding import QT_BINDING
 
-        from python_qt_binding.QtCore import qDebug, qInstallMessageHandler, QSettings, Qt, QtCriticalMsg, QtDebugMsg, QtFatalMsg, QTimer, QtWarningMsg
-        from python_qt_binding.QtGui import QIcon
-        from python_qt_binding.QtWidgets import QAction, QMenuBar
+        from python_qt_binding.QtCore import qDebug, qInstallMsgHandler, QSettings, Qt, QtCriticalMsg, QtDebugMsg, QtFatalMsg, QTimer, QtWarningMsg
+        from python_qt_binding.QtGui import QIcon, QAction, QMenuBar
 
         from .about_handler import AboutHandler
         from .composite_plugin_provider import CompositePluginProvider
@@ -359,7 +358,7 @@ class Main(object):
 
         # TODO PySide2 segfaults when invoking this custom message handler atm
         if QT_BINDING != 'pyside':
-            def message_handler(type_, context, msg):
+            def message_handler(type_, msg):
                 colored_output = 'TERM' in os.environ and 'ANSI_COLORS_DISABLED' not in os.environ
                 cyan_color = '\033[36m' if colored_output else ''
                 red_color = '\033[31m' if colored_output else ''
@@ -373,7 +372,7 @@ class Main(object):
                 elif type_ == QtFatalMsg:
                     print(red_color + msg + reset_color, file=sys.stderr)
                     sys.exit(1)
-            qInstallMessageHandler(message_handler)
+            qInstallMsgHandler(message_handler)
 
         app = self.create_application(argv)
 
