@@ -33,18 +33,26 @@ import os
 
 from python_qt_binding import loadUi
 from python_qt_binding.QtCore import QByteArray, qDebug, QObject, QSignalMapper, Signal, Slot
-from python_qt_binding.QtGui import QAction, QFileDialog, QIcon, QInputDialog, QMessageBox, QValidator
+from python_qt_binding.QtGui import QIcon, QValidator, QAction, QFileDialog, QInputDialog, QMessageBox
 
 from .menu_manager import MenuManager
 from .settings import Settings
 from .settings_proxy import SettingsProxy
 
 
+def is_string(s):
+    """Check if the argument is a string which works for both Python 2 and 3."""
+    try:
+        return isinstance(s, basestring)
+    except NameError:
+        return isinstance(s, str)
+
+
 class PerspectiveManager(QObject):
 
     """Manager for perspectives associated with specific sets of `Settings`."""
 
-    perspective_changed_signal = Signal(basestring)
+    perspective_changed_signal = Signal(str)
     save_settings_signal = Signal(Settings, Settings)
     restore_settings_signal = Signal(Settings, Settings)
     restore_settings_without_plugin_changes_signal = Signal(Settings, Settings)
@@ -67,7 +75,7 @@ class PerspectiveManager(QObject):
 
         # get perspective list from settings
         self.perspectives = self._settings_proxy.value('', 'perspectives', [])
-        if isinstance(self.perspectives, basestring):
+        if is_string(self.perspectives):
             self.perspectives = [self.perspectives]
 
         self._current_perspective = None
@@ -359,7 +367,7 @@ class PerspectiveManager(QObject):
 
         # write perspective data to file
         file_handle = open(file_name, 'w')
-        file_handle.write(json.dumps(data, indent=2))
+        file_handle.write(json.dumps(data, indent=2, separators=(',', ': ')))
         file_handle.close()
 
     def _get_dict_from_settings(self, settings):
@@ -399,11 +407,14 @@ class PerspectiveManager(QObject):
             # add pretty print for better readability
             characters = ''
             for i in range(1, value.size(), 2):
-                character = value.at(i)
-                # output all non-control characters
-                if character >= ' ' and character <= '~':
-                    characters += character
-                else:
+                try:
+                    character = value.at(i)
+                    # output all non-control characters
+                    if character >= ' ' and character <= '~':
+                        characters += character
+                    else:
+                        characters += ' '
+                except UnicodeDecodeError:
                     characters += ' '
             data['pretty-print'] = characters
 

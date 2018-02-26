@@ -33,7 +33,8 @@
 import sys
 
 from python_qt_binding.QtCore import Qt
-from python_qt_binding.QtGui import QFont, QTextEdit
+from python_qt_binding.QtGui import QFont
+from python_qt_binding.QtWidgets import QTextEdit
 
 
 class ConsoleTextEdit(QTextEdit):
@@ -89,7 +90,7 @@ class ConsoleTextEdit(QTextEdit):
             return None
         else:
             # should have a better way of doing this but I can't find it
-            for _ in xrange(length):
+            for _ in range(length):
                 self.textCursor().deletePreviousChar()
         return True
 

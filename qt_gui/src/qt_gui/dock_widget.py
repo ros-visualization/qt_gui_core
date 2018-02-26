@@ -29,7 +29,7 @@
 # POSSIBILITY OF SUCH DAMAGE.
 
 from python_qt_binding.QtCore import qDebug, QEvent, QPoint, QRect, Qt
-from python_qt_binding.QtGui import QApplication, QDockWidget, QMouseEvent
+from python_qt_binding.QtGui import QMouseEvent, QApplication, QDockWidget
 
 from .dockable_main_window import DockableMainWindow
 from .reparent_event import ReparentEvent
@@ -168,7 +168,7 @@ class DockWidget(QDockWidget):
             elif len(overlapping) > 1:
                 # try to determine which main window is the right one
                 # determined docked main windows
-                overlapping_docked = [mw for mw, floating in overlapping.iteritems() if not floating]
+                overlapping_docked = [mw for mw, floating in overlapping.items() if not floating]
                 #print 'overlapping_docked', overlapping_docked
 
                 # if at max one of the main windows is floating

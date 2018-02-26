@@ -36,11 +36,11 @@ from python_qt_binding.QtCore import qWarning
 
 try:
     if QT_BINDING == 'pyside':
-        import libqt_gui_cpp_shiboken
+        from . import libqt_gui_cpp_shiboken
         qt_gui_cpp = libqt_gui_cpp_shiboken.qt_gui_cpp
 
     elif QT_BINDING == 'pyqt':
-        import libqt_gui_cpp_sip
+        from . import libqt_gui_cpp_sip
         qt_gui_cpp = libqt_gui_cpp_sip.qt_gui_cpp
 
     else:
