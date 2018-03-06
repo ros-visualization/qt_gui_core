@@ -222,6 +222,11 @@ class PluginManager(QObject):
 
         handler.set_minimized_dock_widgets_toolbar(self._minimized_dock_widgets_toolbar)
 
+        if instance_id.plugin_id not in self._plugin_descriptors.keys():
+            qWarning(
+                'PluginManager._load_plugin() could not load plugin "%s": plugin not available' %
+                (instance_id.plugin_id))
+            return
         plugin_descriptor = self._plugin_descriptors[instance_id.plugin_id]
         handler.set_plugin_descriptor(plugin_descriptor)
 
