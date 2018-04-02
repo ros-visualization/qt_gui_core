@@ -42,7 +42,7 @@
 // Shiboken2 isn't able to parse it correctly atm
 //#include <boost/shared_ptr.hpp>
 
-#include <pluginlib/class_loader.h>
+#include <pluginlib/class_loader.hpp>
 #include <tinyxml.h>
 
 #include <QCoreApplication>
