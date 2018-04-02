@@ -90,8 +90,6 @@ class Main(object):
             common_group.add_argument('-ht', '--hide-title', dest='hide_title', action='store_true',
                 help='hide the title label, the icon, and the help button (combine with -l and -f to eliminate the entire title bar and reclaim the space)')
 
-            common_group.add_argument('-m', '--multi-process', dest='multi_process', default=False, action='store_true',
-                help='use separate processes for each plugin instance (currently only supported under X11)')
             common_group.add_argument('-p', '--perspective', dest='perspective', type=str, metavar='PERSPECTIVE',
                 help='start with this named perspective')
             common_group.add_argument('--perspective-file', dest='perspective_file', type=str, metavar='PERSPECTIVE_FILE',
@@ -195,6 +193,7 @@ class Main(object):
         parser = ArgumentParser(os.path.basename(Main.main_filename), add_help=False)
         self.add_arguments(parser, standalone=bool(standalone), plugin_argument_provider=plugin_argument_provider)
         self._options = parser.parse_args(arguments)
+        self._options.multi_process = False  # not supported anymore
 
         if standalone:
             # rerun parsing to separate common arguments from plugin specific arguments
@@ -208,7 +207,6 @@ class Main(object):
             self._options.freeze_layout = False
             self._options.lock_perspective = False
             self._options.hide_title = False
-            self._options.multi_process = False
             self._options.perspective = None
             self._options.perspective_file = None
             self._options.standalone_plugin = standalone
