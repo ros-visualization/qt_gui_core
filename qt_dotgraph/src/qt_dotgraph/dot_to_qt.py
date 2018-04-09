@@ -168,7 +168,7 @@ class DotToQtGenerator():
         """
         # let pydot imitate pygraphviz api
         attr = {}
-        for name in edge.get_attributes().iterkeys():
+        for name in edge.get_attributes().keys():
             value = get_unquoted(edge, name)
             attr[name] = value
         edge.attr = attr
@@ -225,9 +225,9 @@ class DotToQtGenerator():
                     edge_item.add_sibling_edge(sibling)
                     sibling.add_sibling_edge(edge_item)
 
-        if label not in edges:
-            edges[label] = []
-        edges[label].append(edge_item)
+        edge_name = source_node.strip('"\n"') + '_TO_' + destination_node.strip('"\n"')
+        if label is not None:
+            edge_name = edge_name + '_' + label
 
         if edge_name not in edges:
             edges[edge_name] = []
@@ -291,11 +291,12 @@ class DotToQtGenerator():
         graph.subgraphs_iter = graph.get_subgraph_list
         graph.edges_iter = graph.get_edge_list
 
-        edges = {}
+        edges = {} # Empty dictionary
 
         for subgraph in graph.subgraphs_iter():
             subgraph.edges_iter = subgraph.get_edge_list
-            edges.update(self.parse_edges(subgraph, nodes, highlight_level, same_label_siblings, scene=scene))
+            edges.update(self.parse_edges(subgraph, nodes, highlight_level,
+                same_label_siblings, scene=scene)[1]) # Get edges of subgraph
             for edge in subgraph.edges_iter():
                 self.addEdgeItem(edge, nodes, edges,
                                  highlight_level=highlight_level,
@@ -308,4 +309,4 @@ class DotToQtGenerator():
                              same_label_siblings=same_label_siblings,
                              scene=scene)
 
-        return nodes, edges
+        return (nodes, edges)
