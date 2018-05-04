@@ -296,7 +296,7 @@ class DotToQtGenerator():
         for subgraph in graph.subgraphs_iter():
             subgraph.edges_iter = subgraph.get_edge_list
             edges.update(self.parse_edges(subgraph, nodes, highlight_level,
-                same_label_siblings, scene=scene)[1]) # Get edges of subgraph
+                same_label_siblings, scene=scene)) # Get edges of subgraph
             for edge in subgraph.edges_iter():
                 self.addEdgeItem(edge, nodes, edges,
                                  highlight_level=highlight_level,
@@ -309,4 +309,4 @@ class DotToQtGenerator():
                              same_label_siblings=same_label_siblings,
                              scene=scene)
 
-        return (nodes, edges)
+        return edges
