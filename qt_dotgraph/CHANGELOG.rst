@@ -2,8 +2,8 @@
 Changelog for package qt_dotgraph
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.2.33 (2018-05-22)
+-------------------
 * limited backport of recursive subgraph parsing (`#117 <https://github.com/ros-visualization/qt_gui_core/issues/117>`_)
 
 0.2.32 (2017-01-27)
