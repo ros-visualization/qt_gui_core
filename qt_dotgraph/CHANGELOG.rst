@@ -2,6 +2,10 @@
 Changelog for package qt_dotgraph
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* limited backport of recursive subgraph parsing (`#117 <https://github.com/ros-visualization/qt_gui_core/issues/117>`_)
+
 0.2.32 (2017-01-27)
 -------------------
 * fix label size in dot graphs (`#75 <https://github.com/ros-visualization/qt_gui_core/pull/75>`_)
