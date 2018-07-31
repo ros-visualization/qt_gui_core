@@ -503,6 +503,7 @@ class Main(object):
             plugins = plugin_manager.find_plugins_by_name(plugin)
             if len(plugins) == 0:
                 print('qt_gui_main() found no plugin matching "%s"' % plugin)
+                print('please re-run with "--force-discover" option')
                 return 1
             elif len(plugins) > 1:
                 print('qt_gui_main() found multiple plugins matching "%s"\n%s' % (plugin, '\n'.join(plugins.values())))
