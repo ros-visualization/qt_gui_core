@@ -2,6 +2,10 @@
 Changelog for package qt_gui_cpp
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* change included pluginlib header to avoid deprecation warning (`#114 <https://github.com/ros-visualization/qt_gui_core/issues/114>`_)
+
 0.3.8 (2017-11-03)
 ------------------
 

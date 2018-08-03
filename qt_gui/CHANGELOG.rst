@@ -2,6 +2,13 @@
 Changelog for package qt_gui
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* load and save perspective file path and name adjustments (`#118 <https://github.com/ros-visualization/qt_gui_core/issues/118>`_)
+* add hint to run with --force-discover, when no plugin found (`#119 <https://github.com/ros-visualization/qt_gui_core/issues/119>`_)
+* remove --multi-process command line argument (`#116 <https://github.com/ros-visualization/qt_gui_core/issues/116>`_)
+* avoid crash when a plugin in .perspective is not available (`#110 <https://github.com/ros-visualization/qt_gui_core/issues/110>`_)
+
 0.3.8 (2017-11-03)
 ------------------
 
