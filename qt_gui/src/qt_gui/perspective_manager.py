@@ -360,7 +360,7 @@ class PerspectiveManager(QObject):
         save_file_name = os.path.join(self._file_path, self._current_perspective.lstrip(self.HIDDEN_PREFIX))
         suffix = '.perspective'
         if not save_file_name.endswith(suffix):
-            save_file_name += '.perspective'
+            save_file_name += suffix
         file_name, _ = QFileDialog.getSaveFileName(
             self._menu_manager.menu, self.tr('Export perspective to file'),
             save_file_name, self.tr('Perspectives (*.perspective)'))
