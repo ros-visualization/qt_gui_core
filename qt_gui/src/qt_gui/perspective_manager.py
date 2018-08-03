@@ -311,8 +311,9 @@ class PerspectiveManager(QObject):
             self._remove_action.setEnabled(False)
 
     def _on_import_perspective(self):
-        file_name, _ = QFileDialog.getOpenFileName(self._menu_manager.menu, self.tr('Import perspective from file'),
-                                                   self._file_path, self.tr('Perspectives (*.perspective)'))
+        file_name, _ = QFileDialog.getOpenFileName(
+            self._menu_manager.menu, self.tr('Import perspective from file'),
+            self._file_path, self.tr('Perspectives (*.perspective)'))
         if file_name is None or file_name == '':
             return
 
@@ -360,8 +361,9 @@ class PerspectiveManager(QObject):
         suffix = '.perspective'
         if not save_file_name.endswith(suffix):
             save_file_name += '.perspective'
-        file_name, _ = QFileDialog.getSaveFileName(self._menu_manager.menu, self.tr('Export perspective to file'),
-                                                   save_file_name, self.tr('Perspectives (*.perspective)'))
+        file_name, _ = QFileDialog.getSaveFileName(
+            self._menu_manager.menu, self.tr('Export perspective to file'),
+            save_file_name, self.tr('Perspectives (*.perspective)'))
         if file_name is None or file_name == '':
             return
         self._file_path = os.path.dirname(file_name)
