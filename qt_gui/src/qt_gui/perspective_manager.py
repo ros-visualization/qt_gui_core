@@ -85,7 +85,7 @@ class PerspectiveManager(QObject):
         self._callback = None
         self._callback_args = []
 
-        self._file_path = ''
+        self._file_path = None
 
         if application_context.provide_app_dbus_interfaces:
             from .perspective_manager_dbus_interface import PerspectiveManagerDBusInterface
