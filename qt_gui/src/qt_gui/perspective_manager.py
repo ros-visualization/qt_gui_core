@@ -85,6 +85,8 @@ class PerspectiveManager(QObject):
         self._callback = None
         self._callback_args = []
 
+        self._file_path = None
+
         if application_context.provide_app_dbus_interfaces:
             from .perspective_manager_dbus_interface import PerspectiveManagerDBusInterface
             self._dbus_server = PerspectiveManagerDBusInterface(self, application_context)
@@ -309,7 +311,9 @@ class PerspectiveManager(QObject):
             self._remove_action.setEnabled(False)
 
     def _on_import_perspective(self):
-        file_name, _ = QFileDialog.getOpenFileName(self._menu_manager.menu, self.tr('Import perspective from file'), None, self.tr('Perspectives (*.perspective)'))
+        file_name, _ = QFileDialog.getOpenFileName(
+            self._menu_manager.menu, self.tr('Import perspective from file'),
+            self._file_path, self.tr('Perspectives (*.perspective)'))
         if file_name is None or file_name == '':
             return
 
@@ -325,6 +329,7 @@ class PerspectiveManager(QObject):
         self.import_perspective_from_file(file_name, perspective_name)
 
     def import_perspective_from_file(self, path, perspective_name):
+        self._file_path = os.path.dirname(path)
         # create clean perspective
         if perspective_name in self.perspectives:
             self._remove_perspective(perspective_name)
@@ -352,9 +357,16 @@ class PerspectiveManager(QObject):
             self._set_dict_on_settings(groups[group], sub)
 
     def _on_export_perspective(self):
-        file_name, _ = QFileDialog.getSaveFileName(self._menu_manager.menu, self.tr('Export perspective to file'), self._current_perspective + '.perspective', self.tr('Perspectives (*.perspective)'))
+        save_file_name = os.path.join(self._file_path, self._current_perspective.lstrip(self.HIDDEN_PREFIX))
+        suffix = '.perspective'
+        if not save_file_name.endswith(suffix):
+            save_file_name += suffix
+        file_name, _ = QFileDialog.getSaveFileName(
+            self._menu_manager.menu, self.tr('Export perspective to file'),
+            save_file_name, self.tr('Perspectives (*.perspective)'))
         if file_name is None or file_name == '':
             return
+        self._file_path = os.path.dirname(file_name)
 
         # trigger save of perspective before export
         self._callback = self._on_export_perspective_continued
