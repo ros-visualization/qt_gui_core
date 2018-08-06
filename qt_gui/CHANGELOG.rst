@@ -2,6 +2,10 @@
 Changelog for package qt_gui
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* keep multi_process variable in standalone mode (`#120 <https://github.com/ros-visualization/qt_gui_core/issues/120>`_)
+
 0.3.9 (2018-08-03)
 ------------------
 * load and save perspective file path and name adjustments (`#118 <https://github.com/ros-visualization/qt_gui_core/issues/118>`_)
