@@ -193,13 +193,13 @@ class Main(object):
         parser = ArgumentParser(os.path.basename(Main.main_filename), add_help=False)
         self.add_arguments(parser, standalone=bool(standalone), plugin_argument_provider=plugin_argument_provider)
         self._options = parser.parse_args(arguments)
-        self._options.multi_process = False  # not supported anymore
 
         if standalone:
             # rerun parsing to separate common arguments from plugin specific arguments
             parser = ArgumentParser(os.path.basename(Main.main_filename), add_help=False)
             self.add_arguments(parser, standalone=bool(standalone))
             self._options, plugin_args = parser.parse_known_args(arguments)
+        self._options.multi_process = False  # not supported anymore
         self._options.plugin_args = plugin_args
 
         # set default values for options not available in standalone mode
