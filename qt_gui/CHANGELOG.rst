@@ -2,6 +2,10 @@
 Changelog for package qt_gui
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* fix path being set for exporting perspective (`#121 <https://github.com/ros-visualization/qt_gui_core/issues/121>`_, regression from 0.3.9)
+
 0.3.10 (2018-08-05)
 -------------------
 * keep multi_process variable in standalone mode (`#120 <https://github.com/ros-visualization/qt_gui_core/issues/120>`_)
