@@ -2,8 +2,8 @@
 Changelog for package qt_gui
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.3.11 (2018-08-29)
+-------------------
 * fix path being set for exporting perspective (`#121 <https://github.com/ros-visualization/qt_gui_core/issues/121>`_, regression from 0.3.9)
 
 0.3.10 (2018-08-05)
