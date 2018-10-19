@@ -94,8 +94,10 @@ class DotToQtGenerator():
         if 'lp' in subgraph.attr:
             label_pos = subgraph.attr['lp'].strip('"').split(',')
         else:
-            label_pos = (float(bb[0]) + (float(bb[2]) - float(bb[0])) / 2, float(bb[1]) + (float(bb[3]) - float(bb[1])) - LABEL_HEIGHT / 2)
-        bounding_box.moveCenter(QPointF(float(bb[0]) + (float(bb[2]) - float(bb[0])) / 2, -float(bb[1]) - (float(bb[3]) - float(bb[1])) / 2))
+            label_pos = (float(bb[0]) + (float(bb[2]) - float(bb[0])) / 2,
+                         float(bb[1]) + (float(bb[3]) - float(bb[1])) - LABEL_HEIGHT / 2)
+        bounding_box.moveCenter(QPointF(float(bb[0]) + (float(bb[2]) - float(bb[0])) / 2,
+                                        -float(bb[1]) - (float(bb[3]) - float(bb[1])) / 2))
         name = subgraph.attr.get('label', '')
         color = QColor(subgraph.attr['color']) if 'color' in subgraph.attr else None
         subgraph_nodeitem = NodeItem(highlight_level,
@@ -158,7 +160,7 @@ class DotToQtGenerator():
                              color=color,
                              tooltip=node.attr.get('tooltip'),
                              parent=scene.activePanel() if scene is not None else None
-                             #label_pos=None
+                             # label_pos=None
                              )
         if scene is not None:
             scene.addItem(node_item)
@@ -251,8 +253,8 @@ class DotToQtGenerator():
         if isinstance(graph, list):
             graph = graph[0]
 
-        #graph = pygraphviz.AGraph(string=self._current_dotcode, strict=False, directed=True)
-        #graph.layout(prog='dot')
+        # graph = pygraphviz.AGraph(string=self._current_dotcode, strict=False, directed=True)
+        # graph.layout(prog='dot')
 
         nodes = self.parse_nodes(graph, highlight_level, scene=scene)
         edges = self.parse_edges(graph, nodes, highlight_level, same_label_siblings, scene=scene)

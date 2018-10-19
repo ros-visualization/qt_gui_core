@@ -34,8 +34,9 @@ from python_qt_binding.QtWidgets import QButtonGroup, QGroupBox, QLabel, QRadioB
 
 
 class ExclusiveOptionGroup(QGroupBox):
+
     """
-    Creates a button group of exclusive radio options. 
+    Creates a button group of exclusive radio options.
 
     Options must be a dict with following keys: 'enabled','selected','title','description','tooltip'
     """

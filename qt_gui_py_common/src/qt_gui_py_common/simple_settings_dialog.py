@@ -42,6 +42,7 @@ from .checkbox_group import CheckBoxGroup
 
 
 class SimpleSettingsDialog(QDialog):
+
     """Simple dialog that can show multiple settings groups and returns their combined results."""
 
     def __init__(self, title='Options', description=None):

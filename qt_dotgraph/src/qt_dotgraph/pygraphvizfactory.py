@@ -40,7 +40,8 @@ class PygraphvizFactory():
         pass
 
     def get_graph(self, graph_type='digraph', rank='same', simplify=True, rankdir='TB', ranksep=0.2, compound=True):
-        graph = pygraphviz.AGraph(directed=(graph_type == 'digraph'), ranksep=ranksep, rankdir=rankdir, rank=rank, compound=True, simplify=simplify)
+        graph = pygraphviz.AGraph(directed=(graph_type == 'digraph'),
+                                  ranksep=ranksep, rankdir=rankdir, rank=rank, compound=True, simplify=simplify)
         return graph
 
     def add_node_to_graph(self,
@@ -87,7 +88,8 @@ class PygraphvizFactory():
         if subgraphlabel is None or subgraphlabel == '':
             raise ValueError('Empty subgraph label')
 
-        sg = graph.add_subgraph(name="cluster_%s" % subgraphlabel, ranksep=ranksep, rankdir=rankdir, rank=rank, compound=compound, label=str(subgraphlabel), style=style, color=color)
+        sg = graph.add_subgraph(name="cluster_%s" % subgraphlabel, ranksep=ranksep, rankdir=rankdir,
+                                rank=rank, compound=compound, label=str(subgraphlabel), style=style, color=color)
 
         return sg
 

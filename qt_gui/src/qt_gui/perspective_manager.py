@@ -130,7 +130,8 @@ class PerspectiveManager(QObject):
             name = self._settings_proxy.value('', 'current-perspective', 'Default')
         elif hide_and_without_plugin_changes:
             name = self.HIDDEN_PREFIX + name
-        self.switch_perspective(name, save_before=not hide_and_without_plugin_changes, without_plugin_changes=hide_and_without_plugin_changes)
+        self.switch_perspective(name, save_before=not hide_and_without_plugin_changes,
+                                without_plugin_changes=hide_and_without_plugin_changes)
 
     @Slot(str)
     @Slot(str, bool)
@@ -171,7 +172,8 @@ class PerspectiveManager(QObject):
             if not without_plugin_changes:
                 self.restore_settings_signal.emit(self._global_settings, self._perspective_settings)
             else:
-                self.restore_settings_without_plugin_changes_signal.emit(self._global_settings, self._perspective_settings)
+                self.restore_settings_without_plugin_changes_signal.emit(
+                    self._global_settings, self._perspective_settings)
 
     def save_settings_completed(self):
         if self._callback is not None:
@@ -199,6 +201,7 @@ class PerspectiveManager(QObject):
 
             # custom validator preventing forward slashs
             class CustomValidator(QValidator):
+
                 def __init__(self, parent=None):
                     super(CustomValidator, self).__init__(parent)
 
@@ -226,10 +229,12 @@ class PerspectiveManager(QObject):
 
         name = str(self._create_perspective_dialog.perspective_name_edit.text()).lstrip(self.HIDDEN_PREFIX)
         if name == '':
-            QMessageBox.warning(self._menu_manager.menu, self.tr('Empty perspective name'), self.tr('The name of the perspective must be non-empty.'))
+            QMessageBox.warning(self._menu_manager.menu, self.tr(
+                'Empty perspective name'), self.tr('The name of the perspective must be non-empty.'))
             return
         if name in self.perspectives:
-            QMessageBox.warning(self._menu_manager.menu, self.tr('Duplicate perspective name'), self.tr('A perspective with the same name already exists.'))
+            QMessageBox.warning(self._menu_manager.menu, self.tr(
+                'Duplicate perspective name'), self.tr('A perspective with the same name already exists.'))
             return
         return name
 
@@ -283,7 +288,9 @@ class PerspectiveManager(QObject):
         # input dialog to choose perspective to be removed
         names = list(self.perspectives)
         names.remove(self._current_perspective)
-        name, return_value = QInputDialog.getItem(self._menu_manager.menu, self._menu_manager.tr('Remove perspective'), self._menu_manager.tr('Select the perspective'), names, 0, False)
+        name, return_value = QInputDialog.getItem(
+            self._menu_manager.menu, self._menu_manager.tr('Remove perspective'),
+            self._menu_manager.tr('Select the perspective'), names, 0, False)
         # convert from unicode
         name = str(name)
         if return_value == QInputDialog.Rejected:
@@ -337,7 +344,7 @@ class PerspectiveManager(QObject):
 
         # read perspective from file
         file_handle = open(path, 'r')
-        #data = eval(file_handle.read())
+        # data = eval(file_handle.read())
         data = json.loads(file_handle.read())
         self._convert_values(data, self._import_value)
 

@@ -43,7 +43,8 @@ class ContainerManager(QObject):
         super(ContainerManager, self).__init__(parent)
         self._root_main_window = root_main_window
         self._container_descriptor = PluginDescriptor('__DockWidgetContainer')
-        self._container_descriptor.set_action_attributes(self.tr('Container'), self.tr('Container for other dock widgets'), 'folder-new', 'theme')
+        self._container_descriptor.set_action_attributes(
+            self.tr('Container'), self.tr('Container for other dock widgets'), 'folder-new', 'theme')
         self._containers = {}
 
     def get_root_main_window(self):

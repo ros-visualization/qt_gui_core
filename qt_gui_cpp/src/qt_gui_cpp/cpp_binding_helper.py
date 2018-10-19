@@ -48,4 +48,5 @@ try:
 
 except ImportError:
     qt_gui_cpp = None
-    qWarning('Could not import "%s" bindings of qt_gui_cpp library - so C++ plugins will not be available:\n%s' % (QT_BINDING, traceback.format_exc()))
+    qWarning('Could not import "%s" bindings of qt_gui_cpp library - so C++ plugins will not be available:\n%s' %
+             (QT_BINDING, traceback.format_exc()))

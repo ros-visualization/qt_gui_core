@@ -48,8 +48,10 @@ class PluginHandlerXEmbedClient(PluginHandlerDirect):
     It utilizes the `PluginHandlerDBusService` of the `PluginHandlerXEmbedContainer` through a peer-to-peer DBus connection.
     """
 
-    def __init__(self, parent, main_window, instance_id, application_context, container_manager, argv, dbus_object_path):
-        super(PluginHandlerXEmbedClient, self).__init__(parent, main_window, instance_id, application_context, container_manager, argv)
+    def __init__(self, parent, main_window, instance_id,
+                 application_context, container_manager, argv, dbus_object_path):
+        super(PluginHandlerXEmbedClient, self).__init__(
+            parent, main_window, instance_id, application_context, container_manager, argv)
         self.setObjectName('PluginHandlerXEmbedClient')
         self._dbus_object_path = dbus_object_path
         self._remote_container = None
@@ -102,7 +104,8 @@ class PluginHandlerXEmbedClient(PluginHandlerDirect):
             instance_settings = Settings(self._remote_instance_settings, '')
             self._save_settings(plugin_settings, instance_settings)
         except Exception:
-            qCritical('PluginHandlerXEmbedClient._save_settings_from_remote() plugin "%s" raised an exception:\n%s' % (str(self._instance_id), traceback.format_exc()))
+            qCritical('PluginHandlerXEmbedClient._save_settings_from_remote() plugin "%s" raised an exception:\n%s' %
+                      (str(self._instance_id), traceback.format_exc()))
             self.emit_save_settings_completed()
 
     def emit_save_settings_completed(self):
@@ -119,7 +122,8 @@ class PluginHandlerXEmbedClient(PluginHandlerDirect):
             instance_settings = Settings(self._remote_instance_settings, '')
             self._restore_settings(plugin_settings, instance_settings)
         except Exception:
-            qCritical('PluginHandlerXEmbedClient._restore_settings_from_remote() plugin "%s" raised an exception:\n%s' % (str(self._instance_id), traceback.format_exc()))
+            qCritical('PluginHandlerXEmbedClient._restore_settings_from_remote() plugin "%s" raised an exception:\n%s' %
+                      (str(self._instance_id), traceback.format_exc()))
             self.emit_restore_settings_completed()
 
     def emit_restore_settings_completed(self):
@@ -139,7 +143,7 @@ class PluginHandlerXEmbedClient(PluginHandlerDirect):
 
         # close embed widget when container is closed
         # TODO necessary?
-        #embed_widget.containerClosed.connect(embed_widget.close)
+        # embed_widget.containerClosed.connect(embed_widget.close)
 
         embed_container_window_id = self._remote_container.embed_widget(os.getpid(), widget.objectName())
         embed_widget.embedInto(embed_container_window_id)
@@ -192,7 +196,7 @@ class PluginHandlerXEmbedClient(PluginHandlerDirect):
 
         # close embed widget when container is closed
         # TODO necessary?
-        #embed_widget.containerClosed.connect(embed_widget.close)
+        # embed_widget.containerClosed.connect(embed_widget.close)
         def foo():
             print('embed_widget.containerClosed')
         embed_widget.containerClosed.connect(foo)

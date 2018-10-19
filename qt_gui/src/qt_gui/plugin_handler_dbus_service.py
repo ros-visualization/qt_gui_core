@@ -52,9 +52,12 @@ class PluginHandlerDBusService(Object):
     def __init__(self, plugin_handler, object_path):
         super(PluginHandlerDBusService, self).__init__(object_path)
         self._plugin_handler = plugin_handler
-        self._save_settings_completed = PluginHandlerDBusService.QueuedSignal(self._plugin_handler.emit_save_settings_completed)
-        self._restore_settings_completed = PluginHandlerDBusService.QueuedSignal(self._plugin_handler.emit_restore_settings_completed)
-        self._shutdown_plugin_completed = PluginHandlerDBusService.QueuedSignal(self._plugin_handler.emit_shutdown_plugin_completed)
+        self._save_settings_completed = PluginHandlerDBusService.QueuedSignal(
+            self._plugin_handler.emit_save_settings_completed)
+        self._restore_settings_completed = PluginHandlerDBusService.QueuedSignal(
+            self._plugin_handler.emit_restore_settings_completed)
+        self._shutdown_plugin_completed = PluginHandlerDBusService.QueuedSignal(
+            self._plugin_handler.emit_shutdown_plugin_completed)
 
     @dbus.service.method('org.ros.qt_gui.PluginHandlerContainer', in_signature='bb', out_signature='')
     def load_completed(self, loaded, has_configuration):

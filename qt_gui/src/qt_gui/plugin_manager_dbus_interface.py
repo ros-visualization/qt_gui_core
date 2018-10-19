@@ -52,7 +52,8 @@ class PluginManagerDBusInterface(Object):
             qWarning(msg)
             return (1, msg)
         elif len(plugins) > 1:
-            msg = 'PluginManagerDBusInterface.start_plugin() found multiple plugins matching "%s"\n%s' % (plugin_name, '\n'.join(plugins.values()))
+            msg = 'PluginManagerDBusInterface.start_plugin() found multiple plugins matching "%s"\n%s' % (
+                plugin_name, '\n'.join(plugins.values()))
             qWarning(msg)
             return (1, msg)
         plugin_id = plugins.keys()[0]

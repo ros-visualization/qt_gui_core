@@ -72,10 +72,10 @@ class ReloadImporter:
     def _reimport(self, name, globals_=None, locals_=None, fromlist=None, level=-1):
         module = self._import(name, globals_, locals_, fromlist if not None else [], level if not None else -1)
 
-        if module.__name__ not in self._excluded_modules and \
-            (self._reload_paths is None or \
-              (hasattr(module, '__file__') and len([p for p in self._reload_paths if module.__file__.startswith(p)]) > 0) \
-            ):
-            self._reload(module)
+        if module.__name__ not in self._excluded_modules:
+            if self._reload_paths is None or \
+                    (hasattr(module, '__file__') and
+                     len([p for p in self._reload_paths if module.__file__.startswith(p)]) > 0):
+                self._reload(module)
 
         return module

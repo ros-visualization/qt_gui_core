@@ -50,8 +50,10 @@ class PluginHandlerXEmbedContainer(PluginHandler):
 
     _serial_number = 0
 
-    def __init__(self, parent, main_window, instance_id, application_context, container_manager, argv, dbus_object_path):
-        super(PluginHandlerXEmbedContainer, self).__init__(parent, main_window, instance_id, application_context, container_manager, argv)
+    def __init__(self, parent, main_window, instance_id,
+                 application_context, container_manager, argv, dbus_object_path):
+        super(PluginHandlerXEmbedContainer, self).__init__(
+            parent, main_window, instance_id, application_context, container_manager, argv)
         self.setObjectName('PluginHandlerXEmbedContainer')
 
         self._dbus_object_path = dbus_object_path
@@ -88,10 +90,11 @@ class PluginHandlerXEmbedContainer(PluginHandler):
         cmd = sys.executable + ' -u'
         cmd += ' %s' % Main.main_filename
         cmd += ' --qt-binding=%s' % QT_BINDING
-        cmd += ' --embed-plugin=%s --embed-plugin-serial=%s --embed-plugin-address=%s' % (self.instance_id().plugin_id, self.instance_id().serial_number, self._dbus_server.address)
+        cmd += ' --embed-plugin=%s --embed-plugin-serial=%s --embed-plugin-address=%s' % (
+            self.instance_id().plugin_id, self.instance_id().serial_number, self._dbus_server.address)
         if self.argv():
             cmd += ' --args %s' % ' '.join(self.argv())
-        #qDebug('PluginHandlerXEmbedContainer._load() starting command: %s' % cmd)
+        # qDebug('PluginHandlerXEmbedContainer._load() starting command: %s' % cmd)
         self._process.start(cmd)
         started = self._process.waitForStarted(3000)
         if not started:
@@ -107,7 +110,8 @@ class PluginHandlerXEmbedContainer(PluginHandler):
             self.__class__._serial_number = self._serial_number + 1
             self._pid = self._serial_number
 
-        qDebug('PluginHandlerXEmbedContainer._load() started subprocess (#%s) for plugin "%s"' % (self._pid, str(self._instance_id)))
+        qDebug('PluginHandlerXEmbedContainer._load() started subprocess (#%s) for plugin "%s"' %
+               (self._pid, str(self._instance_id)))
         # self._emit_load_completed is called asynchronous when client signals finished loading via dbus
 
     def _add_dbus_connection(self, conn):
@@ -186,7 +190,7 @@ class PluginHandlerXEmbedContainer(PluginHandler):
     def embed_widget(self, pid, widget_object_name):
         dock_widget = self._create_dock_widget()
         embed_container = QX11EmbedContainer(dock_widget)
-        #embed_container.clientClosed.connect(self._emit_close_signal)
+        # embed_container.clientClosed.connect(self._emit_close_signal)
         self._add_dock_widget(dock_widget, embed_container)
         # update widget title is triggered by client after embedding
         self._embed_containers[widget_object_name] = embed_container
@@ -215,7 +219,7 @@ class PluginHandlerXEmbedContainer(PluginHandler):
         toolbar.setObjectName(toolbar_object_name)
         embed_container = QX11EmbedContainer(toolbar)
         toolbar.addWidget(embed_container)
-        #embed_container.clientClosed.connect(self._emit_close_signal)
+        # embed_container.clientClosed.connect(self._emit_close_signal)
         self._add_toolbar(toolbar)
         self._embed_containers[toolbar_object_name] = embed_container
         # setup mapping to signal change of orientation to client
@@ -227,7 +231,8 @@ class PluginHandlerXEmbedContainer(PluginHandler):
     def _on_toolbar_orientation_changed(self, toolbar_object_name):
         embed_container = self._embed_containers[toolbar_object_name]
         toolbar = self._embed_toolbars[toolbar_object_name]
-        self._dbus_container_service.toolbar_orientation_changed(embed_container.winId(), toolbar.orientation() == Qt.Horizontal)
+        self._dbus_container_service.toolbar_orientation_changed(
+            embed_container.winId(), toolbar.orientation() == Qt.Horizontal)
 
     def unembed_toolbar(self, toolbar_object_name):
         embed_container = self._embed_containers[toolbar_object_name]

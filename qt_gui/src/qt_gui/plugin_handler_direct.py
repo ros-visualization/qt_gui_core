@@ -41,7 +41,8 @@ class PluginHandlerDirect(PluginHandler):
     """Handler for directly passing invocations between the framework and one `Plugin` instance."""
 
     def __init__(self, parent, main_window, instance_id, application_context, container_manager, argv):
-        super(PluginHandlerDirect, self).__init__(parent, main_window, instance_id, application_context, container_manager, argv)
+        super(PluginHandlerDirect, self).__init__(parent, main_window,
+                                                  instance_id, application_context, container_manager, argv)
         self.setObjectName('PluginHandlerDirect')
         self._context = None
         self._plugin = None
@@ -85,7 +86,8 @@ class PluginHandlerDirect(PluginHandler):
             try:
                 self._plugin.shutdown_plugin()
             except Exception:
-                qCritical('PluginHandlerDirect._shutdown_plugin() plugin "%s" raised an exception:\n%s' % (str(self._instance_id), traceback.format_exc()))
+                qCritical('PluginHandlerDirect._shutdown_plugin() plugin "%s" raised an exception:\n%s' %
+                          (str(self._instance_id), traceback.format_exc()))
         self.emit_shutdown_plugin_completed()
 
     def _delete_widget(self, widget):
@@ -105,7 +107,8 @@ class PluginHandlerDirect(PluginHandler):
             try:
                 self._plugin.save_settings(plugin_settings_plugin, instance_settings_plugin)
             except Exception:
-                qCritical('PluginHandlerDirect._save_settings() plugin "%s" raised an exception:\n%s' % (str(self._instance_id), traceback.format_exc()))
+                qCritical('PluginHandlerDirect._save_settings() plugin "%s" raised an exception:\n%s' %
+                          (str(self._instance_id), traceback.format_exc()))
         self.emit_save_settings_completed()
 
     def _restore_settings(self, plugin_settings, instance_settings):
@@ -115,7 +118,8 @@ class PluginHandlerDirect(PluginHandler):
             try:
                 self._plugin.restore_settings(plugin_settings_plugin, instance_settings_plugin)
             except Exception:
-                qCritical('PluginHandlerDirect._restore_settings() plugin "%s" raised an exception:\n%s' % (str(self._instance_id), traceback.format_exc()))
+                qCritical('PluginHandlerDirect._restore_settings() plugin "%s" raised an exception:\n%s' %
+                          (str(self._instance_id), traceback.format_exc()))
         self.emit_restore_settings_completed()
 
     # pointer to QWidget must be used for PySide to work (at least with 1.0.1)

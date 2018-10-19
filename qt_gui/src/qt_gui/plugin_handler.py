@@ -130,7 +130,8 @@ class PluginHandler(QObject):
         try:
             self._shutdown_plugin()
         except Exception:
-            qCritical('PluginHandler.shutdown_plugin() plugin "%s" raised an exception:\n%s' % (str(self._instance_id), traceback.format_exc()))
+            qCritical('PluginHandler.shutdown_plugin() plugin "%s" raised an exception:\n%s' %
+                      (str(self._instance_id), traceback.format_exc()))
             self.emit_shutdown_plugin_completed()
 
     def _shutdown_plugin(self):
@@ -158,7 +159,8 @@ class PluginHandler(QObject):
         try:
             self._unload()
         except Exception:
-            qCritical('PluginHandler.unload() plugin "%s" raised an exception:\n%s' % (str(self._instance_id), traceback.format_exc()))
+            qCritical('PluginHandler.unload() plugin "%s" raised an exception:\n%s' %
+                      (str(self._instance_id), traceback.format_exc()))
             self._emit_unload_completed()
 
     def _unload(self):
@@ -181,7 +183,8 @@ class PluginHandler(QObject):
         try:
             self._save_settings(plugin_settings, instance_settings)
         except Exception:
-            qCritical('PluginHandler.save_settings() plugin "%s" raised an exception:\n%s' % (str(self._instance_id), traceback.format_exc()))
+            qCritical('PluginHandler.save_settings() plugin "%s" raised an exception:\n%s' %
+                      (str(self._instance_id), traceback.format_exc()))
             self.emit_save_settings_completed()
 
     def _save_settings(self, plugin_settings, instance_settings):
@@ -204,7 +207,8 @@ class PluginHandler(QObject):
             try:
                 method(settings)
             except Exception:
-                qCritical('PluginHandler._call_method_on_all_dock_widgets(%s) failed:\n%s' % (method_name, traceback.format_exc()))
+                qCritical('PluginHandler._call_method_on_all_dock_widgets(%s) failed:\n%s' %
+                          (method_name, traceback.format_exc()))
 
     def restore_settings(self, plugin_settings, instance_settings, callback=None):
         """
@@ -217,7 +221,8 @@ class PluginHandler(QObject):
         try:
             self._restore_settings(plugin_settings, instance_settings)
         except Exception:
-            qCritical('PluginHandler.restore_settings() plugin "%s" raised an exception:\n%s' % (str(self._instance_id), traceback.format_exc()))
+            qCritical('PluginHandler.restore_settings() plugin "%s" raised an exception:\n%s' %
+                      (str(self._instance_id), traceback.format_exc()))
             self.emit_restore_settings_completed()
 
     def _restore_settings(self, plugin_settings, instance_settings):
@@ -319,7 +324,8 @@ class PluginHandler(QObject):
             # warn about dock_widget with same object name
             old_dock_widget = self._main_window.findChild(DockWidget, dock_widget.objectName())
             if old_dock_widget is not None:
-                qWarning('PluginHandler._add_dock_widget_to_main_window() duplicate object name "%s", assign unique object names before adding widgets!' % dock_widget.objectName())
+                qWarning('PluginHandler._add_dock_widget_to_main_window() duplicate object name "%s", assign unique object names before adding widgets!' %
+                         dock_widget.objectName())
             self._main_window.addDockWidget(Qt.BottomDockWidgetArea, dock_widget)
 
     def _on_widget_icon_changed(self, widget):
@@ -381,7 +387,9 @@ class PluginHandler(QObject):
             # warn about toolbar with same object name
             old_toolbar = self._main_window.findChild(QToolBar, toolbar.objectName())
             if old_toolbar is not None:
-                qWarning('PluginHandler._add_toolbar() duplicate object name "%s", assign unique object names before adding toolbars!' % toolbar.objectName())
+                qWarning('PluginHandler._add_toolbar() duplicate object name "%s", '
+                         'assign unique object names before adding toolbars!' %
+                         toolbar.objectName())
             self._main_window.addToolBar(Qt.TopToolBarArea, toolbar)
 
     # pointer to QToolBar must be used for PySide to work (at least with 1.0.1)

@@ -64,7 +64,8 @@ class PluginManager(QObject):
         self.setObjectName('PluginManager')
 
         self._plugin_provider = plugin_provider
-        self._settings = Settings(SettingsProxy(settings), '/'.join([x for x in ['plugin_manager', settings_prefix] if x != '']))
+        self._settings = Settings(SettingsProxy(settings), '/'.join(
+            [x for x in ['plugin_manager', settings_prefix] if x != '']))
         self._application_context = application_context
 
         self._main_window = None
@@ -171,11 +172,11 @@ class PluginManager(QObject):
         instance_id = PluginInstanceId(plugin_id, serial_number)
         return str(instance_id) in self._running_plugins
 
-
     @Slot(str)
     @Slot(str, int)
     def load_plugin(self, plugin_id, serial_number=None, argv=None):
-        qDebug('PluginManager.load_plugin(%s, %s)' % (str(plugin_id), str(serial_number) if serial_number is not None else ''))
+        qDebug('PluginManager.load_plugin(%s, %s)' %
+               (str(plugin_id), str(serial_number) if serial_number is not None else ''))
         # save state of top-level widgets
         self.plugins_about_to_change_signal.emit()
         if serial_number is None:
@@ -205,20 +206,23 @@ class PluginManager(QObject):
 
         # containers are pseudo-plugins and handled by a special handler
         if self._container_manager is not None and instance_id.plugin_id == self._container_manager.get_container_descriptor().plugin_id():
-            handler = PluginHandlerContainer(self, self._main_window, instance_id, self._application_context, self._container_manager)
+            handler = PluginHandlerContainer(
+                self, self._main_window, instance_id, self._application_context, self._container_manager)
 
         # use platform specific handler for multiprocess-mode if available
         elif self._application_context.options.multi_process or self._application_context.options.embed_plugin:
             try:
                 from .plugin_handler_xembed import PluginHandlerXEmbed
-                handler = PluginHandlerXEmbed(self, self._main_window, instance_id, self._application_context, self._container_manager, argv)
+                handler = PluginHandlerXEmbed(
+                    self, self._main_window, instance_id, self._application_context, self._container_manager, argv)
             except ImportError:
                 qCritical('PluginManager._load_plugin() could not load plugin in a separate process')
                 return
 
         # use direct handler for in-process plugins
         else:
-            handler = PluginHandlerDirect(self, self._main_window, instance_id, self._application_context, self._container_manager, argv)
+            handler = PluginHandlerDirect(
+                self, self._main_window, instance_id, self._application_context, self._container_manager, argv)
 
         handler.set_minimized_dock_widgets_toolbar(self._minimized_dock_widgets_toolbar)
 
@@ -256,9 +260,11 @@ class PluginManager(QObject):
         instance_id = handler.instance_id()
         if exception is not None:
             if isinstance(exception, PluginLoadError):
-                qWarning('PluginManager._load_plugin() could not load plugin "%s": %s' % (instance_id.plugin_id, exception))
+                qWarning('PluginManager._load_plugin() could not load plugin "%s": %s' %
+                         (instance_id.plugin_id, exception))
             else:
-                qCritical('PluginManager._load_plugin() could not load plugin "%s"%s' % (instance_id.plugin_id, (':\n%s' % traceback.format_exc() if exception != True else '')))
+                qCritical('PluginManager._load_plugin() could not load plugin "%s"%s' %
+                          (instance_id.plugin_id, (':\n%s' % traceback.format_exc() if exception != True else '')))
             self._remove_running_plugin(instance_id)
             # quit embed application
             if self._application_context.options.embed_plugin:
@@ -290,7 +296,6 @@ class PluginManager(QObject):
         qDebug('PluginManager._emit_load_plugin_completed()')
         # restore state of top-level widgets
         self.plugins_changed_signal.emit()
-
 
     @Slot(str)
     def unload_plugin(self, instance_id_str):
@@ -347,7 +352,6 @@ class PluginManager(QObject):
             info['handler'].label_updated.disconnect(self._plugin_menu.update_plugin_instance_label)
         self._running_plugins.pop(str(instance_id))
 
-
     @Slot(str)
     def reload_plugin(self, instance_id_str):
         instance_id = PluginInstanceId(instance_id=instance_id_str)
@@ -385,7 +389,6 @@ class PluginManager(QObject):
             # restore settings after load
             self._restore_plugin_settings(handler.instance_id(), self._emit_load_plugin_completed)
 
-
     def save_settings(self, global_settings, perspective_settings):
         self._save_settings(global_settings, perspective_settings, self._save_settings_callback)
 
@@ -421,7 +424,6 @@ class PluginManager(QObject):
             self._number_of_ongoing_calls = None
             self.save_settings_completed_signal.emit()
 
-
     def close_application(self, global_settings, perspective_settings):
         self._save_settings(global_settings, perspective_settings, self._close_application_save_callback)
 
@@ -450,7 +452,6 @@ class PluginManager(QObject):
     def _close_application_signal(self):
         self._plugin_provider.shutdown()
         self.close_application_signal.emit()
-
 
     def restore_settings(self, global_settings, perspective_settings):
         qDebug('PluginManager.restore_settings()')

@@ -48,11 +48,16 @@ class RosPluginlibPluginProvider(PluginProvider):
             plugin_descriptor = PluginDescriptor(plugin['plugin_id'], plugin['attributes'])
 
             action_attributes = plugin['action']
-            plugin_descriptor.set_action_attributes(action_attributes['label'], action_attributes.get('statustip', None), action_attributes.get('icon', None), action_attributes.get('icontype', None))
+            plugin_descriptor.set_action_attributes(
+                action_attributes['label'],
+                action_attributes.get('statustip', None),
+                action_attributes.get('icon', None),
+                action_attributes.get('icontype', None))
 
             groups = plugin.get('groups', {})
             for group in groups.values():
-                plugin_descriptor.add_group_attributes(group['label'], group['statustip'], group['icon'], group['icontype'])
+                plugin_descriptor.add_group_attributes(
+                    group['label'], group['statustip'], group['icon'], group['icontype'])
 
             plugin_descriptors.append(plugin_descriptor)
         return plugin_descriptors
@@ -62,7 +67,8 @@ class RosPluginlibPluginProvider(PluginProvider):
             return None
         cpp_plugin_context = None
         if plugin_context is not None:
-            cpp_plugin_context = qt_gui_cpp.PluginContext(plugin_context._handler, plugin_context.serial_number(), plugin_context.argv())
+            cpp_plugin_context = qt_gui_cpp.PluginContext(
+                plugin_context._handler, plugin_context.serial_number(), plugin_context.argv())
         bridge = qt_gui_cpp.PluginBridge()  # @UndefinedVariable
         loaded = bridge.load_plugin(self._plugin_provider, plugin_id, cpp_plugin_context)
         if not loaded:

@@ -46,6 +46,7 @@ class ConsoleTextEdit(QTextEdit):
     _prompt = ('$ ', '  ')  # prompt for single and multi line
 
     class TextEditColoredWriter:
+
         def __init__(self, text_edit, color):
             self._text_edit = text_edit
             self._color = color
@@ -143,7 +144,8 @@ class ConsoleTextEdit(QTextEdit):
                 self.setTextCursor(cursor)
 
                 self._history_index = -1
-                line = str(self.document().lastBlock().text())[prompt_length:].rstrip()  # remove prompt and trailing spaces
+                line = str(self.document().lastBlock().text())[
+                    prompt_length:].rstrip()  # remove prompt and trailing spaces
 
                 self.insertPlainText('\n')
                 if len(line) > 0:

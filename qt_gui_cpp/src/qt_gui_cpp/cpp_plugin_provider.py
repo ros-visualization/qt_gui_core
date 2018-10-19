@@ -40,7 +40,10 @@ class CppPluginProvider(CompositePluginProvider):
         plugin_providers = None
         if qt_gui_cpp is not None:
             plugin_providers = [
-                RosPluginlibPluginProvider(qt_gui_cpp.RosPluginlibPluginProvider_ForPlugins('qt_gui', 'qt_gui_cpp::Plugin')),
-                RosPluginlibPluginProvider(qt_gui_cpp.RecursivePluginProvider(qt_gui_cpp.RosPluginlibPluginProvider_ForPluginProviders.create_instance('qt_gui', 'qt_gui_cpp::PluginProvider'))),
+                RosPluginlibPluginProvider(
+                    qt_gui_cpp.RosPluginlibPluginProvider_ForPlugins('qt_gui', 'qt_gui_cpp::Plugin')),
+                RosPluginlibPluginProvider(qt_gui_cpp.RecursivePluginProvider(
+                    qt_gui_cpp.RosPluginlibPluginProvider_ForPluginProviders.create_instance(
+                        'qt_gui', 'qt_gui_cpp::PluginProvider'))),
             ]
         super(CppPluginProvider, self).__init__(plugin_providers)

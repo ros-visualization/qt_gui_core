@@ -66,8 +66,10 @@ class AboutHandler(QObject):
 
         text += '<h3 style="margin-top: 1px;">%s</h3>' % self.tr('rqt')
 
-        text += '<p>%s %s</p>' % (self.tr('rqt is a framework for graphical user interfaces.'), self.tr('It is extensible with plugins which can be written in either Python or C++.'))
-        text += '<p>%s</p>' % (self.tr('Please see the <a href="%s">Wiki</a> for more information on rqt and available plugins.' % 'http://wiki.ros.org/rqt'))
+        text += '<p>%s %s</p>' % (self.tr('rqt is a framework for graphical user interfaces.'), self.tr(
+            'It is extensible with plugins which can be written in either Python or C++.'))
+        text += '<p>%s</p>' % (
+            self.tr('Please see the <a href="%s">Wiki</a> for more information on rqt and available plugins.' % 'http://wiki.ros.org/rqt'))
 
         text += '<p>%s: ' % self.tr('Utilized libraries:')
 
