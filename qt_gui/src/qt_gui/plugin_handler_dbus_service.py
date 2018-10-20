@@ -59,27 +59,33 @@ class PluginHandlerDBusService(Object):
         self._shutdown_plugin_completed = PluginHandlerDBusService.QueuedSignal(
             self._plugin_handler.emit_shutdown_plugin_completed)
 
-    @dbus.service.method('org.ros.qt_gui.PluginHandlerContainer', in_signature='bb', out_signature='')
+    @dbus.service.method(
+        'org.ros.qt_gui.PluginHandlerContainer', in_signature='bb', out_signature='')
     def load_completed(self, loaded, has_configuration):
         self._plugin_handler.load_completed(loaded, has_configuration)
 
-    @dbus.service.method('org.ros.qt_gui.PluginHandlerContainer', in_signature='is', out_signature='i')
+    @dbus.service.method(
+        'org.ros.qt_gui.PluginHandlerContainer', in_signature='is', out_signature='i')
     def embed_widget(self, pid, widget_object_name):
         return self._plugin_handler.embed_widget(pid, widget_object_name)
 
-    @dbus.service.method('org.ros.qt_gui.PluginHandlerContainer', in_signature='ss', out_signature='')
+    @dbus.service.method(
+        'org.ros.qt_gui.PluginHandlerContainer', in_signature='ss', out_signature='')
     def update_embedded_widget_icon(self, widget_object_name, icon):
         self._plugin_handler.update_embedded_widget_icon(widget_object_name, icon)
 
-    @dbus.service.method('org.ros.qt_gui.PluginHandlerContainer', in_signature='ss', out_signature='')
+    @dbus.service.method(
+        'org.ros.qt_gui.PluginHandlerContainer', in_signature='ss', out_signature='')
     def update_embedded_widget_title(self, widget_object_name, title):
         self._plugin_handler.update_embedded_widget_title(widget_object_name, title)
 
-    @dbus.service.method('org.ros.qt_gui.PluginHandlerContainer', in_signature='s', out_signature='')
+    @dbus.service.method(
+        'org.ros.qt_gui.PluginHandlerContainer', in_signature='s', out_signature='')
     def unembed_widget(self, widget_object_name):
         self._plugin_handler.unembed_widget(widget_object_name)
 
-    @dbus.service.method('org.ros.qt_gui.PluginHandlerContainer', in_signature='is', out_signature='i')
+    @dbus.service.method(
+        'org.ros.qt_gui.PluginHandlerContainer', in_signature='is', out_signature='i')
     def embed_toolbar(self, pid, toolbar_object_name):
         return self._plugin_handler.embed_toolbar(pid, toolbar_object_name)
 
@@ -88,7 +94,8 @@ class PluginHandlerDBusService(Object):
         # no implementation - any method call is relayed as a signal to the service client
         pass
 
-    @dbus.service.method('org.ros.qt_gui.PluginHandlerContainer', in_signature='s', out_signature='')
+    @dbus.service.method(
+        'org.ros.qt_gui.PluginHandlerContainer', in_signature='s', out_signature='')
     def unembed_toolbar(self, toolbar_object_name):
         self._plugin_handler.unembed_toolbar(toolbar_object_name)
 
@@ -107,7 +114,8 @@ class PluginHandlerDBusService(Object):
 
     @dbus.service.method('org.ros.qt_gui.PluginHandlerContainer', in_signature='', out_signature='')
     def shutdown_plugin_completed(self):
-        # schedule notification using queued signal, so that dbus does not wait for the call to finish
+        # schedule notification using queued signal, so that dbus does not wait
+        # for the call to finish
         self._shutdown_plugin_completed.emit()
 
     @dbus.service.signal('org.ros.qt_gui.PluginHandlerContainer', signature='')
@@ -117,7 +125,8 @@ class PluginHandlerDBusService(Object):
 
     @dbus.service.method('org.ros.qt_gui.PluginHandlerContainer', signature='')
     def save_settings_completed(self):
-        # schedule notification using queued signal, so that dbus does not wait for the call to finish
+        # schedule notification using queued signal, so that dbus does not wait
+        # for the call to finish
         self._save_settings_completed.emit()
 
     @dbus.service.signal('org.ros.qt_gui.PluginHandlerContainer', signature='')
@@ -127,7 +136,8 @@ class PluginHandlerDBusService(Object):
 
     @dbus.service.method('org.ros.qt_gui.PluginHandlerContainer', in_signature='', out_signature='')
     def restore_settings_completed(self):
-        # schedule notification using queued signal, so that dbus does not wait for the call to finish
+        # schedule notification using queued signal, so that dbus does not wait
+        # for the call to finish
         self._restore_settings_completed.emit()
 
     @dbus.service.signal('org.ros.qt_gui.PluginHandlerContainer', signature='')

@@ -44,7 +44,8 @@ class PluginHandlerContainer(PluginHandler):
         self._container = None
 
     def _load(self):
-        self._container = DockWidgetContainer(self._container_manager, self._instance_id.serial_number)
+        self._container = DockWidgetContainer(
+            self._container_manager, self._instance_id.serial_number)
         self._container.setObjectName(self._instance_id.tidy_str())
         title = self.tr('Container')
         if self._instance_id.serial_number > 1:

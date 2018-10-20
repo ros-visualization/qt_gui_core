@@ -136,15 +136,19 @@ class PerspectiveManager(QObject):
     @Slot(str)
     @Slot(str, bool)
     @Slot(str, bool, bool)
-    def switch_perspective(self, name, settings_changed=True, save_before=True, without_plugin_changes=False):
-        if save_before and self._global_settings is not None and self._perspective_settings is not None:
+    def switch_perspective(
+            self, name, settings_changed=True, save_before=True, without_plugin_changes=False):
+        if save_before and \
+                self._global_settings is not None and \
+                self._perspective_settings is not None:
             self._callback = self._switch_perspective
             self._callback_args = [name, settings_changed, save_before]
             self.save_settings_signal.emit(self._global_settings, self._perspective_settings)
         else:
             self._switch_perspective(name, settings_changed, save_before, without_plugin_changes)
 
-    def _switch_perspective(self, name, settings_changed, save_before, without_plugin_changes=False):
+    def _switch_perspective(
+            self, name, settings_changed, save_before, without_plugin_changes=False):
         # convert from unicode
         name = str(name.replace('/', '__'))
 
@@ -227,14 +231,19 @@ class PerspectiveManager(QObject):
         if return_value == self._create_perspective_dialog.Rejected:
             return
 
-        name = str(self._create_perspective_dialog.perspective_name_edit.text()).lstrip(self.HIDDEN_PREFIX)
+        name = str(self._create_perspective_dialog.perspective_name_edit.text()).lstrip(
+            self.HIDDEN_PREFIX)
         if name == '':
-            QMessageBox.warning(self._menu_manager.menu, self.tr(
-                'Empty perspective name'), self.tr('The name of the perspective must be non-empty.'))
+            QMessageBox.warning(
+                self._menu_manager.menu,
+                self.tr('Empty perspective name'),
+                self.tr('The name of the perspective must be non-empty.'))
             return
         if name in self.perspectives:
-            QMessageBox.warning(self._menu_manager.menu, self.tr(
-                'Duplicate perspective name'), self.tr('A perspective with the same name already exists.'))
+            QMessageBox.warning(
+                self._menu_manager.menu,
+                self.tr('Duplicate perspective name'),
+                self.tr('A perspective with the same name already exists.'))
             return
         return name
 
@@ -242,7 +251,8 @@ class PerspectiveManager(QObject):
         # convert from unicode
         name = str(name)
         if name.find('/') != -1:
-            raise RuntimeError('PerspectiveManager._create_perspective() name must not contain forward slashs (/)')
+            raise RuntimeError(
+                'PerspectiveManager._create_perspective() name must not contain forward slashs (/)')
 
         qDebug('PerspectiveManager._create_perspective(%s, %s)' % (name, clone_perspective))
         # add to list of perspectives
@@ -364,7 +374,8 @@ class PerspectiveManager(QObject):
             self._set_dict_on_settings(groups[group], sub)
 
     def _on_export_perspective(self):
-        save_file_name = os.path.join(self._file_path, self._current_perspective.lstrip(self.HIDDEN_PREFIX))
+        save_file_name = os.path.join(
+            self._file_path, self._current_perspective.lstrip(self.HIDDEN_PREFIX))
         suffix = '.perspective'
         if not save_file_name.endswith(suffix):
             save_file_name += suffix
@@ -415,7 +426,8 @@ class PerspectiveManager(QObject):
             return eval(value['repr'])
         elif value['type'] == 'repr(QByteArray.hex)':
             return QByteArray.fromHex(eval(value['repr(QByteArray.hex)']))
-        raise RuntimeError('PerspectiveManager._import_value() unknown serialization type (%s)' % value['type'])
+        raise RuntimeError(
+            'PerspectiveManager._import_value() unknown serialization type (%s)' % value['type'])
 
     def _export_value(self, value):
         data = {}
@@ -445,7 +457,9 @@ class PerspectiveManager(QObject):
         # verify that serialized data can be deserialized correctly
         reimported = self._import_value(data)
         if reimported != value:
-            raise RuntimeError('PerspectiveManager._export_value() stored value can not be restored (%s)' % type(value))
+            raise RuntimeError(
+                'PerspectiveManager._export_value() stored value can not be restored (%s)' %
+                type(value))
 
         return data
 

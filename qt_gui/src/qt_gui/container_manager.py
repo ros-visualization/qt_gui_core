@@ -92,7 +92,8 @@ class ContainerManager(QObject):
 
     def event(self, e):
         if e.type() == ReparentEvent.reparent_event_type:
-            qDebug('ContainerManager.event() reparent event: new parent=%s' % e.new_parent.objectName())
+            qDebug('ContainerManager.event() reparent event: new parent=%s' %
+                   e.new_parent.objectName())
             floating = e.dock_widget.isFloating()
             pos = e.dock_widget.pos()
             e.new_parent.addDockWidget(Qt.BottomDockWidgetArea, e.dock_widget)

@@ -32,7 +32,8 @@ import sys
 
 from dbus.server import Server
 from python_qt_binding import QT_BINDING
-from python_qt_binding.QtCore import QByteArray, QDataStream, qDebug, QIODevice, QProcess, QSignalMapper, Qt, qWarning
+from python_qt_binding.QtCore import (QByteArray, QDataStream, qDebug, QIODevice,
+                                      QProcess, QSignalMapper, Qt, qWarning)
 from python_qt_binding.QtGui import QIcon, QToolBar, QX11EmbedContainer
 
 from .main import Main
@@ -45,7 +46,8 @@ class PluginHandlerXEmbedContainer(PluginHandler):
 
     """
     Server part of the `PluginHandlerXEmbed`.
-    It starts the plugin in a subprocess and provides the `PluginHandlerDBusService` through a peer-to-peer DBus connection.
+    It starts the plugin in a subprocess and provides the `PluginHandlerDBusService`
+    through a peer-to-peer DBus connection.
     """
 
     _serial_number = 0
@@ -73,13 +75,17 @@ class PluginHandlerXEmbedContainer(PluginHandler):
 
     def _load(self):
         if not Main.main_filename:
-            raise RuntimeError('PluginHandlerXEmbedContainer._load() filename of initially started script is unknown')
+            raise RuntimeError(
+                'PluginHandlerXEmbedContainer._load() '
+                'filename of initially started script is unknown')
 
         self._dbus_server = Server('tcp:bind=*')
         self._dbus_server.on_connection_added.append(self._add_dbus_connection)
         self._dbus_container_service = PluginHandlerDBusService(self, self._dbus_object_path)
-        self._dbus_plugin_settings_service = SettingsProxyDBusService(self._dbus_object_path + '/plugin')
-        self._dbus_instance_settings_service = SettingsProxyDBusService(self._dbus_object_path + '/instance')
+        self._dbus_plugin_settings_service = SettingsProxyDBusService(
+            self._dbus_object_path + '/plugin')
+        self._dbus_instance_settings_service = SettingsProxyDBusService(
+            self._dbus_object_path + '/instance')
 
         self._process = QProcess(self)
         self._process.setProcessChannelMode(QProcess.SeparateChannels)
@@ -91,7 +97,8 @@ class PluginHandlerXEmbedContainer(PluginHandler):
         cmd += ' %s' % Main.main_filename
         cmd += ' --qt-binding=%s' % QT_BINDING
         cmd += ' --embed-plugin=%s --embed-plugin-serial=%s --embed-plugin-address=%s' % (
-            self.instance_id().plugin_id, self.instance_id().serial_number, self._dbus_server.address)
+            self.instance_id().plugin_id, self.instance_id().serial_number,
+            self._dbus_server.address)
         if self.argv():
             cmd += ' --args %s' % ' '.join(self.argv())
         # qDebug('PluginHandlerXEmbedContainer._load() starting command: %s' % cmd)
@@ -101,7 +108,9 @@ class PluginHandlerXEmbedContainer(PluginHandler):
             self._dbus_container_service.remove_from_connection()
             self._dbus_plugin_settings_service.remove_from_connection()
             self._dbus_instance_settings_service.remove_from_connection()
-            raise RuntimeError('PluginHandlerXEmbedContainer._load() could not start subprocess in reasonable time')
+            raise RuntimeError(
+                'PluginHandlerXEmbedContainer._load() could not start '
+                'subprocess in reasonable time')
         # QProcess.pid() has been added to PySide in 1.0.5
         if hasattr(self._process, 'pid'):
             self._pid = self._process.pid()
@@ -112,12 +121,15 @@ class PluginHandlerXEmbedContainer(PluginHandler):
 
         qDebug('PluginHandlerXEmbedContainer._load() started subprocess (#%s) for plugin "%s"' %
                (self._pid, str(self._instance_id)))
-        # self._emit_load_completed is called asynchronous when client signals finished loading via dbus
+        # self._emit_load_completed is called asynchronous when client signals
+        # finished loading via dbus
 
     def _add_dbus_connection(self, conn):
         self._dbus_container_service.add_to_connection(conn, self._dbus_object_path)
-        self._dbus_plugin_settings_service.add_to_connection(conn, self._dbus_object_path + '/plugin')
-        self._dbus_instance_settings_service.add_to_connection(conn, self._dbus_object_path + '/instance')
+        self._dbus_plugin_settings_service.add_to_connection(
+            conn, self._dbus_object_path + '/plugin')
+        self._dbus_instance_settings_service.add_to_connection(
+            conn, self._dbus_object_path + '/instance')
 
     def _print_process_output(self):
         self._print_process(self._process.readAllStandardOutput(), qDebug)

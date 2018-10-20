@@ -55,7 +55,7 @@ class ReloadImporter:
 
     def add_reload_path(self, path):
         if self._reload_paths is None:
-            self._reload_paths = tuple()
+            self._reload_paths = ()
         self._reload_paths += (os.path.abspath(path),)
 
     def _reload(self, module):
@@ -70,7 +70,8 @@ class ReloadImporter:
             self._import_stack.pop()
 
     def _reimport(self, name, globals_=None, locals_=None, fromlist=None, level=-1):
-        module = self._import(name, globals_, locals_, fromlist if not None else [], level if not None else -1)
+        module = self._import(
+            name, globals_, locals_, fromlist if not None else [], level if not None else -1)
 
         if module.__name__ not in self._excluded_modules:
             if self._reload_paths is None or \

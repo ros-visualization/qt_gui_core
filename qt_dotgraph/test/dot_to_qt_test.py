@@ -223,9 +223,10 @@ class DotToQtGeneratorTest(unittest.TestCase):
 
         (nodes, edges) = gen.dotcode_to_qt_items(dotcode, 1)
 
-        expected_nodes = ['"/Container/Subcontainer"', '"/Container/finished"', '"/start"', '"/Container"',
-                          '"/Container/Subcontainer/logstate1"', '"/Container/Subcontainer/finished"',
-                          '"/Container/logstate"', '"/finished"']
+        expected_nodes = [
+            '"/Container/Subcontainer"', '"/Container/finished"', '"/start"', '"/Container"',
+            '"/Container/Subcontainer/logstate1"', '"/Container/Subcontainer/finished"',
+            '"/Container/logstate"', '"/finished"']
         expected_edges = [
             '/Container/logstate_TO_/Container/finished_done',
             '/Container/Subcontainer/finished_TO_/Container/finished_finished',

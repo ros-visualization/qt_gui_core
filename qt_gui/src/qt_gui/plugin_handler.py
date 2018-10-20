@@ -111,7 +111,8 @@ class PluginHandler(QObject):
             self.__callback = None
             callback(self, exception)
         elif exception is not None:
-            qCritical('PluginHandler.load() failed%s' % (':\n%s' % str(exception) if exception != True else ''))
+            qCritical('PluginHandler.load() failed%s' %
+                      (':\n%s' % str(exception) if exception != True else ''))
 
     def _garbage_widgets_and_toolbars(self):
         for widget in list(self._widgets.keys()):
@@ -201,7 +202,8 @@ class PluginHandler(QObject):
 
     def _call_method_on_all_dock_widgets(self, method_name, instance_settings):
         for dock_widget, _, _ in self._widgets.values():
-            name = 'dock_widget' + dock_widget.objectName().replace(self._instance_id.tidy_str(), '', 1)
+            name = 'dock_widget' + \
+                dock_widget.objectName().replace(self._instance_id.tidy_str(), '', 1)
             settings = instance_settings.get_settings(name)
             method = getattr(dock_widget, method_name)
             try:
@@ -247,13 +249,16 @@ class PluginHandler(QObject):
 
     def _update_dock_widget_features(self, dock_widget):
         if self._application_context.options.lock_perspective or self._application_context.options.standalone_plugin:
-            # dock widgets are not closable when perspective is locked or plugin is running standalone
+            # dock widgets are not closable when perspective is locked or plugin is
+            # running standalone
             features = dock_widget.features()
             dock_widget.setFeatures(features ^ QDockWidget.DockWidgetClosable)
         if self._application_context.options.freeze_layout:
-            # dock widgets are not closable when perspective is locked or plugin is running standalone
+            # dock widgets are not closable when perspective is locked or plugin is
+            # running standalone
             features = dock_widget.features()
-            dock_widget.setFeatures(features ^ (QDockWidget.DockWidgetMovable | QDockWidget.DockWidgetFloatable))
+            dock_widget.setFeatures(
+                features ^ (QDockWidget.DockWidgetMovable | QDockWidget.DockWidgetFloatable))
 
     def _update_title_bar(self, dock_widget, hide_help=False, hide_reload=False):
         title_bar = dock_widget.titleBarWidget()
@@ -279,7 +284,8 @@ class PluginHandler(QObject):
             action_attributes = self._plugin_descriptor.action_attributes()
             if 'icon' in action_attributes and action_attributes['icon'] is not None:
                 base_path = self._plugin_descriptor.attributes().get('plugin_path')
-                icon = get_icon(action_attributes['icon'], action_attributes.get('icontype', None), base_path)
+                icon = get_icon(
+                    action_attributes['icon'], action_attributes.get('icontype', None), base_path)
                 widget.setWindowIcon(icon)
 
     def _update_title_bars(self):
@@ -367,7 +373,8 @@ class PluginHandler(QObject):
         dock_widget.setParent(None)
         widget.setParent(None)
         dock_widget.deleteLater()
-        # defer check for last widget closed to give plugin a chance to add another widget right away
+        # defer check for last widget closed to give plugin a chance to add
+        # another widget right away
         self._defered_check_close.emit()
 
     def _add_toolbar(self, toolbar):
@@ -399,7 +406,8 @@ class PluginHandler(QObject):
         # detach toolbar from parent
         if toolbar.parent():
             toolbar.parent().removeToolBar(toolbar)
-        # defer check for last widget closed to give plugin a chance to add another widget right away
+        # defer check for last widget closed to give plugin a chance to add
+        # another widget right away
         self._defered_check_close.emit()
 
     def _check_close(self):

@@ -50,7 +50,8 @@ class SimpleSettingsDialog(QDialog):
         self.setObjectName('SimpleSettingsDialog')
 
         rp = RosPack()
-        ui_file = os.path.join(rp.get_path('qt_gui_py_common'), 'resource', 'simple_settings_dialog.ui')
+        ui_file = os.path.join(
+            rp.get_path('qt_gui_py_common'), 'resource', 'simple_settings_dialog.ui')
         loadUi(ui_file, self)
 
         self.setWindowTitle(title)
@@ -73,7 +74,8 @@ class SimpleSettingsDialog(QDialog):
     def add_settings_group(self, settings_group):
         """Adds a settings group, which is any widget with a get_settings method."""
         if not hasattr(settings_group, 'get_settings'):
-            qWarning('add_settings_group(): this settings group has no get_settings method to collect the settings!')
+            qWarning(
+                'add_settings_group(): this settings group has no get_settings method to collect the settings!')
         self._settings_groups.append(settings_group)
         self.group_area.layout().addWidget(settings_group)
 

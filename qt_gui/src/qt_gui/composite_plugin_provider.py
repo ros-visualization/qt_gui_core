@@ -57,8 +57,9 @@ class CompositePluginProvider(PluginProvider):
             try:
                 plugin_descriptors = plugin_provider.discover(discovery_data)
             except Exception:
-                qCritical('CompositePluginProvider.discover() could not discover plugins from provider "%s":\n%s' %
-                          (type(plugin_provider), traceback.format_exc()))
+                qCritical(
+                    'CompositePluginProvider.discover() could not discover plugins from '
+                    'provider "%s":\n%s' % (type(plugin_provider), traceback.format_exc()))
             else:
                 self._discovered_plugins[plugin_provider] = plugin_descriptors
                 discovered_plugins += plugin_descriptors

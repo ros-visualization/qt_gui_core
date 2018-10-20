@@ -37,7 +37,8 @@ from .composite_plugin_provider import CompositePluginProvider
 
 class RecursivePluginProvider(CompositePluginProvider):
 
-    """Plugin provider which directly loads all discovered plugins (which should be plugin providers themselfs) and returns their discovered plugins."""
+    """Plugin provider which directly loads all discovered plugins (which should be plugin
+    providers themselfs) and returns their discovered plugins."""
 
     def __init__(self, plugin_provider):
         super(RecursivePluginProvider, self).__init__([])

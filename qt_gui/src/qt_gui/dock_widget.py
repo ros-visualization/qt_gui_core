@@ -38,7 +38,9 @@ from .reparent_event import ReparentEvent
 
 class DockWidget(QDockWidget):
 
-    """Dock widget with the capability to be reparented via drag-and-drop to any other main window."""
+    """
+    Dock widget with the capability to be reparented via drag-and-drop to any other main window.
+    """
 
     def __init__(self, container_manager):
         super(DockWidget, self).__init__()
@@ -74,10 +76,15 @@ class DockWidget(QDockWidget):
                 e.type() == QEvent.Move and \
                 QApplication.mouseButtons() & Qt.LeftButton:
             if self._widget_at(e.pos()) is not None:
-                qDebug('DockWidget._event() start drag, dockwidget=%s, parent=%s, floating=%s, pos=%s' %
-                       (str(self), str(self.parent()), str(self.isFloating()), str(self._dragging_local_pos)))
+                qDebug(
+                    'DockWidget._event() start drag, dockwidget=%s, parent=%s, '
+                    'floating=%s, pos=%s' % (
+                        str(self), str(self.parent()),
+                        str(self.isFloating()),
+                        str(self._dragging_local_pos)))
                 self._dragging_parent = self.parent()
-                # ignore further mouse events so that the widget behind this dock widget can be determined
+                # ignore further mouse events so that the widget behind this dock widget
+                # can be determined
                 self.setAttribute(Qt.WA_TransparentForMouseEvents)
 
                 # collect all main windows (except self.main_window) to re-implement
@@ -88,7 +95,8 @@ class DockWidget(QDockWidget):
                         continue
                     self._main_windows.append(container.main_window)
 
-        # unset local position when releasing button even when custom drag'n'drop has not been started
+        # unset local position when releasing button even when custom drag'n'drop
+        # has not been started
         if self._dragging_local_pos is not None and \
                 e.type() == QEvent.MouseButtonRelease and \
                 e.button() == Qt.LeftButton \
@@ -99,7 +107,8 @@ class DockWidget(QDockWidget):
                 e.type() == QEvent.MouseButtonRelease and \
                 e.button() == Qt.LeftButton and \
                 not self._releasing_and_repressing_while_dragging:
-            qDebug('DockWidget._event() stop drag, dockwidget=%s, parent=%s\n' % (self, self.parent()))
+            qDebug('DockWidget._event() stop drag, dockwidget=%s, parent=%s\n' %
+                   (self, self.parent()))
             self._dragging_parent = None
             self.setAttribute(Qt.WA_TransparentForMouseEvents, False)
             self._main_windows = []
@@ -138,8 +147,13 @@ class DockWidget(QDockWidget):
 
                 # schedule move to trigger dock widget drag'n'drop required for snapping and showing
                 # rubber band and let it complete move forth...
-                mouse_move_event = QMouseEvent(QEvent.MouseMove, self._dragging_local_pos, e.globalPos() + QPoint(
-                    QApplication.startDragDistance(), 1), Qt.NoButton, Qt.LeftButton, e.modifiers())
+                mouse_move_event = QMouseEvent(
+                    QEvent.MouseMove,
+                    self._dragging_local_pos,
+                    e.globalPos() + QPoint(QApplication.startDragDistance(), 1),
+                    Qt.NoButton,
+                    Qt.LeftButton,
+                    e.modifiers())
                 QApplication.instance().postEvent(self, mouse_move_event)
                 QApplication.sendPostedEvents()
                 # ...and back
@@ -203,10 +217,11 @@ class DockWidget(QDockWidget):
 
                 # if at max one of the main windows is floating
                 if len(overlapping_docked) >= len(overlapping) - 1:
-                    # the floating main window is not considered because the docked ones are children of it
+                    # the floating main window is not considered because the docked ones are
+                    # children of it
 
-                    # consider all docked main windows and remove parent if both parent and child are in the list
-                    # print 'considered docked main windows', overlapping_docked
+                    # consider all docked main windows and remove parent if both parent and child
+                    # are in the list print 'considered docked main windows', overlapping_docked
                     parents = []
                     for mw1 in overlapping_docked:
                         # parent of the main window is a dock widget container
@@ -229,7 +244,8 @@ class DockWidget(QDockWidget):
                         # print '- pick single remaining main window'
                         widget = overlapping_docked[0]
                     else:
-                        # print '- found multiple main windows - could not determine which one is on top'
+                        # print '- found multiple main windows - could not determine which one is
+                        # on top'
                         pass
                 # TODO any more heuristic possible?
                 # if all remaining docked main windows have a most common ancestor use the
@@ -252,10 +268,12 @@ class DockWidget(QDockWidget):
 
     def restore_settings(self, settings):
         serial_number = settings.value('parent', None)
-        # print 'DockWidget.restore_settings()', 'parent', serial_number, 'settings group', settings._group
+        # print 'DockWidget.restore_settings()', 'parent', serial_number,
+        # 'settings group', settings._group
         if serial_number is not None:
             serial_number = int(serial_number)
-        if self._parent_container_serial_number() != serial_number and self._container_manager is not None:
+        if self._parent_container_serial_number() != serial_number and \
+                self._container_manager is not None:
             floating = self.isFloating()
             pos = self.pos()
             new_container = self._container_manager.get_container(serial_number)

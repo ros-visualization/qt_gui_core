@@ -56,7 +56,8 @@ class MainWindow(DockableMainWindow):
             self._save_geometry_to_perspective()
             self._save_state_to_perspective()
             self._save_on_close_signaled = True
-            self.save_settings_before_close_signal.emit(self._global_settings, self._perspective_settings)
+            self.save_settings_before_close_signal.emit(
+                self._global_settings, self._perspective_settings)
             event.ignore()
         else:
             event.accept()
@@ -115,7 +116,10 @@ class MainWindow(DockableMainWindow):
             toolbar_settings = self._settings.get_settings('toolbar_areas')
             for toolbar in self.findChildren(QToolBar):
                 area = self.toolBarArea(toolbar)
-                if area in [Qt.LeftToolBarArea, Qt.RightToolBarArea, Qt.TopToolBarArea, Qt.BottomToolBarArea]:
+                if area in [Qt.LeftToolBarArea,
+                            Qt.RightToolBarArea,
+                            Qt.TopToolBarArea,
+                            Qt.BottomToolBarArea]:
                     toolbar_settings.set_value(toolbar.objectName(), area)
 
     def _restore_state_from_perspective(self):
@@ -126,6 +130,10 @@ class MainWindow(DockableMainWindow):
             for toolbar in self.findChildren(QToolBar):
                 if not toolbar.objectName():
                     continue
-                area = Qt.ToolBarArea(int(toolbar_settings.value(toolbar.objectName(), Qt.NoToolBarArea)))
-                if area in [Qt.LeftToolBarArea, Qt.RightToolBarArea, Qt.TopToolBarArea, Qt.BottomToolBarArea]:
+                area = Qt.ToolBarArea(
+                    int(toolbar_settings.value(toolbar.objectName(), Qt.NoToolBarArea)))
+                if area in [Qt.LeftToolBarArea,
+                            Qt.RightToolBarArea,
+                            Qt.TopToolBarArea,
+                            Qt.BottomToolBarArea]:
                     self.addToolBar(area, toolbar)

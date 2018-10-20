@@ -79,7 +79,8 @@ class ConsoleTextEdit(QTextEdit):
         self._add_prompt()
 
     def _add_prompt(self):
-        self._comment_writer.write(self._prompt[self._multi_line] + self._multi_line_indent * self._multi_line_level)
+        self._comment_writer.write(
+            self._prompt[self._multi_line] + self._multi_line_indent * self._multi_line_level)
 
     def _clear_current_line(self, clear_prompt=False):
         # block being current row

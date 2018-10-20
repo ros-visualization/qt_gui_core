@@ -72,7 +72,8 @@ class RosPluginlibPluginProvider(PluginProvider):
         bridge = qt_gui_cpp.PluginBridge()  # @UndefinedVariable
         loaded = bridge.load_plugin(self._plugin_provider, plugin_id, cpp_plugin_context)
         if not loaded:
-            raise PluginLoadError('RosPluginlibPluginProvider.load() could not load plugin "%s"' % plugin_id)
+            raise PluginLoadError(
+                'RosPluginlibPluginProvider.load() could not load plugin "%s"' % plugin_id)
         return bridge
 
     def unload(self, bridge):

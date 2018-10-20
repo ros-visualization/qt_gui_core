@@ -48,12 +48,13 @@ class PluginManagerDBusInterface(Object):
         qDebug('PluginManagerDBusInterface.start_plugin(%s)' % plugin_name)
         plugins = self._plugin_manager.find_plugins_by_name(plugin_name)
         if len(plugins) == 0:
-            msg = 'PluginManagerDBusInterface.start_plugin() found no plugin matching "%s"' % plugin_name
+            msg = 'PluginManagerDBusInterface.start_plugin() found no plugin matching "%s"' % \
+                  plugin_name
             qWarning(msg)
             return (1, msg)
         elif len(plugins) > 1:
-            msg = 'PluginManagerDBusInterface.start_plugin() found multiple plugins matching "%s"\n%s' % (
-                plugin_name, '\n'.join(plugins.values()))
+            msg = 'PluginManagerDBusInterface.start_plugin() found multiple plugins ' \
+                  'matching "%s"\n%s' % (plugin_name, '\n'.join(plugins.values()))
             qWarning(msg)
             return (1, msg)
         plugin_id = plugins.keys()[0]
