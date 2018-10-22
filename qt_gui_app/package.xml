@@ -2,7 +2,8 @@
   <name>qt_gui_app</name>
   <version>0.3.11</version>
   <description>
-    qt_gui_app provides the main to start an instance of the integrated graphical user interface provided by qt_gui.
+    qt_gui_app provides the main to start an instance of the integrated graphical user
+    interface provided by qt_gui.
   </description>
   <maintainer email="dhood@osrfoundation.org">D. Hood</maintainer>
   <maintainer email="dthomas@osrfoundation.org">Dirk Thomas</maintainer>
@@ -13,7 +14,11 @@
   <url type="bugtracker">https://github.com/ros-visualization/qt_gui_app/issues</url>
   <author>Dirk Thomas</author>
 
-  <buildtool_depend>catkin</buildtool_depend>
+  <buildtool_depend>ament_cmake</buildtool_depend>
 
-  <run_depend version_gte="0.3.0">qt_gui</run_depend>
+  <exec_depend>qt_gui</exec_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
 </package>
