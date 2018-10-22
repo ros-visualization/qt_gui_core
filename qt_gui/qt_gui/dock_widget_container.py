@@ -30,8 +30,8 @@
 
 from python_qt_binding.QtGui import QIcon
 
-from .dock_widget import DockWidget
-from .dockable_main_window import DockableMainWindow
+from qt_gui.dock_widget import DockWidget
+from qt_gui.dockable_main_window import DockableMainWindow
 
 
 class DockWidgetContainer(DockWidget):

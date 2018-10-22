@@ -35,7 +35,8 @@ class Plugin(QObject):
 
     """
     Interface for Python plugins.
-    User-defined plugins may either subclass `qt_gui.plugin.Plugin` or according to duck typing implement only the needed methods.
+    User-defined plugins may either subclass `qt_gui.plugin.Plugin` or according to duck typing
+    implement only the needed methods.
     """
 
     def __init__(self, context):
@@ -49,7 +50,8 @@ class Plugin(QObject):
 
     def save_settings(self, plugin_settings, instance_settings):
         """
-        Save the intrinsic state of the plugin to the plugin-specific or instance-specific `Settings`.
+        Save the intrinsic state of the plugin to the plugin-specific or instance-specific
+            `Settings`.
         @param plugin_settings: The plugin-specific settings
         @type plugin_settings: qt_gui.settings.Settings
         @param instance_settings: The instance-specific settings
@@ -59,7 +61,8 @@ class Plugin(QObject):
 
     def restore_settings(self, plugin_settings, instance_settings):
         """
-        Restore the intrinsic state of the plugin from the plugin-specific or instance-specific `Settings`.
+        Restore the intrinsic state of the plugin from the plugin-specific or instance-specific
+            `Settings`.
         @param plugin_settings: The plugin-specific settings
         @type plugin_settings: qt_gui.settings.Settings
         @param instance_settings: The instance-specific settings
@@ -68,8 +71,8 @@ class Plugin(QObject):
         pass
 
     # def trigger_configuration(self):
-        #"""
+        # """
         # Trigger a configuration request from the title bar of one of the dock widgets.
         # If this method is available the `DockWidgetTitleBar` will show the configuration action.
-        #"""
+        # """
         # pass

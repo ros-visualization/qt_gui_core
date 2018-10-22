@@ -34,9 +34,9 @@ from python_qt_binding.QtCore import QObject, QSignalMapper, Signal, Slot
 from python_qt_binding.QtGui import QIcon
 from python_qt_binding.QtWidgets import QAction, QMenu
 
-from .icon_loader import get_icon
-from .menu_manager import MenuManager
-from .plugin_instance_id import PluginInstanceId
+from qt_gui.icon_loader import get_icon
+from qt_gui.menu_manager import MenuManager
+from qt_gui.plugin_instance_id import PluginInstanceId
 
 
 class PluginMenu(QObject):

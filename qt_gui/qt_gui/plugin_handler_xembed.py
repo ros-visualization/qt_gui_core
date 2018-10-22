@@ -28,27 +28,29 @@
 # ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-import webbrowser
-
-from python_qt_binding.QtCore import QObject, Slot
-from rospkg import InvalidManifest, MANIFEST_FILE, parse_manifest_file
-
-from .ros_package_helper import get_package_path
+from qt_gui.plugin_handler_xembed_client import PluginHandlerXEmbedClient
+from qt_gui.plugin_handler_xembed_container import PluginHandlerXEmbedContainer
 
 
-class HelpProvider(QObject):
+class PluginHandlerXEmbed():
 
-    """Handler for the help action in the title bar of dock widgets."""
+    """
+    Handler for forwarding invocations between the framework and one `Plugin` instance via a
+    peer-to-peer DBus connection. The both DBus endpoints are realized by the
+    `PluginHandlerXEmbedContainer` and the `PluginHandlerXEmbedClient`.
+    """
 
-    def __init__(self):
-        super(HelpProvider, self).__init__()
+    def __init__(self, parent, main_window, instance_id,
+                 application_context, container_manager, argv):
+        dbus_object_path = '/PluginHandlerXEmbed/plugin/' + instance_id.tidy_str()
+        if application_context.options.embed_plugin is None:
+            self._handler = PluginHandlerXEmbedContainer(
+                parent, main_window, instance_id, application_context,
+                container_manager, argv, dbus_object_path)
+        else:
+            self._handler = PluginHandlerXEmbedClient(
+                parent, main_window, instance_id, application_context,
+                container_manager, argv, dbus_object_path)
 
-    @Slot(object)
-    def plugin_help_request(self, plugin_descriptor):
-        package_name = plugin_descriptor.attributes()['package_name']
-        package_path = get_package_path(package_name)
-        try:
-            manifest = parse_manifest_file(package_path, MANIFEST_FILE)
-        except (InvalidManifest, IOError):
-            return
-        webbrowser.open(manifest.url)
+    def __getattr__(self, name):
+        return getattr(self._handler, name)

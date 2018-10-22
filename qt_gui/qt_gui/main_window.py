@@ -31,8 +31,8 @@
 from python_qt_binding.QtCore import qDebug, Qt, Signal
 from python_qt_binding.QtWidgets import QToolBar
 
-from .dockable_main_window import DockableMainWindow
-from .settings import Settings
+from qt_gui.dockable_main_window import DockableMainWindow
+from qt_gui.settings import Settings
 
 
 class MainWindow(DockableMainWindow):

@@ -221,7 +221,7 @@ class DockWidgetTitleBar(QWidget):
 if __name__ == '__main__':
     import sys
     from python_qt_binding.QtGui import QApplication
-    from .dockable_main_window import DockableMainWindow
+    from qt_gui.dockable_main_window import DockableMainWindow
 
     app = QApplication(sys.argv)
 

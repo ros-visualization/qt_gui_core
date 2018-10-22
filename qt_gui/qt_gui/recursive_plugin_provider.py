@@ -28,29 +28,41 @@
 # ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-from .plugin_handler_xembed_client import PluginHandlerXEmbedClient
-from .plugin_handler_xembed_container import PluginHandlerXEmbedContainer
+import traceback
+
+from python_qt_binding.QtCore import qCritical
+
+from qt_gui.composite_plugin_provider import CompositePluginProvider
 
 
-class PluginHandlerXEmbed():
+class RecursivePluginProvider(CompositePluginProvider):
 
-    """
-    Handler for forwarding invocations between the framework and one `Plugin` instance via a
-    peer-to-peer DBus connection. The both DBus endpoints are realized by the
-    `PluginHandlerXEmbedContainer` and the `PluginHandlerXEmbedClient`.
-    """
+    """Plugin provider which directly loads all discovered plugins (which should be plugin
+    providers themselfs) and returns their discovered plugins."""
 
-    def __init__(self, parent, main_window, instance_id,
-                 application_context, container_manager, argv):
-        dbus_object_path = '/PluginHandlerXEmbed/plugin/' + instance_id.tidy_str()
-        if application_context.options.embed_plugin is None:
-            self._handler = PluginHandlerXEmbedContainer(
-                parent, main_window, instance_id, application_context,
-                container_manager, argv, dbus_object_path)
-        else:
-            self._handler = PluginHandlerXEmbedClient(
-                parent, main_window, instance_id, application_context,
-                container_manager, argv, dbus_object_path)
+    def __init__(self, plugin_provider):
+        super(RecursivePluginProvider, self).__init__([])
+        self.setObjectName('RecursivePluginProvider')
 
-    def __getattr__(self, name):
-        return getattr(self._handler, name)
+        self._plugin_provider = plugin_provider
+
+    def discover(self, discovery_data):
+        # discover plugins, which are providers themselves
+        plugin_descriptors = self._plugin_provider.discover(discovery_data)
+
+        # instantiate plugins
+        plugin_providers = []
+        for plugin_descriptor in plugin_descriptors:
+            try:
+                # pass None as PluginContext for PluginProviders
+                instance = self._plugin_provider.load(plugin_descriptor.plugin_id(), None)
+            except Exception:
+                qCritical('RecursivePluginProvider.discover() loading plugin "%s" failed:\n%s' %
+                          (str(plugin_descriptor.plugin_id()), traceback.format_exc()))
+            else:
+                if instance is not None:
+                    plugin_providers.append(instance)
+
+        # delegate discovery through instantiated plugin providers to base class
+        self.set_plugin_providers(plugin_providers)
+        return CompositePluginProvider.discover(self, discovery_data)

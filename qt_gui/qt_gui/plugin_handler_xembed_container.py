@@ -36,10 +36,10 @@ from python_qt_binding.QtCore import (QByteArray, QDataStream, qDebug, QIODevice
                                       QProcess, QSignalMapper, Qt, qWarning)
 from python_qt_binding.QtGui import QIcon, QToolBar, QX11EmbedContainer
 
-from .main import Main
-from .plugin_handler import PluginHandler
-from .plugin_handler_dbus_service import PluginHandlerDBusService
-from .settings_proxy_dbus_service import SettingsProxyDBusService
+from qt_gui.main import Main
+from qt_gui.plugin_handler import PluginHandler
+from qt_gui.plugin_handler_dbus_service import PluginHandlerDBusService
+from qt_gui.settings_proxy_dbus_service import SettingsProxyDBusService
 
 
 class PluginHandlerXEmbedContainer(PluginHandler):

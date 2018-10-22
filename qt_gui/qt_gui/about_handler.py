@@ -36,7 +36,7 @@ from python_qt_binding import QT_BINDING, QT_BINDING_MODULES, QT_BINDING_VERSION
 from python_qt_binding.QtCore import QObject, qVersion
 from python_qt_binding.QtWidgets import QMessageBox
 
-from .ros_package_helper import get_package_path
+from qt_gui.ros_package_helper import get_package_path
 
 
 class AboutHandler(QObject):

@@ -28,41 +28,27 @@
 # ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-import traceback
+import webbrowser
 
-from python_qt_binding.QtCore import qCritical
+from python_qt_binding.QtCore import QObject, Slot
+from rospkg import InvalidManifest, MANIFEST_FILE, parse_manifest_file
 
-from .composite_plugin_provider import CompositePluginProvider
+from qt_gui.ros_package_helper import get_package_path
 
 
-class RecursivePluginProvider(CompositePluginProvider):
+class HelpProvider(QObject):
 
-    """Plugin provider which directly loads all discovered plugins (which should be plugin
-    providers themselfs) and returns their discovered plugins."""
+    """Handler for the help action in the title bar of dock widgets."""
 
-    def __init__(self, plugin_provider):
-        super(RecursivePluginProvider, self).__init__([])
-        self.setObjectName('RecursivePluginProvider')
+    def __init__(self):
+        super(HelpProvider, self).__init__()
 
-        self._plugin_provider = plugin_provider
-
-    def discover(self, discovery_data):
-        # discover plugins, which are providers themselves
-        plugin_descriptors = self._plugin_provider.discover(discovery_data)
-
-        # instantiate plugins
-        plugin_providers = []
-        for plugin_descriptor in plugin_descriptors:
-            try:
-                # pass None as PluginContext for PluginProviders
-                instance = self._plugin_provider.load(plugin_descriptor.plugin_id(), None)
-            except Exception:
-                qCritical('RecursivePluginProvider.discover() loading plugin "%s" failed:\n%s' %
-                          (str(plugin_descriptor.plugin_id()), traceback.format_exc()))
-            else:
-                if instance is not None:
-                    plugin_providers.append(instance)
-
-        # delegate discovery through instantiated plugin providers to base class
-        self.set_plugin_providers(plugin_providers)
-        return CompositePluginProvider.discover(self, discovery_data)
+    @Slot(object)
+    def plugin_help_request(self, plugin_descriptor):
+        package_name = plugin_descriptor.attributes()['package_name']
+        package_path = get_package_path(package_name)
+        try:
+            manifest = parse_manifest_file(package_path, MANIFEST_FILE)
+        except (InvalidManifest, IOError):
+            return
+        webbrowser.open(manifest.url)

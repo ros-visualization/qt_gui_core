@@ -36,9 +36,9 @@ from python_qt_binding.QtCore import QByteArray, qDebug, QObject, QSignalMapper,
 from python_qt_binding.QtGui import QIcon, QValidator
 from python_qt_binding.QtWidgets import QAction, QFileDialog, QInputDialog, QMessageBox
 
-from .menu_manager import MenuManager
-from .settings import Settings
-from .settings_proxy import SettingsProxy
+from qt_gui.menu_manager import MenuManager
+from qt_gui.settings import Settings
+from qt_gui.settings_proxy import SettingsProxy
 
 
 def is_string(s):
@@ -88,7 +88,7 @@ class PerspectiveManager(QObject):
         self._file_path = os.getcwd()
 
         if application_context.provide_app_dbus_interfaces:
-            from .perspective_manager_dbus_interface import PerspectiveManagerDBusInterface
+            from qt_gui.perspective_manager_dbus_interface import PerspectiveManagerDBusInterface
             self._dbus_server = PerspectiveManagerDBusInterface(self, application_context)
 
     def set_menu(self, menu):

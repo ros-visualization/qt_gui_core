@@ -32,8 +32,8 @@ import traceback
 
 from python_qt_binding.QtCore import qCritical, QEvent, QObject, qWarning, Slot
 
-from .plugin_context import PluginContext
-from .plugin_handler import PluginHandler
+from qt_gui.plugin_context import PluginContext
+from qt_gui.plugin_handler import PluginHandler
 
 
 class PluginHandlerDirect(PluginHandler):

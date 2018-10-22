@@ -32,7 +32,7 @@ import traceback
 
 from python_qt_binding.QtCore import qCritical
 
-from .plugin_provider import PluginProvider
+from qt_gui.plugin_provider import PluginProvider
 
 
 class CompositePluginProvider(PluginProvider):

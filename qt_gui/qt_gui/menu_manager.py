@@ -34,7 +34,9 @@ from python_qt_binding.QtWidgets import QAction, QMenu
 
 class MenuManager(QObject):
 
-    """Manager for a menu containing alphabetically ordered items as well as additional items before and afterwards."""
+    """Manager for a menu containing alphabetically ordered items as well as additional items
+    before and afterwards.
+    """
 
     def __init__(self, menu):
         super(MenuManager, self).__init__()
