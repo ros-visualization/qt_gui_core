@@ -31,7 +31,8 @@
 # ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-from python_qt_binding.QtWidgets import QButtonGroup, QGroupBox, QLabel, QCheckBox, QVBoxLayout, QWidget
+from python_qt_binding.QtWidgets import \
+    QButtonGroup, QGroupBox, QLabel, QCheckBox, QVBoxLayout, QWidget
 
 
 class CheckBoxGroup(QGroupBox):
@@ -49,7 +50,7 @@ class CheckBoxGroup(QGroupBox):
         self._button_group = QButtonGroup()
         self._button_group.setExclusive(False)
         self._options = options
-        if parent == None:
+        if parent is not None:
             parent = self
 
         for (button_id, option) in enumerate(self._options):

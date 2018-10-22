@@ -1,10 +1,12 @@
-cmake_minimum_required(VERSION 2.8.3)
+cmake_minimum_required(VERSION 3.5)
 project(qt_gui_py_common)
 
-find_package(catkin REQUIRED)
-catkin_package()
+find_package(ament_cmake REQUIRED)
 
-catkin_python_setup()
+ament_python_install_package(${PROJECT_NAME})
 
-install(DIRECTORY resource
-  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION})
+install(TARGETS ${_library_name}
+  DESTINATION "${PYTHON_INSTALL_DIR}/${PROJECT_NAME}"
+)
+
+ament_package()

@@ -74,8 +74,8 @@ class SimpleSettingsDialog(QDialog):
     def add_settings_group(self, settings_group):
         """Adds a settings group, which is any widget with a get_settings method."""
         if not hasattr(settings_group, 'get_settings'):
-            qWarning(
-                'add_settings_group(): this settings group has no get_settings method to collect the settings!')
+            qWarning('add_settings_group(): this settings group has no get_settings method to ' +
+                     'collect the settings!')
         self._settings_groups.append(settings_group)
         self.group_area.layout().addWidget(settings_group)
 
