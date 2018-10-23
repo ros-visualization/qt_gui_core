@@ -41,7 +41,10 @@ from .ros_package_helper import get_package_path
 
 class AboutHandler(QObject):
 
-    """Handler for the about action in the menu bar showing a message box with details on the used libraries and their versions."""
+    """
+    Handler for the about action in the menu bar showing a message box with details on the used
+    libraries and their versions.
+    """
 
     def __init__(self, qtgui_path, parent=None):
         super(AboutHandler, self).__init__(parent)
@@ -66,8 +69,13 @@ class AboutHandler(QObject):
 
         text += '<h3 style="margin-top: 1px;">%s</h3>' % self.tr('rqt')
 
-        text += '<p>%s %s</p>' % (self.tr('rqt is a framework for graphical user interfaces.'), self.tr('It is extensible with plugins which can be written in either Python or C++.'))
-        text += '<p>%s</p>' % (self.tr('Please see the <a href="%s">Wiki</a> for more information on rqt and available plugins.' % 'http://wiki.ros.org/rqt'))
+        text += '<p>%s %s</p>' % (
+            self.tr('rqt is a framework for graphical user interfaces.'),
+            self.tr('It is extensible with plugins which can be written in either Python or C++.'))
+        text += '<p>%s</p>' % (
+            self.tr(
+                'Please see the <a href="%s">Wiki</a> for more information on rqt and available '
+                'plugins.' % 'http://wiki.ros.org/rqt'))
 
         text += '<p>%s: ' % self.tr('Utilized libraries:')
 
@@ -95,5 +103,6 @@ class AboutHandler(QObject):
 
         text += '.</p>'
 
-        mb = QMessageBox(QMessageBox.NoIcon, self.tr('About rqt'), text, QMessageBox.Ok, self.parent())
+        mb = QMessageBox(
+            QMessageBox.NoIcon, self.tr('About rqt'), text, QMessageBox.Ok, self.parent())
         mb.exec_()

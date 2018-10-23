@@ -34,6 +34,7 @@
 import unittest
 from qt_dotgraph.pygraphvizfactory import PygraphvizFactory
 
+
 class PygraphvizFactoryTest(unittest.TestCase):
 
     def test_get_graph(self):

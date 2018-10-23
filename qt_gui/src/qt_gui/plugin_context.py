@@ -34,7 +34,8 @@ from python_qt_binding.QtCore import QObject
 class PluginContext(QObject):
 
     """
-    PluginContext providing information to the plugin and exposing methods for the plugin to interact with the framework.
+    PluginContext providing information to the plugin and exposing methods
+    for the plugin to interact with the framework.
     It relays all methods to the corresponding `PluginHandler`.
     """
 
@@ -47,7 +48,8 @@ class PluginContext(QObject):
     def serial_number(self):
         """
         Return the serial number of the plugin.
-        For a specific type of plugin each instance gets a serial number (which is the first currently not used positive integer at construction time).
+        For a specific type of plugin each instance gets a serial number (which is the first currently not used positive
+        integer at construction time).
         @return: The serial number
         @rtype: int
         """
@@ -65,8 +67,11 @@ class PluginContext(QObject):
         """
         Add a widget to the UI.
         The widget is embedded into a new QDockWidget which itself is added to the QMainWindow.
-        This method can be called once for each widget a plugin would like to add and at any point in time (until the calling plugin has been shutdown).
-        Note: The ownership of the widget is transferred to the callee which will delete it when the plugin is shut down.
+        This method can be called once for each widget a plugin would like to add and at any point in time
+        (until the calling plugin has been shutdown).
+
+        Note: The ownership of the widget is transferred to the callee which will delete it when the plugin
+              is shut down.
         @param widget: The widget to add
         @type widget: QWidget
         """
@@ -85,8 +90,10 @@ class PluginContext(QObject):
         """
         Add a toolbar to the UI.
         The toolbar is directly added to the QMainWindow.
-        This method can be called once for each toolbar a plugin would like to add and at any point in time (until the calling plugin has been shutdown).
-        Note: The ownership of the toolbar is transferred to the callee which will delete it when the plugin is shut down.
+        This method can be called once for each toolbar a plugin would like to add and at any point in time
+        (until the calling plugin has been shutdown).
+        Note: The ownership of the toolbar is transferred to the callee which will delete it when the plugin
+              is shut down.
         @param widget: The toolbar to add
         @type widget: QToolBar
         """

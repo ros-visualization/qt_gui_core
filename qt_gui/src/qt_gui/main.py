@@ -63,7 +63,8 @@ class Main(object):
             DBusGMainLoop(set_as_default=True)
             import dbus
             try:
-                # before being able to check if a session bus is available the dbus mainloop must be set up
+                # before being able to check if a session bus is available the dbus
+                # mainloop must be set up
                 dbus.SessionBus()
                 self._dbus_available = True
             except dbus.exceptions.DBusException:
@@ -73,71 +74,106 @@ class Main(object):
 
     def add_arguments(self, parser, standalone=False, plugin_argument_provider=None):
         common_group = parser.add_argument_group('Options for GUI instance')
-        common_group.add_argument('-b', '--qt-binding', dest='qt_binding', type=str, metavar='BINDING',
+        common_group.add_argument(
+            '-b', '--qt-binding', dest='qt_binding', type=str, metavar='BINDING',
             help='choose Qt bindings to be used [pyqt|pyside]')
-        common_group.add_argument('--clear-config', dest='clear_config', default=False, action='store_true',
+        common_group.add_argument(
+            '--clear-config', dest='clear_config', default=False, action='store_true',
             help='clear the configuration (including all perspectives and plugin settings)')
         if not standalone:
-            common_group.add_argument('-f', '--freeze-layout', dest='freeze_layout', action='store_true',
-                help='freeze the layout of the GUI (prevent rearranging widgets, disable undock/redock)')
-        common_group.add_argument('--force-discover', dest='force_discover', default=False, action='store_true',
+            common_group.add_argument(
+                '-f', '--freeze-layout', dest='freeze_layout', action='store_true',
+                help='freeze the layout of the GUI (prevent rearranging widgets, disable '
+                     'undock/redock)')
+        common_group.add_argument(
+            '--force-discover', dest='force_discover', default=False, action='store_true',
             help='force a rediscover of plugins')
-        common_group.add_argument('-h', '--help', action='help',
-            help='show this help message and exit')
+        common_group.add_argument(
+            '-h', '--help', action='help', help='show this help message and exit')
         if not standalone:
-            common_group.add_argument('-l', '--lock-perspective', dest='lock_perspective', action='store_true',
-                help='lock the GUI to the used perspective (hide menu bar and close buttons of plugins)')
-            common_group.add_argument('-ht', '--hide-title', dest='hide_title', action='store_true',
-                help='hide the title label, the icon, and the help button (combine with -l and -f to eliminate the entire title bar and reclaim the space)')
+            common_group.add_argument(
+                '-l', '--lock-perspective', dest='lock_perspective', action='store_true',
+                help='lock the GUI to the used perspective (hide menu bar and close buttons of '
+                     'plugins)')
+            common_group.add_argument(
+                '-ht', '--hide-title', dest='hide_title', action='store_true',
+                help='hide the title label, the icon, and the help button (combine with -l and -f '
+                     'to eliminate the entire title bar and reclaim the space)')
 
-            common_group.add_argument('-p', '--perspective', dest='perspective', type=str, metavar='PERSPECTIVE',
+            common_group.add_argument(
+                '-p', '--perspective', dest='perspective', type=str, metavar='PERSPECTIVE',
                 help='start with this named perspective')
-            common_group.add_argument('--perspective-file', dest='perspective_file', type=str, metavar='PERSPECTIVE_FILE',
+            common_group.add_argument(
+                '--perspective-file', dest='perspective_file', type=str, metavar='PERSPECTIVE_FILE',
                 help='start with a perspective loaded from a file')
-        common_group.add_argument('--reload-import', dest='reload_import', default=False, action='store_true',
+        common_group.add_argument(
+            '--reload-import', dest='reload_import', default=False, action='store_true',
             help='reload every imported module')
         if not standalone:
-            common_group.add_argument('-s', '--standalone', dest='standalone_plugin', type=str, metavar='PLUGIN',
-                help='start only this plugin (implies -l). To pass arguments to the plugin use --args')
-        common_group.add_argument('-t', '--on-top', dest='on_top', default=False, action='store_true',
+            common_group.add_argument(
+                '-s', '--standalone', dest='standalone_plugin', type=str, metavar='PLUGIN',
+                help='start only this plugin (implies -l). To pass arguments to the plugin use '
+                     '--args')
+        common_group.add_argument(
+            '-t', '--on-top', dest='on_top', default=False, action='store_true',
             help='set window mode to always on top')
-        common_group.add_argument('-v', '--verbose', dest='verbose', default=False, action='store_true',
+        common_group.add_argument(
+            '-v', '--verbose', dest='verbose', default=False, action='store_true',
             help='output qDebug messages')
 
         if not standalone:
-            common_group.add_argument('--args', dest='plugin_args', nargs='*', type=str,
-                help='arbitrary arguments which are passes to the plugin (only with -s, --command-start-plugin or --embed-plugin). It must be the last option since it collects all following options.')
+            common_group.add_argument(
+                '--args', dest='plugin_args', nargs='*', type=str,
+                help='arbitrary arguments which are passes to the plugin '
+                     '(only with -s, --command-start-plugin or --embed-plugin). '
+                     'It must be the last option since it collects all following options.')
 
-            group = parser.add_argument_group('Options to query information without starting a GUI instance',
-                'These options can be used to query information about valid arguments for various options.')
-            group.add_argument('--list-perspectives', dest='list_perspectives', action='store_true',
+            group = parser.add_argument_group(
+                'Options to query information without starting a GUI instance',
+                'These options can be used to query information about valid arguments for various '
+                'options.')
+            group.add_argument(
+                '--list-perspectives', dest='list_perspectives', action='store_true',
                 help='list available perspectives')
-            group.add_argument('--list-plugins', dest='list_plugins', action='store_true',
+            group.add_argument(
+                '--list-plugins', dest='list_plugins', action='store_true',
                 help='list available plugins')
             parser.add_argument_group(group)
 
-            group = parser.add_argument_group('Options to operate on a running GUI instance',
+            group = parser.add_argument_group(
+                'Options to operate on a running GUI instance',
                 'These options can be used to perform actions on a running GUI instance.')
-            group.add_argument('--command-pid', dest='command_pid', type=int, metavar='PID',
-                help='pid of the GUI instance to operate on, defaults to oldest running GUI instance')
-            group.add_argument('--command-start-plugin', dest='command_start_plugin', type=str, metavar='PLUGIN',
+            group.add_argument(
+                '--command-pid', dest='command_pid', type=int, metavar='PID',
+                help='pid of the GUI instance to operate on, defaults to oldest running GUI '
+                'instance')
+            group.add_argument(
+                '--command-start-plugin', dest='command_start_plugin', type=str, metavar='PLUGIN',
                 help='start plugin')
-            group.add_argument('--command-switch-perspective', dest='command_switch_perspective', type=str, metavar='PERSPECTIVE',
-                help='switch perspective')
+            group.add_argument(
+                '--command-switch-perspective', dest='command_switch_perspective', type=str,
+                metavar='PERSPECTIVE', help='switch perspective')
             if not self._dbus_available:
                 group.description = 'These options are not available since DBus is available!'
                 for o in group._group_actions:
                     o.help = SUPPRESS
             parser.add_argument_group(group)
 
-            group = parser.add_argument_group('Special options for embedding widgets from separate processes',
+            group = parser.add_argument_group(
+                'Special options for embedding widgets from separate processes',
                 'These options should never be used on the CLI but only from the GUI code itself.')
-            group.add_argument('--embed-plugin', dest='embed_plugin', type=str, metavar='PLUGIN',
-                help='embed a plugin into an already running GUI instance (requires all other --embed-* options)')
-            group.add_argument('--embed-plugin-serial', dest='embed_plugin_serial', type=int, metavar='SERIAL',
-                help='serial number of plugin to be embedded (requires all other --embed-* options)')
-            group.add_argument('--embed-plugin-address', dest='embed_plugin_address', type=str, metavar='ADDRESS',
-                help='dbus server address of the GUI instance to embed plugin into (requires all other --embed-* options)')
+            group.add_argument(
+                '--embed-plugin', dest='embed_plugin', type=str, metavar='PLUGIN',
+                help='embed a plugin into an already running GUI instance (requires all other '
+                     '--embed-* options)')
+            group.add_argument(
+                '--embed-plugin-serial', dest='embed_plugin_serial', type=int, metavar='SERIAL',
+                help='serial number of plugin to be embedded '
+                     '(requires all other --embed-* options)')
+            group.add_argument(
+                '--embed-plugin-address', dest='embed_plugin_address', type=str, metavar='ADDRESS',
+                help='dbus server address of the GUI instance to embed plugin into '
+                     '(requires all other --embed-* options)')
             for o in group._group_actions:
                 o.help = SUPPRESS
             parser.add_argument_group(group)
@@ -161,7 +197,8 @@ class Main(object):
            QIcon.fromTheme('document-open').isNull() or \
            QIcon.fromTheme('edit-cut').isNull() or \
            QIcon.fromTheme('object-flip-horizontal').isNull():
-            if 'darwin' in platform.platform().lower() and '/usr/local/share/icons' not in QIcon.themeSearchPaths():
+            if 'darwin' in platform.platform().lower() and \
+                    '/usr/local/share/icons' not in QIcon.themeSearchPaths():
                 QIcon.setThemeSearchPaths(QIcon.themeSearchPaths() + ['/usr/local/share/icons'])
             original_theme = QIcon.themeName()
             QIcon.setThemeName('Tango')
@@ -175,7 +212,8 @@ class Main(object):
         app.setAttribute(Qt.AA_DontShowIconsInMenus, False)
         return app
 
-    def main(self, argv=None, standalone=None, plugin_argument_provider=None, plugin_manager_settings_prefix=''):
+    def main(self, argv=None, standalone=None, plugin_argument_provider=None,
+             plugin_manager_settings_prefix=''):
         if argv is None:
             argv = sys.argv
 
@@ -191,7 +229,8 @@ class Main(object):
                 arguments = arguments[0:index + 1]
 
         parser = ArgumentParser(os.path.basename(Main.main_filename), add_help=False)
-        self.add_arguments(parser, standalone=bool(standalone), plugin_argument_provider=plugin_argument_provider)
+        self.add_arguments(parser, standalone=bool(standalone),
+                           plugin_argument_provider=plugin_argument_provider)
         self._options = parser.parse_args(arguments)
 
         if standalone:
@@ -221,27 +260,41 @@ class Main(object):
 
         # check option dependencies
         try:
-            if self._options.plugin_args and not self._options.standalone_plugin and not self._options.command_start_plugin and not self._options.embed_plugin:
-                raise RuntimeError('Option --args can only be used together with either --standalone, --command-start-plugin or --embed-plugin option')
+            if self._options.plugin_args and \
+                    not self._options.standalone_plugin and \
+                    not self._options.command_start_plugin and \
+                    not self._options.embed_plugin:
+                raise RuntimeError(
+                    'Option --args can only be used together with either --standalone, '
+                    '--command-start-plugin or --embed-plugin option')
 
             if self._options.freeze_layout and not self._options.lock_perspective:
-                raise RuntimeError('Option --freeze_layout can only be used together with the --lock_perspective option')
+                raise RuntimeError(
+                    'Option --freeze_layout can only be used together with the '
+                    '--lock_perspective option')
 
             list_options = (self._options.list_perspectives, self._options.list_plugins)
             list_options_set = [opt for opt in list_options if opt is not False]
             if len(list_options_set) > 1:
                 raise RuntimeError('Only one --list-* option can be used at a time')
 
-            command_options = (self._options.command_start_plugin, self._options.command_switch_perspective)
+            command_options = (
+                self._options.command_start_plugin, self._options.command_switch_perspective)
             command_options_set = [opt for opt in command_options if opt is not None]
             if len(command_options_set) > 0 and not self._dbus_available:
                 raise RuntimeError('Without DBus support the --command-* options are not available')
             if len(command_options_set) > 1:
-                raise RuntimeError('Only one --command-* option can be used at a time (except --command-pid which is optional)')
+                raise RuntimeError(
+                    'Only one --command-* option can be used at a time (except --command-pid which '
+                    'is optional)')
             if len(command_options_set) == 0 and self._options.command_pid is not None:
-                raise RuntimeError('Option --command_pid can only be used together with an other --command-* option')
+                raise RuntimeError(
+                    'Option --command_pid can only be used together with an other --command-* '
+                    'option')
 
-            embed_options = (self._options.embed_plugin, self._options.embed_plugin_serial, self._options.embed_plugin_address)
+            embed_options = (
+                self._options.embed_plugin, self._options.embed_plugin_serial,
+                self._options.embed_plugin_address)
             embed_options_set = [opt for opt in embed_options if opt is not None]
             if len(command_options_set) > 0 and not self._dbus_available:
                 raise RuntimeError('Without DBus support the --embed-* options are not available')
@@ -249,24 +302,28 @@ class Main(object):
                 raise RuntimeError('Missing option(s) - all \'--embed-*\' options must be set')
 
             if len(embed_options_set) > 0 and self._options.clear_config:
-                raise RuntimeError('Option --clear-config can only be used without any --embed-* option')
+                raise RuntimeError(
+                    'Option --clear-config can only be used without any --embed-* option')
 
             groups = (list_options_set, command_options_set, embed_options_set)
             groups_set = [opt for opt in groups if len(opt) > 0]
             if len(groups_set) > 1:
-                raise RuntimeError('Options from different groups (--list, --command, --embed) can not be used together')
+                raise RuntimeError(
+                    'Options from different groups (--list, --command, --embed) can not be used '
+                    'together')
 
             perspective_options = (self._options.perspective, self._options.perspective_file)
             perspective_options_set = [opt for opt in perspective_options if opt is not None]
             if len(perspective_options_set) > 1:
                 raise RuntimeError('Only one --perspective-* option can be used at a time')
 
-            if self._options.perspective_file is not None and not os.path.isfile(self._options.perspective_file):
+            if self._options.perspective_file is not None and \
+                    not os.path.isfile(self._options.perspective_file):
                 raise RuntimeError('Option --perspective-file must reference existing file')
 
         except RuntimeError as e:
             print(str(e))
-            #parser.parse_args(['--help'])
+            # parser.parse_args(['--help'])
             # calling --help will exit
             return 1
 
@@ -294,18 +351,21 @@ class Main(object):
                 from .application_dbus_interface import ApplicationDBusInterface
                 _dbus_server = ApplicationDBusInterface(context.dbus_base_bus_name)
 
-        # determine host bus name, either based on pid given on command line or via dbus application interface if any other instance is available
+        # determine host bus name, either based on pid given on command line or
+        # via dbus application interface if any other instance is available
         if len(command_options_set) > 0 or len(embed_options_set) > 0:
             host_pid = None
             if self._options.command_pid is not None:
                 host_pid = self._options.command_pid
             else:
                 try:
-                    remote_object = SessionBus().get_object(context.dbus_base_bus_name, '/Application')
+                    remote_object = SessionBus().get_object(
+                        context.dbus_base_bus_name, '/Application')
                 except DBusException:
                     pass
                 else:
-                    remote_interface = Interface(remote_object, context.dbus_base_bus_name + '.Application')
+                    remote_interface = Interface(
+                        remote_object, context.dbus_base_bus_name + '.Application')
                     host_pid = remote_interface.get_pid()
             if host_pid is not None:
                 context.dbus_host_bus_name = context.dbus_base_bus_name + '.pid%d' % host_pid
@@ -314,22 +374,31 @@ class Main(object):
         if len(command_options_set) > 0:
             if self._options.command_start_plugin is not None:
                 try:
-                    remote_object = SessionBus().get_object(context.dbus_host_bus_name, '/PluginManager')
+                    remote_object = SessionBus().get_object(
+                        context.dbus_host_bus_name, '/PluginManager')
                 except DBusException:
-                    (rc, msg) = (1, 'unable to communicate with GUI instance "%s"' % context.dbus_host_bus_name)
+                    (rc, msg) = (1, 'unable to communicate with GUI instance "%s"' %
+                                 context.dbus_host_bus_name)
                 else:
-                    remote_interface = Interface(remote_object, context.dbus_base_bus_name + '.PluginManager')
-                    (rc, msg) = remote_interface.start_plugin(self._options.command_start_plugin, ' '.join(self._options.plugin_args))
+                    remote_interface = Interface(
+                        remote_object, context.dbus_base_bus_name + '.PluginManager')
+                    (rc, msg) = remote_interface.start_plugin(
+                        self._options.command_start_plugin, ' '.join(self._options.plugin_args))
                 if rc == 0:
-                    print('qt_gui_main() started plugin "%s" in GUI "%s"' % (msg, context.dbus_host_bus_name))
+                    print('qt_gui_main() started plugin "%s" in GUI "%s"' %
+                          (msg, context.dbus_host_bus_name))
                 else:
-                    print('qt_gui_main() could not start plugin "%s" in GUI "%s": %s' % (self._options.command_start_plugin, context.dbus_host_bus_name, msg))
+                    print('qt_gui_main() could not start plugin "%s" in GUI "%s": %s' %
+                          (self._options.command_start_plugin, context.dbus_host_bus_name, msg))
                 return rc
             elif self._options.command_switch_perspective is not None:
-                remote_object = SessionBus().get_object(context.dbus_host_bus_name, '/PerspectiveManager')
-                remote_interface = Interface(remote_object, context.dbus_base_bus_name + '.PerspectiveManager')
+                remote_object = SessionBus().get_object(
+                    context.dbus_host_bus_name, '/PerspectiveManager')
+                remote_interface = Interface(
+                    remote_object, context.dbus_base_bus_name + '.PerspectiveManager')
                 remote_interface.switch_perspective(self._options.command_switch_perspective)
-                print('qt_gui_main() switched to perspective "%s" in GUI "%s"' % (self._options.command_switch_perspective, context.dbus_host_bus_name))
+                print('qt_gui_main() switched to perspective "%s" in GUI "%s"' %
+                      (self._options.command_switch_perspective, context.dbus_host_bus_name))
                 return 0
             raise RuntimeError('Unknown command not handled')
 
@@ -337,7 +406,10 @@ class Main(object):
         setattr(sys, 'SELECT_QT_BINDING', self._options.qt_binding)
         from python_qt_binding import QT_BINDING
 
-        from python_qt_binding.QtCore import qDebug, qInstallMessageHandler, QSettings, Qt, QtCriticalMsg, QtDebugMsg, QtFatalMsg, QTimer, QtWarningMsg
+        from python_qt_binding.QtCore import (qDebug, qInstallMessageHandler,
+                                              QSettings, Qt, QtCriticalMsg, QtDebugMsg)
+        from python_qt_binding.QtCore import QtFatalMsg, QTimer, QtWarningMsg
+
         from python_qt_binding.QtGui import QIcon
         from python_qt_binding.QtWidgets import QAction, QMenuBar
 
@@ -373,7 +445,8 @@ class Main(object):
 
         self._check_icon_theme_compliance()
 
-        settings = QSettings(QSettings.IniFormat, QSettings.UserScope, 'ros.org', self._settings_filename)
+        settings = QSettings(
+            QSettings.IniFormat, QSettings.UserScope, 'ros.org', self._settings_filename)
         if len(embed_options_set) == 0:
             if self._options.clear_config:
                 settings.clear()
@@ -413,7 +486,8 @@ class Main(object):
 
         # setup plugin manager
         plugin_provider = CompositePluginProvider(self.plugin_providers)
-        plugin_manager = PluginManager(plugin_provider, settings, context, settings_prefix=plugin_manager_settings_prefix)
+        plugin_manager = PluginManager(
+            plugin_provider, settings, context, settings_prefix=plugin_manager_settings_prefix)
 
         if self._options.list_plugins:
             # output available plugins
@@ -439,7 +513,8 @@ class Main(object):
             plugin_manager.set_main_window(main_window, menu_bar, container_manager)
 
             if not self._options.freeze_layout:
-                minimized_dock_widgets_toolbar = MinimizedDockWidgetsToolbar(container_manager, main_window)
+                minimized_dock_widgets_toolbar = MinimizedDockWidgetsToolbar(
+                    container_manager, main_window)
                 main_window.addToolBar(Qt.BottomToolBarArea, minimized_dock_widgets_toolbar)
                 plugin_manager.set_minimized_dock_widgets_toolbar(minimized_dock_widgets_toolbar)
 
@@ -454,13 +529,16 @@ class Main(object):
             # signal new settings due to changed perspective
             perspective_manager.save_settings_signal.connect(main_window.save_settings)
             perspective_manager.restore_settings_signal.connect(main_window.restore_settings)
-            perspective_manager.restore_settings_without_plugin_changes_signal.connect(main_window.restore_settings)
+            perspective_manager.restore_settings_without_plugin_changes_signal.connect(
+                main_window.restore_settings)
 
         if perspective_manager is not None and plugin_manager is not None:
             perspective_manager.save_settings_signal.connect(plugin_manager.save_settings)
-            plugin_manager.save_settings_completed_signal.connect(perspective_manager.save_settings_completed)
+            plugin_manager.save_settings_completed_signal.connect(
+                perspective_manager.save_settings_completed)
             perspective_manager.restore_settings_signal.connect(plugin_manager.restore_settings)
-            perspective_manager.restore_settings_without_plugin_changes_signal.connect(plugin_manager.restore_settings_without_plugins)
+            perspective_manager.restore_settings_without_plugin_changes_signal.connect(
+                plugin_manager.restore_settings_without_plugins)
 
         if plugin_manager is not None and main_window is not None:
             # signal before changing plugins to save window state
@@ -470,7 +548,8 @@ class Main(object):
             # signal save settings to store plugin setup on close
             main_window.save_settings_before_close_signal.connect(plugin_manager.close_application)
             # signal save and shutdown called for all plugins, trigger closing main window again
-            plugin_manager.close_application_signal.connect(main_window.close, type=Qt.QueuedConnection)
+            plugin_manager.close_application_signal.connect(
+                main_window.close, type=Qt.QueuedConnection)
 
         if main_window is not None and menu_bar is not None:
             about_handler = AboutHandler(context.qtgui_path, main_window)
@@ -506,7 +585,8 @@ class Main(object):
                 print('try passing the option "--force-discover"')
                 return 1
             elif len(plugins) > 1:
-                print('qt_gui_main() found multiple plugins matching "%s"\n%s' % (plugin, '\n'.join(plugins.values())))
+                print('qt_gui_main() found multiple plugins matching "%s"\n%s' %
+                      (plugin, '\n'.join(plugins.values())))
                 return 1
             plugin = list(plugins.keys())[0]
 
@@ -526,7 +606,10 @@ class Main(object):
             if plugin:
                 perspective_manager.set_perspective(plugin, hide_and_without_plugin_changes=True)
             elif self._options.perspective_file:
-                perspective_manager.import_perspective_from_file(self._options.perspective_file, perspective_manager.HIDDEN_PREFIX + os.path.basename(self._options.perspective_file))
+                perspective_manager.import_perspective_from_file(
+                    self._options.perspective_file,
+                    perspective_manager.HIDDEN_PREFIX + os.path.basename(
+                        self._options.perspective_file))
             else:
                 perspective_manager.set_perspective(self._options.perspective)
 
@@ -543,7 +626,10 @@ class Main(object):
                 if 'icon' in action_attributes and action_attributes['icon'] is not None:
                     base_path = plugin_descriptor.attributes().get('plugin_path')
                     try:
-                        icon = get_icon(action_attributes['icon'], action_attributes.get('icontype', None), base_path)
+                        icon = get_icon(
+                            action_attributes['icon'],
+                            action_attributes.get('icontype', None),
+                            base_path)
                     except UserWarning:
                         pass
                     else:

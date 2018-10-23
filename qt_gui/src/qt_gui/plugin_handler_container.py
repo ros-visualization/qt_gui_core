@@ -38,12 +38,14 @@ class PluginHandlerContainer(PluginHandler):
     """Handler for creating a container."""
 
     def __init__(self, parent, main_window, instance_id, application_context, container_manager):
-        super(PluginHandlerContainer, self).__init__(parent, main_window, instance_id, application_context, container_manager)
+        super(PluginHandlerContainer, self).__init__(
+            parent, main_window, instance_id, application_context, container_manager)
         self.setObjectName('PluginHandlerContainer')
         self._container = None
 
     def _load(self):
-        self._container = DockWidgetContainer(self._container_manager, self._instance_id.serial_number)
+        self._container = DockWidgetContainer(
+            self._container_manager, self._instance_id.serial_number)
         self._container.setObjectName(self._instance_id.tidy_str())
         title = self.tr('Container')
         if self._instance_id.serial_number > 1:

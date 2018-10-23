@@ -47,7 +47,8 @@ class PluginManager(QObject):
 
     """
     Manager of plugin life cycle.
-    It creates a specific `PluginHandler` for each plugin instance and maintains the perspective specific set of running plugins.
+    It creates a specific `PluginHandler` for each plugin instance and maintains the perspective
+    specific set of running plugins.
     """
 
     plugins_about_to_change_signal = Signal()
@@ -64,7 +65,8 @@ class PluginManager(QObject):
         self.setObjectName('PluginManager')
 
         self._plugin_provider = plugin_provider
-        self._settings = Settings(SettingsProxy(settings), '/'.join([x for x in ['plugin_manager', settings_prefix] if x != '']))
+        self._settings = Settings(SettingsProxy(settings), '/'.join(
+            [x for x in ['plugin_manager', settings_prefix] if x != '']))
         self._application_context = application_context
 
         self._main_window = None
@@ -86,8 +88,10 @@ class PluginManager(QObject):
                 qCritical('PluginManager.__init__() multiprocess-mode only available under linux')
                 exit(-1)
 
-        # force connection type to queued, to delay the 'reloading' giving the 'unloading' time to finish
-        self._deferred_reload_plugin_signal.connect(self._reload_plugin_load, type=Qt.QueuedConnection)
+        # force connection type to queued, to delay the 'reloading' giving the
+        # 'unloading' time to finish
+        self._deferred_reload_plugin_signal.connect(
+            self._reload_plugin_load, type=Qt.QueuedConnection)
 
         if self._application_context.provide_app_dbus_interfaces:
             from .plugin_manager_dbus_interface import PluginManagerDBusInterface
@@ -161,7 +165,8 @@ class PluginManager(QObject):
         self.discover()
         plugins = {}
         for plugin_id, plugin_descriptor in self._plugin_descriptors.items():
-            plugins[plugin_id] = '/'.join(plugin_descriptor.attributes().get('class_type', 'unknown').split('::'))
+            plugins[plugin_id] = '/'.join(
+                plugin_descriptor.attributes().get('class_type', 'unknown').split('::'))
         return plugins
 
     def get_plugin_descriptor(self, plugin_id):
@@ -171,11 +176,11 @@ class PluginManager(QObject):
         instance_id = PluginInstanceId(plugin_id, serial_number)
         return str(instance_id) in self._running_plugins
 
-
     @Slot(str)
     @Slot(str, int)
     def load_plugin(self, plugin_id, serial_number=None, argv=None):
-        qDebug('PluginManager.load_plugin(%s, %s)' % (str(plugin_id), str(serial_number) if serial_number is not None else ''))
+        qDebug('PluginManager.load_plugin(%s, %s)' %
+               (str(plugin_id), str(serial_number) if serial_number is not None else ''))
         # save state of top-level widgets
         self.plugins_about_to_change_signal.emit()
         if serial_number is None:
@@ -201,24 +206,29 @@ class PluginManager(QObject):
     def _load_plugin_load(self, instance_id, callback, argv=None):
         # if the requested instance is already running, do nothing
         if str(instance_id) in self._running_plugins:
-            raise Exception('PluginManager._load_plugin(%s) instance already loaded' % str(instance_id))
+            raise Exception(
+                'PluginManager._load_plugin(%s) instance already loaded' % str(instance_id))
 
         # containers are pseudo-plugins and handled by a special handler
         if self._container_manager is not None and instance_id.plugin_id == self._container_manager.get_container_descriptor().plugin_id():
-            handler = PluginHandlerContainer(self, self._main_window, instance_id, self._application_context, self._container_manager)
+            handler = PluginHandlerContainer(
+                self, self._main_window, instance_id, self._application_context, self._container_manager)
 
         # use platform specific handler for multiprocess-mode if available
         elif self._application_context.options.multi_process or self._application_context.options.embed_plugin:
             try:
                 from .plugin_handler_xembed import PluginHandlerXEmbed
-                handler = PluginHandlerXEmbed(self, self._main_window, instance_id, self._application_context, self._container_manager, argv)
+                handler = PluginHandlerXEmbed(
+                    self, self._main_window, instance_id, self._application_context, self._container_manager, argv)
             except ImportError:
-                qCritical('PluginManager._load_plugin() could not load plugin in a separate process')
+                qCritical(
+                    'PluginManager._load_plugin() could not load plugin in a separate process')
                 return
 
         # use direct handler for in-process plugins
         else:
-            handler = PluginHandlerDirect(self, self._main_window, instance_id, self._application_context, self._container_manager, argv)
+            handler = PluginHandlerDirect(
+                self, self._main_window, instance_id, self._application_context, self._container_manager, argv)
 
         handler.set_minimized_dock_widgets_toolbar(self._minimized_dock_widgets_toolbar)
 
@@ -256,9 +266,11 @@ class PluginManager(QObject):
         instance_id = handler.instance_id()
         if exception is not None:
             if isinstance(exception, PluginLoadError):
-                qWarning('PluginManager._load_plugin() could not load plugin "%s": %s' % (instance_id.plugin_id, exception))
+                qWarning('PluginManager._load_plugin() could not load plugin "%s": %s' %
+                         (instance_id.plugin_id, exception))
             else:
-                qCritical('PluginManager._load_plugin() could not load plugin "%s"%s' % (instance_id.plugin_id, (':\n%s' % traceback.format_exc() if exception != True else '')))
+                qCritical('PluginManager._load_plugin() could not load plugin "%s"%s' %
+                          (instance_id.plugin_id, (':\n%s' % traceback.format_exc() if exception != True else '')))
             self._remove_running_plugin(instance_id)
             # quit embed application
             if self._application_context.options.embed_plugin:
@@ -279,8 +291,10 @@ class PluginManager(QObject):
     def _restore_plugin_settings(self, instance_id, callback):
         if self._global_settings is not None and self._perspective_settings is not None:
             info = self._running_plugins[str(instance_id)]
-            plugin_settings = self._global_settings.get_settings('plugin__' + instance_id.tidy_plugin_str())
-            instance_settings = self._perspective_settings.get_settings('plugin__' + instance_id.tidy_str())
+            plugin_settings = self._global_settings.get_settings(
+                'plugin__' + instance_id.tidy_plugin_str())
+            instance_settings = self._perspective_settings.get_settings(
+                'plugin__' + instance_id.tidy_str())
             handler = info['handler']
             handler.restore_settings(plugin_settings, instance_settings, callback)
         else:
@@ -291,10 +305,10 @@ class PluginManager(QObject):
         # restore state of top-level widgets
         self.plugins_changed_signal.emit()
 
-
     @Slot(str)
     def unload_plugin(self, instance_id_str):
-        # unloading a plugin with locked perspective or running standalone triggers close of application
+        # unloading a plugin with locked perspective or running standalone
+        # triggers close of application
         if self._application_context.options.lock_perspective or self._application_context.options.standalone_plugin:
             self._close_application_signal()
             return
@@ -308,8 +322,10 @@ class PluginManager(QObject):
     def _save_plugin_settings(self, instance_id, callback):
         if self._global_settings is not None and self._perspective_settings is not None:
             info = self._running_plugins[str(instance_id)]
-            plugin_settings = self._global_settings.get_settings('plugin__' + instance_id.tidy_plugin_str())
-            instance_settings = self._perspective_settings.get_settings('plugin__' + instance_id.tidy_str())
+            plugin_settings = self._global_settings.get_settings(
+                'plugin__' + instance_id.tidy_plugin_str())
+            instance_settings = self._perspective_settings.get_settings(
+                'plugin__' + instance_id.tidy_str())
             handler = info['handler']
             handler.save_settings(plugin_settings, instance_settings, callback)
         else:
@@ -346,7 +362,6 @@ class PluginManager(QObject):
             self._plugin_menu.remove_instance(instance_id)
             info['handler'].label_updated.disconnect(self._plugin_menu.update_plugin_instance_label)
         self._running_plugins.pop(str(instance_id))
-
 
     @Slot(str)
     def reload_plugin(self, instance_id_str):
@@ -385,7 +400,6 @@ class PluginManager(QObject):
             # restore settings after load
             self._restore_plugin_settings(handler.instance_id(), self._emit_load_plugin_completed)
 
-
     def save_settings(self, global_settings, perspective_settings):
         self._save_settings(global_settings, perspective_settings, self._save_settings_callback)
 
@@ -421,9 +435,9 @@ class PluginManager(QObject):
             self._number_of_ongoing_calls = None
             self.save_settings_completed_signal.emit()
 
-
     def close_application(self, global_settings, perspective_settings):
-        self._save_settings(global_settings, perspective_settings, self._close_application_save_callback)
+        self._save_settings(
+            global_settings, perspective_settings, self._close_application_save_callback)
 
     def _close_application_save_callback(self, instance_id=None):
         self._save_settings_callback(instance_id)
@@ -435,7 +449,8 @@ class PluginManager(QObject):
         self._number_of_ongoing_calls = len(self._running_plugins)
         if self._number_of_ongoing_calls > 0:
             for info in self._running_plugins.values():
-                self._shutdown_plugin(info['instance_id'], self._close_application_shutdown_callback)
+                self._shutdown_plugin(
+                    info['instance_id'], self._close_application_shutdown_callback)
         else:
             self._close_application_shutdown_callback()
 
@@ -450,7 +465,6 @@ class PluginManager(QObject):
     def _close_application_signal(self):
         self._plugin_provider.shutdown()
         self.close_application_signal.emit()
-
 
     def restore_settings(self, global_settings, perspective_settings):
         qDebug('PluginManager.restore_settings()')
@@ -467,7 +481,8 @@ class PluginManager(QObject):
                 obsolete.append(PluginInstanceId(instance_id=instance_id))
         self._number_of_ongoing_calls = len(obsolete)
         if self._number_of_ongoing_calls > 0:
-            qDebug('PluginManager.restore_settings() unloading %d obsolete plugins' % self._number_of_ongoing_calls)
+            qDebug('PluginManager.restore_settings() unloading %d obsolete plugins' %
+                   self._number_of_ongoing_calls)
             for instance_id in obsolete:
                 self._shutdown_plugin(instance_id, self._restore_settings_unload_obsolete)
         else:
@@ -506,7 +521,8 @@ class PluginManager(QObject):
                 loading.append(instance_id)
         self._number_of_ongoing_calls = len(loading)
         if self._number_of_ongoing_calls > 0:
-            qDebug('PluginManager.restore_settings() loading %d plugins' % self._number_of_ongoing_calls)
+            qDebug('PluginManager.restore_settings() loading %d plugins' %
+                   self._number_of_ongoing_calls)
             for instance_id in loading:
                 self._load_plugin_load(instance_id, self._restore_settings_load_missing_callback)
         else:
@@ -533,7 +549,8 @@ class PluginManager(QObject):
         self._number_of_ongoing_calls = len(self._running_plugins)
         if self._number_of_ongoing_calls > 0:
             for info in self._running_plugins.values():
-                self._restore_plugin_settings(info['instance_id'], self._restore_settings_restore_callback)
+                self._restore_plugin_settings(
+                    info['instance_id'], self._restore_settings_restore_callback)
         else:
             self._restore_settings_restore_callback()
 
