@@ -35,7 +35,7 @@ from python_qt_binding.QtWidgets import (QGraphicsPathItem,
                                          QGraphicsSimpleTextItem)
 
 
-from .graph_item import GraphItem
+from qt_dotgraph.graph_item import GraphItem
 
 
 class EdgeItem(GraphItem):
