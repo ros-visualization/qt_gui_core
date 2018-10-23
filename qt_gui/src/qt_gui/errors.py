@@ -33,6 +33,7 @@
 
 
 class PluginLoadError(Exception):
+
     """
     Exception when loading a plugin fails due to known reason.
     """

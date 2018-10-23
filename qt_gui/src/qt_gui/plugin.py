@@ -67,9 +67,9 @@ class Plugin(QObject):
         """
         pass
 
-    #def trigger_configuration(self):
+    # def trigger_configuration(self):
         #"""
-        #Trigger a configuration request from the title bar of one of the dock widgets.
-        #If this method is available the `DockWidgetTitleBar` will show the configuration action.
+        # Trigger a configuration request from the title bar of one of the dock widgets.
+        # If this method is available the `DockWidgetTitleBar` will show the configuration action.
         #"""
-        #pass
+        # pass

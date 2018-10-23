@@ -1,7 +1,9 @@
 from python_qt_binding.QtCore import QRectF
 from python_qt_binding.QtWidgets import QAbstractGraphicsShapeItem
 
+
 class QGraphicsBox3dItem(QAbstractGraphicsShapeItem):
+
     def __init__(self, bounding_box):
         super(QGraphicsBox3dItem, self).__init__()
         self._bounding_box = bounding_box

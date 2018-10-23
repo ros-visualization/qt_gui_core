@@ -33,7 +33,8 @@ import traceback
 
 from dbus import Interface
 from dbus.connection import Connection
-from python_qt_binding.QtCore import QByteArray, qCritical, QDataStream, qDebug, QIODevice, Qt, qWarning, Slot
+from python_qt_binding.QtCore import (QByteArray, qCritical, QDataStream,
+                                      qDebug, QIODevice, Qt, qWarning, Slot)
 from python_qt_binding.QtGui import QVBoxLayout, QX11EmbedWidget
 
 from .plugin_handler_direct import PluginHandlerDirect
@@ -45,11 +46,14 @@ class PluginHandlerXEmbedClient(PluginHandlerDirect):
 
     """
     Client part of the `PluginHandlerXEmbed`.
-    It utilizes the `PluginHandlerDBusService` of the `PluginHandlerXEmbedContainer` through a peer-to-peer DBus connection.
+    It utilizes the `PluginHandlerDBusService` of the `PluginHandlerXEmbedContainer`
+    through a peer-to-peer DBus connection.
     """
 
-    def __init__(self, parent, main_window, instance_id, application_context, container_manager, argv, dbus_object_path):
-        super(PluginHandlerXEmbedClient, self).__init__(parent, main_window, instance_id, application_context, container_manager, argv)
+    def __init__(self, parent, main_window, instance_id,
+                 application_context, container_manager, argv, dbus_object_path):
+        super(PluginHandlerXEmbedClient, self).__init__(
+            parent, main_window, instance_id, application_context, container_manager, argv)
         self.setObjectName('PluginHandlerXEmbedClient')
         self._dbus_object_path = dbus_object_path
         self._remote_container = None
@@ -64,9 +68,12 @@ class PluginHandlerXEmbedClient(PluginHandlerDirect):
         self._remote_container = Interface(proxy, 'org.ros.qt_gui.PluginHandlerContainer')
         self._remote_container.connect_to_signal('shutdown_plugin', self._shutdown_plugin)
         self._remote_container.connect_to_signal('save_settings', self._save_settings_from_remote)
-        self._remote_container.connect_to_signal('restore_settings', self._restore_settings_from_remote)
-        self._remote_container.connect_to_signal('trigger_configuration', self._trigger_configuration)
-        self._remote_container.connect_to_signal('toolbar_orientation_changed', self._toolbar_orientation_changed)
+        self._remote_container.connect_to_signal(
+            'restore_settings', self._restore_settings_from_remote)
+        self._remote_container.connect_to_signal(
+            'trigger_configuration', self._trigger_configuration)
+        self._remote_container.connect_to_signal(
+            'toolbar_orientation_changed', self._toolbar_orientation_changed)
 
         proxy = conn.get_object(None, self._dbus_object_path + '/plugin')
         self._remote_plugin_settings = Interface(proxy, 'org.ros.qt_gui.Settings')
@@ -102,7 +109,9 @@ class PluginHandlerXEmbedClient(PluginHandlerDirect):
             instance_settings = Settings(self._remote_instance_settings, '')
             self._save_settings(plugin_settings, instance_settings)
         except Exception:
-            qCritical('PluginHandlerXEmbedClient._save_settings_from_remote() plugin "%s" raised an exception:\n%s' % (str(self._instance_id), traceback.format_exc()))
+            qCritical(
+                'PluginHandlerXEmbedClient._save_settings_from_remote() plugin "%s" '
+                'raised an exception:\n%s' % (str(self._instance_id), traceback.format_exc()))
             self.emit_save_settings_completed()
 
     def emit_save_settings_completed(self):
@@ -119,7 +128,10 @@ class PluginHandlerXEmbedClient(PluginHandlerDirect):
             instance_settings = Settings(self._remote_instance_settings, '')
             self._restore_settings(plugin_settings, instance_settings)
         except Exception:
-            qCritical('PluginHandlerXEmbedClient._restore_settings_from_remote() plugin "%s" raised an exception:\n%s' % (str(self._instance_id), traceback.format_exc()))
+            qCritical(
+                'PluginHandlerXEmbedClient._restore_settings_from_remote() '
+                'plugin "%s" raised an exception:\n%s' %
+                (str(self._instance_id), traceback.format_exc()))
             self.emit_restore_settings_completed()
 
     def emit_restore_settings_completed(self):
@@ -129,7 +141,8 @@ class PluginHandlerXEmbedClient(PluginHandlerDirect):
     @Slot('QWidget*')
     def add_widget(self, widget):
         if widget in self._embed_widgets:
-            qWarning('PluginHandlerXEmbedClient.add_widget() widget "%s" already added' % widget.objectName())
+            qWarning('PluginHandlerXEmbedClient.add_widget() widget "%s" already added' %
+                     widget.objectName())
             return
         embed_widget = QX11EmbedWidget()
         layout = QVBoxLayout()
@@ -139,9 +152,10 @@ class PluginHandlerXEmbedClient(PluginHandlerDirect):
 
         # close embed widget when container is closed
         # TODO necessary?
-        #embed_widget.containerClosed.connect(embed_widget.close)
+        # embed_widget.containerClosed.connect(embed_widget.close)
 
-        embed_container_window_id = self._remote_container.embed_widget(os.getpid(), widget.objectName())
+        embed_container_window_id = self._remote_container.embed_widget(
+            os.getpid(), widget.objectName())
         embed_widget.embedInto(embed_container_window_id)
 
         signaler = WindowChangedSignaler(widget, widget)
@@ -163,7 +177,8 @@ class PluginHandlerXEmbedClient(PluginHandlerDirect):
         self._remote_container.update_embedded_widget_icon(widget.objectName(), icon_str)
 
     def _on_embed_widget_title_changed(self, widget):
-        self._remote_container.update_embedded_widget_title(widget.objectName(), widget.windowTitle())
+        self._remote_container.update_embedded_widget_title(
+            widget.objectName(), widget.windowTitle())
 
     # pointer to QWidget must be used for PySide to work (at least with 1.0.1)
     @Slot('QWidget*')
@@ -182,7 +197,8 @@ class PluginHandlerXEmbedClient(PluginHandlerDirect):
     @Slot('QToolBar*')
     def add_toolbar(self, toolbar):
         if toolbar in self._embed_widgets:
-            qWarning('PluginHandlerXEmbedClient.add_toolbar() toolbar "%s" already added' % toolbar.objectName())
+            qWarning('PluginHandlerXEmbedClient.add_toolbar() toolbar "%s" already added' %
+                     toolbar.objectName())
             return
         embed_widget = QX11EmbedWidget()
         layout = QVBoxLayout()
@@ -192,12 +208,13 @@ class PluginHandlerXEmbedClient(PluginHandlerDirect):
 
         # close embed widget when container is closed
         # TODO necessary?
-        #embed_widget.containerClosed.connect(embed_widget.close)
+        # embed_widget.containerClosed.connect(embed_widget.close)
         def foo():
             print('embed_widget.containerClosed')
         embed_widget.containerClosed.connect(foo)
 
-        embed_container_window_id = self._remote_container.embed_toolbar(os.getpid(), toolbar.objectName())
+        embed_container_window_id = self._remote_container.embed_toolbar(
+            os.getpid(), toolbar.objectName())
         embed_widget.embedInto(embed_container_window_id)
 
         self._embed_widgets[toolbar] = embed_widget, None

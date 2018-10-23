@@ -40,8 +40,10 @@ class PluginHandlerDirect(PluginHandler):
 
     """Handler for directly passing invocations between the framework and one `Plugin` instance."""
 
-    def __init__(self, parent, main_window, instance_id, application_context, container_manager, argv):
-        super(PluginHandlerDirect, self).__init__(parent, main_window, instance_id, application_context, container_manager, argv)
+    def __init__(self, parent, main_window, instance_id,
+                 application_context, container_manager, argv):
+        super(PluginHandlerDirect, self).__init__(
+            parent, main_window, instance_id, application_context, container_manager, argv)
         self.setObjectName('PluginHandlerDirect')
         self._context = None
         self._plugin = None
@@ -85,7 +87,9 @@ class PluginHandlerDirect(PluginHandler):
             try:
                 self._plugin.shutdown_plugin()
             except Exception:
-                qCritical('PluginHandlerDirect._shutdown_plugin() plugin "%s" raised an exception:\n%s' % (str(self._instance_id), traceback.format_exc()))
+                qCritical(
+                    'PluginHandlerDirect._shutdown_plugin() plugin "%s" raised an exception:\n%s' %
+                    (str(self._instance_id), traceback.format_exc()))
         self.emit_shutdown_plugin_completed()
 
     def _delete_widget(self, widget):
@@ -105,7 +109,9 @@ class PluginHandlerDirect(PluginHandler):
             try:
                 self._plugin.save_settings(plugin_settings_plugin, instance_settings_plugin)
             except Exception:
-                qCritical('PluginHandlerDirect._save_settings() plugin "%s" raised an exception:\n%s' % (str(self._instance_id), traceback.format_exc()))
+                qCritical(
+                    'PluginHandlerDirect._save_settings() plugin "%s" raised an exception:\n%s' %
+                    (str(self._instance_id), traceback.format_exc()))
         self.emit_save_settings_completed()
 
     def _restore_settings(self, plugin_settings, instance_settings):
@@ -115,14 +121,17 @@ class PluginHandlerDirect(PluginHandler):
             try:
                 self._plugin.restore_settings(plugin_settings_plugin, instance_settings_plugin)
             except Exception:
-                qCritical('PluginHandlerDirect._restore_settings() plugin "%s" raised an exception:\n%s' % (str(self._instance_id), traceback.format_exc()))
+                qCritical(
+                    'PluginHandlerDirect._restore_settings() plugin "%s" raised an exception:\n%s' %
+                    (str(self._instance_id), traceback.format_exc()))
         self.emit_restore_settings_completed()
 
     # pointer to QWidget must be used for PySide to work (at least with 1.0.1)
     @Slot('QWidget*')
     def add_widget(self, widget):
         if widget in self._widgets:
-            qWarning('PluginHandlerDirect.add_widget() widget "%s" already added' % widget.objectName())
+            qWarning('PluginHandlerDirect.add_widget() widget "%s" already added' %
+                     widget.objectName())
             return
         dock_widget = self._create_dock_widget()
         self._add_dock_widget(dock_widget, widget)
@@ -131,7 +140,8 @@ class PluginHandlerDirect(PluginHandler):
     @Slot('QToolBar*')
     def add_toolbar(self, toolbar):
         if toolbar in self._toolbars:
-            qWarning('PluginHandlerDirect.add_toolbar() toolbar "%s" already added' % toolbar.objectName())
+            qWarning('PluginHandlerDirect.add_toolbar() toolbar "%s" already added' %
+                     toolbar.objectName())
             return
         self._add_toolbar(toolbar)
 

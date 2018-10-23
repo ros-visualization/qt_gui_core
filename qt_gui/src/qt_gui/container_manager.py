@@ -43,7 +43,8 @@ class ContainerManager(QObject):
         super(ContainerManager, self).__init__(parent)
         self._root_main_window = root_main_window
         self._container_descriptor = PluginDescriptor('__DockWidgetContainer')
-        self._container_descriptor.set_action_attributes(self.tr('Container'), self.tr('Container for other dock widgets'), 'folder-new', 'theme')
+        self._container_descriptor.set_action_attributes(
+            self.tr('Container'), self.tr('Container for other dock widgets'), 'folder-new', 'theme')
         self._containers = {}
 
     def get_root_main_window(self):
@@ -91,7 +92,8 @@ class ContainerManager(QObject):
 
     def event(self, e):
         if e.type() == ReparentEvent.reparent_event_type:
-            qDebug('ContainerManager.event() reparent event: new parent=%s' % e.new_parent.objectName())
+            qDebug('ContainerManager.event() reparent event: new parent=%s' %
+                   e.new_parent.objectName())
             floating = e.dock_widget.isFloating()
             pos = e.dock_widget.pos()
             e.new_parent.addDockWidget(Qt.BottomDockWidgetArea, e.dock_widget)

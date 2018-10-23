@@ -35,8 +35,9 @@ from python_qt_binding.QtWidgets import QButtonGroup, QGroupBox, QLabel, QCheckB
 
 
 class CheckBoxGroup(QGroupBox):
+
     """
-    Creates a button group of non-exclusive checkbox options. 
+    Creates a button group of non-exclusive checkbox options.
 
     Options must be a dict with following keys: 'enabled','title','description','tooltip'
     """
@@ -50,7 +51,7 @@ class CheckBoxGroup(QGroupBox):
         self._options = options
         if parent == None:
             parent = self
-        
+
         for (button_id, option) in enumerate(self._options):
 
             checkbox = QCheckBox(option.get('title', 'option %d' % button_id))

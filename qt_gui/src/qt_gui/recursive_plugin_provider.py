@@ -37,7 +37,8 @@ from .composite_plugin_provider import CompositePluginProvider
 
 class RecursivePluginProvider(CompositePluginProvider):
 
-    """Plugin provider which directly loads all discovered plugins (which should be plugin providers themselfs) and returns their discovered plugins."""
+    """Plugin provider which directly loads all discovered plugins (which should be plugin
+    providers themselfs) and returns their discovered plugins."""
 
     def __init__(self, plugin_provider):
         super(RecursivePluginProvider, self).__init__([])
@@ -56,7 +57,8 @@ class RecursivePluginProvider(CompositePluginProvider):
                 # pass None as PluginContext for PluginProviders
                 instance = self._plugin_provider.load(plugin_descriptor.plugin_id(), None)
             except Exception:
-                qCritical('RecursivePluginProvider.discover() loading plugin "%s" failed:\n%s' % (str(plugin_descriptor.plugin_id()), traceback.format_exc()))
+                qCritical('RecursivePluginProvider.discover() loading plugin "%s" failed:\n%s' %
+                          (str(plugin_descriptor.plugin_id()), traceback.format_exc()))
             else:
                 if instance is not None:
                     plugin_providers.append(instance)

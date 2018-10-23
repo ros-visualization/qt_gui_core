@@ -57,6 +57,7 @@ def get_unquoted(item, name):
         # not part of the string family
         return value
 
+
 # approximately, for workarounds (TODO: get this from dotfile somehow)
 LABEL_HEIGHT = 30
 
@@ -94,8 +95,10 @@ class DotToQtGenerator():
         if 'lp' in subgraph.attr:
             label_pos = subgraph.attr['lp'].strip('"').split(',')
         else:
-            label_pos = (float(bb[0]) + (float(bb[2]) - float(bb[0])) / 2, float(bb[1]) + (float(bb[3]) - float(bb[1])) - LABEL_HEIGHT / 2)
-        bounding_box.moveCenter(QPointF(float(bb[0]) + (float(bb[2]) - float(bb[0])) / 2, -float(bb[1]) - (float(bb[3]) - float(bb[1])) / 2))
+            label_pos = (float(bb[0]) + (float(bb[2]) - float(bb[0])) / 2,
+                         float(bb[1]) + (float(bb[3]) - float(bb[1])) - LABEL_HEIGHT / 2)
+        bounding_box.moveCenter(QPointF(float(bb[0]) + (float(bb[2]) - float(bb[0])) / 2,
+                                        -float(bb[1]) - (float(bb[3]) - float(bb[1])) / 2))
         name = subgraph.attr.get('label', '')
         color = QColor(subgraph.attr['color']) if 'color' in subgraph.attr else None
         subgraph_nodeitem = NodeItem(highlight_level,
@@ -147,7 +150,8 @@ class DotToQtGenerator():
         # decrease rect by one so that edges do not reach inside
         bb_width = node.attr.get('width', len(name) / 5)
         bb_height = node.attr.get('height', 1.0)
-        bounding_box = QRectF(0, 0, POINTS_PER_INCH * float(bb_width) - 1.0, POINTS_PER_INCH * float(bb_height) - 1.0)
+        bounding_box = QRectF(0, 0, POINTS_PER_INCH * float(
+            bb_width) - 1.0, POINTS_PER_INCH * float(bb_height) - 1.0)
         pos = node.attr.get('pos', '0,0').split(',')
         bounding_box.moveCenter(QPointF(float(pos[0]), -float(pos[1])))
 
@@ -158,16 +162,18 @@ class DotToQtGenerator():
                              color=color,
                              tooltip=node.attr.get('tooltip'),
                              parent=scene.activePanel() if scene is not None else None
-                             #label_pos=None
+                             # label_pos=None
                              )
         if scene is not None:
             scene.addItem(node_item)
         return node_item
 
-    def addEdgeItem(self, edge, nodes, edges, highlight_level, same_label_siblings=False, scene=None):
+    def addEdgeItem(
+            self, edge, nodes, edges, highlight_level, same_label_siblings=False, scene=None):
         """
         adds EdgeItem by data in edge to edges
-        :param same_label_siblings: if true, edges with same label will be considered siblings (collective highlighting)
+        :param same_label_siblings:
+            if true, edges with same label will be considered siblings (collective highlighting)
         """
         # let pydot imitate pygraphviz api
         attr = {}
@@ -241,8 +247,10 @@ class DotToQtGenerator():
     def dotcode_to_qt_items(self, dotcode, highlight_level, same_label_siblings=False, scene=None):
         """
         takes dotcode, runs layout, and creates qt items based on the dot layout.
-        returns two dicts, one mapping node names to Node_Item, one mapping edge names to lists of Edge_Item
-        :param same_label_siblings: if true, edges with same label will be considered siblings (collective highlighting)
+        returns two dicts, one mapping node names to Node_Item, one mapping edge names to lists of
+            Edge_Item.
+        :param same_label_siblings:
+            if true, edges with same label will be considered siblings (collective highlighting)
         """
         # layout graph
         if dotcode is None:
@@ -251,8 +259,8 @@ class DotToQtGenerator():
         if isinstance(graph, list):
             graph = graph[0]
 
-        #graph = pygraphviz.AGraph(string=self._current_dotcode, strict=False, directed=True)
-        #graph.layout(prog='dot')
+        # graph = pygraphviz.AGraph(string=self._current_dotcode, strict=False, directed=True)
+        # graph.layout(prog='dot')
 
         nodes = self.parse_nodes(graph, highlight_level, scene=scene)
         edges = self.parse_edges(graph, nodes, highlight_level, same_label_siblings, scene=scene)
@@ -295,7 +303,9 @@ class DotToQtGenerator():
         edges = {}
         for subgraph in graph.subgraphs_iter():
             subgraph.edges_iter = subgraph.get_edge_list
-            edges.update(self.parse_edges(subgraph, nodes, highlight_level, same_label_siblings, scene=scene))
+            edges.update(
+                self.parse_edges(
+                    subgraph, nodes, highlight_level, same_label_siblings, scene=scene))
             for edge in subgraph.edges_iter():
                 self.addEdgeItem(edge, nodes, edges,
                                  highlight_level=highlight_level,
