@@ -31,11 +31,11 @@ set(qt_gui_cpp_LINK_LIBRARIES
 )
 
 qt5_wrap_cpp(qt_gui_cpp_MOCS ${qt_gui_cpp_HDRS})
-
+ament_export_dependencies(pluginlib)
 include_directories(${PROJECT_NAME} ${qt_gui_cpp_INCLUDE_DIRECTORIES} ${pluginlib_INCLUDE_DIRS})
 add_library(${PROJECT_NAME} ${qt_gui_cpp_SRCS} ${qt_gui_cpp_MOCS})
 target_link_libraries(${PROJECT_NAME} ${qt_gui_cpp_LINK_LIBRARIES} ${ament_LIBRARIES} ${Boost_LIBRARIES} Qt5::Widgets ${TinyXML_LIBRARIES})
 
 install(TARGETS ${PROJECT_NAME}
-  ARCHIVE DESTINATION lib}
+  ARCHIVE DESTINATION lib
   LIBRARY DESTINATION lib)

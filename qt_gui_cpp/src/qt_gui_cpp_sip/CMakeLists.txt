@@ -32,11 +32,17 @@ set(qt_gui_cpp_sip_LIBRARIES ${qt_gui_cpp_LIBRARIES} ${PROJECT_NAME} ${ament_LIB
 set(qt_gui_cpp_sip_LIBRARY_DIRS ${qt_gui_cpp_LIBRARY_DIRS} lib)
 set(qt_gui_cpp_sip_LDFLAGS_OTHER ${qt_gui_cpp_LDFLAGS_OTHER} -Wl,-rpath,\\"lib\\")
 
-set(qt_gui_cpp_INCLUDE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../../include)
+set(qt_gui_cpp_INCLUDE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../../include ${pluginlib_INCLUDE_DIRS})
 
 
 find_package(python_qt_binding REQUIRED)
 include(${python_qt_binding_EXTRAS_DIR}/sip_helper.cmake)
+
+ament_export_dependencies(pluginlib)
+include_directories(${PROJECT_NAME} ${qt_gui_cpp_INCLUDE_DIRECTORIES} ${pluginlib_INCLUDE_DIRS})
+
+# The include directories used by build_sip_binding are different than the one set in include directories
+set(qt_gui_cpp_sip_INCLUDE_DIRS ${qt_gui_cpp_sip_INCLUDE_DIRS} ${pluginlib_INCLUDE_DIRS})
 
 if(sip_helper_FOUND)
   list(APPEND qt_gui_cpp_BINDINGS "sip")
@@ -44,7 +50,7 @@ if(sip_helper_FOUND)
 
   build_sip_binding(qt_gui_cpp_sip qt_gui_cpp.sip
     SOURCE_DIR ${PROJECT_SOURCE_DIR}/src/qt_gui_cpp_sip
-    LIBRARY_DIR ${CATKIN_DEVEL_PREFIX}/${CATKIN_PACKAGE_PYTHON_DESTINATION}
+    LIBRARY_DIR lib
     DEPENDS ${qt_gui_cpp_sip_DEPENDENT_FILES}
     DEPENDENCIES qt_gui_cpp
   )
