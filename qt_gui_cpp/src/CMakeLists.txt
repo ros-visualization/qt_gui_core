@@ -1,5 +1,3 @@
-add_subdirectory(qt_gui_cpp)
-
 set(qt_gui_cpp_BINDINGS "")
 
 add_subdirectory(qt_gui_cpp_shiboken)

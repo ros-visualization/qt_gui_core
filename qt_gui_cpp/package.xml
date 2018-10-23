@@ -22,6 +22,7 @@
   <build_depend version_gte="0.3.0">python_qt_binding</build_depend>
   <build_depend>qt5-qmake</build_depend>
   <build_depend>qtbase5-dev</build_depend>
+  <build_depend>tinyxml_vendor</build_depend>
   <build_depend>tinyxml</build_depend>
 
   <run_depend version_gte="1.9.23">pluginlib</run_depend>

@@ -1,11 +1,10 @@
 #!/usr/bin/env python
 
-from distutils.core import setup
-from catkin_pkg.python_setup import generate_distutils_setup
+from setuptools import setup
 
-d = generate_distutils_setup(
+d = dict(
     packages=['qt_gui_cpp'],
-    package_dir={'': 'src'}
+    package_dir={'src': 'qt_gui_cpp'}
 )
 
 setup(**d)
