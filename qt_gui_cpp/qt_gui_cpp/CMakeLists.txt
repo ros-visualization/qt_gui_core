@@ -1,6 +1,7 @@
 set(Python_ADDITIONAL_VERSIONS "${PYTHON_VERSION_MAJOR}.${PYTHON_VERSION_MINOR}")
 find_package(PythonLibs "${PYTHON_VERSION_MAJOR}.${PYTHON_VERSION_MINOR}" REQUIRED)
 find_package(Qt5Widgets REQUIRED)
+
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC")
 
 set(qt_gui_cpp_SRCS
@@ -31,9 +32,11 @@ set(qt_gui_cpp_LINK_LIBRARIES
 )
 
 qt5_wrap_cpp(qt_gui_cpp_MOCS ${qt_gui_cpp_HDRS})
+
 ament_export_dependencies(pluginlib)
 include_directories(${PROJECT_NAME} ${qt_gui_cpp_INCLUDE_DIRECTORIES} ${pluginlib_INCLUDE_DIRS})
 add_library(${PROJECT_NAME} ${qt_gui_cpp_SRCS} ${qt_gui_cpp_MOCS})
+
 target_link_libraries(${PROJECT_NAME} ${qt_gui_cpp_LINK_LIBRARIES} ${ament_LIBRARIES} ${Boost_LIBRARIES} Qt5::Widgets ${TinyXML_LIBRARIES})
 
 install(TARGETS ${PROJECT_NAME}
