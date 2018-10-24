@@ -21,7 +21,6 @@
   <build_depend>python3-qt5-bindings</build_depend>
 
   <exec_depend>python_qt_binding</exec_depend>
-  <exec_depend>python-rospkg</exec_depend>
   <exec_depend>tango-icon-theme</exec_depend>
 
   <export>

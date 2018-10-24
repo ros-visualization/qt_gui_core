@@ -35,7 +35,7 @@ import os
 from python_qt_binding import loadUi
 from python_qt_binding.QtCore import qWarning
 from python_qt_binding.QtWidgets import QDialog, QLabel
-from rospkg.rospack import RosPack
+from ament_index_python.resources import get_resource
 
 from .exclusive_options_group import ExclusiveOptionGroup
 from .checkbox_group import CheckBoxGroup
@@ -49,9 +49,8 @@ class SimpleSettingsDialog(QDialog):
         super(SimpleSettingsDialog, self).__init__()
         self.setObjectName('SimpleSettingsDialog')
 
-        rp = RosPack()
-        ui_file = os.path.join(
-            rp.get_path('qt_gui_py_common'), 'resource', 'simple_settings_dialog.ui')
+        _, package_path = get_resource('packages', 'qt_gui_py_common')
+        ui_file = os.path.join(package_path, 'share', 'resource', 'simple_settings_dialog.ui')
         loadUi(ui_file, self)
 
         self.setWindowTitle(title)

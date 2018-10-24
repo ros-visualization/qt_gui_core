@@ -16,7 +16,6 @@
   <buildtool_depend>ament_cmake</buildtool_depend>
 
   <exec_depend>python_qt_binding</exec_depend>
-  <exec_depend>python-rospkg</exec_depend>
 
   <export>
     <build_type>ament_cmake</build_type>

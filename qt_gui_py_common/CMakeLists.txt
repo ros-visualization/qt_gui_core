@@ -5,6 +5,9 @@ find_package(ament_cmake REQUIRED)
 
 ament_python_install_package(${PROJECT_NAME})
 
+install(DIRECTORY resource
+  DESTINATION share)
+
 install(TARGETS ${_library_name}
   DESTINATION "${PYTHON_INSTALL_DIR}/${PROJECT_NAME}"
 )

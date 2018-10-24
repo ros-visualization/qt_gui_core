@@ -31,7 +31,6 @@
 import webbrowser
 
 from python_qt_binding.QtCore import QObject, Slot
-from rospkg import InvalidManifest, MANIFEST_FILE, parse_manifest_file
 
 from qt_gui.ros_package_helper import get_package_path
 
@@ -47,6 +46,8 @@ class HelpProvider(QObject):
     def plugin_help_request(self, plugin_descriptor):
         package_name = plugin_descriptor.attributes()['package_name']
         package_path = get_package_path(package_name)
+        # TODO parse package.xml
+        return
         try:
             manifest = parse_manifest_file(package_path, MANIFEST_FILE)
         except (InvalidManifest, IOError):

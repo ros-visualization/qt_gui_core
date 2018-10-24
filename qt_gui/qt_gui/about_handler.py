@@ -61,9 +61,6 @@ class AboutHandler(QObject):
             sys.path.append(os.path.join(qt_gui_cpp_path, 'src'))
             from qt_gui_cpp.cpp_binding_helper import qt_gui_cpp
 
-        import rospkg
-        _rospkg_version = getattr(rospkg, '__version__', '&lt; 0.2.4')
-
         logo = os.path.join(self._qtgui_path, 'resource', 'ros_org_vertical.png')
         text = '<img src="%s" width="56" height="200" style="float: left;"/>' % logo
 
@@ -80,8 +77,6 @@ class AboutHandler(QObject):
         text += '<p>%s: ' % self.tr('Utilized libraries:')
 
         text += 'Python %s, ' % platform.python_version()
-
-        text += 'rospkg %s, ' % _rospkg_version
 
         if QT_BINDING == 'pyside':
             text += 'PySide'
