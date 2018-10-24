@@ -51,6 +51,9 @@ class HelpProvider(QObject):
         except (InvalidPackage, IOError):
             return
 
+        if not package.package_format or package.package_format < 2:
+            return
+
         if len(package.urls) == 0:
             return
         url_str = package.urls[0].url
