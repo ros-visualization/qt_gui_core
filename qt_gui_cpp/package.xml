@@ -24,12 +24,11 @@
   <build_depend>tinyxml_vendor</build_depend>
   <build_depend>tinyxml</build_depend>
 
-  <run_depend version_gte="1.9.23">pluginlib</run_depend>
-  <run_depend version_gte="0.3.0">qt_gui</run_depend>
-  <run_depend>tinyxml</run_depend>
+  <exec_depend version_gte="1.9.23">pluginlib</exec_depend>
+  <exec_depend version_gte="0.3.0">qt_gui</exec_depend>
+  <exec_depend>tinyxml</exec_depend>
 
   <export>
       <build_type>ament_cmake</build_type>
-    <!--<qt_gui plugin="${prefix}/plugin.xml"/>-->
   </export>
 </package>
