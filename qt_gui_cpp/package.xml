@@ -16,7 +16,6 @@
 
   <buildtool_depend>ament_cmake</buildtool_depend>
 
-  <build_depend>cmake_modules</build_depend>
   <build_depend>pkg-config</build_depend>
   <build_depend version_gte="1.9.23">pluginlib</build_depend>
   <build_depend version_gte="0.3.0">python_qt_binding</build_depend>
