@@ -47,7 +47,15 @@ class HelpProvider(QObject):
         package_name = plugin_descriptor.attributes()['package_name']
         package_path = get_package_path(package_name)
         try:
-            manifest = parse_package(package_path, MANIFEST_FILE)
+            package = parse_package(package_path, MANIFEST_FILE)
         except (InvalidPackage, IOError):
             return
-        webbrowser.open(manifest.url)
+
+        if len(package.urls) == 0:
+            return
+        url_str = package.urls[0].url
+        for url in package.urls:
+            if url.type == 'website':
+                url_str = url.url
+                break
+        webbrowser.open(url_str)
