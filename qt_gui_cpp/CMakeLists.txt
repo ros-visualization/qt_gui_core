@@ -29,4 +29,10 @@ ament_export_dependencies(pluginlib)
 ament_export_include_directories(include ${pluginlib_INCLUDE_DIRS})
 ament_export_libraries(${PROJECT_NAME})
 
+if(BUILD_TESTING)
+  find_package(ament_cmake_pytest REQUIRED)
+  find_package(ament_lint_auto REQUIRED)
+  ament_lint_auto_find_test_dependencies()
+endif()
+
 ament_package(CONFIG_EXTRAS cmake/${PROJECT_NAME}-extras.cmake)
