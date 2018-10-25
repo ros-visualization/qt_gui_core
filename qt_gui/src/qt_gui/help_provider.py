@@ -30,13 +30,12 @@
 
 import webbrowser
 
-from catkin_pkg.package import parse_package, InvalidPackage
+from catkin_pkg.package import InvalidPackage, parse_package
 from python_qt_binding.QtCore import QObject, Slot
 from qt_gui.ros_package_helper import get_package_path
 
 
 class HelpProvider(QObject):
-
     """Handler for the help action in the title bar of dock widgets."""
 
     def __init__(self):
@@ -47,7 +46,7 @@ class HelpProvider(QObject):
         package_name = plugin_descriptor.attributes()['package_name']
         package_path = get_package_path(package_name)
         try:
-            package = parse_package(package_path, MANIFEST_FILE)
+            package = parse_package(package_path)
         except (InvalidPackage, IOError):
             return
 

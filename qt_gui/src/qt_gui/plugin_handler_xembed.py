@@ -33,7 +33,6 @@ from qt_gui.plugin_handler_xembed_container import PluginHandlerXEmbedContainer
 
 
 class PluginHandlerXEmbed():
-
     """
     Handler for forwarding invocations between the framework and one `Plugin` instance via a
     peer-to-peer DBus connection. The both DBus endpoints are realized by the

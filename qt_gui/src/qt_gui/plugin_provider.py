@@ -32,7 +32,6 @@ from python_qt_binding.QtCore import QObject
 
 
 class PluginProvider(QObject):
-
     """Interface for discovering, loading and unloading of plugins."""
 
     def __init__(self):

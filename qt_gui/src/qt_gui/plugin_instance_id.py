@@ -30,7 +30,6 @@
 
 
 class PluginInstanceId():
-
     """Identifier of a plugin instance."""
 
     def __init__(self, plugin_id=None, serial_number=None, instance_id=None):

@@ -36,7 +36,6 @@ from qt_gui.plugin_provider import PluginProvider
 
 
 class CompositePluginProvider(PluginProvider):
-
     """Composite of multiple `PluginProvider`s."""
 
     def __init__(self, plugin_providers=None):

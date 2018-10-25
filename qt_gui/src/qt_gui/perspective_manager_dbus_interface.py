@@ -30,12 +30,11 @@
 
 from python_qt_binding.QtCore import qDebug
 
-from dbus.service import BusName, Object
 import dbus
+from dbus.service import BusName, Object
 
 
 class PerspectiveManagerDBusInterface(Object):
-
     """DBus service of the `PerspectiveManager` available on the unique bus name."""
 
     def __init__(self, perspective_manager, application_context):

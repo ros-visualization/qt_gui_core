@@ -32,11 +32,9 @@ from python_qt_binding.QtCore import QObject
 
 
 class PluginContext(QObject):
-
     """
-    PluginContext providing information to the plugin and exposing methods
-    for the plugin to interact with the framework.
-    It relays all methods to the corresponding `PluginHandler`.
+    PluginContext providing information to the plugin and exposing methods for the plugin to
+    interact with the framework. It relays all methods to the corresponding `PluginHandler`.
     """
 
     def __init__(self, handler):
@@ -66,12 +64,13 @@ class PluginContext(QObject):
     def add_widget(self, widget):
         """
         Add a widget to the UI.
+
         The widget is embedded into a new QDockWidget which itself is added to the QMainWindow.
         This method can be called once for each widget a plugin would like to add and at any point
         in time (until the calling plugin has been shutdown).
 
-        Note: The ownership of the widget is transferred to the callee which will delete it when the
-              plugin is shut down.
+        Note: The ownership of the widget is transferred to the callee which will delete it when
+            the plugin is shut down.
         @param widget: The widget to add
         @type widget: QWidget
         """
@@ -80,6 +79,7 @@ class PluginContext(QObject):
     def remove_widget(self, widget):
         """
         Remove a previously added widget from the UI.
+
         Note: The ownership of the widget is transferred to the caller.
         @param widget: The widget to remove
         @type widget: QWidget
@@ -88,8 +88,8 @@ class PluginContext(QObject):
 
     def add_toolbar(self, toolbar):
         """
-        Add a toolbar to the UI.
-        The toolbar is directly added to the QMainWindow.
+        Add a toolbar to the UI, which is directly added to the QMainWindow.
+
         This method can be called once for each toolbar a plugin would like to add and at any point
         in time (until the calling plugin has been shutdown).
         Note: The ownership of the toolbar is transferred to the callee which will delete it when
@@ -102,6 +102,7 @@ class PluginContext(QObject):
     def remove_toolbar(self, toolbar):
         """
         Remove a previously added toolbar from the UI.
+
         Note: The ownership of the toolbar is transferred to the caller.
         @param widget: The toolbar to remove
         @type widget: QToolBar
@@ -111,12 +112,11 @@ class PluginContext(QObject):
     def close_plugin(self):
         """
         Close the plugin.
+
         The framework will call `Plugin.shutdown_plugin()` and unload it afterwards.
         """
         self._handler.close_plugin()
 
     def reload_plugin(self):
-        """
-        Reload the plugin.
-        """
+        """ Reload the plugin. """
         self._handler.reload_plugin()

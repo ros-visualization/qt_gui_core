@@ -37,7 +37,6 @@ from qt_gui.plugin_handler import PluginHandler
 
 
 class PluginHandlerDirect(PluginHandler):
-
     """Handler for directly passing invocations between the framework and one `Plugin` instance."""
 
     def __init__(self, parent, main_window, instance_id,

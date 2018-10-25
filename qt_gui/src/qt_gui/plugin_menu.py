@@ -28,10 +28,7 @@
 # ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-import os
-
 from python_qt_binding.QtCore import QObject, QSignalMapper, Signal, Slot
-from python_qt_binding.QtGui import QIcon
 from python_qt_binding.QtWidgets import QAction, QMenu
 
 from qt_gui.icon_loader import get_icon
@@ -40,7 +37,6 @@ from qt_gui.plugin_instance_id import PluginInstanceId
 
 
 class PluginMenu(QObject):
-
     """Menu of available plugins to load and running plugin instances to unload."""
 
     load_plugin_signal = Signal(str)

@@ -30,12 +30,11 @@
 
 import os
 
-from dbus.service import BusName, Object
 import dbus
+from dbus.service import BusName, Object
 
 
 class ApplicationDBusInterface(Object):
-
     """
     Application DBus service available on the named bus name.
     The PID of the application instance is used to identify the unique bus name where further

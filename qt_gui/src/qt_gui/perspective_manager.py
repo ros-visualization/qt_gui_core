@@ -50,7 +50,6 @@ def is_string(s):
 
 
 class PerspectiveManager(QObject):
-
     """Manager for perspectives associated with specific sets of `Settings`."""
 
     perspective_changed_signal = Signal(str)
@@ -174,7 +173,8 @@ class PerspectiveManager(QObject):
         self.perspective_changed_signal.emit(self._current_perspective.lstrip(self.HIDDEN_PREFIX))
         if settings_changed:
             if not without_plugin_changes:
-                self.restore_settings_signal.emit(self._global_settings, self._perspective_settings)
+                self.restore_settings_signal.emit(
+                    self._global_settings, self._perspective_settings)
             else:
                 self.restore_settings_without_plugin_changes_signal.emit(
                     self._global_settings, self._perspective_settings)
@@ -195,7 +195,8 @@ class PerspectiveManager(QObject):
         if name is not None:
             clone_perspective = self._create_perspective_dialog.clone_checkbox.isChecked()
             self._create_perspective(name, clone_perspective)
-            self.switch_perspective(name, settings_changed=not clone_perspective, save_before=False)
+            self.switch_perspective(
+                name, settings_changed=not clone_perspective, save_before=False)
 
     def _choose_new_perspective_name(self, show_cloning=True):
         # input dialog for new perspective name
@@ -253,7 +254,7 @@ class PerspectiveManager(QObject):
         name = str(name)
         if name.find('/') != -1:
             raise RuntimeError(
-                'PerspectiveManager._create_perspective() name must not contain forward slashs (/)')
+                'PerspectiveManager._create_perspective() name cannot contain forward slashes (/)')
 
         qDebug('PerspectiveManager._create_perspective(%s, %s)' % (name, clone_perspective))
         # add to list of perspectives
@@ -422,7 +423,6 @@ class PerspectiveManager(QObject):
             self._convert_values(groups[group], convert_function)
 
     def _import_value(self, value):
-        import QtCore  # @UnusedImport
         if value['type'] == 'repr':
             return eval(value['repr'])
         elif value['type'] == 'repr(QByteArray.hex)':
@@ -434,7 +434,8 @@ class PerspectiveManager(QObject):
         data = {}
         if value.__class__.__name__ == 'QByteArray':
             hex_value = value.toHex()
-            data['repr(QByteArray.hex)'] = self._strip_qt_binding_prefix(hex_value, repr(hex_value))
+            data['repr(QByteArray.hex)'] = \
+                self._strip_qt_binding_prefix(hex_value, repr(hex_value))
             data['type'] = 'repr(QByteArray.hex)'
 
             # add pretty print for better readability

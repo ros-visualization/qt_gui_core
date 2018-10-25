@@ -28,12 +28,11 @@
 # ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-import os
 import time
 import traceback
 
 from python_qt_binding.QtCore import \
-    qCritical, qDebug, QObject, QSettings, Qt, qWarning, Signal, Slot
+    qCritical, qDebug, QObject, Qt, qWarning, Signal, Slot
 
 from qt_gui.errors import PluginLoadError
 from qt_gui.plugin_handler_container import PluginHandlerContainer
@@ -45,7 +44,6 @@ from qt_gui.settings_proxy import SettingsProxy
 
 
 class PluginManager(QObject):
-
     """
     Manager of plugin life cycle.
     It creates a specific `PluginHandler` for each plugin instance and maintains the perspective
@@ -85,7 +83,7 @@ class PluginManager(QObject):
         if self._application_context.options.multi_process or \
                 self._application_context.options.embed_plugin:
             try:
-                from qt_gui.plugin_handler_xembed import PluginHandlerXEmbed  # @UnusedImport
+                from qt_gui.plugin_handler_xembed import PluginHandlerXEmbed  # noqa: F401
             except ImportError:
                 qCritical('PluginManager.__init__() multiprocess-mode only available under linux')
                 exit(-1)
@@ -372,7 +370,8 @@ class PluginManager(QObject):
         info = self._running_plugins[str(instance_id)]
         if self._plugin_menu is not None:
             self._plugin_menu.remove_instance(instance_id)
-            info['handler'].label_updated.disconnect(self._plugin_menu.update_plugin_instance_label)
+            info['handler'].label_updated.disconnect(
+                self._plugin_menu.update_plugin_instance_label)
         self._running_plugins.pop(str(instance_id))
 
     @Slot(str)

@@ -34,11 +34,14 @@ import __builtin__
 import os
 import sys
 
+from importlib import reload
+
 
 class ReloadImporter:
-
-    """Overrides the builtin import and automatically reloads all modules which are imported from on
-    of the reload paths after calling enable."""
+    """
+    Overrides the builtin import and automatically reloads all modules which are imported from on
+    of the reload paths after calling enable.
+    """
 
     def __init__(self):
         self._excluded_modules = sys.modules.keys()

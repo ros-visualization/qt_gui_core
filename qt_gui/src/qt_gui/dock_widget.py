@@ -37,9 +37,7 @@ from qt_gui.reparent_event import ReparentEvent
 
 
 class DockWidget(QDockWidget):
-
-    """
-    Dock widget with the capability to be reparented via drag-and-drop to any other main window.
+    """Dock widget with the capability to be reparented via drag-and-drop to any other main window.
     """
 
     def __init__(self, container_manager):
@@ -145,8 +143,8 @@ class DockWidget(QDockWidget):
                 QApplication.instance().postEvent(self, mouse_repress_event)
                 QApplication.sendPostedEvents()
 
-                # schedule move to trigger dock widget drag'n'drop required for snapping and showing
-                # rubber band and let it complete move forth...
+                # schedule move to trigger dock widget drag'n'drop required for snapping and
+                # showing rubber band and let it complete move forth...
                 mouse_move_event = QMouseEvent(
                     QEvent.MouseMove,
                     self._dragging_local_pos,

@@ -35,7 +35,6 @@ from qt_gui.dockable_main_window import DockableMainWindow
 
 
 class DockWidgetContainer(DockWidget):
-
     """`DockWidget` containing a main window acting as a container for other dock widgets."""
 
     def __init__(self, container_manager, serial_number):

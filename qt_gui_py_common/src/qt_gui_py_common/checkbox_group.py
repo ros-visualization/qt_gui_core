@@ -32,11 +32,10 @@
 # POSSIBILITY OF SUCH DAMAGE.
 
 from python_qt_binding.QtWidgets import \
-    QButtonGroup, QGroupBox, QLabel, QCheckBox, QVBoxLayout, QWidget
+    QButtonGroup, QCheckBox, QGroupBox, QLabel, QVBoxLayout
 
 
 class CheckBoxGroup(QGroupBox):
-
     """
     Creates a button group of non-exclusive checkbox options.
 
@@ -66,7 +65,7 @@ class CheckBoxGroup(QGroupBox):
                 parent.layout().addWidget(QLabel(option['description']))
 
     def get_settings(self):
-        """Returns dictionary with selected_indexes (array) and selected_options (array) keys."""
+        """Return dictionary with selected_indexes (array) and selected_options (array) keys."""
         selected_indexes = []
         selected_options = []
         for button in self._button_group.buttons():

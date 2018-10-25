@@ -34,7 +34,6 @@ from qt_gui.window_changed_signaler import WindowChangedSignaler
 
 
 class PluginHandlerContainer(PluginHandler):
-
     """Handler for creating a container."""
 
     def __init__(self, parent, main_window, instance_id, application_context, container_manager):

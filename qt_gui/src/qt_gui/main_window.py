@@ -36,7 +36,6 @@ from qt_gui.settings import Settings
 
 
 class MainWindow(DockableMainWindow):
-
     """Main window of the application managing the geometry and state of all top-level widgets."""
 
     save_settings_before_close_signal = Signal(Settings, Settings)
