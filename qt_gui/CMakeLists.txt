@@ -17,7 +17,7 @@ if(BUILD_TESTING)
 
   ament_add_pytest_test(${PROJECT_NAME} test
     APPEND_ENV PYTHONPATH=${CMAKE_CURRENT_BINARY_DIR}
-    TIMEOUT 90
+    TIMEOUT 90)
 endif()
 
 ament_package()
