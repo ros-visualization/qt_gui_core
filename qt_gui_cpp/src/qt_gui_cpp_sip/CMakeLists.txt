@@ -35,7 +35,7 @@ set(qt_gui_cpp_sip_LDFLAGS_OTHER ${qt_gui_cpp_LDFLAGS_OTHER} -Wl,-rpath,\\"lib\\
 set(qt_gui_cpp_INCLUDE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../../include ${pluginlib_INCLUDE_DIRS})
 
 find_package(python_qt_binding REQUIRED)
-include(${python_qt_binding_EXTRAS_DIR}/sip_helper.cmake)
+include(${python_qt_binding_DIR}/sip_helper.cmake)
 
 ament_export_dependencies(pluginlib)
 include_directories(${PROJECT_NAME} ${qt_gui_cpp_INCLUDE_DIRECTORIES} ${pluginlib_INCLUDE_DIRS})
