@@ -4,7 +4,7 @@ from setuptools import setup
 
 package_name = 'qt_gui'
 
-d = dict(
+setup(
     packages=['qt_gui'],
     package_dir={'': 'qt_gui'},
     data_files=[
@@ -13,5 +13,3 @@ d = dict(
         ('share/' + package_name, ['package.xml']),
     ],
 )
-
-setup(**d)

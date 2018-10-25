@@ -2,9 +2,7 @@
 
 from setuptools import setup
 
-d = dict(
+setup(
     packages=['qt_dotgraph'],
     package_dir={'': 'qt_dotgraph'}
 )
-
-setup(**d)

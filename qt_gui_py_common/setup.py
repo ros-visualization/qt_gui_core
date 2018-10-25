@@ -2,7 +2,8 @@
 
 from setuptools import setup
 package_name = 'qt_gui_py'
-d = dict(
+
+setup(
     packages=['qt_gui_py_common'],
     package_dir={'': 'python_qt_binding'},
     data_files=[
@@ -12,5 +13,3 @@ d = dict(
         ('share/' + package_name, ['package.xml']),
     ],
 )
-
-setup(**d)

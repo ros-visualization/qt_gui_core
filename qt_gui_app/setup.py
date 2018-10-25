@@ -1,8 +1,6 @@
 #!/usr/bin/env python
 
 from setuptools import setup
-d = dict(
+setup(
     package_dir={}
 )
-
-setup(**d)
