@@ -6,11 +6,11 @@ find_package(Boost REQUIRED COMPONENTS filesystem system)
 find_package(tinyxml_vendor REQUIRED)
 find_package(pluginlib REQUIRED)
 
-ament_python_install_package(${PROJECT_NAME})
+ament_python_install_package(${PROJECT_NAME}
+  PACKAGE_DIR src/${PROJECT_NAME})
 
 include_directories(include ${ament_INCLUDE_DIRS} ${Boost_INCLUDE_DIRS} ${TinyXML_INCLUDE_DIRS} ${pluginlib_INCLUDE_DIRS})
 
-add_subdirectory(qt_gui_cpp)
 add_subdirectory(src)
 
 install(DIRECTORY include/qt_gui_cpp/
