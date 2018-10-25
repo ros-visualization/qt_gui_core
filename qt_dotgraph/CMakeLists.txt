@@ -3,7 +3,8 @@ project(qt_dotgraph)
 
 find_package(ament_cmake REQUIRED)
 
-ament_python_install_package(${PROJECT_NAME})
+ament_python_install_package(${PROJECT_NAME}
+        PACKAGE_DIR src/${PROJECT_DIR})
 
 if (CATKIN_ENABLE_TESTING)
   catkin_add_nosetests(test)
