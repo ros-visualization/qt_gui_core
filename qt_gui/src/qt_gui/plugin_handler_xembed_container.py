@@ -44,8 +44,10 @@ from qt_gui.settings_proxy_dbus_service import SettingsProxyDBusService
 
 class PluginHandlerXEmbedContainer(PluginHandler):
     """
-    Server part of the `PluginHandlerXEmbed` that starts the plugin in a subprocess and provides
-    the `PluginHandlerDBusService` through a peer-to-peer DBus connection.
+    Server part of the `PluginHandlerXEmbed`.
+
+    Starts the plugin in a subprocess and provides the `PluginHandlerDBusService` through a
+    peer-to-peer DBus connection.
     """
 
     _serial_number = 0

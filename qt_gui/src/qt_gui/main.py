@@ -33,12 +33,13 @@
 from __future__ import print_function
 
 from argparse import ArgumentParser, SUPPRESS
-from ament_index_python.resources import get_resource
 
 import os
 import platform
 import signal
 import sys
+
+from ament_index_python.resources import get_resource
 
 
 class Main(object):

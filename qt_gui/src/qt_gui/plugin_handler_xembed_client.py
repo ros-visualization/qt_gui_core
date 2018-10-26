@@ -44,8 +44,10 @@ from qt_gui.window_changed_signaler import WindowChangedSignaler
 
 class PluginHandlerXEmbedClient(PluginHandlerDirect):
     """
-    Client part of the `PluginHandlerXEmbed` that utilizes the `PluginHandlerDBusService` of the
-    `PluginHandlerXEmbedContainer` through a peer-to-peer DBus connection.
+    Client part of the `PluginHandlerXEmbed`.
+
+    Client utilizes the `PluginHandlerDBusService` of the `PluginHandlerXEmbedContainer` through a
+    peer-to-peer DBus connection.
     """
 
     def __init__(self, parent, main_window, instance_id,

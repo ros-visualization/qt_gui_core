@@ -31,16 +31,16 @@
 # POSSIBILITY OF SUCH DAMAGE.
 
 import __builtin__
+from importlib import reload
 import os
 import sys
-
-from importlib import reload
 
 
 class ReloadImporter:
     """
-    Overrides the builtin import and automatically reloads all modules which are imported from on
-    of the reload paths after calling enable.
+    Overrides the builtin import and automatically reloads all modules.
+
+    Modules are imported from one of the reload paths after calling enable.
     """
 
     def __init__(self):

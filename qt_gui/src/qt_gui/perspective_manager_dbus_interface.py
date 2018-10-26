@@ -28,10 +28,10 @@
 # ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-from python_qt_binding.QtCore import qDebug
-
 import dbus
 from dbus.service import BusName, Object
+
+from python_qt_binding.QtCore import qDebug
 
 
 class PerspectiveManagerDBusInterface(Object):
