@@ -237,11 +237,8 @@ class DotToQtGeneratorTest(unittest.TestCase):
             '/start_TO_/Container/logstate',
             ]
 
-        print("\n\nActual result")
         nodes_sorted = list(sorted(nodes.keys()))
         edges_sorted = list(sorted(edges.keys()))
-        print(nodes_sorted)
-        print(edges_sorted)
 
         self.assertEqual(expected_nodes, nodes_sorted)
         self.assertEqual(expected_edges, edges_sorted)
