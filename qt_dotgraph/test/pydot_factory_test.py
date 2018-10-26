@@ -32,6 +32,7 @@
 # POSSIBILITY OF SUCH DAMAGE.
 
 import unittest
+
 from qt_dotgraph.pydotfactory import PydotFactory
 
 
@@ -40,8 +41,8 @@ class PyDotFactoryTest(unittest.TestCase):
     def test_get_graph(self):
         fac = PydotFactory()
         g = fac.get_graph()
-        self.assertEquals('same', g.get_rank())
-        self.assertEquals('digraph', g.get_graph_type())
+        self.assertEqual('same', g.get_rank())
+        self.assertEqual('digraph', g.get_graph_type())
 
     def test_add_node(self):
         fac = PydotFactory()

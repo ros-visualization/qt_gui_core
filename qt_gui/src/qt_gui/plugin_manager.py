@@ -46,6 +46,7 @@ from qt_gui.settings_proxy import SettingsProxy
 class PluginManager(QObject):
     """
     Manager of plugin life cycle.
+
     It creates a specific `PluginHandler` for each plugin instance and maintains the perspective
     specific set of running plugins.
     """

@@ -33,9 +33,7 @@ from python_qt_binding.QtWidgets import QAction, QMenu
 
 
 class MenuManager(QObject):
-    """
-    Menu manager containing alphabetically ordered items and additional items before and after.
-    """
+    """Menu manager containing alphabetically ordered items and other items before and after."""
 
     def __init__(self, menu):
         super(MenuManager, self).__init__()

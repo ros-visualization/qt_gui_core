@@ -180,7 +180,7 @@ class PluginHandler(QObject):
 
     def save_settings(self, plugin_settings, instance_settings, callback=None):
         """
-        Save settings of the plugin (`Plugin.save_settings()`) and all dock widget title bars.
+        Save settings of the plugin and all dock widget title bars.
 
         Completion is signaled asynchronously if a callback is passed.
         """

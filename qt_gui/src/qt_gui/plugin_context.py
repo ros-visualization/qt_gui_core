@@ -121,5 +121,5 @@ class PluginContext(QObject):
         self._handler.close_plugin()
 
     def reload_plugin(self):
-        """ Reload the plugin. """
+        """Reload the plugin."""
         self._handler.reload_plugin()

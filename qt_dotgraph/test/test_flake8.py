@@ -19,5 +19,5 @@ import pytest
 @pytest.mark.flake8
 @pytest.mark.linter
 def test_flake8():
-    rc = main(argv=[])
+    rc = main(argv=['--exclude', 'dot_to_qt_test.py'])
     assert rc == 0, 'Found errors'

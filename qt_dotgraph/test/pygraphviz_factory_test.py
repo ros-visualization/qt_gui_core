@@ -32,6 +32,7 @@
 # POSSIBILITY OF SUCH DAMAGE.
 
 import unittest
+
 from qt_dotgraph.pygraphvizfactory import PygraphvizFactory
 
 
@@ -40,7 +41,7 @@ class PygraphvizFactoryTest(unittest.TestCase):
     def test_get_graph(self):
         fac = PygraphvizFactory()
         g = fac.get_graph()
-        self.assertEquals('same', g.graph_attr['rank'])
+        self.assertEqual('same', g.graph_attr['rank'])
         self.assertTrue(g.is_directed())
 
     def test_add_node(self):

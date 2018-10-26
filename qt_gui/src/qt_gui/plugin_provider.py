@@ -51,7 +51,7 @@ class PluginProvider(QObject):
     def load(self, plugin_id, plugin_context):
         """
         Load a plugin and pass the `PluginContext`.
-        
+
         @return: The created plugin instance
         @raise PluginLoadError
         """
