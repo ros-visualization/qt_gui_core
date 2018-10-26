@@ -125,7 +125,7 @@ class DotToQtGeneratorTest(unittest.TestCase):
 
         gen = DotToQtGenerator()
         dotcode = r'''
-        strict digraph {
+        strict digraph "" {
             graph [bb="0,0,249,541",
                     compound=True,
                     rank=same,
