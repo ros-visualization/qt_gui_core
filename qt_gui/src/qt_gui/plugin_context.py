@@ -33,8 +33,9 @@ from python_qt_binding.QtCore import QObject
 
 class PluginContext(QObject):
     """
-    PluginContext providing information to the plugin and exposing methods for the plugin to
-    interact with the framework. It relays all methods to the corresponding `PluginHandler`.
+    Provides information to the plugin and exposes methods to interact with the framework.
+
+    PluginContext relays all methods to the corresponding `PluginHandler`.
     """
 
     def __init__(self, handler):
@@ -46,6 +47,7 @@ class PluginContext(QObject):
     def serial_number(self):
         """
         Return the serial number of the plugin.
+
         For a specific type of plugin each instance gets a serial number (which is the first
         currently not used positive integer at construction time).
         @return: The serial number
@@ -56,6 +58,7 @@ class PluginContext(QObject):
     def argv(self):
         """
         Return the command line arguments of the plugin.
+
         @return: The arguments without a program name at the beginning
         @rtype: list
         """

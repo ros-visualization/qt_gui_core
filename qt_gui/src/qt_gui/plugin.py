@@ -33,45 +33,41 @@ from python_qt_binding.QtCore import QObject
 
 class Plugin(QObject):
     """
-    Interface for Python plugins. User-defined plugins may either subclass `qt_gui.plugin.Plugin`
-    or according to duck typing implement only the needed methods.
+    Interface for Python plugins.
+
+    User-defined plugins may either subclass `qt_gui.plugin.Plugin` or according to duck typing
+    implement only the needed methods.
     """
 
     def __init__(self, context):
         """Instantiate the plugin and pass the `PluginContext`."""
-
         super(Plugin, self).__init__(context)
         self.setObjectName('Plugin')
 
     def shutdown_plugin(self):
         """Shutdown and clean up the plugin before unloading."""
-
         pass
 
     def save_settings(self, plugin_settings, instance_settings):
         """
-        Save the intrinsic state of the plugin to the plugin-specific or instance-specific
-        `Settings`.
+        Save the intrinsic state of the plugin to the plugin or instance specific `Settings`.
 
         @param plugin_settings: The plugin-specific settings
         @type plugin_settings: qt_gui.settings.Settings
         @param instance_settings: The instance-specific settings
         @type instance_settings: qt_gui.settings.Settings
         """
-
         pass
 
     def restore_settings(self, plugin_settings, instance_settings):
         """
-        Restore the intrinsic state of the plugin from the plugin-specific or instance-specific
-        `Settings`.
+        Restore the intrinsic state of the plugin from the plugin or instance specific `Settings`.
 
         @param plugin_settings: The plugin-specific settings
         @type plugin_settings: qt_gui.settings.Settings
         @param instance_settings: The instance-specific settings
         @type instance_settings: qt_gui.settings.Settings
         """
-
         pass
 
     # def trigger_configuration(self):

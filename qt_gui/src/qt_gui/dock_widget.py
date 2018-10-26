@@ -37,8 +37,7 @@ from qt_gui.reparent_event import ReparentEvent
 
 
 class DockWidget(QDockWidget):
-    """Dock widget with the capability to be reparented via drag-and-drop to any other main window.
-    """
+    """Widget with the capability to be reparented via drag-and-drop to any other main window."""
 
     def __init__(self, container_manager):
         super(DockWidget, self).__init__()
@@ -189,7 +188,8 @@ class DockWidget(QDockWidget):
         root_main_window = self._container_manager.get_root_main_window()
 
         # work around bug where root main window is detected when point is near but not inside it
-        if widget == root_main_window and not self._widget_contains(root_main_window, global_point):
+        if widget == root_main_window and \
+                not self._widget_contains(root_main_window, global_point):
             # print '- work around to large root main window'
             widget = None
 

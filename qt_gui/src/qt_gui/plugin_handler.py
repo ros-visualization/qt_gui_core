@@ -42,6 +42,7 @@ from qt_gui.window_changed_signaler import WindowChangedSignaler
 class PluginHandler(QObject):
     """
     Base class for the bidirectional exchange between the framework and one `Plugin` instance.
+
     It utilizes a `PluginProvider` to load/unload the plugin and provides callbacks for the
     `PluginContext`.
     """
@@ -126,7 +127,7 @@ class PluginHandler(QObject):
 
     def shutdown_plugin(self, callback):
         """
-        Shutdown plugin (`Plugin.shutdown_plugin()`) and remove all added widgets.
+        Shut down the plugin and remove all added widgets.
 
         Completion is signaled asynchronously if a callback is passed.
         """
@@ -219,8 +220,7 @@ class PluginHandler(QObject):
 
     def restore_settings(self, plugin_settings, instance_settings, callback=None):
         """
-        Restore settings of the plugin (`Plugin.restore_settings()`) and all dock widget title
-        bars.
+        Restore settings of the plugin and all dock widget title bars.
 
         Completion is signaled asynchronously if a callback is passed.
         """

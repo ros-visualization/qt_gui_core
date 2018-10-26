@@ -37,8 +37,9 @@ from qt_gui.composite_plugin_provider import CompositePluginProvider
 
 class RecursivePluginProvider(CompositePluginProvider):
     """
-    Plugin provider which directly loads all discovered plugins (which should be plugin
-    providers themselfs) and returns their discovered plugins.
+    Plugin provider which directly loads and returns all discovered plugins.
+
+    Discovered plugins should be plugin providers themselves.
     """
 
     def __init__(self, plugin_provider):

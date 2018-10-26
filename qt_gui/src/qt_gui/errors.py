@@ -33,5 +33,6 @@
 
 
 class PluginLoadError(Exception):
-    """ Exception when loading a plugin fails due to known reason. """
+    """Exception when loading a plugin fails due to known reason."""
+
     pass

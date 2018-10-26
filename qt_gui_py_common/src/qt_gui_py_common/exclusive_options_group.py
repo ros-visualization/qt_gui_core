@@ -35,7 +35,6 @@ from python_qt_binding.QtWidgets import \
 
 
 class ExclusiveOptionGroup(QGroupBox):
-
     """
     Creates a button group of exclusive radio options.
 

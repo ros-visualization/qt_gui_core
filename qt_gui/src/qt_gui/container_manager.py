@@ -36,7 +36,6 @@ from qt_gui.reparent_event import ReparentEvent
 
 
 class ContainerManager(QObject):
-
     """Manager of `DockWidgetContainer`s enabling reparenting to stored parent."""
 
     def __init__(self, root_main_window, parent=None):
