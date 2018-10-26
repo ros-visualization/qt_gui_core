@@ -71,7 +71,7 @@ class DotToQtGenerator():
         for name in subgraph.get_attributes().keys():
             value = get_unquoted(subgraph, name)
             attr[name] = value
-        obj_dic = subgraph.__getattribute__("obj_dict")
+        obj_dic = subgraph.__getattribute__('obj_dict')
         for name in obj_dic:
             if name not in ['nodes', 'attributes', 'parent_graph'] and obj_dic[name] is not None:
                 attr[name] = get_unquoted(obj_dic, name)
