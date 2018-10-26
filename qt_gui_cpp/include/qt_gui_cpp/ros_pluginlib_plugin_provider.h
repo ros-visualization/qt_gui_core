@@ -43,6 +43,7 @@
 //#include <boost/shared_ptr.hpp>
 
 #include <pluginlib/class_loader.hpp>
+#include <pluginlib/impl/filesystem_helper.hpp>
 #include <boost/filesystem.hpp>
 #include <tinyxml.h>
 
@@ -144,12 +145,8 @@ public:
 
       std::string name = class_loader_->getName(lookup_name);
       std::string plugin_xml = class_loader_->getPluginManifestPath(lookup_name);
-      boost::filesystem::path p(plugin_xml);
-#if BOOST_FILESYSTEM_VERSION >= 3
+      pluginlib::impl::fs::path p(plugin_xml);
       std::string plugin_path = p.parent_path().string();
-#else
-      std::string plugin_path = p.parent_path();
-#endif
 
       QMap<QString, QString> attributes;
       attributes["class_name"] = name.c_str();
