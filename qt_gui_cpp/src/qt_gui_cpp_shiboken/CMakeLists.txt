@@ -58,7 +58,7 @@ if(shiboken_helper_FOUND)
       ARCHIVE_OUTPUT_DIRECTORY lib}
       LIBRARY_OUTPUT_DIRECTORY lib}
     )
-    target_link_libraries(qt_gui_cpp_shiboken ${PROJECT_NAME} ${ament_LIBRARIES} ${Boost_LIBRARIES})
+    target_link_libraries(qt_gui_cpp_shiboken ${PROJECT_NAME} ${ament_LIBRARIES})
     shiboken_target_link_libraries(qt_gui_cpp_shiboken "${qt_gui_cpp_shiboken_QT_COMPONENTS}")
 
     install(TARGETS qt_gui_cpp_shiboken

@@ -38,13 +38,8 @@
 #include "plugin_descriptor.h"
 #include "plugin_provider.h"
 
-// while this header uses boost shared pointers
-// Shiboken2 isn't able to parse it correctly atm
-//#include <boost/shared_ptr.hpp>
-
 #include <pluginlib/class_loader.hpp>
 #include <pluginlib/impl/filesystem_helper.hpp>
-#include <boost/filesystem.hpp>
 #include <tinyxml.h>
 
 #include <QCoreApplication>
