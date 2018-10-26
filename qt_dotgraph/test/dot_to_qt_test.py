@@ -234,5 +234,10 @@ class DotToQtGeneratorTest(unittest.TestCase):
             '/Container/finished_TO_/finished_finished',
             '/start_TO_/Container/logstate',
             '/Container/Subcontainer/logstate1_TO_/Container/Subcontainer/finished_done']
+
+        print("\n\nActual result")
+        print(nodes.keys())
+        print(edges.keys())
+
         self.assertEqual(expected_nodes, nodes.keys())
         self.assertEqual(expected_edges, edges.keys())
