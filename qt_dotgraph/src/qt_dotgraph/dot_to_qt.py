@@ -31,6 +31,7 @@
 # POSSIBILITY OF SUCH DAMAGE.
 
 import codecs
+
 import pydot
 
 from python_qt_binding.QtCore import QPointF, QRectF
@@ -117,7 +118,7 @@ class DotToQtGenerator():
         return subgraph_nodeitem
 
     def getNodeItemForNode(self, node, highlight_level, scene=None):
-        """Returns a pyqt NodeItem object, or None in case of error or invisible style."""
+        """Return a pyqt NodeItem object, or None in case of error or invisible style."""
         # let pydot imitate pygraphviz api
         attr = {}
         for name in node.get_attributes().keys():

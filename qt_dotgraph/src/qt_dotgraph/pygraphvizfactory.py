@@ -85,7 +85,7 @@ class PygraphvizFactory():
                               shape='box',
                               style='bold'):
         """
-        Creates a cluster subgraph  item for this factory, adds it to the graph.
+        Create a cluster subgraph  item for this factory, adds it to the graph.
 
         Cluster name can vary from label but must always be same for the same node label.
         Most layouters require cluster names to start with cluster.
@@ -111,4 +111,4 @@ class PygraphvizFactory():
     def create_dot(self, graph):
         graph.layout('dot')
         # sadly pygraphviz generates line wraps cutting between numbers
-        return graph.string().replace("\\\n", "")
+        return graph.string().replace('\\\n', '')
