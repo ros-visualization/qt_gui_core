@@ -94,7 +94,7 @@ class PygraphvizFactoryTest(unittest.TestCase):
         fac.add_node_to_graph(g, 'edge')
         fac.add_edge_to_graph(g, 'foo', 'edge')
         fac.add_subgraph_to_graph(g, 'graph')
-        snippets = ['strict digraph {\n\tgraph',
+        snippets = ['strict digraph "" {\n\tgraph',
                     'foo',
                     'label=foo',
                     '"edge"',
