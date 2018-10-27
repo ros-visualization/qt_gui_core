@@ -37,6 +37,9 @@ set(qt_gui_cpp_INCLUDE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../../include ${pluginli
 find_package(python_qt_binding REQUIRED)
 include(${python_qt_binding_DIR}/sip_helper.cmake)
 
+# prevent pluginlib from using boost
+target_compile_definitions(lib${PROJECT_NAME} PUBLIC "PLUGINLIB__DISABLE_BOOST_FUNCTIONS")
+
 ament_export_dependencies(pluginlib)
 include_directories(${PROJECT_NAME} ${qt_gui_cpp_INCLUDE_DIRECTORIES} ${pluginlib_INCLUDE_DIRS})
 

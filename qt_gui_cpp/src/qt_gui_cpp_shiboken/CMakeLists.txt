@@ -39,6 +39,10 @@ set(qt_gui_cpp_HDRS
 
 find_package(python_qt_binding REQUIRED)
 include(${python_qt_binding_DIR}/shiboken_helper.cmake)
+
+# prevent pluginlib from using boost
+target_compile_definitions(${PROJECT_NAME} PUBLIC "PLUGINLIB__DISABLE_BOOST_FUNCTIONS")
+
 ament_export_dependencies(pluginlib)
 if(shiboken_helper_FOUND)
   if(Shiboken_VERSION VERSION_GREATER "1.1.1")
