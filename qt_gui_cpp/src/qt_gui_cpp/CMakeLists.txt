@@ -3,7 +3,7 @@ find_package(PythonLibs "${PYTHON_VERSION_MAJOR}.${PYTHON_VERSION_MINOR}" REQUIR
 find_package(Qt5Widgets REQUIRED)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC")
-
+add_definitions(-DPLUGINLIB__DISABLE_BOOST_FUNCTIONS true)
 set(qt_gui_cpp_SRCS
   composite_plugin_provider.cpp
   generic_proxy.cpp
