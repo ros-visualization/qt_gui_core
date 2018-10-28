@@ -60,9 +60,6 @@ if(shiboken_helper_FOUND)
       LIBRARY_OUTPUT_DIRECTORY lib}
     )
 
-    # prevent pluginlib from using boost
-    target_compile_definitions(qt_gui_cpp_shiboken.so PUBLIC "PLUGINLIB__DISABLE_BOOST_FUNCTIONS")
-
     target_link_libraries(qt_gui_cpp_shiboken ${PROJECT_NAME} ${ament_LIBRARIES})
     shiboken_target_link_libraries(qt_gui_cpp_shiboken "${qt_gui_cpp_shiboken_QT_COMPONENTS}")
 

@@ -52,9 +52,6 @@ if(sip_helper_FOUND)
     DEPENDENCIES qt_gui_cpp
   )
 
-  # prevent pluginlib from using boost
-  target_compile_definitions(libqt_gui_cpp_sip.a PUBLIC "PLUGINLIB__DISABLE_BOOST_FUNCTIONS")
-
   if(APPLE)
     set(LIBQT_GUI_CPP_SIP_SUFFIX .so)
   else()
