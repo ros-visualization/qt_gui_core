@@ -37,7 +37,6 @@ from .ros_package_helper import get_package_path
 
 
 class HelpProvider(QObject):
-
     """Handler for the help action in the title bar of dock widgets."""
 
     def __init__(self):

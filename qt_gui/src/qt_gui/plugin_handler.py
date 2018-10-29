@@ -33,17 +33,18 @@ import traceback
 from python_qt_binding.QtCore import qCritical, qDebug, QObject, Qt, qWarning, Signal, Slot
 from python_qt_binding.QtWidgets import QDockWidget, QToolBar
 
-from .dock_widget import DockWidget
-from .dock_widget_title_bar import DockWidgetTitleBar
-from .icon_loader import get_icon
-from .window_changed_signaler import WindowChangedSignaler
+from qt_gui.dock_widget import DockWidget
+from qt_gui.dock_widget_title_bar import DockWidgetTitleBar
+from qt_gui.icon_loader import get_icon
+from qt_gui.window_changed_signaler import WindowChangedSignaler
 
 
 class PluginHandler(QObject):
-
     """
     Base class for the bidirectional exchange between the framework and one `Plugin` instance.
-    It utilizes a `PluginProvider` to load/unload the plugin and provides callbacks for the `PluginContext`.
+
+    It utilizes a `PluginProvider` to load/unload the plugin and provides callbacks for the
+    `PluginContext`.
     """
 
     label_updated = Signal(str, str)
@@ -52,7 +53,8 @@ class PluginHandler(QObject):
     help_signal = Signal(str)
     _defered_check_close = Signal()
 
-    def __init__(self, parent, main_window, instance_id, application_context, container_manager, argv=None):
+    def __init__(self, parent, main_window, instance_id, application_context, container_manager,
+                 argv=None):
         super(PluginHandler, self).__init__(parent)
         self.setObjectName('PluginHandler')
 
@@ -91,6 +93,7 @@ class PluginHandler(QObject):
     def load(self, plugin_provider, callback=None):
         """
         Load plugin.
+
         Completion is signaled asynchronously if a callback is passed.
         """
         self._plugin_provider = plugin_provider
@@ -112,7 +115,7 @@ class PluginHandler(QObject):
             callback(self, exception)
         elif exception is not None:
             qCritical('PluginHandler.load() failed%s' %
-                      (':\n%s' % str(exception) if exception != True else ''))
+                      (':\n%s' % str(exception) if not exception else ''))
 
     def _garbage_widgets_and_toolbars(self):
         for widget in list(self._widgets.keys()):
@@ -124,7 +127,8 @@ class PluginHandler(QObject):
 
     def shutdown_plugin(self, callback):
         """
-        Shutdown plugin (`Plugin.shutdown_plugin()`) and remove all added widgets.
+        Shut down the plugin and remove all added widgets.
+
         Completion is signaled asynchronously if a callback is passed.
         """
         self.__callback = callback
@@ -154,6 +158,7 @@ class PluginHandler(QObject):
     def unload(self, callback=None):
         """
         Unload plugin.
+
         Completion is signaled asynchronously if a callback is passed.
         """
         self.__callback = callback
@@ -175,7 +180,8 @@ class PluginHandler(QObject):
 
     def save_settings(self, plugin_settings, instance_settings, callback=None):
         """
-        Save settings of the plugin (`Plugin.save_settings()`) and all dock widget title bars.
+        Save settings of the plugin and all dock widget title bars.
+
         Completion is signaled asynchronously if a callback is passed.
         """
         qDebug('PluginHandler.save_settings()')
@@ -214,7 +220,8 @@ class PluginHandler(QObject):
 
     def restore_settings(self, plugin_settings, instance_settings, callback=None):
         """
-        Restore settings of the plugin (`Plugin.restore_settings()`) and all dock widget title bars.
+        Restore settings of the plugin and all dock widget title bars.
+
         Completion is signaled asynchronously if a callback is passed.
         """
         qDebug('PluginHandler.restore_settings()')
@@ -248,7 +255,8 @@ class PluginHandler(QObject):
         return dock_widget
 
     def _update_dock_widget_features(self, dock_widget):
-        if self._application_context.options.lock_perspective or self._application_context.options.standalone_plugin:
+        if self._application_context.options.lock_perspective or \
+                self._application_context.options.standalone_plugin:
             # dock widgets are not closable when perspective is locked or plugin is
             # running standalone
             features = dock_widget.features()
@@ -330,8 +338,10 @@ class PluginHandler(QObject):
             # warn about dock_widget with same object name
             old_dock_widget = self._main_window.findChild(DockWidget, dock_widget.objectName())
             if old_dock_widget is not None:
-                qWarning('PluginHandler._add_dock_widget_to_main_window() duplicate object name "%s", assign unique object names before adding widgets!' %
+                qWarning('PluginHandler._add_dock_widget_to_main_window() duplicate object name ' +
+                         '"%s", assign unique object names before adding widgets!' %
                          dock_widget.objectName())
+
             self._main_window.addDockWidget(Qt.BottomDockWidgetArea, dock_widget)
 
     def _on_widget_icon_changed(self, widget):

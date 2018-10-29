@@ -28,13 +28,12 @@
 # ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-from .dock_widget_container import DockWidgetContainer
-from .plugin_handler import PluginHandler
-from .window_changed_signaler import WindowChangedSignaler
+from qt_gui.dock_widget_container import DockWidgetContainer
+from qt_gui.plugin_handler import PluginHandler
+from qt_gui.window_changed_signaler import WindowChangedSignaler
 
 
 class PluginHandlerContainer(PluginHandler):
-
     """Handler for creating a container."""
 
     def __init__(self, parent, main_window, instance_id, application_context, container_manager):
