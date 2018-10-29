@@ -33,6 +33,11 @@
 #ifndef qt_gui_cpp__RosPluginlibPluginProvider_H
 #define qt_gui_cpp__RosPluginlibPluginProvider_H
 
+// Pluginlib has an optional dependency on boost::shared_ptr, which is not required here
+// On machines without boost, including pluginlib/class_loader.hpp requires defining this flag to
+// disable that dependency. Mosty notably these are the machines configured on ci.ros2.org
+#define PLUGINLIB__DISABLE_BOOST_FUNCTIONS
+
 #include "plugin.h"
 #include "plugin_context.h"
 #include "plugin_descriptor.h"
@@ -43,6 +48,7 @@
 //#include <boost/shared_ptr.hpp>
 
 #include <pluginlib/class_loader.hpp>
+#include <pluginlib/impl/filesystem_helper.hpp>
 #include <tinyxml.h>
 
 #include <QCoreApplication>
@@ -143,12 +149,8 @@ public:
 
       std::string name = class_loader_->getName(lookup_name);
       std::string plugin_xml = class_loader_->getPluginManifestPath(lookup_name);
-      boost::filesystem::path p(plugin_xml);
-#if BOOST_FILESYSTEM_VERSION >= 3
+      pluginlib::impl::fs::path p(plugin_xml);
       std::string plugin_path = p.parent_path().string();
-#else
-      std::string plugin_path = p.parent_path();
-#endif
 
       QMap<QString, QString> attributes;
       attributes["class_name"] = name.c_str();

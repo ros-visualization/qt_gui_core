@@ -2,7 +2,6 @@ cmake_minimum_required(VERSION 2.8.3)
 project(qt_gui_cpp)
 
 find_package(catkin REQUIRED COMPONENTS cmake_modules pluginlib)
-find_package(Boost REQUIRED COMPONENTS filesystem system)
 find_package(TinyXML REQUIRED)
 
 catkin_package(
@@ -15,7 +14,7 @@ catkin_package(
 
 catkin_python_setup()
 
-include_directories(include ${catkin_INCLUDE_DIRS} ${Boost_INCLUDE_DIRS} ${TinyXML_INCLUDE_DIRS})
+include_directories(include ${catkin_INCLUDE_DIRS} ${TinyXML_INCLUDE_DIRS})
 
 add_subdirectory(src)
 
