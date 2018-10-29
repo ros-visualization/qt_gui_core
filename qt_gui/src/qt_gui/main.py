@@ -106,8 +106,8 @@ class Main(object):
                 '-p', '--perspective', dest='perspective', type=str, metavar='PERSPECTIVE',
                 help='start with this named perspective')
             common_group.add_argument(
-                '--perspective-file', dest='perspective_file', type=str, metavar='PERSPECTIVE_FILE',
-                help='start with a perspective loaded from a file')
+                '--perspective-file', dest='perspective_file', type=str,
+                metavar='PERSPECTIVE_FILE', help='start with a perspective loaded from a file')
         common_group.add_argument(
             '--reload-import', dest='reload_import', default=False, action='store_true',
             help='reload every imported module')
@@ -284,11 +284,12 @@ class Main(object):
                 self._options.command_start_plugin, self._options.command_switch_perspective)
             command_options_set = [opt for opt in command_options if opt is not None]
             if len(command_options_set) > 0 and not self._dbus_available:
-                raise RuntimeError('Without DBus support the --command-* options are not available')
+                raise RuntimeError(
+                    'Without DBus support the --command-* options are not available')
             if len(command_options_set) > 1:
                 raise RuntimeError(
-                    'Only one --command-* option can be used at a time (except --command-pid which '
-                    'is optional)')
+                    'Only one --command-* option can be used at a time (except --command-pid '
+                    'which is optional)')
             if len(command_options_set) == 0 and self._options.command_pid is not None:
                 raise RuntimeError(
                     'Option --command_pid can only be used together with an other --command-* '
@@ -351,7 +352,7 @@ class Main(object):
 
                 # provide pid of application via dbus
                 from qt_gui.application_dbus_interface import ApplicationDBusInterface
-                _dbus_server = ApplicationDBusInterface(context.dbus_base_bus_name)
+                _dbus_server = ApplicationDBusInterface(context.dbus_base_bus_name)  # noqa: F841
 
         # determine host bus name, either based on pid given on command line or
         # via dbus application interface if any other instance is available
@@ -413,7 +414,7 @@ class Main(object):
         from python_qt_binding.QtCore import QtFatalMsg, QTimer, QtWarningMsg
 
         from python_qt_binding.QtGui import QIcon
-        from python_qt_binding.QtWidgets import QAction, QMenuBar
+        from python_qt_binding.QtWidgets import QAction
 
         from qt_gui.about_handler import AboutHandler
         from qt_gui.composite_plugin_provider import CompositePluginProvider

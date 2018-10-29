@@ -37,12 +37,11 @@ from python_qt_binding.QtCore import qWarning
 from python_qt_binding.QtWidgets import QDialog, QLabel
 from ament_index_python.resources import get_resource
 
-from .exclusive_options_group import ExclusiveOptionGroup
 from .checkbox_group import CheckBoxGroup
+from .exclusive_options_group import ExclusiveOptionGroup
 
 
 class SimpleSettingsDialog(QDialog):
-
     """Simple dialog that can show multiple settings groups and returns their combined results."""
 
     def __init__(self, title='Options', description=None):
@@ -63,15 +62,15 @@ class SimpleSettingsDialog(QDialog):
         self.group_area.layout().addWidget(QLabel(text))
 
     def add_exclusive_option_group(self, *args, **kwargs):
-        """Convenience method to add an ExclusiveOptionGroup."""
+        """Add an ExclusiveOptionGroup."""
         self.add_settings_group(ExclusiveOptionGroup(*args, **kwargs))
 
     def add_checkbox_group(self, *args, **kwargs):
-        """Convenience method to add an CheckBoxGroup."""
+        """Add a CheckBoxGroup."""
         self.add_settings_group(CheckBoxGroup(*args, **kwargs))
 
     def add_settings_group(self, settings_group):
-        """Adds a settings group, which is any widget with a get_settings method."""
+        """Add a settings group, which is any widget with a get_settings method."""
         if not hasattr(settings_group, 'get_settings'):
             qWarning('add_settings_group(): this settings group has no get_settings method to ' +
                      'collect the settings!')
@@ -79,7 +78,7 @@ class SimpleSettingsDialog(QDialog):
         self.group_area.layout().addWidget(settings_group)
 
     def get_settings(self):
-        """Returns the combined settings from all settings groups as a list."""
+        """Return the combined settings from all settings groups as a list."""
         if self.exec_() == QDialog.Accepted:
             results = []
             for settings_group in self._settings_groups:
