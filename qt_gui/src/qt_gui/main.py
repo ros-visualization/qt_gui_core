@@ -334,7 +334,7 @@ class Main(object):
             self._options.lock_perspective = True
 
         # create application context containing various relevant information
-        from .application_context import ApplicationContext
+        from qt_gui.application_context import ApplicationContext
         context = ApplicationContext()
         context.qtgui_path = self._qtgui_path
         context.options = self._options
@@ -350,7 +350,7 @@ class Main(object):
                 context.dbus_unique_bus_name = context.dbus_base_bus_name + '.pid%d' % os.getpid()
 
                 # provide pid of application via dbus
-                from .application_dbus_interface import ApplicationDBusInterface
+                from qt_gui.application_dbus_interface import ApplicationDBusInterface
                 _dbus_server = ApplicationDBusInterface(context.dbus_base_bus_name)
 
         # determine host bus name, either based on pid given on command line or
@@ -415,15 +415,15 @@ class Main(object):
         from python_qt_binding.QtGui import QIcon
         from python_qt_binding.QtWidgets import QAction, QMenuBar
 
-        from .about_handler import AboutHandler
-        from .composite_plugin_provider import CompositePluginProvider
-        from .container_manager import ContainerManager
-        from .help_provider import HelpProvider
-        from .icon_loader import get_icon
-        from .main_window import MainWindow
-        from .minimized_dock_widgets_toolbar import MinimizedDockWidgetsToolbar
-        from .perspective_manager import PerspectiveManager
-        from .plugin_manager import PluginManager
+        from qt_gui.about_handler import AboutHandler
+        from qt_gui.composite_plugin_provider import CompositePluginProvider
+        from qt_gui.container_manager import ContainerManager
+        from qt_gui.help_provider import HelpProvider
+        from qt_gui.icon_loader import get_icon
+        from qt_gui.main_window import MainWindow
+        from qt_gui.minimized_dock_widgets_toolbar import MinimizedDockWidgetsToolbar
+        from qt_gui.perspective_manager import PerspectiveManager
+        from qt_gui.plugin_manager import PluginManager
 
         # TODO PySide2 segfaults when invoking this custom message handler atm
         if QT_BINDING != 'pyside':
@@ -598,7 +598,7 @@ class Main(object):
 
         if self._options.reload_import:
             qDebug('ReloadImporter() automatically reload all subsequent imports')
-            from .reload_importer import ReloadImporter
+            from qt_gui.reload_importer import ReloadImporter
             _reload_importer = ReloadImporter()
             self._add_reload_paths(_reload_importer)
             _reload_importer.enable()

@@ -32,5 +32,5 @@
 def get_package_path(name):
     """Helper function to determine the path of a ROS package using rospkg."""
     from ament_index_python.resources import get_resource
-    _, package_path = get_resource(name)
+    _, package_path = get_resource('packages', name)
     return package_path
