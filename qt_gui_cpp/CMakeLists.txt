@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.5)
 project(qt_gui_cpp)
 
+<<<<<<< HEAD
 find_package(ament_cmake REQUIRED)
 find_package(Boost REQUIRED COMPONENTS filesystem system)
 find_package(tinyxml_vendor REQUIRED)
@@ -10,6 +11,22 @@ ament_python_install_package(${PROJECT_NAME}
   PACKAGE_DIR src/${PROJECT_NAME})
 
 include_directories(include ${ament_INCLUDE_DIRS} ${Boost_INCLUDE_DIRS} ${TinyXML_INCLUDE_DIRS} ${pluginlib_INCLUDE_DIRS})
+=======
+find_package(catkin REQUIRED COMPONENTS cmake_modules pluginlib)
+find_package(TinyXML REQUIRED)
+
+catkin_package(
+  INCLUDE_DIRS include
+  LIBRARIES ${PROJECT_NAME}
+  CATKIN_DEPENDS pluginlib
+  CFG_EXTRAS ${PROJECT_NAME}-extras.cmake
+  DEPENDS TinyXML
+)
+
+catkin_python_setup()
+
+include_directories(include ${catkin_INCLUDE_DIRS} ${TinyXML_INCLUDE_DIRS})
+>>>>>>> remove_boost_depends
 
 add_subdirectory(src)
 
