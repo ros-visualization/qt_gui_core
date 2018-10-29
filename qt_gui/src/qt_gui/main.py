@@ -33,6 +33,8 @@
 from __future__ import print_function
 
 from argparse import ArgumentParser, SUPPRESS
+from ament_index_python.resources import get_resource
+
 import os
 import platform
 import signal
@@ -644,5 +646,6 @@ class Main(object):
 
 
 if __name__ == '__main__':
-    main = Main()
+    _, qtgui_path = get_resource('packages', 'qt_gui')
+    main = Main(qtgui_path)
     sys.exit(main.main())

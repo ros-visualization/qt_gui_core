@@ -1,25 +1,32 @@
-cmake_minimum_required(VERSION 2.8.3)
+cmake_minimum_required(VERSION 3.5)
 project(qt_gui_cpp)
 
-find_package(catkin REQUIRED COMPONENTS cmake_modules pluginlib)
+find_package(ament_cmake REQUIRED)
 find_package(Boost REQUIRED COMPONENTS filesystem system)
-find_package(TinyXML REQUIRED)
+find_package(tinyxml_vendor REQUIRED)
+find_package(pluginlib REQUIRED)
 
-catkin_package(
-  INCLUDE_DIRS include
-  LIBRARIES ${PROJECT_NAME}
-  CATKIN_DEPENDS pluginlib
-  CFG_EXTRAS ${PROJECT_NAME}-extras.cmake
-  DEPENDS Boost TinyXML
-)
+ament_python_install_package(${PROJECT_NAME}
+  PACKAGE_DIR src/${PROJECT_NAME})
 
-catkin_python_setup()
-
-include_directories(include ${catkin_INCLUDE_DIRS} ${Boost_INCLUDE_DIRS} ${TinyXML_INCLUDE_DIRS})
+include_directories(include ${ament_INCLUDE_DIRS} ${Boost_INCLUDE_DIRS} ${TinyXML_INCLUDE_DIRS} ${pluginlib_INCLUDE_DIRS})
 
 add_subdirectory(src)
 
 install(DIRECTORY include/qt_gui_cpp/
-  DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION})
+  DESTINATION include)
 install(FILES plugin.xml
-  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION})
+  DESTINATION share)
+install(
+    DIRECTORY include
+    DESTINATION include
+  )
+
+ament_export_dependencies(Boost)
+ament_export_dependencies(TinyXML)
+ament_export_dependencies(pluginlib)
+
+ament_export_include_directories(include ${pluginlib_INCLUDE_DIRS})
+ament_export_libraries(${PROJECT_NAME})
+
+ament_package(CONFIG_EXTRAS cmake/${PROJECT_NAME}-extras.cmake)

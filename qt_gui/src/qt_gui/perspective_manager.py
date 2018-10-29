@@ -200,7 +200,8 @@ class PerspectiveManager(QObject):
     def _choose_new_perspective_name(self, show_cloning=True):
         # input dialog for new perspective name
         if self._create_perspective_dialog is None:
-            ui_file = os.path.join(self._qtgui_path, 'resource', 'perspective_create.ui')
+            ui_file = os.path.join(self._qtgui_path,
+                                   'share', 'qt_gui', 'resource', 'perspective_create.ui')
             self._create_perspective_dialog = loadUi(ui_file)
 
             # custom validator preventing forward slashs

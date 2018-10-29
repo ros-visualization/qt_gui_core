@@ -23,8 +23,7 @@ set(qt_gui_cpp_HDRS
 
 set(qt_gui_cpp_INCLUDE_DIRECTORIES
   ${PYTHON_INCLUDE_DIR}
-  ${PROJECT_SOURCE_DIR}/include/qt_gui_cpp
-  ${PROJECT_SOURCE_DIR}/src/qt_gui_cpp
+  ${PROJECT_NAME}/include/qt_gui_cpp
 )
 
 set(qt_gui_cpp_LINK_LIBRARIES
@@ -34,10 +33,12 @@ set(qt_gui_cpp_LINK_LIBRARIES
 
 qt5_wrap_cpp(qt_gui_cpp_MOCS ${qt_gui_cpp_HDRS})
 
-include_directories(${PROJECT_NAME} ${qt_gui_cpp_INCLUDE_DIRECTORIES})
+ament_export_dependencies(pluginlib)
+include_directories(${PROJECT_NAME} ${qt_gui_cpp_INCLUDE_DIRECTORIES} ${pluginlib_INCLUDE_DIRS})
 add_library(${PROJECT_NAME} ${qt_gui_cpp_SRCS} ${qt_gui_cpp_MOCS})
-target_link_libraries(${PROJECT_NAME} ${qt_gui_cpp_LINK_LIBRARIES} ${catkin_LIBRARIES} ${Boost_LIBRARIES} Qt5::Widgets ${TinyXML_LIBRARIES})
+
+target_link_libraries(${PROJECT_NAME} ${qt_gui_cpp_LINK_LIBRARIES} ${ament_LIBRARIES} ${Boost_LIBRARIES} Qt5::Widgets ${TinyXML_LIBRARIES})
 
 install(TARGETS ${PROJECT_NAME}
-  ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
-  LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION})
+  ARCHIVE DESTINATION lib
+  LIBRARY DESTINATION lib)

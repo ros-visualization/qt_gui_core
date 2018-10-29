@@ -30,10 +30,9 @@
 
 import webbrowser
 
+from catkin_pkg.package import parse_package, InvalidPackage
 from python_qt_binding.QtCore import QObject, Slot
-from rospkg import InvalidManifest, MANIFEST_FILE, parse_manifest_file
-
-from .ros_package_helper import get_package_path
+from qt_gui.ros_package_helper import get_package_path
 
 
 class HelpProvider(QObject):
@@ -48,7 +47,18 @@ class HelpProvider(QObject):
         package_name = plugin_descriptor.attributes()['package_name']
         package_path = get_package_path(package_name)
         try:
-            manifest = parse_manifest_file(package_path, MANIFEST_FILE)
-        except (InvalidManifest, IOError):
+            package = parse_package(package_path, MANIFEST_FILE)
+        except (InvalidPackage, IOError):
             return
-        webbrowser.open(manifest.url)
+
+        if not package.package_format or package.package_format < 2:
+            return
+
+        if len(package.urls) == 0:
+            return
+        url_str = package.urls[0].url
+        for url in package.urls:
+            if url.type == 'website':
+                url_str = url.url
+                break
+        webbrowser.open(url_str)

@@ -3,12 +3,10 @@
 import os
 import sys
 
-import rospkg
-r = rospkg.RosPack()
-p = r.get_path('qt_gui')
-sys.path.append(os.path.join(p, 'src'))
-
 from qt_gui.main import Main
+from qt_gui.ros_package_helper import get_package_path
+
+p = get_package_path('qt_gui')
 main = Main(p, invoked_filename=os.path.abspath(__file__))
-# TODO add dummy plugin provider 
-sys.exit(main.main())
+# TODO add dummy plugin provider
+sys.exit(main.main(p))
