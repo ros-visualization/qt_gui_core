@@ -35,7 +35,7 @@ from python_qt_binding.QtWidgets import (QGraphicsPathItem,
                                          QGraphicsSimpleTextItem)
 
 
-from .graph_item import GraphItem
+from qt_dotgraph.graph_item import GraphItem
 
 
 class EdgeItem(GraphItem):
@@ -87,7 +87,8 @@ class EdgeItem(GraphItem):
             self._label.hoverLeaveEvent = self._handle_hoverLeaveEvent
             self._label.setAcceptHoverEvents(True)
 
-        # spline specification according to http://www.graphviz.org/doc/info/attrs.html#k:splineType
+        # spline specification according to
+        # http://www.graphviz.org/doc/info/attrs.html#k:splineType
         coordinates = spline.split(' ')
         # extract optional end_point
         end_point = None

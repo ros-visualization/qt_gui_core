@@ -30,15 +30,16 @@
 # ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-from python_qt_binding.QtWidgets import QButtonGroup, QGroupBox, QLabel, QRadioButton, QVBoxLayout, QWidget
+from python_qt_binding.QtWidgets import \
+    QButtonGroup, QGroupBox, QLabel, QRadioButton, QVBoxLayout
 
 
 class ExclusiveOptionGroup(QGroupBox):
-
     """
     Creates a button group of exclusive radio options.
 
-    Options must be a dict with following keys: 'enabled','selected','title','description','tooltip'
+    Options must be a dict with following keys:
+        'enabled', 'selected', 'title', 'description', 'tooltip'
     """
 
     def __init__(self, options, title='Exclusive Options', selected_index=None, parent=None):
@@ -48,7 +49,7 @@ class ExclusiveOptionGroup(QGroupBox):
         self._button_group = QButtonGroup()
         self._button_group.setExclusive(True)
         self._options = options
-        if parent == None:
+        if parent is None:
             parent = self
 
         for (button_id, option) in enumerate(self._options):
@@ -64,8 +65,12 @@ class ExclusiveOptionGroup(QGroupBox):
                 parent.layout().addWidget(QLabel(option['description']))
 
     def get_settings(self):
-        """Returns dictionary with selected_index (int) and selected_option (dict) keys."""
+        """Return dictionary with selected_index (int) and selected_option (dict) keys."""
         selected_index = self._button_group.checkedId()
         if selected_index >= 0:
-            return {'selected_index': selected_index, 'selected_option': self._options[selected_index]}
+            return
+            {
+                'selected_index': selected_index,
+                'selected_option': self._options[selected_index]
+            }
         return {'selected_index': None, 'selected_option': None}

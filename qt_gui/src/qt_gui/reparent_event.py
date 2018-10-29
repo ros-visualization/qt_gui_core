@@ -32,7 +32,6 @@ from python_qt_binding.QtCore import QEvent
 
 
 class ReparentEvent(QEvent):
-
     """Event for reparenting dock widgets to other main windows."""
 
     reparent_event_type = QEvent.registerEventType()

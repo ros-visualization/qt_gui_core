@@ -32,7 +32,6 @@ import dbus
 
 
 class SettingsProxyDBusService(dbus.service.Object):
-
     """DBus service of a 'Settings' instance."""
 
     def __init__(self, object_path):

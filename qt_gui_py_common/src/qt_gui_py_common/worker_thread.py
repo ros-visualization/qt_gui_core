@@ -34,9 +34,11 @@ from python_qt_binding.QtCore import QThread
 
 
 class WorkerThread(QThread):
+    """
+    Run code in a separate thread, get notified upon completion and kill the thread synchronously.
 
-    """Convenience wrapper around QThread allowing to easily run code in a separate thread,
-    get notified upon completion and kill the thread synchronously."""
+    Convenience class built around a QThread
+    """
 
     def __init__(self, run_callback, finished_callback=None):
         super(WorkerThread, self).__init__()

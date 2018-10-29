@@ -30,7 +30,6 @@
 
 
 class PluginDescriptor(object):
-
     """Information about one Plugin."""
 
     def __init__(self, plugin_id, attributes=None):

@@ -35,7 +35,6 @@ from python_qt_binding.QtWidgets import QMainWindow
 
 
 class DockableMainWindow(QMainWindow):
-
     """Main window which allows DockWidgets to be reparented into it."""
 
     def __init__(self, parent=None):

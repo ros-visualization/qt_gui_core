@@ -32,12 +32,11 @@ import traceback
 
 from python_qt_binding.QtCore import qCritical, QEvent, QObject, qWarning, Slot
 
-from .plugin_context import PluginContext
-from .plugin_handler import PluginHandler
+from qt_gui.plugin_context import PluginContext
+from qt_gui.plugin_handler import PluginHandler
 
 
 class PluginHandlerDirect(PluginHandler):
-
     """Handler for directly passing invocations between the framework and one `Plugin` instance."""
 
     def __init__(self, parent, main_window, instance_id,
@@ -88,8 +87,8 @@ class PluginHandlerDirect(PluginHandler):
                 self._plugin.shutdown_plugin()
             except Exception:
                 qCritical(
-                    'PluginHandlerDirect._shutdown_plugin() plugin "%s" raised an exception:\n%s' %
-                    (str(self._instance_id), traceback.format_exc()))
+                    'PluginHandlerDirect._shutdown_plugin() plugin "%s" raised an ' +
+                    'exception:\n%s' % (str(self._instance_id), traceback.format_exc()))
         self.emit_shutdown_plugin_completed()
 
     def _delete_widget(self, widget):
@@ -122,7 +121,7 @@ class PluginHandlerDirect(PluginHandler):
                 self._plugin.restore_settings(plugin_settings_plugin, instance_settings_plugin)
             except Exception:
                 qCritical(
-                    'PluginHandlerDirect._restore_settings() plugin "%s" raised an exception:\n%s' %
+                    'PluginHandlerDirect._restore_settings() plugin "{}" raised an exception:\n' %
                     (str(self._instance_id), traceback.format_exc()))
         self.emit_restore_settings_completed()
 

@@ -34,7 +34,6 @@ from python_qt_binding.QtCore import QEvent, QObject, Signal
 
 
 class WindowChangedSignaler(QObject):
-
     """Signaler for for filtered events of an icon or title change of a widget."""
 
     hide_signal = Signal(object)
