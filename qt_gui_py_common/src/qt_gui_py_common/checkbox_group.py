@@ -31,11 +31,11 @@
 # ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-from python_qt_binding.QtWidgets import QButtonGroup, QGroupBox, QLabel, QCheckBox, QVBoxLayout, QWidget
+from python_qt_binding.QtWidgets import \
+    QButtonGroup, QCheckBox, QGroupBox, QLabel, QVBoxLayout
 
 
 class CheckBoxGroup(QGroupBox):
-
     """
     Creates a button group of non-exclusive checkbox options.
 
@@ -49,7 +49,7 @@ class CheckBoxGroup(QGroupBox):
         self._button_group = QButtonGroup()
         self._button_group.setExclusive(False)
         self._options = options
-        if parent == None:
+        if parent is None:
             parent = self
 
         for (button_id, option) in enumerate(self._options):
@@ -65,7 +65,7 @@ class CheckBoxGroup(QGroupBox):
                 parent.layout().addWidget(QLabel(option['description']))
 
     def get_settings(self):
-        """Returns dictionary with selected_indexes (array) and selected_options (array) keys."""
+        """Return dictionary with selected_indexes (array) and selected_options (array) keys."""
         selected_indexes = []
         selected_options = []
         for button in self._button_group.buttons():

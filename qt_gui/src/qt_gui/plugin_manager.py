@@ -28,25 +28,25 @@
 # ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-import os
 import time
 import traceback
 
-from python_qt_binding.QtCore import qCritical, qDebug, QObject, QSettings, Qt, qWarning, Signal, Slot
+from python_qt_binding.QtCore import \
+    qCritical, qDebug, QObject, Qt, qWarning, Signal, Slot
 
-from .errors import PluginLoadError
-from .plugin_handler_container import PluginHandlerContainer
-from .plugin_handler_direct import PluginHandlerDirect
-from .plugin_instance_id import PluginInstanceId
-from .plugin_menu import PluginMenu
-from .settings import Settings
-from .settings_proxy import SettingsProxy
+from qt_gui.errors import PluginLoadError
+from qt_gui.plugin_handler_container import PluginHandlerContainer
+from qt_gui.plugin_handler_direct import PluginHandlerDirect
+from qt_gui.plugin_instance_id import PluginInstanceId
+from qt_gui.plugin_menu import PluginMenu
+from qt_gui.settings import Settings
+from qt_gui.settings_proxy import SettingsProxy
 
 
 class PluginManager(QObject):
-
     """
     Manager of plugin life cycle.
+
     It creates a specific `PluginHandler` for each plugin instance and maintains the perspective
     specific set of running plugins.
     """
@@ -81,9 +81,10 @@ class PluginManager(QObject):
 
         self._number_of_ongoing_calls = None
 
-        if self._application_context.options.multi_process or self._application_context.options.embed_plugin:
+        if self._application_context.options.multi_process or \
+                self._application_context.options.embed_plugin:
             try:
-                from .plugin_handler_xembed import PluginHandlerXEmbed  # @UnusedImport
+                from qt_gui.plugin_handler_xembed import PluginHandlerXEmbed  # noqa: F401
             except ImportError:
                 qCritical('PluginManager.__init__() multiprocess-mode only available under linux')
                 exit(-1)
@@ -94,7 +95,7 @@ class PluginManager(QObject):
             self._reload_plugin_load, type=Qt.QueuedConnection)
 
         if self._application_context.provide_app_dbus_interfaces:
-            from .plugin_manager_dbus_interface import PluginManagerDBusInterface
+            from qt_gui.plugin_manager_dbus_interface import PluginManagerDBusInterface
             self._dbus_service = PluginManagerDBusInterface(self, self._application_context)
 
     def set_main_window(self, main_window, menu_bar, container_manager):
@@ -138,7 +139,10 @@ class PluginManager(QObject):
 
         # wipe cached data when forcing discovery or when cache is to old (or from the future)
         now = time.time()
-        if self._application_context.options.force_discover or not cache_stamp or cache_stamp > now or cache_stamp + PluginManager.discovery_cache_max_age < now:
+        if self._application_context.options.force_discover or \
+                not cache_stamp or \
+                cache_stamp > now or \
+                cache_stamp + PluginManager.discovery_cache_max_age < now:
             qDebug('PluginManager._discover() force discovery of plugins')
             cache_stamp = None
             for k in discovery_data.all_keys():
@@ -157,7 +161,8 @@ class PluginManager(QObject):
     def find_plugins_by_name(self, lookup_name):
         plugins = {}
         for plugin_id, plugin_full_name in self.get_plugins().items():
-            if plugin_full_name.lower().find(lookup_name.lower()) >= 0 or plugin_id.lower().find(lookup_name.lower()) >= 0:
+            if plugin_full_name.lower().find(lookup_name.lower()) >= 0 or \
+                    plugin_id.lower().find(lookup_name.lower()) >= 0:
                 plugins[plugin_id] = plugin_full_name
         return plugins
 
@@ -210,16 +215,20 @@ class PluginManager(QObject):
                 'PluginManager._load_plugin(%s) instance already loaded' % str(instance_id))
 
         # containers are pseudo-plugins and handled by a special handler
-        if self._container_manager is not None and instance_id.plugin_id == self._container_manager.get_container_descriptor().plugin_id():
-            handler = PluginHandlerContainer(
-                self, self._main_window, instance_id, self._application_context, self._container_manager)
+        if self._container_manager is not None and \
+            instance_id.plugin_id == \
+                self._container_manager.get_container_descriptor().plugin_id():
+            handler = PluginHandlerContainer(self, self._main_window, instance_id,
+                                             self._application_context, self._container_manager)
 
         # use platform specific handler for multiprocess-mode if available
-        elif self._application_context.options.multi_process or self._application_context.options.embed_plugin:
+        elif self._application_context.options.multi_process or \
+                self._application_context.options.embed_plugin:
             try:
-                from .plugin_handler_xembed import PluginHandlerXEmbed
-                handler = PluginHandlerXEmbed(
-                    self, self._main_window, instance_id, self._application_context, self._container_manager, argv)
+                from qt_gui.plugin_handler_xembed import PluginHandlerXEmbed
+                handler = \
+                    PluginHandlerXEmbed(self, self._main_window, instance_id,
+                                        self._application_context, self._container_manager, argv)
             except ImportError:
                 qCritical(
                     'PluginManager._load_plugin() could not load plugin in a separate process')
@@ -227,8 +236,8 @@ class PluginManager(QObject):
 
         # use direct handler for in-process plugins
         else:
-            handler = PluginHandlerDirect(
-                self, self._main_window, instance_id, self._application_context, self._container_manager, argv)
+            handler = PluginHandlerDirect(self, self._main_window, instance_id,
+                                          self._application_context, self._container_manager, argv)
 
         handler.set_minimized_dock_widgets_toolbar(self._minimized_dock_widgets_toolbar)
 
@@ -270,7 +279,8 @@ class PluginManager(QObject):
                          (instance_id.plugin_id, exception))
             else:
                 qCritical('PluginManager._load_plugin() could not load plugin "%s"%s' %
-                          (instance_id.plugin_id, (':\n%s' % traceback.format_exc() if exception != True else '')))
+                          (instance_id.plugin_id, (':\n%s' % traceback.format_exc() if
+                           not exception else '')))
             self._remove_running_plugin(instance_id)
             # quit embed application
             if self._application_context.options.embed_plugin:
@@ -309,7 +319,8 @@ class PluginManager(QObject):
     def unload_plugin(self, instance_id_str):
         # unloading a plugin with locked perspective or running standalone
         # triggers close of application
-        if self._application_context.options.lock_perspective or self._application_context.options.standalone_plugin:
+        if self._application_context.options.lock_perspective or \
+                self._application_context.options.standalone_plugin:
             self._close_application_signal()
             return
         instance_id = PluginInstanceId(instance_id=instance_id_str)
@@ -360,7 +371,8 @@ class PluginManager(QObject):
         info = self._running_plugins[str(instance_id)]
         if self._plugin_menu is not None:
             self._plugin_menu.remove_instance(instance_id)
-            info['handler'].label_updated.disconnect(self._plugin_menu.update_plugin_instance_label)
+            info['handler'].label_updated.disconnect(
+                self._plugin_menu.update_plugin_instance_label)
         self._running_plugins.pop(str(instance_id))
 
     @Slot(str)
