@@ -9,7 +9,7 @@ catkin_package(
   LIBRARIES ${PROJECT_NAME}
   CATKIN_DEPENDS pluginlib
   CFG_EXTRAS ${PROJECT_NAME}-extras.cmake
-  DEPENDS Boost TinyXML
+  DEPENDS TinyXML
 )
 
 catkin_python_setup()

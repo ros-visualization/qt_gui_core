@@ -33,7 +33,7 @@
 #ifndef qt_gui_cpp__RosPluginlibPluginProvider_H
 #define qt_gui_cpp__RosPluginlibPluginProvider_H
 
-// Pluginlib has an optional dependency on boost::shared_ptr, which is not required here
+// Pluginlib has an optional dependency on std::shared_ptr, which is not required here
 // On machines without boost, including pluginlib/class_loader.hpp requires defining this flag to
 // disable that dependency. Mosty notably these are the machines configured on ci.ros2.org
 #define PLUGINLIB__DISABLE_BOOST_FUNCTIONS
@@ -42,10 +42,6 @@
 #include "plugin_context.h"
 #include "plugin_descriptor.h"
 #include "plugin_provider.h"
-
-// while this header uses boost shared pointers
-// Shiboken2 isn't able to parse it correctly atm
-//#include <boost/shared_ptr.hpp>
 
 #include <pluginlib/class_loader.hpp>
 #include <pluginlib/impl/filesystem_helper.hpp>
@@ -210,7 +206,7 @@ public:
       return 0;
     }
 
-    boost::shared_ptr<T> instance;
+    std::shared_ptr<T> instance;
     try
     {
       instance = create_plugin(lookup_name, plugin_context);
@@ -262,7 +258,7 @@ public:
       return;
     }
 
-    boost::shared_ptr<T> pointer = instances_.take(instance);
+    std::shared_ptr<T> pointer = instances_.take(instance);
     libraries_to_unload_.append(pointer);
 
     QCoreApplication::postEvent(this, new QEvent(static_cast<QEvent::Type>(unload_libraries_event_)));
@@ -280,9 +276,9 @@ public:
 
 protected:
 
-  virtual boost::shared_ptr<T> create_plugin(const std::string& lookup_name, PluginContext* /*plugin_context*/ = 0)
+  virtual std::shared_ptr<T> create_plugin(const std::string& lookup_name, PluginContext* /*plugin_context*/ = 0)
   {
-    return class_loader_->createInstance(lookup_name);
+    return class_loader_->createSharedInstance(lookup_name);
   }
 
   virtual void init_plugin(const QString& /*plugin_id*/, PluginContext* plugin_context, Plugin* plugin)
@@ -397,9 +393,9 @@ private:
 
   pluginlib::ClassLoader<T>* class_loader_;
 
-  QMap<void*, boost::shared_ptr<T> > instances_;
+  QMap<void*, std::shared_ptr<T> > instances_;
 
-  QList<boost::shared_ptr<T> > libraries_to_unload_;
+  QList<std::shared_ptr<T> > libraries_to_unload_;
 
 };
 
