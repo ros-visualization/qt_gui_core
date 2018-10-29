@@ -32,10 +32,10 @@
 
 import os
 
+from ament_index_python.resources import get_resource
 from python_qt_binding import loadUi
 from python_qt_binding.QtCore import qWarning
 from python_qt_binding.QtWidgets import QDialog, QLabel
-from ament_index_python.resources import get_resource
 
 from .checkbox_group import CheckBoxGroup
 from .exclusive_options_group import ExclusiveOptionGroup

@@ -125,7 +125,7 @@ class DotToQtGeneratorTest(unittest.TestCase):
 
         gen = DotToQtGenerator()
         dotcode = r'''
-        strict digraph {
+        strict digraph "" {
             graph [bb="0,0,249,541",
                     compound=True,
                     rank=same,
@@ -224,15 +224,21 @@ class DotToQtGeneratorTest(unittest.TestCase):
         (nodes, edges) = gen.dotcode_to_qt_items(dotcode, 1)
 
         expected_nodes = [
-            '"/Container/Subcontainer"', '"/Container/finished"', '"/start"', '"/Container"',
-            '"/Container/Subcontainer/logstate1"', '"/Container/Subcontainer/finished"',
-            '"/Container/logstate"', '"/finished"']
+            '"/Container"', '"/Container/Subcontainer"', '"/Container/Subcontainer/finished"',
+            '"/Container/Subcontainer/logstate1"', '"/Container/finished"', '"/Container/logstate"',
+            '"/finished"', '"/start"'
+            ]
         expected_edges = [
-            '/Container/logstate_TO_/Container/finished_done',
             '/Container/Subcontainer/finished_TO_/Container/finished_finished',
-            '/start_TO_/Container/Subcontainer/logstate1',
+            '/Container/Subcontainer/logstate1_TO_/Container/Subcontainer/finished_done',
             '/Container/finished_TO_/finished_finished',
+            '/Container/logstate_TO_/Container/finished_done',
+            '/start_TO_/Container/Subcontainer/logstate1',
             '/start_TO_/Container/logstate',
-            '/Container/Subcontainer/logstate1_TO_/Container/Subcontainer/finished_done']
-        self.assertEqual(expected_nodes, nodes.keys())
-        self.assertEqual(expected_edges, edges.keys())
+            ]
+
+        nodes_sorted = list(sorted(nodes.keys()))
+        edges_sorted = list(sorted(edges.keys()))
+
+        self.assertEqual(expected_nodes, nodes_sorted)
+        self.assertEqual(expected_edges, edges_sorted)
