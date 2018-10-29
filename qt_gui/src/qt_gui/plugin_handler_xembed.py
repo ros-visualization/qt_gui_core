@@ -28,15 +28,15 @@
 # ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-from .plugin_handler_xembed_client import PluginHandlerXEmbedClient
-from .plugin_handler_xembed_container import PluginHandlerXEmbedContainer
+from qt_gui.plugin_handler_xembed_client import PluginHandlerXEmbedClient
+from qt_gui.plugin_handler_xembed_container import PluginHandlerXEmbedContainer
 
 
 class PluginHandlerXEmbed():
-
     """
-    Handler for forwarding invocations between the framework and one `Plugin` instance via a
-    peer-to-peer DBus connection. The both DBus endpoints are realized by the
+    Handler for forwarding invocations between the framework and one `Plugin` instance.
+
+    Handler uses peer-to-peer DBus connection. The both DBus endpoints are realized by the
     `PluginHandlerXEmbedContainer` and the `PluginHandlerXEmbedClient`.
     """
 

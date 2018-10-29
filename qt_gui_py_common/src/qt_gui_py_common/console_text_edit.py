@@ -135,7 +135,8 @@ class ConsoleTextEdit(QTextEdit):
 
             if event.key() in [Qt.Key_Backspace]:
                 # don't allow cursor to delete into prompt
-                if self.textCursor().positionInBlock() == prompt_length and not self.textCursor().hasSelection():
+                if (self.textCursor().positionInBlock() == prompt_length and
+                        not self.textCursor().hasSelection()):
                     return None
 
             if event.key() in [Qt.Key_Return, Qt.Key_Enter]:
