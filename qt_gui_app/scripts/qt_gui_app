@@ -3,7 +3,6 @@
 import os
 import sys
 
-<<<<<<< HEAD
 from ament_index_python.resources import get_resource
 from qt_gui.main import Main
 
@@ -11,15 +10,3 @@ _, qtgui_path = get_resource('packages', 'qt_gui')
 main = Main(qtgui_path, invoked_filename=os.path.abspath(__file__))
 # TODO add dummy plugin provider
 sys.exit(main.main(p))
-=======
-import rospkg
-from qt_gui.main import Main
-
-r = rospkg.RosPack()
-p = r.get_path('qt_gui')
-sys.path.append(os.path.join(p, 'src'))
-
-main = Main(p, invoked_filename=os.path.abspath(__file__))
-# TODO add dummy plugin provider
-sys.exit(main.main())
->>>>>>> style_changes

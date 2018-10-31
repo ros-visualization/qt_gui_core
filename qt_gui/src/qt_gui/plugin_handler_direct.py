@@ -121,7 +121,7 @@ class PluginHandlerDirect(PluginHandler):
                 self._plugin.restore_settings(plugin_settings_plugin, instance_settings_plugin)
             except Exception:
                 qCritical(
-                    'PluginHandlerDirect._restore_settings() plugin "%s" raised an exception:\n' %
+                    'PluginHandlerDirect._restore_settings() plugin "%s" raised an exception:\n%s' %
                     (str(self._instance_id), traceback.format_exc()))
         self.emit_restore_settings_completed()
 
