@@ -174,4 +174,4 @@ class PydotFactory():
         if type(dot) != str:
             dot = dot.decode()
         # sadly pydot generates line wraps cutting between numbers
-        return dot.replace("\\\n", "")
+        return dot.replace('\\\n', '')

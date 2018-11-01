@@ -87,7 +87,7 @@ class PluginHandlerDirect(PluginHandler):
                 self._plugin.shutdown_plugin()
             except Exception:
                 qCritical(
-                    'PluginHandlerDirect._shutdown_plugin() plugin "%s" raised an ' +
+                    'PluginHandlerDirect._shutdown_plugin() plugin "%s" raised an '
                     'exception:\n%s' % (str(self._instance_id), traceback.format_exc()))
         self.emit_shutdown_plugin_completed()
 
