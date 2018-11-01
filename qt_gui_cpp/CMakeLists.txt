@@ -2,8 +2,8 @@ cmake_minimum_required(VERSION 3.5)
 project(qt_gui_cpp)
 
 find_package(ament_cmake REQUIRED)
-find_package(tinyxml_vendor REQUIRED)
 find_package(pluginlib REQUIRED)
+find_package(tinyxml_vendor REQUIRED)
 
 ament_python_install_package(${PROJECT_NAME}
   PACKAGE_DIR src/${PROJECT_NAME})
