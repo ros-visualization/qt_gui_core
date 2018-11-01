@@ -58,7 +58,7 @@ if(shiboken_helper_FOUND)
       ARCHIVE_OUTPUT_DIRECTORY ${CATKIN_DEVEL_PREFIX}/${CATKIN_PACKAGE_PYTHON_DESTINATION}
       LIBRARY_OUTPUT_DIRECTORY ${CATKIN_DEVEL_PREFIX}/${CATKIN_PACKAGE_PYTHON_DESTINATION}
     )
-    target_link_libraries(qt_gui_cpp_shiboken ${PROJECT_NAME} ${catkin_LIBRARIES} ${Boost_LIBRARIES})
+    target_link_libraries(qt_gui_cpp_shiboken ${PROJECT_NAME} ${catkin_LIBRARIES})
     shiboken_target_link_libraries(qt_gui_cpp_shiboken "${qt_gui_cpp_shiboken_QT_COMPONENTS}")
 
     install(TARGETS qt_gui_cpp_shiboken
