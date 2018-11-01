@@ -21,8 +21,8 @@ install(
     DESTINATION include
   )
 
-ament_export_dependencies(TinyXML)
 ament_export_dependencies(pluginlib)
+ament_export_dependencies(TinyXML)
 
 ament_export_include_directories(include ${pluginlib_INCLUDE_DIRS})
 ament_export_libraries(${PROJECT_NAME})
