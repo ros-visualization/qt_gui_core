@@ -37,7 +37,6 @@ from python_qt_binding.QtWidgets import QDockWidget, QMenu, QWidget
 
 
 class DockWidgetTitleBar(QWidget):
-
     """Title bar for dock widgets providing custom actions."""
 
     def __init__(self, dock_widget, qtgui_path, hide_title=False):
@@ -56,20 +55,20 @@ class DockWidgetTitleBar(QWidget):
         icon = QIcon.fromTheme('emblem-system')
         if not icon.isNull():
             self.configuration_button.setIcon(icon)
-            self.configuration_button.setText("")
+            self.configuration_button.setText('')
         icon = QIcon.fromTheme('view-refresh')
         if not icon.isNull():
             self.reload_button.setIcon(icon)
-            self.reload_button.setText("")
+            self.reload_button.setText('')
         icon = QIcon.fromTheme('help-browser')
         if not icon.isNull():
             self.help_button.setIcon(icon)
-            self.help_button.setText("")
+            self.help_button.setText('')
 
         icon = QIcon.fromTheme('window-close')
         if not icon.isNull():
             self.close_button.setIcon(icon)
-            self.close_button.setText("")
+            self.close_button.setText('')
         self.close_button.clicked.connect(self._close_clicked)
 
         self.float_button.clicked.connect(self._toggle_floating)
@@ -221,7 +220,7 @@ class DockWidgetTitleBar(QWidget):
 if __name__ == '__main__':
     import sys
     from python_qt_binding.QtGui import QApplication
-    from .dockable_main_window import DockableMainWindow
+    from qt_gui.dockable_main_window import DockableMainWindow
 
     app = QApplication(sys.argv)
 

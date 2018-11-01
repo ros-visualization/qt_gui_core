@@ -32,7 +32,6 @@ from python_qt_binding.QtCore import QObject
 
 
 class PluginProvider(QObject):
-
     """Interface for discovering, loading and unloading of plugins."""
 
     def __init__(self):
@@ -42,6 +41,7 @@ class PluginProvider(QObject):
     def discover(self, discovery_data):
         """
         Discover the plugins.
+
         @param discovery_data:
             The settings containing any discovery data which is cached between invocations
         @return: Dictionary of plugin ids to `PluginDescriptor`s
@@ -51,6 +51,7 @@ class PluginProvider(QObject):
     def load(self, plugin_id, plugin_context):
         """
         Load a plugin and pass the `PluginContext`.
+
         @return: The created plugin instance
         @raise PluginLoadError
         """

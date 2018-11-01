@@ -32,7 +32,6 @@ from python_qt_binding.QtCore import QObject, Slot
 
 
 class Settings(QObject):
-
     """Storage of key-value data with a QSettings-like interface."""
 
     def __init__(self, settings_proxy, group):

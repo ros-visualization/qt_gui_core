@@ -32,6 +32,7 @@
 # POSSIBILITY OF SUCH DAMAGE.
 
 import os
+
 from python_qt_binding.QtGui import QIcon
 
 

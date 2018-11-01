@@ -30,7 +30,6 @@
 
 
 class ApplicationContext(object):
-
     """Application wide context containing variables used in various places."""
 
     def __init__(self):

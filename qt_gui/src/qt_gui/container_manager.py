@@ -30,13 +30,12 @@
 
 from python_qt_binding.QtCore import qDebug, QObject, Qt
 
-from .dock_widget import DockWidget
-from .plugin_descriptor import PluginDescriptor
-from .reparent_event import ReparentEvent
+from qt_gui.dock_widget import DockWidget
+from qt_gui.plugin_descriptor import PluginDescriptor
+from qt_gui.reparent_event import ReparentEvent
 
 
 class ContainerManager(QObject):
-
     """Manager of `DockWidgetContainer`s enabling reparenting to stored parent."""
 
     def __init__(self, root_main_window, parent=None):
@@ -44,7 +43,9 @@ class ContainerManager(QObject):
         self._root_main_window = root_main_window
         self._container_descriptor = PluginDescriptor('__DockWidgetContainer')
         self._container_descriptor.set_action_attributes(
-            self.tr('Container'), self.tr('Container for other dock widgets'), 'folder-new', 'theme')
+            self.tr('Container'), self.tr('Container for other dock widgets'),
+            'folder-new', 'theme')
+
         self._containers = {}
 
     def get_root_main_window(self):

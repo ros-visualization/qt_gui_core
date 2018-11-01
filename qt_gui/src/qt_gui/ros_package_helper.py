@@ -30,7 +30,7 @@
 
 
 def get_package_path(name):
-    """Helper function to determine the path of a ROS package using rospkg."""
+    """Determine the path of a ROS package using rospkg."""
     import rospkg
     r = rospkg.RosPack()
     return r.get_path(name)

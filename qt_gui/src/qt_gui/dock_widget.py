@@ -32,15 +32,12 @@ from python_qt_binding.QtCore import qDebug, QEvent, QPoint, QRect, Qt
 from python_qt_binding.QtGui import QMouseEvent
 from python_qt_binding.QtWidgets import QApplication, QDockWidget
 
-from .dockable_main_window import DockableMainWindow
-from .reparent_event import ReparentEvent
+from qt_gui.dockable_main_window import DockableMainWindow
+from qt_gui.reparent_event import ReparentEvent
 
 
 class DockWidget(QDockWidget):
-
-    """
-    Dock widget with the capability to be reparented via drag-and-drop to any other main window.
-    """
+    """Widget with the capability to be reparented via drag-and-drop to any other main window."""
 
     def __init__(self, container_manager):
         super(DockWidget, self).__init__()
@@ -145,8 +142,8 @@ class DockWidget(QDockWidget):
                 QApplication.instance().postEvent(self, mouse_repress_event)
                 QApplication.sendPostedEvents()
 
-                # schedule move to trigger dock widget drag'n'drop required for snapping and showing
-                # rubber band and let it complete move forth...
+                # schedule move to trigger dock widget drag'n'drop required for snapping and
+                # showing rubber band and let it complete move forth...
                 mouse_move_event = QMouseEvent(
                     QEvent.MouseMove,
                     self._dragging_local_pos,
@@ -191,7 +188,8 @@ class DockWidget(QDockWidget):
         root_main_window = self._container_manager.get_root_main_window()
 
         # work around bug where root main window is detected when point is near but not inside it
-        if widget == root_main_window and not self._widget_contains(root_main_window, global_point):
+        if widget == root_main_window and \
+                not self._widget_contains(root_main_window, global_point):
             # print '- work around to large root main window'
             widget = None
 
