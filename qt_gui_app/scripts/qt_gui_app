@@ -9,4 +9,4 @@ from qt_gui.main import Main
 _, qtgui_path = get_resource('packages', 'qt_gui')
 main = Main(qtgui_path, invoked_filename=os.path.abspath(__file__))
 # TODO add dummy plugin provider
-sys.exit(main.main(p))
+sys.exit(main.main())

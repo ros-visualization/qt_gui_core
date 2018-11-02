@@ -12,8 +12,6 @@ include_directories(include ${ament_INCLUDE_DIRS} ${TinyXML_INCLUDE_DIRS} ${plug
 
 add_subdirectory(src)
 
-install(DIRECTORY include/qt_gui_cpp/
-  DESTINATION include)
 install(FILES plugin.xml
   DESTINATION share)
 install(

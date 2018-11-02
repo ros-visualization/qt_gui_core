@@ -26,6 +26,7 @@
 
   <exec_depend version_gte="1.9.23">pluginlib</exec_depend>
   <exec_depend version_gte="0.3.0">qt_gui</exec_depend>
+  <exec_depend>tinyxml_vendor</exec_depend>
   <exec_depend>tinyxml</exec_depend>
 
   <export>
