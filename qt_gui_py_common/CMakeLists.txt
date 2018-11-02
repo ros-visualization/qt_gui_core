@@ -7,7 +7,7 @@ ament_python_install_package(${PROJECT_NAME}
   PACKAGE_DIR src/${PROJECT_NAME})
 
 install(DIRECTORY resource
-  DESTINATION share)
+  DESTINATION share/${PROJECT_NAME})
 
 install(TARGETS ${_library_name}
   DESTINATION "${PYTHON_INSTALL_DIR}/${PROJECT_NAME}"
