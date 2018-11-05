@@ -1,11 +1,13 @@
-cmake_minimum_required(VERSION 2.8.3)
+cmake_minimum_required(VERSION 3.5)
 project(qt_dotgraph)
 
-find_package(catkin REQUIRED)
-catkin_package()
+find_package(ament_cmake REQUIRED)
 
-catkin_python_setup()
+ament_python_install_package(${PROJECT_NAME}
+  PACKAGE_DIR src/${PROJECT_NAME})
 
 if (CATKIN_ENABLE_TESTING)
   catkin_add_nosetests(test)
 endif()
+
+ament_package()

@@ -37,17 +37,17 @@ from python_qt_binding.QtCore import (QByteArray, qCritical, QDataStream,
                                       qDebug, QIODevice, Qt, qWarning, Slot)
 from python_qt_binding.QtGui import QVBoxLayout, QX11EmbedWidget
 
-from .plugin_handler_direct import PluginHandlerDirect
-from .settings import Settings
-from .window_changed_signaler import WindowChangedSignaler
+from qt_gui.plugin_handler_direct import PluginHandlerDirect
+from qt_gui.settings import Settings
+from qt_gui.window_changed_signaler import WindowChangedSignaler
 
 
 class PluginHandlerXEmbedClient(PluginHandlerDirect):
-
     """
     Client part of the `PluginHandlerXEmbed`.
-    It utilizes the `PluginHandlerDBusService` of the `PluginHandlerXEmbedContainer`
-    through a peer-to-peer DBus connection.
+
+    Client utilizes the `PluginHandlerDBusService` of the `PluginHandlerXEmbedContainer` through a
+    peer-to-peer DBus connection.
     """
 
     def __init__(self, parent, main_window, instance_id,

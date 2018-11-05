@@ -38,8 +38,8 @@ set(qt_gui_cpp_HDRS
 )
 
 find_package(python_qt_binding REQUIRED)
-include(${python_qt_binding_EXTRAS_DIR}/shiboken_helper.cmake)
-
+include(${python_qt_binding_DIR}/shiboken_helper.cmake)
+ament_export_dependencies(pluginlib)
 if(shiboken_helper_FOUND)
   if(Shiboken_VERSION VERSION_GREATER "1.1.1")
     # shiboken 1.1.2 and higher will segfault until https://bugreports.qt-project.org/browse/PYSIDE-218 is fixed
@@ -53,16 +53,13 @@ if(shiboken_helper_FOUND)
 
     include_directories(qt_gui_cpp_shiboken ${qt_gui_cpp_INCLUDE_PATH}/qt_gui_cpp)
     shiboken_include_directories(qt_gui_cpp_shiboken "${qt_gui_cpp_shiboken_QT_COMPONENTS}")
+
     add_library(qt_gui_cpp_shiboken ${qt_gui_cpp_shiboken_SRCS})
-    set_target_properties(qt_gui_cpp_shiboken PROPERTIES
-      ARCHIVE_OUTPUT_DIRECTORY ${CATKIN_DEVEL_PREFIX}/${CATKIN_PACKAGE_PYTHON_DESTINATION}
-      LIBRARY_OUTPUT_DIRECTORY ${CATKIN_DEVEL_PREFIX}/${CATKIN_PACKAGE_PYTHON_DESTINATION}
-    )
-    target_link_libraries(qt_gui_cpp_shiboken ${PROJECT_NAME} ${catkin_LIBRARIES})
+    target_link_libraries(qt_gui_cpp_shiboken ${PROJECT_NAME} ${ament_LIBRARIES})
     shiboken_target_link_libraries(qt_gui_cpp_shiboken "${qt_gui_cpp_shiboken_QT_COMPONENTS}")
 
     install(TARGETS qt_gui_cpp_shiboken
-      ARCHIVE DESTINATION ${CATKIN_PACKAGE_PYTHON_DESTINATION}
-      LIBRARY DESTINATION ${CATKIN_PACKAGE_PYTHON_DESTINATION})
+      ARCHIVE DESTINATION lib
+      LIBRARY DESTINATION lib)
   endif()
 endif()

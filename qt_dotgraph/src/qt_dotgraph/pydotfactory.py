@@ -36,9 +36,6 @@ try:
 except ImportError:
     from urllib import quote
 
-# work around for https://bugs.launchpad.net/ubuntu/+source/pydot/+bug/1321135
-import pyparsing
-pyparsing._noncomma = "".join([c for c in pyparsing.printables if c != ","])
 import pydot
 
 
@@ -50,7 +47,7 @@ class PydotFactory():
 
     def escape_label(self, name):
         if name in ['graph', 'subgraph', 'node', 'edge']:
-            ret = "%s_" % name
+            ret = '%s_' % name
         else:
             ret = name
         return ret
@@ -92,7 +89,8 @@ class PydotFactory():
                           url=None,
                           tooltip=None):
         """
-        creates a node item for this factory, adds it to the graph.
+        Create a node item for this factory, adds it to the graph.
+
         Node name can vary from label but must always be same for the same node label
         """
         if nodename is None or nodename == '':
@@ -125,7 +123,8 @@ class PydotFactory():
                               style='bold',
                               subgraphlabel=None):
         """
-        creates a cluster subgraph  item for this factory, adds it to the graph.
+        Create a cluster subgraph item for this factory, adds it to the graph.
+
         cluster name can vary from label but must always be same for the same node label.
         Most layouters require cluster names to start with cluster.
         """
@@ -175,4 +174,4 @@ class PydotFactory():
         if type(dot) != str:
             dot = dot.decode()
         # sadly pydot generates line wraps cutting between numbers
-        return dot.replace("\\\n", "")
+        return dot.replace('\\\n', '')

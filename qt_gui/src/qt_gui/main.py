@@ -33,6 +33,8 @@
 from __future__ import print_function
 
 from argparse import ArgumentParser, SUPPRESS
+from ament_index_python.resources import get_resource
+
 import os
 import platform
 import signal
@@ -104,8 +106,8 @@ class Main(object):
                 '-p', '--perspective', dest='perspective', type=str, metavar='PERSPECTIVE',
                 help='start with this named perspective')
             common_group.add_argument(
-                '--perspective-file', dest='perspective_file', type=str, metavar='PERSPECTIVE_FILE',
-                help='start with a perspective loaded from a file')
+                '--perspective-file', dest='perspective_file', type=str,
+                metavar='PERSPECTIVE_FILE', help='start with a perspective loaded from a file')
         common_group.add_argument(
             '--reload-import', dest='reload_import', default=False, action='store_true',
             help='reload every imported module')
@@ -282,11 +284,12 @@ class Main(object):
                 self._options.command_start_plugin, self._options.command_switch_perspective)
             command_options_set = [opt for opt in command_options if opt is not None]
             if len(command_options_set) > 0 and not self._dbus_available:
-                raise RuntimeError('Without DBus support the --command-* options are not available')
+                raise RuntimeError(
+                    'Without DBus support the --command-* options are not available')
             if len(command_options_set) > 1:
                 raise RuntimeError(
-                    'Only one --command-* option can be used at a time (except --command-pid which '
-                    'is optional)')
+                    'Only one --command-* option can be used at a time (except --command-pid '
+                    'which is optional)')
             if len(command_options_set) == 0 and self._options.command_pid is not None:
                 raise RuntimeError(
                     'Option --command_pid can only be used together with an other --command-* '
@@ -332,7 +335,7 @@ class Main(object):
             self._options.lock_perspective = True
 
         # create application context containing various relevant information
-        from .application_context import ApplicationContext
+        from qt_gui.application_context import ApplicationContext
         context = ApplicationContext()
         context.qtgui_path = self._qtgui_path
         context.options = self._options
@@ -348,8 +351,8 @@ class Main(object):
                 context.dbus_unique_bus_name = context.dbus_base_bus_name + '.pid%d' % os.getpid()
 
                 # provide pid of application via dbus
-                from .application_dbus_interface import ApplicationDBusInterface
-                _dbus_server = ApplicationDBusInterface(context.dbus_base_bus_name)
+                from qt_gui.application_dbus_interface import ApplicationDBusInterface
+                _dbus_server = ApplicationDBusInterface(context.dbus_base_bus_name)  # noqa: F841
 
         # determine host bus name, either based on pid given on command line or
         # via dbus application interface if any other instance is available
@@ -411,17 +414,17 @@ class Main(object):
         from python_qt_binding.QtCore import QtFatalMsg, QTimer, QtWarningMsg
 
         from python_qt_binding.QtGui import QIcon
-        from python_qt_binding.QtWidgets import QAction, QMenuBar
+        from python_qt_binding.QtWidgets import QAction
 
-        from .about_handler import AboutHandler
-        from .composite_plugin_provider import CompositePluginProvider
-        from .container_manager import ContainerManager
-        from .help_provider import HelpProvider
-        from .icon_loader import get_icon
-        from .main_window import MainWindow
-        from .minimized_dock_widgets_toolbar import MinimizedDockWidgetsToolbar
-        from .perspective_manager import PerspectiveManager
-        from .plugin_manager import PluginManager
+        from qt_gui.about_handler import AboutHandler
+        from qt_gui.composite_plugin_provider import CompositePluginProvider
+        from qt_gui.container_manager import ContainerManager
+        from qt_gui.help_provider import HelpProvider
+        from qt_gui.icon_loader import get_icon
+        from qt_gui.main_window import MainWindow
+        from qt_gui.minimized_dock_widgets_toolbar import MinimizedDockWidgetsToolbar
+        from qt_gui.perspective_manager import PerspectiveManager
+        from qt_gui.plugin_manager import PluginManager
 
         # TODO PySide2 segfaults when invoking this custom message handler atm
         if QT_BINDING != 'pyside':
@@ -596,7 +599,7 @@ class Main(object):
 
         if self._options.reload_import:
             qDebug('ReloadImporter() automatically reload all subsequent imports')
-            from .reload_importer import ReloadImporter
+            from qt_gui.reload_importer import ReloadImporter
             _reload_importer = ReloadImporter()
             self._add_reload_paths(_reload_importer)
             _reload_importer.enable()
@@ -644,5 +647,6 @@ class Main(object):
 
 
 if __name__ == '__main__':
-    main = Main()
+    _, qtgui_path = get_resource('packages', 'qt_gui')
+    main = Main(qtgui_path)
     sys.exit(main.main())

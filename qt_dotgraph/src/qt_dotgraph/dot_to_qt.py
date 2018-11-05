@@ -30,12 +30,9 @@
 # ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-# work around for https://bugs.launchpad.net/ubuntu/+source/pydot/+bug/1321135
-import pyparsing
-pyparsing._noncomma = "".join([c for c in pyparsing.printables if c != ","])
-import pydot
-
 import codecs
+
+import pydot
 
 from python_qt_binding.QtCore import QPointF, QRectF
 from python_qt_binding.QtGui import QColor
@@ -74,7 +71,7 @@ class DotToQtGenerator():
         for name in subgraph.get_attributes().keys():
             value = get_unquoted(subgraph, name)
             attr[name] = value
-        obj_dic = subgraph.__getattribute__("obj_dict")
+        obj_dic = subgraph.__getattribute__('obj_dict')
         for name in obj_dic:
             if name not in ['nodes', 'attributes', 'parent_graph'] and obj_dic[name] is not None:
                 attr[name] = get_unquoted(obj_dic, name)
@@ -121,15 +118,13 @@ class DotToQtGenerator():
         return subgraph_nodeitem
 
     def getNodeItemForNode(self, node, highlight_level, scene=None):
-        """
-        returns a pyqt NodeItem object, or None in case of error or invisible style
-        """
+        """Return a pyqt NodeItem object, or None in case of error or invisible style."""
         # let pydot imitate pygraphviz api
         attr = {}
         for name in node.get_attributes().keys():
             value = get_unquoted(node, name)
             attr[name] = value
-        obj_dic = node.__getattribute__("obj_dict")
+        obj_dic = node.__getattribute__('obj_dict')
         for name in obj_dic:
             if name not in ['attributes', 'parent_graph'] and obj_dic[name] is not None:
                 attr[name] = get_unquoted(obj_dic, name)
@@ -142,7 +137,7 @@ class DotToQtGenerator():
 
         name = node.attr.get('label', node.attr.get('name'))
         if name is None:
-            print("Error, no label defined for node with attr: %s" % node.attr)
+            print('Error, no label defined for node with attr: %s' % node.attr)
             return None
 
         name = codecs.escape_decode(name)[0].decode('utf-8')
@@ -171,7 +166,8 @@ class DotToQtGenerator():
     def addEdgeItem(
             self, edge, nodes, edges, highlight_level, same_label_siblings=False, scene=None):
         """
-        adds EdgeItem by data in edge to edges
+        Add EdgeItem by data in edge to edges.
+
         :param same_label_siblings:
             if true, edges with same label will be considered siblings (collective highlighting)
         """
@@ -227,7 +223,7 @@ class DotToQtGenerator():
         if same_label_siblings:
             if label is None:
                 # for sibling detection
-                label = "%s_%s" % (source_node, destination_node)
+                label = '%s_%s' % (source_node, destination_node)
             # symmetrically add all sibling edges with same label
             if label in edges:
                 for sibling in edges[label]:
@@ -246,8 +242,9 @@ class DotToQtGenerator():
 
     def dotcode_to_qt_items(self, dotcode, highlight_level, same_label_siblings=False, scene=None):
         """
-        takes dotcode, runs layout, and creates qt items based on the dot layout.
-        returns two dicts, one mapping node names to Node_Item, one mapping edge names to lists of
+        Take dotcode, run layout, and creates qt items based on the dot layout.
+
+        Returns two dicts, one mapping node names to Node_Item, one mapping edge names to lists of
             Edge_Item.
         :param same_label_siblings:
             if true, edges with same label will be considered siblings (collective highlighting)
@@ -267,7 +264,7 @@ class DotToQtGenerator():
         return nodes, edges
 
     def parse_nodes(self, graph, highlight_level, scene=None):
-        """Recursively searches all nodes inside the graph and all subgraphs."""
+        """Recursively search all nodes inside the graph and all subgraphs."""
         # let pydot imitate pygraphviz api
         graph.nodes_iter = graph.get_node_list
         graph.subgraphs_iter = graph.get_subgraph_list
@@ -286,7 +283,8 @@ class DotToQtGenerator():
                 # hack required by pydot
                 if node.get_name() in ('graph', 'node', 'empty'):
                     continue
-                nodes[node.get_name()] = self.getNodeItemForNode(node, highlight_level, scene=scene)
+                nodes[node.get_name()] = \
+                    self.getNodeItemForNode(node, highlight_level, scene=scene)
         for node in graph.nodes_iter():
             # hack required by pydot
             if node.get_name() in ('graph', 'node', 'empty'):
@@ -295,7 +293,7 @@ class DotToQtGenerator():
         return nodes
 
     def parse_edges(self, graph, nodes, highlight_level, same_label_siblings, scene=None):
-        """Recursively searches all edges inside the graph and all subgraphs."""
+        """Recursively search all edges inside the graph and all subgraphs."""
         # let pydot imitate pygraphviz api
         graph.subgraphs_iter = graph.get_subgraph_list
         graph.edges_iter = graph.get_edge_list

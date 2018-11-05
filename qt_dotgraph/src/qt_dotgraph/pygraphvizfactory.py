@@ -56,7 +56,8 @@ class PygraphvizFactory():
                           url=None,
                           tooltip=None):
         """
-        creates a node item for this factory, adds it to the graph.
+        Create a node item for this factory, adds it to the graph.
+
         Node name can vary from label but must always be same for the same node label
         """
         if nodename is None or nodename == '':
@@ -84,15 +85,16 @@ class PygraphvizFactory():
                               shape='box',
                               style='bold'):
         """
-        creates a cluster subgraph  item for this factory, adds it to the graph.
-        cluster name can vary from label but must always be same for the same node label.
+        Create a cluster subgraph  item for this factory, adds it to the graph.
+
+        Cluster name can vary from label but must always be same for the same node label.
         Most layouters require cluster names to start with cluster.
         """
         if subgraphlabel is None or subgraphlabel == '':
             raise ValueError('Empty subgraph label')
 
         sg = graph.add_subgraph(
-            name="cluster_%s" % subgraphlabel, ranksep=ranksep, rankdir=rankdir,
+            name='cluster_%s' % subgraphlabel, ranksep=ranksep, rankdir=rankdir,
             rank=rank, compound=compound, label=str(subgraphlabel), style=style, color=color)
 
         return sg
@@ -109,4 +111,4 @@ class PygraphvizFactory():
     def create_dot(self, graph):
         graph.layout('dot')
         # sadly pygraphviz generates line wraps cutting between numbers
-        return graph.string().replace("\\\n", "")
+        return graph.string().replace('\\\n', '')

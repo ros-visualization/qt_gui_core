@@ -38,8 +38,8 @@ from python_qt_binding.QtWidgets import (QGraphicsEllipseItem,
                                          QGraphicsRectItem,
                                          QGraphicsSimpleTextItem)
 
-from .dot_shapes import QGraphicsBox3dItem
-from .graph_item import GraphItem
+from qt_dotgraph.dot_shapes import QGraphicsBox3dItem
+from qt_dotgraph.graph_item import GraphItem
 
 
 class NodeItem(GraphItem):
