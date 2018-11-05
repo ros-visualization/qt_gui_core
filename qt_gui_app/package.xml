@@ -2,8 +2,7 @@
   <name>qt_gui_app</name>
   <version>0.3.11</version>
   <description>
-    qt_gui_app provides the main to start an instance of the integrated graphical user
-    interface provided by qt_gui.
+    qt_gui_app provides the main to start an instance of the integrated graphical user interface provided by qt_gui.
   </description>
   <maintainer email="dhood@osrfoundation.org">D. Hood</maintainer>
   <maintainer email="dthomas@osrfoundation.org">Dirk Thomas</maintainer>
