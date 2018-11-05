@@ -8,7 +8,7 @@ find_package(tinyxml_vendor REQUIRED)
 ament_python_install_package(${PROJECT_NAME}
   PACKAGE_DIR src/${PROJECT_NAME})
 
-include_directories(include ${ament_INCLUDE_DIRS} ${TinyXML_INCLUDE_DIRS} ${pluginlib_INCLUDE_DIRS})
+include_directories(include ${TinyXML_INCLUDE_DIRS} ${pluginlib_INCLUDE_DIRS})
 
 add_subdirectory(src)
 
