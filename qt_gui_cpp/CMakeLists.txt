@@ -22,6 +22,7 @@ install(
 ament_export_dependencies(pluginlib)
 ament_export_dependencies(TinyXML)
 
+ament_export_include_directories(include)
 ament_export_libraries(${PROJECT_NAME})
 
 ament_package(CONFIG_EXTRAS cmake/${PROJECT_NAME}-extras.cmake)
