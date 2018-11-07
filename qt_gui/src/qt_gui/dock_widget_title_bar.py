@@ -43,7 +43,8 @@ class DockWidgetTitleBar(QWidget):
         super(DockWidgetTitleBar, self).__init__(dock_widget)
         self._dock_widget = dock_widget
 
-        ui_file = os.path.join(qtgui_path, 'resource', 'dock_widget_title_bar.ui')
+        ui_file = os.path.join(
+            qtgui_path, 'share', 'qt_gui', 'resource', 'dock_widget_title_bar.ui')
         loadUi(ui_file, self)
         self._extra_buttons = {
             'configuration': self.configuration_button,
