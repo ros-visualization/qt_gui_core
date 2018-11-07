@@ -31,12 +31,15 @@
 # ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
+# This file does not pass flake8 due to the raw string literals below.
+# flake8: noqa
+
+import subprocess
+import sys
 import unittest
 
-from qt_dotgraph.dot_to_qt import DotToQtGenerator, get_unquoted
 from python_qt_binding.QtWidgets import QApplication
-import sys
-import subprocess
+from qt_dotgraph.dot_to_qt import DotToQtGenerator, get_unquoted
 
 
 def check_x_server():
@@ -117,7 +120,7 @@ class DotToQtGeneratorTest(unittest.TestCase):
                 "Label text for '%s' is higher than surrounding shape." % name)
 
     def test_unquoted(self):
-        self.assertEqual("foo", get_unquoted({'bar': 'foo'}, 'bar'))
+        self.assertEqual('foo', get_unquoted({'bar': 'foo'}, 'bar'))
 
     def test_recursive(self):
         if DotToQtGeneratorTest._Q_APP is None:
@@ -160,20 +163,20 @@ class DotToQtGeneratorTest(unittest.TestCase):
                                     ranksep=0.2,
                                     style=bold
                             ];
-                            "/Container/Subcontainer/logstate1"                      [height=0.5,
+                            "/Container/Subcontainer/logstate1" [height=0.5,
                                     label=logstate1,
                                     pos="133,235",
                                     shape=box,
                                     url=None,
                                     width=0.90278];
-                            "/Container/Subcontainer/finished"                       [color=blue,
+                            "/Container/Subcontainer/finished" [color=blue,
                                     height=0.5,
                                     label=finished,
                                     pos="133,168",
                                     shape=ellipse,
                                     url=None,
                                     width=1.0833];
-                            "/Container/Subcontainer/logstate1" -> "/Container/Subcontainer/finished"                        [label=done,
+                            "/Container/Subcontainer/logstate1" -> "/Container/Subcontainer/finished" [label=done,
                                     lp="146.5,201.5",
                                     pos="e,133,186.19 133,216.92 133,210.7 133,203.5 133,196.6",
                                     url=None];
@@ -185,7 +188,7 @@ class DotToQtGeneratorTest(unittest.TestCase):
                             shape=ellipse,
                             url=None,
                             width=1.0833];
-                    "/Container/Subcontainer/finished" -> "/Container/finished"              [label=finished,
+                    "/Container/Subcontainer/finished" -> "/Container/finished" [label=finished,
                             lp="132,126.5",
                             pos="e,96.623,110.5 122.33,150.44 116.39,141.19 108.85,129.5 102.19,119.15",
                             url=None];
@@ -195,7 +198,7 @@ class DotToQtGeneratorTest(unittest.TestCase):
                             shape=box,
                             url=None,
                             width=0.81944];
-                    "/Container/logstate" -> "/Container/finished"           [label=done,
+                    "/Container/logstate" -> "/Container/finished" [label=done,
                             lp="82.5,126.5",
                             pos="e,74.304,110.45 53.482,149.8 57.712,140.5 63.287,128.93 69,119 69.051,118.91 69.102,118.82 69.153,118.74",
                             url=None];
@@ -225,9 +228,9 @@ class DotToQtGeneratorTest(unittest.TestCase):
 
         expected_nodes = [
             '"/Container"', '"/Container/Subcontainer"', '"/Container/Subcontainer/finished"',
-            '"/Container/Subcontainer/logstate1"', '"/Container/finished"', '"/Container/logstate"',
-            '"/finished"', '"/start"'
-            ]
+            '"/Container/Subcontainer/logstate1"', '"/Container/finished"',
+            '"/Container/logstate"', '"/finished"', '"/start"'
+        ]
         expected_edges = [
             '/Container/Subcontainer/finished_TO_/Container/finished_finished',
             '/Container/Subcontainer/logstate1_TO_/Container/Subcontainer/finished_done',
@@ -235,7 +238,7 @@ class DotToQtGeneratorTest(unittest.TestCase):
             '/Container/logstate_TO_/Container/finished_done',
             '/start_TO_/Container/Subcontainer/logstate1',
             '/start_TO_/Container/logstate',
-            ]
+        ]
 
         nodes_sorted = list(sorted(nodes.keys()))
         edges_sorted = list(sorted(edges.keys()))
