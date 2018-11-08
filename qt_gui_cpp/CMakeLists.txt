@@ -14,13 +14,14 @@ add_subdirectory(src)
 
 install(FILES plugin.xml
   DESTINATION share)
+
 install(
-    DIRECTORY include
-    DESTINATION include
-  )
+  DIRECTORY include
+  DESTINATION include
+)
 
 ament_export_dependencies(pluginlib)
-ament_export_dependencies(TinyXML)
+ament_export_include_directories(include)
 
 ament_export_include_directories(include)
 ament_export_libraries(${PROJECT_NAME})
