@@ -53,7 +53,7 @@ class AboutHandler(QObject):
     def show(self):
         try:
             # append folder of 'qt_gui_cpp/lib' to module search path
-            qt_gui_cpp_path = os.path.realpath(get_package_path('qt_gui'))
+            qt_gui_cpp_path = os.path.realpath(get_package_path('qt_gui_cpp'))
         except Exception:
             qt_gui_cpp = None
         else:
