@@ -21,13 +21,11 @@
   <build_depend version_gte="0.3.0">python_qt_binding</build_depend>
   <build_depend>qt5-qmake</build_depend>
   <build_depend>qtbase5-dev</build_depend>
-  <build_depend>tinyxml_vendor</build_depend>
-  <build_depend>tinyxml</build_depend>
+  <build_depend>tinyxml2_vendor</build_depend>
 
   <exec_depend version_gte="1.9.23">pluginlib</exec_depend>
   <exec_depend version_gte="0.3.0">qt_gui</exec_depend>
-  <exec_depend>tinyxml_vendor</exec_depend>
-  <exec_depend>tinyxml</exec_depend>
+  <exec_depend>tinyxml2_vendor</exec_depend>
 
   <export>
     <build_type>ament_cmake</build_type>
