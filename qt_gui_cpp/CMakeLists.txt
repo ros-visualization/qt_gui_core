@@ -16,7 +16,7 @@ install(FILES plugin.xml
   DESTINATION share)
 
 install(
-  DIRECTORY include
+  DIRECTORY include/
   DESTINATION include
 )
 
