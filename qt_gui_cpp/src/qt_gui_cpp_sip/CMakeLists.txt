@@ -29,7 +29,7 @@ set(qt_gui_cpp_sip_DEPENDENT_FILES
 # maintain context for different named target
 set(qt_gui_cpp_sip_INCLUDE_DIRS ${qt_gui_cpp_INCLUDE_DIRS} "${CMAKE_CURRENT_SOURCE_DIR}/../../include")
 set(qt_gui_cpp_sip_LIBRARY_DIRS ${qt_gui_cpp_LIBRARY_DIRS} lib)
-set(qt_gui_cpp_sip_LDFLAGS_OTHER ${qt_gui_cpp_LDFLAGS_OTHER} -Wl,-rpath,\\"lib\\")
+set(qt_gui_cpp_sip_LDFLAGS_OTHER ${qt_gui_cpp_LDFLAGS_OTHER})
 
 find_library(class_loader_LIBRARY class_loader)
 find_library(console_bridge_LIBRARY console_bridge)
@@ -83,6 +83,8 @@ if(sip_helper_FOUND)
 
   if(APPLE)
     set(LIBQT_GUI_CPP_SIP_SUFFIX .so)
+  elseif(WIN32)
+    set(LIBQT_GUI_CPP_SIP_SUFFIX .pyd)
   else()
     set(LIBQT_GUI_CPP_SIP_SUFFIX ${CMAKE_SHARED_LIBRARY_SUFFIX})
   endif()
