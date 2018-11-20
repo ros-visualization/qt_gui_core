@@ -220,21 +220,24 @@ class DockWidgetTitleBar(QWidget):
 
 if __name__ == '__main__':
     import sys
-    from python_qt_binding.QtGui import QApplication
+    from python_qt_binding.QtWidgets import QApplication
     from qt_gui.dockable_main_window import DockableMainWindow
+    from ament_index_python.resources import get_resource
 
+    _, qtgui_path = get_resource('packages', 'qt_gui')
     app = QApplication(sys.argv)
 
     win = DockableMainWindow()
 
     dock1 = QDockWidget('dockwidget1', win)
     win.addDockWidget(Qt.LeftDockWidgetArea, dock1)
-    title_bar = DockWidgetTitleBar(dock1)
+    title_bar = DockWidgetTitleBar(dock1, qtgui_path)
     dock1.setTitleBarWidget(title_bar)
 
     dock2 = QDockWidget('dockwidget2')
     win.addDockWidget(Qt.RightDockWidgetArea, dock2)
-    title_bar = DockWidgetTitleBar(dock2)
+    title_bar = DockWidgetTitleBar(dock2, qtgui_path)
+
     dock2.setTitleBarWidget(title_bar)
 
     win.resize(640, 480)
