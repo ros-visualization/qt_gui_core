@@ -31,6 +31,35 @@ set(qt_gui_cpp_sip_INCLUDE_DIRS ${qt_gui_cpp_INCLUDE_DIRS} "${CMAKE_CURRENT_SOUR
 set(qt_gui_cpp_sip_LIBRARY_DIRS ${qt_gui_cpp_LIBRARY_DIRS} lib)
 set(qt_gui_cpp_sip_LDFLAGS_OTHER ${qt_gui_cpp_LDFLAGS_OTHER} -Wl,-rpath,\\"lib\\")
 
+find_library(class_loader_LIBRARY class_loader)
+find_library(console_bridge_LIBRARY console_bridge)
+find_library(TinyXML2_LIBRARY tinyxml2)
+
+set(_qt_gui_cpp_sip_LIBRARIES
+  ${pluginlib_LIBRARIES}
+  ${PYTHON_LIBRARY}
+  ${TinyXML2_LIBRARY}
+  ${class_loader_LIBRARY}
+  ${console_bridge_LIBRARY}
+)
+
+foreach(_library ${_qt_gui_cpp_sip_LIBRARIES})
+  if (EXISTS ${_library})
+    list(APPEND qt_gui_cpp_sip_LIBRARIES ${_library})
+  else()
+    message(STATUS "Library with path \"${_library}\" was supposed to be linked, but the path is poorly formed or it does not exist. Therefore it won't be found by sip so it will be ignored")
+  endif()
+endforeach()
+
+# The qt_gui_cpp library does not exist yet, but it will be built before sip generation
+list(APPEND qt_gui_cpp_sip_LIBRARIES "$<TARGET_FILE:qt_gui_cpp>")
+
+if(CMAKE_COMPILER_IS_GNUCXX)
+  # this is needed to use the experimental/filesystem on Linux, but cannot be passed with
+  # ament_export_libraries() because it is not absolute and cannot be found with find_library
+  list(APPEND qt_gui_cpp_sip_LIBRARIES stdc++fs)
+endif()
+
 set(qt_gui_cpp_INCLUDE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../../include ${pluginlib_INCLUDE_DIRS})
 
 find_package(python_qt_binding REQUIRED)
@@ -59,5 +88,5 @@ if(sip_helper_FOUND)
   endif()
 
   install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/../../lib/libqt_gui_cpp_sip${LIBQT_GUI_CPP_SIP_SUFFIX}
-      DESTINATION lib)
+      DESTINATION ${PYTHON_INSTALL_DIR}/${PROJECT_NAME})
 endif()
