@@ -31,5 +31,6 @@
 
   <export>
     <build_type>ament_cmake</build_type>
+    <qt_gui plugin="${prefix}/plugin.xml"/>
   </export>
 </package>
