@@ -31,6 +31,23 @@ set(qt_gui_cpp_sip_INCLUDE_DIRS ${qt_gui_cpp_INCLUDE_DIRS} "${CMAKE_CURRENT_SOUR
 set(qt_gui_cpp_sip_LIBRARY_DIRS ${qt_gui_cpp_LIBRARY_DIRS} lib)
 set(qt_gui_cpp_sip_LDFLAGS_OTHER ${qt_gui_cpp_LDFLAGS_OTHER} -Wl,-rpath,\\"lib\\")
 
+set(_qt_gui_cpp_sip_LIBRARIES
+  ${pluginlib_LIBRARIES}
+  ${PYTHON_LIBRARY}
+  qt_gui_cpp
+)
+
+# sip needs libraries to have resolved paths and cannot link to cmake targets
+foreach(_lib_name ${_qt_gui_cpp_sip_LIBRARIES})
+  if(TARGET ${_lib_name})
+    # Use a nifty cmake generator expression to resolve the target location
+    list(APPEND qt_gui_cpp_sip_LIBRARIES $<TARGET_FILE:${_lib_name}>)
+  else()
+    # This library should work as is
+    list(APPEND qt_gui_cpp_sip_LIBRARIES ${_lib_name})
+  endif()
+endforeach()
+
 set(qt_gui_cpp_INCLUDE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../../include ${pluginlib_INCLUDE_DIRS})
 
 find_package(python_qt_binding REQUIRED)
@@ -59,5 +76,5 @@ if(sip_helper_FOUND)
   endif()
 
   install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/../../lib/libqt_gui_cpp_sip${LIBQT_GUI_CPP_SIP_SUFFIX}
-      DESTINATION lib)
+      DESTINATION ${PYTHON_INSTALL_DIR}/${PROJECT_NAME})
 endif()
