@@ -280,7 +280,7 @@ class PluginManager(QObject):
             else:
                 qCritical('PluginManager._load_plugin() could not load plugin "%s"%s' %
                           (instance_id.plugin_id, (':\n%s' % traceback.format_exc() if
-                           not exception else '')))
+                           isinstance(exception, Exception) else '')))
             self._remove_running_plugin(instance_id)
             # quit embed application
             if self._application_context.options.embed_plugin:
