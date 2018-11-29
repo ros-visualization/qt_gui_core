@@ -59,5 +59,5 @@ if(sip_helper_FOUND)
   endif()
 
   install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/../../lib/libqt_gui_cpp_sip${LIBQT_GUI_CPP_SIP_SUFFIX}
-      DESTINATION lib)
+      DESTINATION ${CMAKE_INSTALL_PREFIX}/${PYTHON_INSTALL_DIR}/${PROJECT_NAME}/)
 endif()

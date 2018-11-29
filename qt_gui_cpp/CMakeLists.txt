@@ -22,8 +22,6 @@ install(
 
 ament_export_dependencies(pluginlib)
 ament_export_include_directories(include)
-
-ament_export_include_directories(include)
 ament_export_libraries(${PROJECT_NAME})
 
 # TODO(brawner) add ament_lint_auto tests here. Much of the c++ code needs to
