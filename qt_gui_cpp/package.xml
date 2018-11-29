@@ -30,6 +30,7 @@
   <exec_depend>tinyxml</exec_depend>
 
   <export>
+    <qt_gui plugin="${prefix}/plugin.xml"/>
     <build_type>ament_cmake</build_type>
   </export>
 </package>

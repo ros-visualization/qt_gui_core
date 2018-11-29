@@ -13,7 +13,7 @@ include_directories(include ${TinyXML_INCLUDE_DIRS} ${pluginlib_INCLUDE_DIRS})
 add_subdirectory(src)
 
 install(FILES plugin.xml
-  DESTINATION share)
+  DESTINATION share/${PROJECT_NAME})
 
 install(
   DIRECTORY include/
