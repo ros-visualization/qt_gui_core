@@ -4,7 +4,8 @@ project(qt_gui_app)
 find_package(ament_cmake REQUIRED)
 find_package(ament_cmake_python REQUIRED)
 
-install(PROGRAMS scripts/qt_gui_app DESTINATION bin)
+install(PROGRAMS scripts/qt_gui_app
+  DESTINATION lib/${PROJECT_NAME})
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
