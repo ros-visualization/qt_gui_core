@@ -45,7 +45,7 @@
 
 #include <pluginlib/class_loader.hpp>
 #include <pluginlib/impl/filesystem_helper.hpp>
-#include <tinyxml.h>
+#include <tinyxml2.h>
 
 #include <QCoreApplication>
 #include <QEvent>
@@ -294,40 +294,33 @@ private:
 
     std::string manifest_path = class_loader_->getPluginManifestPath(lookup_name);
     //qDebug("RosPluginlibPluginProvider::parseManifest() manifest_path \"%s\"", manifest_path.c_str());
-    TiXmlDocument doc;
-    bool loaded = doc.LoadFile(manifest_path);
-    if (!loaded)
+    tinyxml2::XMLDocument doc;
+    bool loaded = doc.LoadFile(manifest_path.c_str());
+    if (!loaded || doc.Error())
     {
-      if (doc.ErrorRow() > 0)
-      {
-        qWarning("RosPluginlibPluginProvider::parseManifest() could not load manifest \"%s\" (%s [line %d, column %d])", manifest_path.c_str(), doc.ErrorDesc(), doc.ErrorRow(), doc.ErrorCol());
-      }
-      else
-      {
-        qWarning("RosPluginlibPluginProvider::parseManifest() could not load manifest \"%s\" (%s)", manifest_path.c_str(), doc.ErrorDesc());
-      }
+      qWarning("RosPluginlibPluginProvider::parseManifest() could not load manifest \"%s\" (%s)", manifest_path.c_str(), doc.ErrorStr());
       return false;
     }
 
     // search library-tag with specific path-attribute
     std::string class_type = class_loader_->getClassType(lookup_name);
-    TiXmlElement* library_element = doc.FirstChildElement("library");
+    tinyxml2::XMLElement* library_element = doc.FirstChildElement("library");
     while (library_element)
     {
         // search class-tag with specific type- and base_class_type-attribute
-        TiXmlElement* class_element = library_element->FirstChildElement("class");
+        tinyxml2::XMLElement* class_element = library_element->FirstChildElement("class");
         while (class_element)
         {
           if (class_type.compare(class_element->Attribute("type")) == 0 && base_class_type_.compare(class_element->Attribute("base_class_type")) == 0)
           {
-            TiXmlElement* qtgui_element = class_element->FirstChildElement("qtgui");
+            tinyxml2::XMLElement* qtgui_element = class_element->FirstChildElement("qtgui");
             if (qtgui_element)
             {
               // extract meta information
               parseActionAttributes(qtgui_element, plugin_path, label, statustip, icon, icontype);
 
               // extract grouping information
-              TiXmlElement* group_element = qtgui_element->FirstChildElement("group");
+              tinyxml2::XMLElement* group_element = qtgui_element->FirstChildElement("group");
               while (group_element)
               {
                 QString group_label;
@@ -353,9 +346,9 @@ private:
     return false;
   }
 
-  void parseActionAttributes(TiXmlElement* element, const std::string& plugin_path, QString& label, QString& statustip, QString& icon, QString& icontype)
+  void parseActionAttributes(tinyxml2::XMLElement* element, const std::string& plugin_path, QString& label, QString& statustip, QString& icon, QString& icontype)
   {
-    TiXmlElement* child_element;
+    tinyxml2::XMLElement* child_element;
     if ((child_element = element->FirstChildElement("label")) != 0)
     {
       label = child_element->GetText();
