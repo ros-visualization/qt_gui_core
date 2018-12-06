@@ -295,8 +295,8 @@ private:
     std::string manifest_path = class_loader_->getPluginManifestPath(lookup_name);
     //qDebug("RosPluginlibPluginProvider::parseManifest() manifest_path \"%s\"", manifest_path.c_str());
     tinyxml2::XMLDocument doc;
-    bool loaded = doc.LoadFile(manifest_path.c_str());
-    if (!loaded || doc.Error())
+    tinyxml2::XMLError result = doc.LoadFile(manifest_path.c_str());
+    if (result != tinyxml2::XML_SUCCESS)
     {
       qWarning("RosPluginlibPluginProvider::parseManifest() could not load manifest \"%s\" (%s)", manifest_path.c_str(), doc.ErrorStr());
       return false;
