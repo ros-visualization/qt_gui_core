@@ -193,19 +193,17 @@ class Main(object):
 
     def _check_icon_theme_compliance(self):
         from python_qt_binding.QtGui import QIcon
-        # TODO find a better way to verify Theme standard compliance
-        if QIcon.themeName() == '' or \
-           QIcon.fromTheme('document-save').isNull() or \
-           QIcon.fromTheme('document-open').isNull() or \
-           QIcon.fromTheme('edit-cut').isNull() or \
-           QIcon.fromTheme('object-flip-horizontal').isNull():
-            if 'darwin' in platform.platform().lower() and \
-                    '/usr/local/share/icons' not in QIcon.themeSearchPaths():
-                QIcon.setThemeSearchPaths(QIcon.themeSearchPaths() + ['/usr/local/share/icons'])
-            original_theme = QIcon.themeName()
+        required_icons = ['document-save', 'document-open', 'edit-cut', 'object-flip-horizontal']
+        current_theme_is_valid = True
+        for icon_name in required_icons:
+            if QIcon.fromTheme(icon_name).isNull():
+                current_theme_is_valid = False
+
+        if not current_theme_is_valid:
+            _, icons_pkg_path = get_resource('packages', 'qt_gui_icons')
+            icons_path = os.path.join(icons_pkg_path, 'share', 'qt_gui_icons', 'resource', 'icons')
+            QIcon.setThemeSearchPaths(QIcon.themeSearchPaths() + [icons_path, ])
             QIcon.setThemeName('Tango')
-            if QIcon.fromTheme('document-save').isNull():
-                QIcon.setThemeName(original_theme)
 
     def create_application(self, argv):
         from python_qt_binding.QtCore import Qt
