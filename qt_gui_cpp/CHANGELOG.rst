@@ -2,8 +2,8 @@
 Changelog for package qt_gui_cpp
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+1.0.3 (2018-12-11)
+------------------
 * skip qt_gui_cpp on Windows (`#158 <https://github.com/ros-visualization/qt_gui_core/issues/158>`_)
 * fix finding Qt5 widgets on Windows (`#157 <https://github.com/ros-visualization/qt_gui_core/issues/157>`_)
 
