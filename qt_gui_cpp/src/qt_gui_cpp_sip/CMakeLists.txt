@@ -65,6 +65,7 @@ if(sip_helper_FOUND)
 
   build_sip_binding(qt_gui_cpp_sip qt_gui_cpp.sip
     SOURCE_DIR ${PROJECT_SOURCE_DIR}/src/qt_gui_cpp_sip
+    LIBRARY_DIR ${CMAKE_CURRENT_BINARY_DIR}
     DEPENDS ${qt_gui_cpp_sip_DEPENDENT_FILES}
     DEPENDENCIES qt_gui_cpp
   )
@@ -77,6 +78,6 @@ if(sip_helper_FOUND)
     set(LIBQT_GUI_CPP_SIP_SUFFIX ${CMAKE_SHARED_LIBRARY_SUFFIX})
   endif()
 
-  install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/../../lib/libqt_gui_cpp_sip${LIBQT_GUI_CPP_SIP_SUFFIX}
+  install(FILES ${CMAKE_CURRENT_BINARY_DIR}/libqt_gui_cpp_sip${LIBQT_GUI_CPP_SIP_SUFFIX}
       DESTINATION ${PYTHON_INSTALL_DIR}/${PROJECT_NAME})
 endif()
