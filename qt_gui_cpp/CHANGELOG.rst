@@ -2,6 +2,11 @@
 Changelog for package qt_gui_cpp
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* skip qt_gui_cpp on Windows (`#158 <https://github.com/ros-visualization/qt_gui_core/issues/158>`_)
+* fix finding Qt5 widgets on Windows (`#157 <https://github.com/ros-visualization/qt_gui_core/issues/157>`_)
+
 1.0.2 (2018-12-11)
 ------------------
 * move build location of qt_gui_cpp_sip library out-of-source (`#156 <https://github.com/ros-visualization/qt_gui_core/issues/156>`_)
