@@ -2,6 +2,10 @@
 Changelog for package qt_dotgraph
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* fix build type (`#155 <https://github.com/ros-visualization/qt_gui_core/issues/155>`_)
+
 1.0.0 (2018-12-10)
 ------------------
 * use ament_lint_auto (`#136 <https://github.com/ros-visualization/qt_gui_core/issues/136>`_)

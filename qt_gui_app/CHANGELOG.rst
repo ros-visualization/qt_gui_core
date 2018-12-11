@@ -2,6 +2,9 @@
 Changelog for package qt_gui_app
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+
 1.0.0 (2018-12-10)
 ------------------
 * move installed script to lib/qt_gui_app (`#149 <https://github.com/ros-visualization/qt_gui_core/issues/149>`_)

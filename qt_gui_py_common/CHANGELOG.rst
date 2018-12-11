@@ -2,6 +2,9 @@
 Changelog for package qt_gui_py_common
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+
 1.0.0 (2018-12-10)
 ------------------
 * fix return statement (`#139 <https://github.com/ros-visualization/qt_gui_core/issues/139>`_)
