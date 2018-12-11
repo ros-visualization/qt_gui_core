@@ -2,6 +2,10 @@
 Changelog for package qt_gui_cpp
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* move build location of qt_gui_cpp_sip library out-of-source (`#156 <https://github.com/ros-visualization/qt_gui_core/issues/156>`_)
+
 1.0.1 (2018-12-11)
 ------------------
 
