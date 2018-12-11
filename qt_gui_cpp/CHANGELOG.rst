@@ -2,8 +2,8 @@
 Changelog for package qt_gui_cpp
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+1.0.0 (2018-12-10)
+------------------
 * port to Windows (`#146 <https://github.com/ros-visualization/qt_gui_core/issues/146>`_)
 * check check of return value of loadFile (`#152 <https://github.com/ros-visualization/qt_gui_core/issues/152>`_)
 * add required libraries (`#148 <https://github.com/ros-visualization/qt_gui_core/issues/148>`_)

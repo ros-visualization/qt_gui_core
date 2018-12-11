@@ -2,8 +2,8 @@
 Changelog for package qt_gui
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+1.0.0 (2018-12-10)
+------------------
 * fix warning message (`#143 <https://github.com/ros-visualization/qt_gui_core/issues/143>`_)
 * fix debug entry point of doc widget title bar (`#141 <https://github.com/ros-visualization/qt_gui_core/issues/141>`_)
 * use ament_lint_auto (`#136 <https://github.com/ros-visualization/qt_gui_core/issues/136>`_)

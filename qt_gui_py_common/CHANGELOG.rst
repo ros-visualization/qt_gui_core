@@ -2,8 +2,8 @@
 Changelog for package qt_gui_py_common
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+1.0.0 (2018-12-10)
+------------------
 * fix return statement (`#139 <https://github.com/ros-visualization/qt_gui_core/issues/139>`_)
 * fix simple_settings_ui path (`#138 <https://github.com/ros-visualization/qt_gui_core/issues/138>`_)
 * use ament_lint_auto (`#136 <https://github.com/ros-visualization/qt_gui_core/issues/136>`_)
