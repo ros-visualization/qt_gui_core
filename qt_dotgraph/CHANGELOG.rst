@@ -2,8 +2,8 @@
 Changelog for package qt_dotgraph
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+1.0.1 (2018-12-11)
+------------------
 * fix build type (`#155 <https://github.com/ros-visualization/qt_gui_core/issues/155>`_)
 
 1.0.0 (2018-12-10)
