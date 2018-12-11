@@ -2,6 +2,16 @@
 Changelog for package qt_gui
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* fix warning message (`#143 <https://github.com/ros-visualization/qt_gui_core/issues/143>`_)
+* fix debug entry point of doc widget title bar (`#141 <https://github.com/ros-visualization/qt_gui_core/issues/141>`_)
+* use ament_lint_auto (`#136 <https://github.com/ros-visualization/qt_gui_core/issues/136>`_)
+* update tests (`#133 <https://github.com/ros-visualization/qt_gui_core/issues/133>`_)
+* port to ROS 2 (`#135 <https://github.com/ros-visualization/qt_gui_core/issues/135>`_)
+  Porting to ROS2
+* autopep8 (`#123 <https://github.com/ros-visualization/qt_gui_core/issues/123>`_)
+
 0.3.11 (2018-08-29)
 -------------------
 * fix path being set for exporting perspective (`#121 <https://github.com/ros-visualization/qt_gui_core/issues/121>`_, regression from 0.3.9)

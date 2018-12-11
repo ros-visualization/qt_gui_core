@@ -2,6 +2,23 @@
 Changelog for package qt_gui_cpp
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* port to Windows (`#146 <https://github.com/ros-visualization/qt_gui_core/issues/146>`_)
+* check check of return value of loadFile (`#152 <https://github.com/ros-visualization/qt_gui_core/issues/152>`_)
+* add required libraries (`#148 <https://github.com/ros-visualization/qt_gui_core/issues/148>`_)
+* migrate from tinyxml to tinyxml2 (`#147 <https://github.com/ros-visualization/qt_gui_core/issues/147>`_)
+* add test for importing sip generated library (`#150 <https://github.com/ros-visualization/qt_gui_core/issues/150>`_)
+* register plugins at the correct location (`#144 <https://github.com/ros-visualization/qt_gui_core/issues/144>`_)
+* fix include dir path (`#140 <https://github.com/ros-visualization/qt_gui_core/issues/140>`_)
+* use ament_lint_auto (`#136 <https://github.com/ros-visualization/qt_gui_core/issues/136>`_)
+* modify qt_gui_cpp to fix build errors in rqt_gui_core (`#137 <https://github.com/ros-visualization/qt_gui_core/issues/137>`_)
+* update tests (`#133 <https://github.com/ros-visualization/qt_gui_core/issues/133>`_)
+* port to ROS 2 (`#135 <https://github.com/ros-visualization/qt_gui_core/issues/135>`_)
+* remove boost shared_ptr references
+* remove boost filesystem depends
+* autopep8 (`#123 <https://github.com/ros-visualization/qt_gui_core/issues/123>`_)
+
 0.3.11 (2018-08-29)
 -------------------
 

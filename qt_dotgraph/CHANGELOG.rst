@@ -2,6 +2,13 @@
 Changelog for package qt_dotgraph
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* use ament_lint_auto (`#136 <https://github.com/ros-visualization/qt_gui_core/issues/136>`_)
+* update tests (`#133 <https://github.com/ros-visualization/qt_gui_core/issues/133>`_)
+* port to ROS 2 (`#135 <https://github.com/ros-visualization/qt_gui_core/issues/135>`_)
+* autopep8 (`#123 <https://github.com/ros-visualization/qt_gui_core/issues/123>`_)
+
 0.3.11 (2018-08-29)
 -------------------
 

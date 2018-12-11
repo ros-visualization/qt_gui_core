@@ -2,6 +2,13 @@
 Changelog for package qt_gui_app
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* move installed script to lib/qt_gui_app (`#149 <https://github.com/ros-visualization/qt_gui_core/issues/149>`_)
+* use ament_lint_auto (`#136 <https://github.com/ros-visualization/qt_gui_core/issues/136>`_)
+* update tests (`#133 <https://github.com/ros-visualization/qt_gui_core/issues/133>`_)
+* port to ROS 2 (`#135 <https://github.com/ros-visualization/qt_gui_core/issues/135>`_)
+
 0.3.11 (2018-08-29)
 -------------------
 
