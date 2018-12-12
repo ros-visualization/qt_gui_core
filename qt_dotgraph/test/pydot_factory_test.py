@@ -108,6 +108,9 @@ class PyDotFactoryTest(unittest.TestCase):
                     'label=edge_',
                     'foo -> edge_\t [',
                     '"];\n}\n']
-        result = fac.create_dot(g)
+        try:
+            result = fac.create_dot(g)
+        except FileNotFoundError:
+            raise unittest.SkipTest('skipping test since dot is unavailable')
         for sn in snippets:
             self.assertTrue(sn in result, '%s \nmissing in\n %s' % (sn, result))

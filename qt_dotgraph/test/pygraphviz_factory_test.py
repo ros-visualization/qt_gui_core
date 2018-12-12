@@ -33,9 +33,14 @@
 
 import unittest
 
-from qt_dotgraph.pygraphvizfactory import PygraphvizFactory
+try:
+    from qt_dotgraph.pygraphvizfactory import PygraphvizFactory
+except ImportError:
+    PygraphvizFactory = None
 
 
+@unittest.skipIf(
+    PygraphvizFactory is None, 'skipping test since pygraphviz is unavailable')
 class PygraphvizFactoryTest(unittest.TestCase):
 
     def test_get_graph(self):
