@@ -3,12 +3,6 @@ project(qt_gui_cpp)
 
 find_package(ament_cmake REQUIRED)
 
-if(WIN32)
-  message(STATUS "qt_gui_coo is not yet supported on Windows. Package will not be built.")
-  ament_package()
-  return()
-endif()
-
 find_package(pluginlib REQUIRED)
 find_package(tinyxml2_vendor REQUIRED)
 
@@ -28,8 +22,6 @@ install(
 )
 
 ament_export_dependencies(pluginlib)
-ament_export_include_directories(include)
-
 ament_export_include_directories(include)
 ament_export_libraries(${PROJECT_NAME})
 

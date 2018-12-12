@@ -41,8 +41,8 @@ set(_qt_gui_cpp_sip_LIBRARIES
 foreach(_lib_name ${_qt_gui_cpp_sip_LIBRARIES})
   if(TARGET ${_lib_name})
     # Use a nifty cmake generator expression to resolve the target location
-    list(APPEND qt_gui_cpp_sip_LIBRARIES $<TARGET_FILE:${_lib_name}>)
-  else()
+    list(APPEND qt_gui_cpp_sip_LIBRARIES $<TARGET_LINKER_FILE:${_lib_name}>)
+  elseif(EXISTS ${_lib_name} OR ${_lib_name} STREQUAL "stdc++fs")
     # This library should work as is
     list(APPEND qt_gui_cpp_sip_LIBRARIES ${_lib_name})
   endif()
