@@ -6,7 +6,6 @@
     It is extensible with Python- and C++-based plugins (implemented in separate packages) which can contribute arbitrary widgets.
     It requires either PyQt or PySide bindings.
   </description>
-  <maintainer email="dhood@osrfoundation.org">D. Hood</maintainer>
   <maintainer email="dthomas@osrfoundation.org">Dirk Thomas</maintainer>
   <license>BSD</license>
 
