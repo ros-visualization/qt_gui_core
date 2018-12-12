@@ -4,7 +4,6 @@
   <description>
     qt_dotgraph provides helpers to work with dot graphs.
   </description>
-  <maintainer email="dhood@osrfoundation.org">D. Hood</maintainer>
   <maintainer email="dthomas@osrfoundation.org">Dirk Thomas</maintainer>
   <license>BSD</license>
 
