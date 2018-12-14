@@ -156,7 +156,7 @@ class Main(object):
                 '--command-switch-perspective', dest='command_switch_perspective', type=str,
                 metavar='PERSPECTIVE', help='switch perspective')
             if not self._dbus_available:
-                group.description = 'These options are not available since DBus is available!'
+                group.description = 'These options are not available since DBus is not available!'
                 for o in group._group_actions:
                     o.help = SUPPRESS
             parser.add_argument_group(group)
