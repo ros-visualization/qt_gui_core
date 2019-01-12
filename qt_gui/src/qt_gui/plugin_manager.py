@@ -423,7 +423,9 @@ class PluginManager(QObject):
         # trigger async call on all running plugins
         self._number_of_ongoing_calls = len(self._running_plugins)
         if self._number_of_ongoing_calls > 0:
-            for info in self._running_plugins.values():
+            # If changing perspectives, plugins may be removed from this dictionary during
+            # _save_plugin_settings, so a shallow copy of the values is needed
+            for info in list(self._running_plugins.values()):
                 self._save_plugin_settings(info['instance_id'], callback)
         else:
             callback()
