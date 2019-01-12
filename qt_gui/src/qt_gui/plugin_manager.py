@@ -425,8 +425,7 @@ class PluginManager(QObject):
         if self._number_of_ongoing_calls > 0:
             # If changing perspectives, plugins may be removed from this dictionary during
             # _save_plugin_settings, so a shallow copy of the values is needed
-            running_plugin_names = list(self._running_plugins.values())
-            for info in running_plugin_names:
+            for info in list(self._running_plugins.values()):
                 self._save_plugin_settings(info['instance_id'], callback)
         else:
             callback()
