@@ -288,6 +288,32 @@ protected:
 
 private:
 
+  template<typename TVersion>
+  struct TinyXMLAPIChoice
+  {
+    template<
+      // the function signature must use a template argument to trigger SFINAE
+      typename TDoc,
+      // T needs to be an explicit argument for std::enable_if to have a type
+      typename TType = TVersion,
+      // only enable for TinyXML versions >= 6
+      typename = typename std::enable_if<std::is_same<TType, std::true_type>::value>::type
+    >
+    static void warningWithErrorStr(const std::string & manifest_path, const TDoc & doc, std::true_type * = nullptr)
+    {
+      qWarning("RosPluginlibPluginProvider::parseManifest() could not load manifest \"%s\" (%s)", manifest_path.c_str(), doc.ErrorStr());
+    }
+    template<
+      typename TDoc,
+      typename TType = TVersion,
+      typename = typename std::enable_if<std::is_same<TType, std::false_type>::value>::type
+    >
+    static void warningWithErrorStr(const std::string & manifest_path, const TDoc & doc, std::false_type * = nullptr)
+    {
+      qWarning("RosPluginlibPluginProvider::parseManifest() could not load manifest \"%s\" (%s, %s)", manifest_path.c_str(), doc.GetErrorStr1(), doc.GetErrorStr2());
+    }
+  };
+
   bool parseManifest(const std::string& lookup_name, const std::string& plugin_path, QString& label, QString& statustip, QString& icon, QString& icontype, PluginDescriptor* plugin_descriptor)
   {
     //qDebug("RosPluginlibPluginProvider::parseManifest()");
@@ -298,7 +324,7 @@ private:
     tinyxml2::XMLError result = doc.LoadFile(manifest_path.c_str());
     if (result != tinyxml2::XML_SUCCESS)
     {
-      qWarning("RosPluginlibPluginProvider::parseManifest() could not load manifest \"%s\" (%s)", manifest_path.c_str(), doc.ErrorStr());
+      TinyXMLAPIChoice<std::integral_constant<bool, (TIXML2_MAJOR_VERSION >= 6)>>::warningWithErrorStr(manifest_path, doc);
       return false;
     }
 
