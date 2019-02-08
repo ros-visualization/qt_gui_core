@@ -34,6 +34,7 @@
 #define qt_gui_cpp__PluginContext_H
 
 #include "generic_proxy.h"
+#include "exports.h"
 
 #include <QMap>
 #include <QObject>
@@ -49,7 +50,7 @@ namespace qt_gui_cpp
  * PluginContext providing information to the plugin and exposing methods for the plugin to interact with the framework.
  * It relays all methods to the corresponding plugin handler.
  */
-class PluginContext
+class QT_GUI_CPP_DECL PluginContext
   : public QObject
 {
 

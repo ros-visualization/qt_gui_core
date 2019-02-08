@@ -13,6 +13,7 @@ set(qt_gui_cpp_SRCS
   plugin_descriptor.cpp
   plugin_provider.cpp
   recursive_plugin_provider.cpp
+  ros_pluginlib_plugin_provider.cpp
   settings.cpp
 )
 
