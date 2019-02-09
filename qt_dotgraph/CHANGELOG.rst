@@ -2,6 +2,11 @@
 Changelog for package qt_dotgraph
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* skip pydot/pygraphviz tests when unavailable (`#161 <https://github.com/ros-visualization/qt_gui_core/issues/161>`_)
+* remove obsolete maintainer (`#159 <https://github.com/ros-visualization/qt_gui_core/issues/159>`_)
+
 1.0.3 (2018-12-11)
 ------------------
 

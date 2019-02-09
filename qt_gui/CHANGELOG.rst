@@ -2,6 +2,12 @@
 Changelog for package qt_gui
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* fix dictionary changes size during iteration (`#166 <https://github.com/ros-visualization/qt_gui_core/issues/166>`_)
+* fix typo (`#164 <https://github.com/ros-visualization/qt_gui_core/issues/164>`_)
+* remove obsolete maintainer (`#159 <https://github.com/ros-visualization/qt_gui_core/issues/159>`_)
+
 1.0.3 (2018-12-11)
 ------------------
 

@@ -2,6 +2,12 @@
 Changelog for package qt_gui_cpp
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* support TinyXML2 version 2.2.0 on Xenial (`#169 <https://github.com/ros-visualization/qt_gui_core/issues/169>`_)
+* set default C++ standard to 14
+* remove obsolete maintainer (`#159 <https://github.com/ros-visualization/qt_gui_core/issues/159>`_)
+
 1.0.3 (2018-12-11)
 ------------------
 * skip qt_gui_cpp on Windows (`#158 <https://github.com/ros-visualization/qt_gui_core/issues/158>`_)
