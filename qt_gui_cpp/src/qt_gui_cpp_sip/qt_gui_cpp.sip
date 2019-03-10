@@ -1,4 +1,4 @@
-%Module libqt_gui_cpp_sip 1
+%Module libqt_gui_cpp_sip
 
 %Import QtCore/QtCoremod.sip
 %Import QtGui/QtGuimod.sip
