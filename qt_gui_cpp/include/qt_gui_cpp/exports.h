@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, Dirk Thomas, TU Darmstadt
+ * Copyright (c) 2019, Dirk Thomas, TU Darmstadt
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
