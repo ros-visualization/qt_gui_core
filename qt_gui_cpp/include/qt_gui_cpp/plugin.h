@@ -36,6 +36,7 @@
 #include "plugin_bridge.h"
 #include "plugin_context.h"
 #include "settings.h"
+#include "exports.h"
 
 #include <QObject>
 
@@ -45,7 +46,7 @@ namespace qt_gui_cpp
 /**
  * The base class for C++ plugins.
  */
-class Plugin
+class QT_GUI_CPP_DECL Plugin
   : public QObject
 {
 
