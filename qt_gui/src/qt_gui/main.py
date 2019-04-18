@@ -302,7 +302,7 @@ class Main(object):
             if len(command_options_set) > 0 and not self._dbus_available:
                 raise RuntimeError('Without DBus support the --embed-* options are not available')
             if len(embed_options_set) > 0 and len(embed_options_set) < len(embed_options):
-                raise RuntimeError('Missing option(s) - all \'--embed-*\' options must be set')
+                raise RuntimeError("Missing option(s) - all '--embed-*' options must be set")
 
             if len(embed_options_set) > 0 and self._options.clear_config:
                 raise RuntimeError(
