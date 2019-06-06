@@ -423,6 +423,7 @@ class PerspectiveManager(QObject):
             self._convert_values(groups[group], convert_function)
 
     def _import_value(self, value):
+        import QtCore  # noqa: F401
         if value['type'] == 'repr':
             return eval(value['repr'])
         elif value['type'] == 'repr(QByteArray.hex)':
