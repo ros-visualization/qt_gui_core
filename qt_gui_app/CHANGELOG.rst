@@ -2,6 +2,9 @@
 Changelog for package qt_gui_app
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+
 1.0.4 (2019-02-08)
 ------------------
 * remove obsolete maintainer (`#159 <https://github.com/ros-visualization/qt_gui_core/issues/159>`_)

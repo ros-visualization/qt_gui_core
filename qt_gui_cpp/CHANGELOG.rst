@@ -2,6 +2,9 @@
 Changelog for package qt_gui_cpp
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+
 1.0.4 (2019-02-08)
 ------------------
 * support TinyXML2 version 2.2.0 on Xenial (`#169 <https://github.com/ros-visualization/qt_gui_core/issues/169>`_)
