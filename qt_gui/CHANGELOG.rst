@@ -2,8 +2,8 @@
 Changelog for package qt_gui
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.3.13 (2019-09-30)
+-------------------
 * add Python 3 dependencies with conditions (`#184 <https://github.com/ros-visualization/qt_gui_core/issues/184>`_)
 
 0.3.12 (2019-09-30)

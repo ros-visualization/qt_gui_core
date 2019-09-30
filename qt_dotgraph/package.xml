@@ -1,6 +1,6 @@
 <package format="3">
   <name>qt_dotgraph</name>
-  <version>0.3.12</version>
+  <version>0.3.13</version>
   <description>
     qt_dotgraph provides helpers to work with dot graphs.
   </description>
