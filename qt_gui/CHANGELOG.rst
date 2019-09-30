@@ -2,6 +2,10 @@
 Changelog for package qt_gui
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* add Python 3 dependencies with conditions (`#184 <https://github.com/ros-visualization/qt_gui_core/issues/184>`_)
+
 0.3.12 (2019-09-30)
 -------------------
 * fix C++ Settings methods allKeys, childGroups, childKeys (`#182 <https://github.com/ros-visualization/qt_gui_core/issues/182>`_)
