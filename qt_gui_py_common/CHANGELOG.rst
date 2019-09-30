@@ -2,6 +2,12 @@
 Changelog for package qt_gui_py_common
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* remove obsolete maintainer (`#160 <https://github.com/ros-visualization/qt_gui_core/issues/160>`_)
+* changes for flake8 and ROS2 compatible style changes (`#130 <https://github.com/ros-visualization/qt_gui_core/issues/130>`_)
+* autopep8 (`#123 <https://github.com/ros-visualization/qt_gui_core/issues/123>`_)
+
 0.3.11 (2018-08-29)
 -------------------
 

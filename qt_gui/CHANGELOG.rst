@@ -2,6 +2,17 @@
 Changelog for package qt_gui
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* fix C++ Settings methods allKeys, childGroups, childKeys (`#182 <https://github.com/ros-visualization/qt_gui_core/issues/182>`_)
+* add missing QtCore import (`#178 <https://github.com/ros-visualization/qt_gui_core/issues/178>`_)
+* fix changing dictionary during iteration (`#167 <https://github.com/ros-visualization/qt_gui_core/issues/167>`_)
+* fix typo (`#164 <https://github.com/ros-visualization/qt_gui_core/issues/164>`_)
+* remove obsolete maintainer (`#160 <https://github.com/ros-visualization/qt_gui_core/issues/160>`_)
+* fix warning message (`#143 <https://github.com/ros-visualization/qt_gui_core/issues/143>`_)
+* changes for flake8 and ROS2 compatible style changes (`#130 <https://github.com/ros-visualization/qt_gui_core/issues/130>`_)
+* autopep8 (`#123 <https://github.com/ros-visualization/qt_gui_core/issues/123>`_)
+
 0.3.11 (2018-08-29)
 -------------------
 * fix path being set for exporting perspective (`#121 <https://github.com/ros-visualization/qt_gui_core/issues/121>`_, regression from 0.3.9)
