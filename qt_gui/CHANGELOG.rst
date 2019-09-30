@@ -2,8 +2,8 @@
 Changelog for package qt_gui
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.3.12 (2019-09-30)
+-------------------
 * fix C++ Settings methods allKeys, childGroups, childKeys (`#182 <https://github.com/ros-visualization/qt_gui_core/issues/182>`_)
 * add missing QtCore import (`#178 <https://github.com/ros-visualization/qt_gui_core/issues/178>`_)
 * fix changing dictionary during iteration (`#167 <https://github.com/ros-visualization/qt_gui_core/issues/167>`_)

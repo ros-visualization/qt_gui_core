@@ -2,8 +2,8 @@
 Changelog for package qt_gui_cpp
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.3.12 (2019-09-30)
+-------------------
 * [Windows] Add missing DLL exports for qt_gui_cpp (`#170 <https://github.com/ros-visualization/qt_gui_core/issues/170>`_)
 * cherry-pick windows port from crystal-devel (`#173 <https://github.com/ros-visualization/qt_gui_core/issues/173>`_)
 * remove obsolete maintainer (`#160 <https://github.com/ros-visualization/qt_gui_core/issues/160>`_)
