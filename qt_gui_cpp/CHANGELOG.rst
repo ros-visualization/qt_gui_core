@@ -2,8 +2,8 @@
 Changelog for package qt_gui_cpp
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.3.14 (2019-10-03)
+-------------------
 * fix compile regression on armhf (`#187 <https://github.com/ros-visualization/qt_gui_core/issues/187>`_, regression from 0.3.12)
 
 0.3.13 (2019-09-30)
