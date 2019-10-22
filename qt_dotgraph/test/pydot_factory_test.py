@@ -31,6 +31,7 @@
 # ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
+import re
 import unittest
 from qt_dotgraph.pydotfactory import PydotFactory
 
@@ -93,20 +94,22 @@ class PyDotFactoryTest(unittest.TestCase):
         fac.add_node_to_graph(g, 'edge')
         fac.add_edge_to_graph(g, 'foo', 'edge')
         fac.add_subgraph_to_graph(g, 'foo')
-        snippets = ['digraph graphname {\n\tgraph [',
+        snippets = ['digraph graphname { graph [',
                     'rankdir=TB',
                     'compound=True',
                     'rank=same',
                     'node [label="\\N"]',
-                    'subgraph cluster_foo {\n\t\tgraph [',
-                    'foo\t [',
+                    'subgraph cluster_foo { graph [',
+                    'foo [',
                     'label=foo',
                     'shape=box',
                     'pos="',
-                    'edge_\t [',
+                    'edge_ [',
                     'label=edge_',
-                    'foo -> edge_\t [',
-                    '"];\n}\n']
+                    'foo -> edge_ [',
+                    '"]; }']
         result = fac.create_dot(g)
+        # get rid of version specific whitespaces
+        result = re.sub('[\n\t ]+', ' ', result)
         for sn in snippets:
             self.assertTrue(sn in result, '%s \nmissing in\n %s' % (sn, result))
