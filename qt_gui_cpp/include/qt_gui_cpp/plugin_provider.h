@@ -36,6 +36,7 @@
 #include "plugin.h"
 #include "plugin_context.h"
 #include "plugin_descriptor.h"
+#include "exports.h"
 
 #include <QList>
 #include <QMap>
@@ -44,7 +45,7 @@
 namespace qt_gui_cpp
 {
 
-class PluginProvider
+class QT_GUI_CPP_DECL PluginProvider
 {
 
 public:
