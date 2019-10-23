@@ -2,6 +2,10 @@
 Changelog for package qt_gui_cpp
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* rework for Windows linkage (`#188 <https://github.com/ros-visualization/qt_gui_core/issues/188>`_)
+
 0.3.14 (2019-10-03)
 -------------------
 * fix compile regression on armhf (`#187 <https://github.com/ros-visualization/qt_gui_core/issues/187>`_, regression from 0.3.12)
