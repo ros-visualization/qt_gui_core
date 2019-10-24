@@ -100,14 +100,15 @@ class PygraphvizFactoryTest(unittest.TestCase):
         fac.add_node_to_graph(g, 'edge')
         fac.add_edge_to_graph(g, 'foo', 'edge')
         fac.add_subgraph_to_graph(g, 'graph')
-        snippets = ['strict digraph "" { graph',
+        snippets = ['strict digraph { graph',
                     'foo',
                     'label=foo',
                     '"edge"',
                     'label="edge"',
                     'foo -> "edge"']
         result = fac.create_dot(g)
-        # get rid of version specific whitespaces
+        # get rid of version specific quotes / whitespaces
+        result = re.sub('""', ' ', result)
         result = re.sub('[\n\t ]+', ' ', result)
         for sn in snippets:
             self.assertTrue(sn in result, '%s \nmissing in\n %s' % (sn, result))
