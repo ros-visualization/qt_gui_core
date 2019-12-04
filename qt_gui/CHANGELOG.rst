@@ -2,6 +2,10 @@
 Changelog for package qt_gui
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* fix UI to enter perspective name (`#198 <https://github.com/ros-visualization/qt_gui_core/issues/198>`_)
+
 0.3.15 (2019-10-23)
 -------------------
 

@@ -2,6 +2,9 @@
 Changelog for package qt_gui_cpp
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+
 0.3.15 (2019-10-23)
 -------------------
 * rework for Windows linkage (`#188 <https://github.com/ros-visualization/qt_gui_core/issues/188>`_)
