@@ -2,8 +2,8 @@
 Changelog for package qt_dotgraph
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.3.16 (2019-12-04)
+-------------------
 * make another test more flexible in terms of whitespaces (`#194 <https://github.com/ros-visualization/qt_gui_core/issues/194>`_)
 
 0.3.15 (2019-10-23)
