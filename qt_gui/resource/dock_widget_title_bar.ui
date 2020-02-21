@@ -274,7 +274,7 @@
       <string notr="true">text-align: center; padding: 0px; margin: 0px</string>
      </property>
      <property name="text">
-      <string>_</string>
+      <string>-</string>
      </property>
      <property name="iconSize">
       <size>
