@@ -199,7 +199,7 @@ class Main(object):
            QIcon.fromTheme('document-open').isNull() or \
            QIcon.fromTheme('edit-cut').isNull() or \
            QIcon.fromTheme('object-flip-horizontal').isNull():
-            if 'darwin' in platform.platform().lower() and \
+            if 'darwin' == platform.system().lower() and \
                     '/usr/local/share/icons' not in QIcon.themeSearchPaths():
                 QIcon.setThemeSearchPaths(QIcon.themeSearchPaths() + ['/usr/local/share/icons'])
             original_theme = QIcon.themeName()
