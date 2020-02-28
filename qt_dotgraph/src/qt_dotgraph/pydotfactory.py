@@ -37,6 +37,7 @@ except ImportError:
     from urllib import quote
 
 import pydot
+import os
 
 
 # Reference implementation for a dotcode factory
@@ -174,4 +175,4 @@ class PydotFactory():
         if type(dot) != str:
             dot = dot.decode()
         # sadly pydot generates line wraps cutting between numbers
-        return dot.replace('\\\n', '')
+        return dot.replace('\\%s' % os.linesep, '').replace('\\\n', '')
