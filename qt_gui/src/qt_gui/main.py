@@ -564,8 +564,13 @@ class Main(object):
 
         # set initial size - only used without saved configuration
         if main_window is not None:
-            main_window.resize(600, 450)
-            main_window.move(100, 100)
+            # Adjust size to fit the widget if standalone (e.g. single plugin)
+            if standalone:
+                main_window.adjustSize()
+            # On "clean" startup set some size to fully display the menu bar
+            else:
+                main_window.resize(600, 450)
+                main_window.move(100, 100)
 
         # ensure that qt_gui/src is in sys.path
         src_path = os.path.realpath(os.path.join(os.path.dirname(__file__), '..'))
