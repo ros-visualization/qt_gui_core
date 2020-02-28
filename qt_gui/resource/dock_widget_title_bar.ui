@@ -100,6 +100,9 @@
      <property name="toolTip">
       <string>Toggle Dockable</string>
      </property>
+     <property name="styleSheet">
+      <string notr="true">text-align: center; padding: 0px; margin: 0px</string>
+     </property>
      <property name="text">
       <string>D</string>
      </property>
@@ -137,6 +140,9 @@
      <property name="toolTip">
       <string>Configuration</string>
      </property>
+     <property name="styleSheet">
+      <string notr="true">text-align: center; padding: 0px; margin: 0px</string>
+     </property>
      <property name="text">
       <string>C</string>
      </property>
@@ -167,6 +173,9 @@
      </property>
      <property name="toolTip">
       <string>Reload</string>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">text-align: center; padding: 0px; margin: 0px</string>
      </property>
      <property name="text">
       <string>R</string>
@@ -204,6 +213,9 @@
      </property>
      <property name="toolTip">
       <string>Help</string>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">text-align: center; padding: 0px; margin: 0px</string>
      </property>
      <property name="text">
       <string>?</string>
@@ -258,6 +270,9 @@
      <property name="toolTip">
       <string>Minimize</string>
      </property>
+     <property name="styleSheet">
+      <string notr="true">text-align: center; padding: 0px; margin: 0px</string>
+     </property>
      <property name="text">
       <string>-</string>
      </property>
@@ -295,6 +310,9 @@
      <property name="toolTip">
       <string>Toggle Floating</string>
      </property>
+     <property name="styleSheet">
+      <string notr="true">text-align: center; padding: 0px; margin: 0px</string>
+     </property>
      <property name="text">
       <string>O</string>
      </property>
@@ -331,6 +349,9 @@
      </property>
      <property name="toolTip">
       <string>Close</string>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">text-align: center; padding: 0px; margin: 0px</string>
      </property>
      <property name="text">
       <string>X</string>
