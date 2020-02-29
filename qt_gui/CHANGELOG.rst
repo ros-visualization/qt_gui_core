@@ -2,6 +2,14 @@
 Changelog for package qt_gui
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* bump CMake minimum version to avoid CMP0048 warning (`#206 <https://github.com/ros-visualization/qt_gui_core/issues/206>`_)
+* use native default icon theme if suitable (`#202 <https://github.com/ros-visualization/qt_gui_core/issues/202>`_)
+* fix title bar buttons rendering on macOS (`#205 <https://github.com/ros-visualization/qt_gui_core/issues/205>`_)
+* fix platform check for macOS in themeSearchPaths patching (`#204 <https://github.com/ros-visualization/qt_gui_core/issues/204>`_)
+* auto adjust main window if standalone (`#199 <https://github.com/ros-visualization/qt_gui_core/issues/199>`_)
+
 0.3.16 (2019-12-04)
 -------------------
 * fix UI to enter perspective name (`#198 <https://github.com/ros-visualization/qt_gui_core/issues/198>`_)
