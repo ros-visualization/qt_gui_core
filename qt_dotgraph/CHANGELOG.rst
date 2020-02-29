@@ -2,8 +2,8 @@
 Changelog for package qt_dotgraph
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.3.17 (2020-02-28)
+-------------------
 * bump CMake minimum version to avoid CMP0048 warning (`#206 <https://github.com/ros-visualization/qt_gui_core/issues/206>`_)
 * [Windows] use the portable way to decide the line break (`#200 <https://github.com/ros-visualization/qt_gui_core/issues/200>`_)
 

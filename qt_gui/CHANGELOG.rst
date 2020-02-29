@@ -2,8 +2,8 @@
 Changelog for package qt_gui
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.3.17 (2020-02-28)
+-------------------
 * bump CMake minimum version to avoid CMP0048 warning (`#206 <https://github.com/ros-visualization/qt_gui_core/issues/206>`_)
 * use native default icon theme if suitable (`#202 <https://github.com/ros-visualization/qt_gui_core/issues/202>`_)
 * fix title bar buttons rendering on macOS (`#205 <https://github.com/ros-visualization/qt_gui_core/issues/205>`_)
