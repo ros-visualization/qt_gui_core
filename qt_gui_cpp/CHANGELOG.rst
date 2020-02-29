@@ -2,8 +2,8 @@
 Changelog for package qt_gui_cpp
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.4.0 (2020-02-28)
+------------------
 * fix namespace in typesystem.xml (`#201 <https://github.com/ros-visualization/qt_gui_core/issues/201>`_)
 
 0.3.17 (2020-02-28)
