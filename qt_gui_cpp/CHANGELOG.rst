@@ -2,6 +2,10 @@
 Changelog for package qt_gui_cpp
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* fix namespace in typesystem.xml (`#201 <https://github.com/ros-visualization/qt_gui_core/issues/201>`_)
+
 0.3.17 (2020-02-28)
 -------------------
 * bump CMake minimum version to avoid CMP0048 warning (`#206 <https://github.com/ros-visualization/qt_gui_core/issues/206>`_)
