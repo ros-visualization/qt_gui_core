@@ -9,7 +9,7 @@ endif()
 find_package(ament_cmake REQUIRED)
 
 if(WIN32)
-  message(STATUS "qt_gui_coo is not yet supported on Windows. Package will not be built.")
+  message(STATUS "${PROJECT_NAME} is not yet supported on Windows. Package will not be built.")
   ament_package()
   return()
 endif()
