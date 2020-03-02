@@ -36,8 +36,9 @@ try:
 except ImportError:
     from urllib import quote
 
-import pydot
 import os
+
+import pydot
 
 
 # Reference implementation for a dotcode factory
