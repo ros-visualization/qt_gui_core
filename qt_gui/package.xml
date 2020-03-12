@@ -15,6 +15,8 @@
   <author>Dirk Thomas</author>
 
   <buildtool_depend>catkin</buildtool_depend>
+  <buildtool_depend condition="$ROS_PYTHON_VERSION == 2">python-setuptools</buildtool_depend>
+  <buildtool_depend condition="$ROS_PYTHON_VERSION == 3">python3-setuptools</buildtool_depend>
 
   <build_depend>qt5-qmake</build_depend>
   <build_depend condition="$ROS_PYTHON_VERSION == 2">python-qt5-bindings</build_depend>
