@@ -31,7 +31,7 @@
 import os
 
 from python_qt_binding import loadUi
-from python_qt_binding.QtCore import QEvent, QObject, Qt, qWarning
+from python_qt_binding.QtCore import qDebug, QEvent, QObject, Qt, qWarning
 from python_qt_binding.QtGui import QIcon
 from python_qt_binding.QtWidgets import QDockWidget, QMenu, QWidget
 
@@ -104,9 +104,6 @@ class DockWidgetTitleBar(QWidget):
             self.minimize_button.hide()
             self.float_button.hide()
             self.close_button.hide()
-
-    def __del__(self):
-        self._dock_widget.removeEventFilter(self)
 
     def connect_button(self, button_id, callback):
         button = self._extra_buttons.get(button_id, None)
