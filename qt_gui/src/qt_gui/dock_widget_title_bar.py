@@ -31,7 +31,7 @@
 import os
 
 from python_qt_binding import loadUi
-from python_qt_binding.QtCore import qDebug, QEvent, QObject, Qt, qWarning
+from python_qt_binding.QtCore import QEvent, QObject, Qt, qWarning
 from python_qt_binding.QtGui import QIcon
 from python_qt_binding.QtWidgets import QDockWidget, QMenu, QWidget
 
