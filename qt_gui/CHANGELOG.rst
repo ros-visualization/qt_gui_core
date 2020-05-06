@@ -2,6 +2,14 @@
 Changelog for package qt_gui
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+1.0.8 (2020-05-05)
+------------------
+* qt_gui: use native default icon theme if suitable (`#202 <https://github.com/ros-visualization/qt_gui_core/issues/202>`_)
+* fix title bar buttons rendering on macOS (`#205 <https://github.com/ros-visualization/qt_gui_core/issues/205>`_)
+* fix platform check for macOS in themeSearchPaths patching (`#204 <https://github.com/ros-visualization/qt_gui_core/issues/204>`_)
+* auto adjust main window if standalone (`#199 <https://github.com/ros-visualization/qt_gui_core/issues/199>`_)
+* Contributors: Alexander Gutenkunst, Anton Matosov, Max Schwarz
+
 1.0.7 (2019-09-30)
 ------------------
 * fix C++ Settings methods allKeys, childGroups, childKeys (`#182 <https://github.com/ros-visualization/qt_gui_core/issues/182>`_)
