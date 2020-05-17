@@ -68,8 +68,7 @@ class ExclusiveOptionGroup(QGroupBox):
         """Return dictionary with selected_index (int) and selected_option (dict) keys."""
         selected_index = self._button_group.checkedId()
         if selected_index >= 0:
-            return
-            {
+            return {
                 'selected_index': selected_index,
                 'selected_option': self._options[selected_index]
             }
