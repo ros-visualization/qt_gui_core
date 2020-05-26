@@ -446,7 +446,7 @@ class PerspectiveManager(QObject):
                     character = value.at(i)
                     # output all non-control characters
                     if character >= b' ' and character <= b'~':
-                        characters += character.decode("utf-8")
+                        characters += character.decode('utf-8')
                     else:
                         characters += ' '
                 except UnicodeDecodeError:
