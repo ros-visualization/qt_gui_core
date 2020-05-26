@@ -35,8 +35,11 @@ set(qt_gui_cpp_LINK_LIBRARIES
 qt5_wrap_cpp(qt_gui_cpp_MOCS ${qt_gui_cpp_HDRS})
 
 ament_export_dependencies(pluginlib TinyXML2)
-include_directories(${PROJECT_NAME} ${qt_gui_cpp_INCLUDE_DIRECTORIES})
 add_library(${PROJECT_NAME} ${qt_gui_cpp_SRCS} ${qt_gui_cpp_MOCS})
+target_include_directories(${PROJECT_NAME} PUBLIC
+  "$<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include>"
+  "$<INSTALL_INTERFACE:include>")
+target_include_directories(${PROJECT_NAME} PRIVATE ${qt_gui_cpp_INCLUDE_DIRECTORIES})
 ament_target_dependencies(${PROJECT_NAME} pluginlib TinyXML2)
 
 if (WIN32)
@@ -46,7 +49,7 @@ if (WIN32)
   target_compile_options(${PROJECT_NAME} PUBLIC "/Zc:__cplusplus")
 endif()
 
-target_link_libraries(${PROJECT_NAME} ${qt_gui_cpp_LINK_LIBRARIES} ${ament_LIBRARIES} Qt5::Widgets)
+target_link_libraries(${PROJECT_NAME} ${qt_gui_cpp_LINK_LIBRARIES} Qt5::Widgets)
 
 install(TARGETS ${PROJECT_NAME}
   ARCHIVE DESTINATION lib
