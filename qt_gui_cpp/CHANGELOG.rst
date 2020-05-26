@@ -2,12 +2,14 @@
 Changelog for package qt_gui_cpp
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+
 1.0.8 (2020-05-05)
 ------------------
 * quiet upstream Qt5 warnings (`#210 <https://github.com/ros-visualization/qt_gui_core/issues/210>`_)
 * fix project name in log message (`#208 <https://github.com/ros-visualization/qt_gui_core/issues/208>`_)
 * fixed namespace in typesystem.xml (`#201 <https://github.com/ros-visualization/qt_gui_core/issues/201>`_)
-* Contributors: Dan Rose, Hermann von Kleist, Jacob Perron
 
 1.0.7 (2019-09-30)
 ------------------

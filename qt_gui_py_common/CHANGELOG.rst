@@ -2,10 +2,12 @@
 Changelog for package qt_gui_py_common
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+
 1.0.8 (2020-05-05)
 ------------------
 * fix CMake warning about using uninitialized variables (`#215 <https://github.com/ros-visualization/qt_gui_core/issues/215>`_)
-* Contributors: Dirk Thomas
 
 1.0.7 (2019-09-30)
 ------------------
