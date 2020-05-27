@@ -32,6 +32,8 @@ set(qt_gui_cpp_sip_LIBRARY_DIRS ${qt_gui_cpp_LIBRARY_DIRS} lib)
 set(qt_gui_cpp_sip_LDFLAGS_OTHER ${qt_gui_cpp_LDFLAGS_OTHER})
 
 ament_get_recursive_properties(deps_include_dirs deps_libraries ${pluginlib_TARGETS})
+list(APPEND deps_include_dirs ${TinyXML2_INCLUDE_DIRS})
+list(APPEND deps_libraries ${TinyXML2_LIBRARIES})
 
 set(_qt_gui_cpp_sip_LIBRARIES
   ${deps_libraries}
