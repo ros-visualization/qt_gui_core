@@ -1,4 +1,8 @@
-<package>
+<?xml version="1.0"?>
+<?xml-model
+  href="http://download.ros.org/schema/package_format3.xsd"
+  schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
   <name>qt_gui_cpp</name>
   <version>0.4.0</version>
   <description>
@@ -14,6 +18,8 @@
   <author>Dirk Thomas</author>
 
   <buildtool_depend>catkin</buildtool_depend>
+  <buildtool_depend condition="$ROS_PYTHON_VERSION == 2">python-setuptools</buildtool_depend>
+  <buildtool_depend condition="$ROS_PYTHON_VERSION == 3">python3-setuptools</buildtool_depend>
 
   <build_depend>cmake_modules</build_depend>
   <build_depend>pkg-config</build_depend>
@@ -23,9 +29,9 @@
   <build_depend>qtbase5-dev</build_depend>
   <build_depend>tinyxml</build_depend>
 
-  <run_depend version_gte="1.9.23">pluginlib</run_depend>
-  <run_depend version_gte="0.3.0">qt_gui</run_depend>
-  <run_depend>tinyxml</run_depend>
+  <exec_depend version_gte="1.9.23">pluginlib</exec_depend>
+  <exec_depend version_gte="0.3.0">qt_gui</exec_depend>
+  <exec_depend>tinyxml</exec_depend>
 
   <export>
     <qt_gui plugin="${prefix}/plugin.xml"/>

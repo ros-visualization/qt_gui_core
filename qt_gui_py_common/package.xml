@@ -1,3 +1,7 @@
+<?xml version="1.0"?>
+<?xml-model
+  href="http://download.ros.org/schema/package_format3.xsd"
+  schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
   <name>qt_gui_py_common</name>
   <version>0.4.0</version>
@@ -13,6 +17,8 @@
   <author>Dorian Scholz</author>
 
   <buildtool_depend>catkin</buildtool_depend>
+  <buildtool_depend condition="$ROS_PYTHON_VERSION == 2">python-setuptools</buildtool_depend>
+  <buildtool_depend condition="$ROS_PYTHON_VERSION == 3">python3-setuptools</buildtool_depend>
 
   <exec_depend version_gte="0.3.0">python_qt_binding</exec_depend>
   <exec_depend condition="$ROS_PYTHON_VERSION == 2">python-rospkg</exec_depend>
