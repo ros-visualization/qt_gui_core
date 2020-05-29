@@ -2,6 +2,10 @@
 Changelog for package qt_gui_app
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* use setuptools instead of distutils (`#209 <https://github.com/ros-visualization/qt_gui_core/issues/209>`_)
+
 0.4.0 (2020-02-28)
 ------------------
 

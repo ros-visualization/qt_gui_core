@@ -2,6 +2,11 @@
 Changelog for package qt_dotgraph
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* use setuptools instead of distutils (`#209 <https://github.com/ros-visualization/qt_gui_core/issues/209>`_)
+* Please flake8 (`#207 <https://github.com/ros-visualization/qt_gui_core/issues/207>`_)
+
 0.4.0 (2020-02-28)
 ------------------
 

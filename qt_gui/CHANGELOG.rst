@@ -2,6 +2,12 @@
 Changelog for package qt_gui
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* use setuptools instead of distutils (`#209 <https://github.com/ros-visualization/qt_gui_core/issues/209>`_)
+* fix export perspective with Python 3 (`#217 <https://github.com/ros-visualization/qt_gui_core/issues/217>`_)
+* fix runtime error on shutdown (`#213 <https://github.com/ros-visualization/qt_gui_core/issues/213>`_)
+
 0.4.0 (2020-02-28)
 ------------------
 
