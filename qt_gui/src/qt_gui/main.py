@@ -205,7 +205,8 @@ class Main(object):
                 QIcon.setThemeName('scalable')
         except LookupError:
             if(platform.system() != 'Linux'):
-                print('qt_gui_icons package is not installed in your system. Icons will not work!')
+                print('qt_gui_icons package is not installed in your system. Icons will not work!',
+                      file=sys.stderr)
 
     def create_application(self, argv):
         from python_qt_binding.QtCore import Qt
