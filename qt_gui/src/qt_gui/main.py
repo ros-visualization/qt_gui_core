@@ -38,7 +38,7 @@ import platform
 import signal
 import sys
 
-from ament_index_python.resources import get_resource
+from ament_index_python.resources import get_resource, has_resource
 
 
 class Main(object):
@@ -193,20 +193,20 @@ class Main(object):
 
     def _check_icon_theme_compliance(self):
         from python_qt_binding.QtGui import QIcon
-        try:
-            # if themeName is defined we are on Linux, otherwise try to find the package
-            # qt_gui_icons
-            if(QIcon.themeName() == ''):
-                icon_paths = QIcon.themeSearchPaths()
+        # if themeName is defined we are on Linux, otherwise try to find the package
+        # qt_gui_icons
+        if QIcon.themeName() == '':
+            icon_paths = QIcon.themeSearchPaths()
+            if has_resource('packages', 'qt_gui_icons'):
                 _, package_path = get_resource('packages', 'qt_gui_icons')
                 icon_paths.append(os.path.join(
                     package_path, 'share', 'qt_gui_icons', 'resource', 'icons', 'Tango'))
-                QIcon.setThemeSearchPaths(icon_paths)
-                QIcon.setThemeName('scalable')
-        except LookupError:
-            if(platform.system() != 'Linux'):
-                print('qt_gui_icons package is not installed in your system. Icons will not work!',
-                      file=sys.stderr)
+            else:
+                if platform.system() != 'Linux':
+                    print('qt_gui_icons package is not installed in your system. ' +
+                          'Icons will not work!', file=sys.stderr)
+            QIcon.setThemeSearchPaths(icon_paths)
+            QIcon.setThemeName('scalable')
 
     def create_application(self, argv):
         from python_qt_binding.QtCore import Qt
