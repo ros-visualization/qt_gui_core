@@ -201,12 +201,12 @@ class Main(object):
                 _, package_path = get_resource('packages', 'qt_gui_icons')
                 icon_paths.append(os.path.join(
                     package_path, 'share', 'qt_gui_icons', 'resource', 'icons', 'Tango'))
+                QIcon.setThemeSearchPaths(icon_paths)
+                QIcon.setThemeName('scalable')
             else:
                 if platform.system() != 'Linux':
                     print('qt_gui_icons package is not installed in your system. ' +
                           'Icons will not work!', file=sys.stderr)
-            QIcon.setThemeSearchPaths(icon_paths)
-            QIcon.setThemeName('scalable')
 
     def create_application(self, argv):
         from python_qt_binding.QtCore import Qt
