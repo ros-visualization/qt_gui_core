@@ -191,21 +191,6 @@ class Main(object):
     def _add_reload_paths(self, reload_importer):
         reload_importer.add_reload_path(os.path.join(os.path.dirname(__file__), *('..',) * 4))
 
-    def _check_icon_theme_compliance(self):
-        from python_qt_binding.QtGui import QIcon
-        # TODO find a better way to verify Theme standard compliance
-        if QIcon.fromTheme('document-save').isNull() or \
-           QIcon.fromTheme('document-open').isNull() or \
-           QIcon.fromTheme('edit-cut').isNull() or \
-           QIcon.fromTheme('object-flip-horizontal').isNull():
-            if platform.system() == 'Darwin' and \
-                    '/usr/local/share/icons' not in QIcon.themeSearchPaths():
-                QIcon.setThemeSearchPaths(QIcon.themeSearchPaths() + ['/usr/local/share/icons'])
-            original_theme = QIcon.themeName()
-            QIcon.setThemeName('Tango')
-            if QIcon.fromTheme('document-save').isNull():
-                QIcon.setThemeName(original_theme)
-
     def create_application(self, argv):
         from python_qt_binding.QtCore import Qt
         from python_qt_binding.QtWidgets import QApplication
@@ -444,8 +429,6 @@ class Main(object):
             qInstallMessageHandler(message_handler)
 
         app = self.create_application(argv)
-
-        self._check_icon_theme_compliance()
 
         settings = QSettings(
             QSettings.IniFormat, QSettings.UserScope, 'ros.org', self._settings_filename)
