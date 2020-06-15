@@ -197,10 +197,10 @@ class Main(object):
         # qt_gui_icons
         if QIcon.themeName() == '':
             icon_paths = QIcon.themeSearchPaths()
-            if has_resource('packages', 'qt_gui_icons'):
-                _, package_path = get_resource('packages', 'qt_gui_icons')
+            package_path = has_resource('packages', 'tango_icons_vendor')
+            if package_path:
                 icon_paths.append(os.path.join(
-                    package_path, 'share', 'qt_gui_icons', 'resource', 'icons', 'Tango'))
+                    package_path, 'share', 'tango_icons_vendor', 'resource', 'icons', 'Tango'))
                 QIcon.setThemeSearchPaths(icon_paths)
                 QIcon.setThemeName('scalable')
             else:
