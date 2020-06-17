@@ -36,6 +36,8 @@ set(qt_gui_cpp_HDRS
   ${qt_gui_cpp_INCLUDE_PATH}/qt_gui_cpp/ros_pluginlib_plugin_provider_for_plugins.h
   ${qt_gui_cpp_INCLUDE_PATH}/qt_gui_cpp/settings.h
 )
+ament_get_recursive_properties(deps_include_dirs _ ${TinyXML2_TARGETS} ${pluginlib_TARGETS})
+list(APPEND qt_gui_cpp_INCLUDE_PATH ${deps_include_dirs})
 
 find_package(python_qt_binding REQUIRED)
 include(${python_qt_binding_DIR}/shiboken_helper.cmake)
@@ -51,15 +53,15 @@ if(shiboken_helper_FOUND)
     set(QT_INCLUDE_DIR "${Qt5Widgets_INCLUDE_DIRS}")
     shiboken_generator(libqt_gui_cpp global.h typesystem.xml ${PROJECT_SOURCE_DIR}/src/qt_gui_cpp_shiboken "${qt_gui_cpp_shiboken_SRCS}" "${qt_gui_cpp_HDRS}" "${qt_gui_cpp_INCLUDE_PATH}" "${CMAKE_CURRENT_BINARY_DIR}")
 
-    include_directories(qt_gui_cpp_shiboken ${qt_gui_cpp_INCLUDE_PATH}/qt_gui_cpp)
     shiboken_include_directories(qt_gui_cpp_shiboken "${qt_gui_cpp_shiboken_QT_COMPONENTS}")
 
-    add_library(qt_gui_cpp_shiboken ${qt_gui_cpp_shiboken_SRCS})
-    target_link_libraries(qt_gui_cpp_shiboken ${PROJECT_NAME} ${ament_LIBRARIES})
+    add_library(qt_gui_cpp_shiboken SHARED ${qt_gui_cpp_shiboken_SRCS})
+    target_include_directories(qt_gui_cpp_shiboken PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../../include)
+    target_link_libraries(qt_gui_cpp_shiboken ${PROJECT_NAME})
+    ament_target_dependencies(qt_gui_cpp_shiboken pluginlib TinyXML2)
     shiboken_target_link_libraries(qt_gui_cpp_shiboken "${qt_gui_cpp_shiboken_QT_COMPONENTS}")
 
     install(TARGETS qt_gui_cpp_shiboken
-      ARCHIVE DESTINATION lib
-      LIBRARY DESTINATION lib)
+      DESTINATION ${PYTHON_INSTALL_DIR}/${PROJECT_NAME})
   endif()
 endif()
