@@ -34,6 +34,7 @@ from __future__ import print_function
 
 from argparse import ArgumentParser, SUPPRESS
 import os
+import platform
 import signal
 import sys
 
@@ -447,7 +448,7 @@ class Main(object):
         app = self.create_application(argv)
 
         self._check_icon_theme_compliance()
-        
+
         settings = QSettings(
             QSettings.IniFormat, QSettings.UserScope, 'ros.org', self._settings_filename)
         if len(embed_options_set) == 0:
