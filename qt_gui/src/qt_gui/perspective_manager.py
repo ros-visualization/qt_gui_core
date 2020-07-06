@@ -443,11 +443,11 @@ class PerspectiveManager(QObject):
             for i in range(1, value.size(), 2):
                 try:
                     character = value.at(i)
+                    if isinstance(character, bytes):
+                        character = character.decode('utf-8')
                     # output all non-control characters
-                    character_encoded = character.encode('utf-8') if type(character) == str else character
-                    character_decoded = character if type(character) == str else character.decode('utf-8')
-                    if character_encoded >= b' ' and character_encoded <= b'~':
-                        characters += character_decoded
+                    if character >= ' ' and character <= '~':
+                        characters += character
                     else:
                         characters += ' '
                 except UnicodeDecodeError:
