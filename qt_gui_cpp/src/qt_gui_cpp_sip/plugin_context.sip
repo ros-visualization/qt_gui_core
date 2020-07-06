@@ -25,6 +25,10 @@ public:
 
   void reloadPlugin();
 
+private:
+
+  PluginContext& operator=(const PluginContext&);
+
 };
 
 };
