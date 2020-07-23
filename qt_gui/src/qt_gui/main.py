@@ -191,22 +191,22 @@ class Main(object):
     def _add_reload_paths(self, reload_importer):
         reload_importer.add_reload_path(os.path.join(os.path.dirname(__file__), *('..',) * 4))
 
-    def _check_icon_theme_compliance(self):
+    def _set_theme_if_necessary(self):
         from python_qt_binding.QtGui import QIcon
-        # if themeName is defined we are on Linux, otherwise try to find the package
-        # qt_gui_icons
-        if QIcon.themeName() == '':
-            icon_paths = QIcon.themeSearchPaths()
+        # if themeName is defined we are on Linux
+        # otherwise try to use the them provided by tango_icons_vendor
+        if not QIcon.themeName():
             package_path = has_resource('packages', 'tango_icons_vendor')
             if package_path:
+                icon_paths = QIcon.themeSearchPaths()
                 icon_paths.append(os.path.join(
-                    package_path, 'share', 'tango_icons_vendor', 'resource', 'icons', 'Tango'))
+                    package_path, 'share', 'tango_icons_vendor',
+                    'resource', 'icons', 'Tango'))
                 QIcon.setThemeSearchPaths(icon_paths)
                 QIcon.setThemeName('scalable')
-            else:
-                if platform.system() != 'Linux':
-                    print('qt_gui_icons package is not installed in your system. ' +
-                          'Icons will not work!', file=sys.stderr)
+            elif platform.system() != 'Linux':
+                print("The 'tango_icons_vendor' package was not found - icons "
+                      'will not work', file=sys.stderr)
 
     def create_application(self, argv):
         from python_qt_binding.QtCore import Qt
@@ -447,7 +447,7 @@ class Main(object):
 
         app = self.create_application(argv)
 
-        self._check_icon_theme_compliance()
+        self._set_theme_if_necessary()
 
         settings = QSettings(
             QSettings.IniFormat, QSettings.UserScope, 'ros.org', self._settings_filename)
