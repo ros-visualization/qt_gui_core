@@ -2,8 +2,8 @@
 Changelog for package qt_gui
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.4.2 (2020-07-24)
+------------------
 * fix exporting perspective for Python 3.6 (`#228 <https://github.com/ros-visualization/qt_gui_core/issues/228>`_)
 
 0.4.1 (2020-05-28)

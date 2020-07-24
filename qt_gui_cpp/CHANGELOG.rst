@@ -2,8 +2,8 @@
 Changelog for package qt_gui_cpp
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.4.2 (2020-07-24)
+------------------
 * quiet upstream Qt5 warnings (`#210 <https://github.com/ros-visualization/qt_gui_core/issues/210>`_) (`#229 <https://github.com/ros-visualization/qt_gui_core/issues/229>`_)
 * declare private assignment operator for SIP (`#226 <https://github.com/ros-visualization/qt_gui_core/issues/226>`_)
 
