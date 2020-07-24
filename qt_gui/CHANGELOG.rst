@@ -2,6 +2,10 @@
 Changelog for package qt_gui
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* fix exporting perspective for Python 3.6 (`#228 <https://github.com/ros-visualization/qt_gui_core/issues/228>`_)
+
 0.4.1 (2020-05-28)
 ------------------
 * use setuptools instead of distutils (`#209 <https://github.com/ros-visualization/qt_gui_core/issues/209>`_)

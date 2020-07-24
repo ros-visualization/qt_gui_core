@@ -2,6 +2,9 @@
 Changelog for package qt_gui_py_common
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+
 0.4.1 (2020-05-28)
 ------------------
 * use setuptools instead of distutils (`#209 <https://github.com/ros-visualization/qt_gui_core/issues/209>`_)

@@ -2,6 +2,10 @@
 Changelog for package qt_gui_app
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* fix shebang line for python3 (`#223 <https://github.com/ros-visualization/qt_gui_core/issues/223>`_)
+
 0.4.1 (2020-05-28)
 ------------------
 * use setuptools instead of distutils (`#209 <https://github.com/ros-visualization/qt_gui_core/issues/209>`_)
