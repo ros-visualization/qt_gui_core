@@ -2,8 +2,8 @@
 Changelog for package qt_gui_cpp
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+1.1.1 (2020-08-03)
+------------------
 * avoid a warning about C++ plugins on Windows (`#232 <https://github.com/ros-visualization/qt_gui_core/issues/232>`_)
 * qt_gui_cpp_sip: declare private assignment operator for SIP (`#226 <https://github.com/ros-visualization/qt_gui_core/issues/226>`_)
 
