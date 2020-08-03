@@ -2,6 +2,12 @@
 Changelog for package qt_gui
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* add logic to load qt_gui_icons on windows and macOS (`#222 <https://github.com/ros-visualization/qt_gui_core/issues/222>`_)
+* fix exporting perspective for Python 3.6 (`#228 <https://github.com/ros-visualization/qt_gui_core/issues/228>`_)
+* remove tango-icon-theme dependency (`#224 <https://github.com/ros-visualization/qt_gui_core/issues/224>`_)
+
 1.1.0 (2020-05-27)
 ------------------
 

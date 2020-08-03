@@ -2,6 +2,11 @@
 Changelog for package qt_gui_cpp
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* avoid a warning about C++ plugins on Windows (`#232 <https://github.com/ros-visualization/qt_gui_core/issues/232>`_)
+* qt_gui_cpp_sip: declare private assignment operator for SIP (`#226 <https://github.com/ros-visualization/qt_gui_core/issues/226>`_)
+
 1.1.0 (2020-05-27)
 ------------------
 * Use ament_target_dependencies for qt_gui_cpp. (`#221 <https://github.com/ros-visualization/qt_gui_core/issues/221>`_)
