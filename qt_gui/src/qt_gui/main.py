@@ -406,6 +406,14 @@ class Main(object):
                 return 0
             raise RuntimeError('Unknown command not handled')
 
+        try:
+            # HACK importing cv2 before any Qt modules prevents shared objects
+            # like rqt_image_view on Ubuntu Focal to fail loading with the
+            # error message 'cannot allocate memory in static TLS block'
+            import cv2  # noqa: F401
+        except ImportError:
+            pass
+
         # choose selected or default qt binding
         setattr(sys, 'SELECT_QT_BINDING', self._options.qt_binding)
         from python_qt_binding import QT_BINDING
