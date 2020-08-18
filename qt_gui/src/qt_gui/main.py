@@ -90,15 +90,15 @@ class Main(object):
             help='force a rediscover of plugins')
         common_group.add_argument(
             '-h', '--help', action='help', help='show this help message and exit')
+        common_group.add_argument(
+                '-ht', '--hide-title', dest='hide_title', action='store_true',
+                help='hide the title label, the icon, and the help button (combine with -l and -f '
+                     'to eliminate the entire title bar and reclaim the space)')
         if not standalone:
             common_group.add_argument(
                 '-l', '--lock-perspective', dest='lock_perspective', action='store_true',
                 help='lock the GUI to the used perspective (hide menu bar and close buttons of '
                      'plugins)')
-            common_group.add_argument(
-                '-ht', '--hide-title', dest='hide_title', action='store_true',
-                help='hide the title label, the icon, and the help button (combine with -l and -f '
-                     'to eliminate the entire title bar and reclaim the space)')
 
             common_group.add_argument(
                 '-p', '--perspective', dest='perspective', type=str, metavar='PERSPECTIVE',
@@ -244,7 +244,6 @@ class Main(object):
         if standalone:
             self._options.freeze_layout = False
             self._options.lock_perspective = False
-            self._options.hide_title = False
             self._options.perspective = None
             self._options.perspective_file = None
             self._options.standalone_plugin = standalone
