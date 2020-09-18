@@ -153,7 +153,8 @@ class PydotFactory():
 
     def add_edge_to_graph(
             self, graph, nodename1, nodename2, label=None, url=None,
-            simplify=True, style=None, penwidth=1, color=None):
+            simplify=True, style=None, penwidth=1, color=None,
+            edgetooltip=None):
         if simplify and LooseVersion(pydot.__version__) < LooseVersion('1.0.10'):
             if graph.get_edge(self.escape_name(nodename1), self.escape_name(nodename2)) != []:
                 return
@@ -169,6 +170,8 @@ class PydotFactory():
             edge.obj_dict['attributes']['colorR'] = str(color[0])
             edge.obj_dict['attributes']['colorG'] = str(color[1])
             edge.obj_dict['attributes']['colorB'] = str(color[2])
+        if edgetooltip is not None:
+            edge.obj_dict['attributes']['edgetooltip'] = edgetooltip
         graph.add_edge(edge)
 
     def create_dot(self, graph):

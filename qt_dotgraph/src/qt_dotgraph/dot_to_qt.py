@@ -218,7 +218,8 @@ class DotToQtGenerator():
                              penwidth=penwidth,
                              parent=scene.activePanel() if scene is not None else None,
                              edge_color=color,
-                             style=style)
+                             style=style,
+                             edgetooltip=edge.attr.get('edgetooltip'))
 
         if same_label_siblings:
             if label is None:

@@ -48,7 +48,8 @@ class EdgeItem(GraphItem):
 
     def __init__(
             self, highlight_level, spline, label_center, label, from_node, to_node,
-            parent=None, penwidth=1, edge_color=None, style='solid'):
+            parent=None, penwidth=1, edge_color=None, style='solid',
+            edgetooltip=None):
         super(EdgeItem, self).__init__(highlight_level, parent)
 
         self.from_node = from_node
@@ -131,6 +132,12 @@ class EdgeItem(GraphItem):
             self._arrow.hoverLeaveEvent = self._handle_hoverLeaveEvent
             self._arrow.setAcceptHoverEvents(True)
 
+        self._edgetooltip = None
+        if edgetooltip is not None:
+            edgetooltip = edgetooltip.replace('\\n', '<br/>')
+            self.setToolTip(edgetooltip)
+            self._edgetooltip = edgetooltip
+
         self._path = QGraphicsPathItem(parent)
         self._path.setPath(path)
         self.addToGroup(self._path)
@@ -149,7 +156,7 @@ class EdgeItem(GraphItem):
         super(EdgeItem, self).setToolTip(tool_tip)
         if self._label is not None:
             self._label.setToolTip(tool_tip)
-        if self._arrow is not None:
+        if self._arrow is not None and self._edgetooltip is None:
             self._arrow.setToolTip(tool_tip)
 
     def add_sibling_edge(self, edge):
