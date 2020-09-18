@@ -2,6 +2,10 @@
 Changelog for package qt_gui
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* allow hide title in standalone (`#235 <https://github.com/ros-visualization/qt_gui_core/issues/235>`_)
+
 1.1.1 (2020-08-03)
 ------------------
 * add logic to load qt_gui_icons on windows and macOS (`#222 <https://github.com/ros-visualization/qt_gui_core/issues/222>`_)

@@ -2,6 +2,9 @@
 Changelog for package qt_gui_cpp
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+
 1.1.1 (2020-08-03)
 ------------------
 * avoid a warning about C++ plugins on Windows (`#232 <https://github.com/ros-visualization/qt_gui_core/issues/232>`_)
