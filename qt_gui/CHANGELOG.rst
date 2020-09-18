@@ -2,8 +2,8 @@
 Changelog for package qt_gui
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+1.1.2 (2020-09-18)
+------------------
 * allow hide title in standalone (`#235 <https://github.com/ros-visualization/qt_gui_core/issues/235>`_)
 
 1.1.1 (2020-08-03)
