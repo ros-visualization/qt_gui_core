@@ -100,12 +100,15 @@ class PygraphvizFactory():
         return sg
 
     def add_edge_to_graph(
-            self, graph, nodename1, nodename2, label=None, url=None, simplify=True, style=None):
+            self, graph, nodename1, nodename2, label=None, url=None,
+            simplify=True, style=None, edgetooltip=None):
         kwargs = {'url': url}
         if label is not None:
             kwargs['label'] = label
         if style is not None:
             kwargs['style'] = style
+        if edgetooltip is not None:
+            kwargs['edgetooltip'] = edgetooltip
         graph.add_edge(nodename1, nodename2, **kwargs)
 
     def create_dot(self, graph):
