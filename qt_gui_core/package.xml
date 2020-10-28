@@ -8,7 +8,8 @@
   <description>
     Integration of the ROS package system and ROS-specific plugins for a Qt-based GUI.
   </description>
-  <maintainer email="dthomas@osrfoundation.org">Dirk Thomas</maintainer>
+  <maintainer email="cottsay@openrobotics.org">Scott Logan</maintainer>
+  <maintainer email="sloretz@openrobotics.org">Shane Loretz</maintainer>
   <license>BSD</license>
 
   <url type="website">http://ros.org/wiki/qt_gui_core</url>

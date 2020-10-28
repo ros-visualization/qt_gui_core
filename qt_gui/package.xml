@@ -10,7 +10,8 @@
     It is extensible with Python- and C++-based plugins (implemented in separate packages) which can contribute arbitrary widgets.
     It requires either PyQt or PySide bindings.
   </description>
-  <maintainer email="dthomas@osrfoundation.org">Dirk Thomas</maintainer>
+  <maintainer email="cottsay@openrobotics.org">Scott Logan</maintainer>
+  <maintainer email="sloretz@openrobotics.org">Shane Loretz</maintainer>
   <license>BSD</license>
 
   <url type="website">http://ros.org/wiki/qt_gui</url>
