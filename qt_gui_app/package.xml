@@ -8,7 +8,8 @@
   <description>
     qt_gui_app provides the main to start an instance of the integrated graphical user interface provided by qt_gui.
   </description>
-  <maintainer email="dthomas@osrfoundation.org">Dirk Thomas</maintainer>
+  <maintainer email="cottsay@openrobotics.org">Scott Logan</maintainer>
+  <maintainer email="sloretz@openrobotics.org">Shane Loretz</maintainer>
   <license>BSD</license>
 
   <url type="website">http://ros.org/wiki/qt_gui_app</url>
