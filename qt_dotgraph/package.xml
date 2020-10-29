@@ -4,13 +4,15 @@
   <description>
     qt_dotgraph provides helpers to work with dot graphs.
   </description>
-  <maintainer email="dthomas@osrfoundation.org">Dirk Thomas</maintainer>
+  <maintainer email="cottsay@openrobotics.org">Scott Logan</maintainer>
+  <maintainer email="sloretz@openrobotics.org">Shane Loretz</maintainer>
   <license>BSD</license>
 
   <url type="website">http://ros.org/wiki/qt_dotgraph</url>
   <url type="repository">https://github.com/ros-visualization/qt_gui_core</url>
   <url type="bugtracker">https://github.com/ros-visualization/qt_gui_core/issues</url>
   <author>Thibault Kruse</author>
+  <author email="dthomas@osrfoundation.org">Dirk Thomas</author>
 
   <buildtool_depend>ament_cmake</buildtool_depend>
 
