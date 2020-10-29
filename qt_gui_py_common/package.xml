@@ -4,7 +4,8 @@
   <description>
     qt_gui_py_common provides common functionality for GUI plugins written in Python.
   </description>
-  <maintainer email="scholz@sim.tu-darmstadt.de">Dorian Scholz</maintainer>
+  <maintainer email="cottsay@openrobotics.org">Scott Logan</maintainer>
+  <maintainer email="sloretz@openrobotics.org">Shane Loretz</maintainer>
   <license>BSD</license>
 
   <url type="website">http://ros.org/wiki/qt_gui_py_common</url>
