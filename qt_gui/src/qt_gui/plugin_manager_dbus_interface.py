@@ -56,6 +56,6 @@ class PluginManagerDBusInterface(Object):
                   'matching "%s"\n%s' % (plugin_name, '\n'.join(plugins.values()))
             qWarning(msg)
             return (1, msg)
-        plugin_id = plugins.keys()[0]
+        plugin_id = next(iter(plugins))
         self._plugin_manager.load_plugin(plugin_id, argv=argv.split(' ') if argv else [])
         return (0, plugin_id)
