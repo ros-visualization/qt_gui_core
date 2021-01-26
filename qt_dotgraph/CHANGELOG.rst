@@ -2,6 +2,9 @@
 Changelog for package qt_dotgraph
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+
 1.1.2 (2020-09-18)
 ------------------
 * add API to set edge tooltip (`#237 <https://github.com/ros-visualization/qt_gui_core/issues/237>`_)
