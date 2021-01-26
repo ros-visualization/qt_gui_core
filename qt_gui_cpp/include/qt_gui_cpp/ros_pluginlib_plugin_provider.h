@@ -44,7 +44,7 @@
 #include "plugin_provider.h"
 
 #include <pluginlib/class_loader.hpp>
-#include <rcpputils/filesystem_helper.hpp>
+#include <pluginlib/impl/filesystem_helper.hpp>
 #include <tinyxml2.h>
 
 #include <QCoreApplication>
@@ -145,7 +145,7 @@ public:
 
       std::string name = class_loader_->getName(lookup_name);
       std::string plugin_xml = class_loader_->getPluginManifestPath(lookup_name);
-      rcpputils::fs::path p(plugin_xml);
+      pluginlib::impl::fs::path p(plugin_xml);
       std::string plugin_path = p.parent_path().string();
 
       QMap<QString, QString> attributes;
