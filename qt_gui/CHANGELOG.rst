@@ -2,8 +2,8 @@
 Changelog for package qt_gui
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+2.0.0 (2021-01-26)
+------------------
 * Fix 'dict_keys' object not subscriptable (`#243 <https://github.com/ros-visualization/qt_gui_core/issues/243>`_)
 * Contributors: Michael Jeronimo
 
