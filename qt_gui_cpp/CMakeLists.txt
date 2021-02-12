@@ -19,6 +19,7 @@ if(WIN32)
 endif()
 
 find_package(pluginlib REQUIRED)
+find_package(rcpputils REQUIRED)
 find_package(tinyxml2_vendor REQUIRED)
 find_package(TinyXML2 REQUIRED)
 
@@ -36,6 +37,7 @@ install(
 )
 
 ament_export_dependencies(pluginlib)
+ament_export_dependencies(rcpputils)
 ament_export_include_directories(include)
 
 ament_export_include_directories(include)
