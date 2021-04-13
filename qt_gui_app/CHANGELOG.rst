@@ -2,6 +2,11 @@
 Changelog for package qt_gui_app
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.3.18 (2021-04-12)
+-------------------
+* Update Maintainers (`#240 <https://github.com/ros-visualization/qt_gui_core/issues/240>`_) (`#241 <https://github.com/ros-visualization/qt_gui_core/issues/241>`_)
+* Contributors: Shane Loretz
+
 0.3.17 (2020-02-28)
 -------------------
 * bump CMake minimum version to avoid CMP0048 warning (`#206 <https://github.com/ros-visualization/qt_gui_core/issues/206>`_)
