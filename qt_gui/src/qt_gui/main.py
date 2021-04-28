@@ -34,7 +34,6 @@ from __future__ import print_function
 
 from argparse import ArgumentParser, SUPPRESS
 import os
-import platform
 import signal
 import sys
 
