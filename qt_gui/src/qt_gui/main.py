@@ -34,7 +34,6 @@ from __future__ import print_function
 
 from argparse import ArgumentParser, SUPPRESS
 import os
-import platform
 import signal
 import sys
 
@@ -193,20 +192,19 @@ class Main(object):
 
     def _set_theme_if_necessary(self):
         from python_qt_binding.QtGui import QIcon
-        # if themeName is defined we are on Linux
-        # otherwise try to use the them provided by tango_icons_vendor
-        if not QIcon.themeName():
-            package_path = has_resource('packages', 'tango_icons_vendor')
-            if package_path:
-                icon_paths = QIcon.themeSearchPaths()
-                icon_paths.append(os.path.join(
-                    package_path, 'share', 'tango_icons_vendor',
-                    'resource', 'icons', 'Tango'))
-                QIcon.setThemeSearchPaths(icon_paths)
-                QIcon.setThemeName('scalable')
-            elif platform.system() != 'Linux':
-                print("The 'tango_icons_vendor' package was not found - icons "
-                      'will not work', file=sys.stderr)
+        # Always prefer tango_icons_vendor
+        package_path = has_resource('packages', 'tango_icons_vendor')
+        if package_path:
+            icon_paths = QIcon.themeSearchPaths()
+            icon_paths = [
+                os.path.join(package_path, 'share', 'tango_icons_vendor', 'resource', 'icons')
+            ] + icon_paths
+            QIcon.setThemeSearchPaths(icon_paths)
+        # Use Tango if possible, fall back to system default
+        original_theme = QIcon.themeName()
+        QIcon.setThemeName('Tango')
+        if QIcon.fromTheme('document-save').isNull():
+            QIcon.setThemeName(original_theme)
 
     def create_application(self, argv):
         from python_qt_binding.QtCore import Qt
