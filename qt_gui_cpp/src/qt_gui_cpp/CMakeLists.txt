@@ -1,5 +1,7 @@
-set(Python_ADDITIONAL_VERSIONS "${PYTHON_VERSION_MAJOR}.${PYTHON_VERSION_MINOR}")
-find_package(PythonLibs "${PYTHON_VERSION_MAJOR}.${PYTHON_VERSION_MINOR}" REQUIRED)
+find_package(Python3 REQUIRED COMPONENTS Development)
+
+set(Python_ADDITIONAL_VERSIONS "${Python3_VERSION_MAJOR}.${Python3_VERSION_MINOR}")
+find_package(PythonLibs "${Python3_VERSION_MAJOR}.${Python3_VERSION_MINOR}" REQUIRED)
 find_package(Qt5 REQUIRED COMPONENTS Widgets)
 if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC")
@@ -23,7 +25,6 @@ set(qt_gui_cpp_HDRS
 )
 
 set(qt_gui_cpp_INCLUDE_DIRECTORIES
-  ${PYTHON_INCLUDE_DIR}
   ${PROJECT_NAME}/include/qt_gui_cpp
 )
 
@@ -49,7 +50,10 @@ if (WIN32)
   target_compile_options(${PROJECT_NAME} PUBLIC "/Zc:__cplusplus")
 endif()
 
-target_link_libraries(${PROJECT_NAME} ${qt_gui_cpp_LINK_LIBRARIES} Qt5::Widgets)
+target_link_libraries(${PROJECT_NAME}
+  ${qt_gui_cpp_LINK_LIBRARIES}
+  Qt5::Widgets
+  Python::Python)
 
 install(TARGETS ${PROJECT_NAME}
   ARCHIVE DESTINATION lib

@@ -35,23 +35,6 @@ ament_get_recursive_properties(deps_include_dirs deps_libraries ${pluginlib_TARG
 list(APPEND deps_include_dirs ${TinyXML2_INCLUDE_DIRS})
 list(APPEND deps_libraries ${TinyXML2_LIBRARIES})
 
-set(_qt_gui_cpp_sip_LIBRARIES
-  ${deps_libraries}
-  ${PYTHON_LIBRARY}
-  qt_gui_cpp
-)
-
-# sip needs libraries to have resolved paths and cannot link to cmake targets
-foreach(_lib_name ${_qt_gui_cpp_sip_LIBRARIES})
-  if(TARGET ${_lib_name})
-    # Use a nifty cmake generator expression to resolve the target location
-    list(APPEND qt_gui_cpp_sip_LIBRARIES $<TARGET_FILE:${_lib_name}>)
-  else()
-    # This library should work as is
-    list(APPEND qt_gui_cpp_sip_LIBRARIES ${_lib_name})
-  endif()
-endforeach()
-
 find_package(python_qt_binding REQUIRED)
 include(${python_qt_binding_DIR}/sip_helper.cmake)
 
