@@ -53,7 +53,7 @@ endif()
 target_link_libraries(${PROJECT_NAME}
   ${qt_gui_cpp_LINK_LIBRARIES}
   Qt5::Widgets
-  Python::Python)
+  Python3::Python)
 
 install(TARGETS ${PROJECT_NAME}
   ARCHIVE DESTINATION lib
