@@ -2,6 +2,11 @@
 Changelog for package qt_gui
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+1.1.3 (2021-08-31)
+------------------
+* Fix 'dict_keys' object not subscriptable (`#243 <https://github.com/ros-visualization/qt_gui_core/issues/243>`_)
+* Contributors: Michael Jeronimo
+
 1.1.2 (2020-09-18)
 ------------------
 * allow hide title in standalone (`#235 <https://github.com/ros-visualization/qt_gui_core/issues/235>`_)

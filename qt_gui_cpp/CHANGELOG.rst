@@ -2,6 +2,11 @@
 Changelog for package qt_gui_cpp
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+1.1.3 (2021-08-31)
+------------------
+* Fix duplicated QMap to QMultiMap (`#244 <https://github.com/ros-visualization/qt_gui_core/issues/244>`_)
+* Contributors: Chris Lalancette, Homalozoa X
+
 1.1.2 (2020-09-18)
 ------------------
 
