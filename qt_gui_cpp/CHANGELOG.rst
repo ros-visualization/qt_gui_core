@@ -2,8 +2,8 @@
 Changelog for package qt_gui_cpp
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+2.1.0 (2021-11-02)
+------------------
 * FindPython3 explicitly instead of FindPythonInterp implicitly (`#254 <https://github.com/ros-visualization/qt_gui_core/issues/254>`_)
 * Contributors: Shane Loretz
 
