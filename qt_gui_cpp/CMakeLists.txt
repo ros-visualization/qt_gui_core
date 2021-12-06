@@ -19,7 +19,6 @@ if(WIN32)
 endif()
 
 find_package(pluginlib REQUIRED)
-find_package(Python3 REQUIRED COMPONENTS Development)
 find_package(Qt5 REQUIRED COMPONENTS Widgets)
 find_package(rcpputils REQUIRED)
 find_package(tinyxml2_vendor REQUIRED)
@@ -57,7 +56,6 @@ target_link_libraries(${PROJECT_NAME}
   ${QT_QTGUI_LIBRARY}
   Qt5::Widgets
   pluginlib::pluginlib
-  Python3::Module
   rcpputils::rcpputils
   tinyxml2::tinyxml2)
 
