@@ -59,13 +59,6 @@ target_link_libraries(${PROJECT_NAME}
   rcpputils::rcpputils
   tinyxml2::tinyxml2)
 
-if (WIN32)
-  # On Windows systems, Visual Studio does not currently set __cplusplus correctly unless this
-  # compile option is added. __cplusplus is used by a header in pluginlib/class_loader.hpp
-  message(STATUS "On Windows, setting /Zc:__cplusplus")
-  target_compile_options(${PROJECT_NAME} PUBLIC "/Zc:__cplusplus")
-endif()
-
 add_subdirectory(src/qt_gui_cpp_shiboken)
 add_subdirectory(src/qt_gui_cpp_sip)
 
