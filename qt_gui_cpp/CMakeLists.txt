@@ -19,6 +19,7 @@ if(WIN32)
 endif()
 
 find_package(pluginlib REQUIRED)
+find_package(Qt5 REQUIRED COMPONENTS Widgets)
 find_package(rcpputils REQUIRED)
 find_package(tinyxml2_vendor REQUIRED)
 find_package(TinyXML2 REQUIRED)
@@ -26,7 +27,45 @@ find_package(TinyXML2 REQUIRED)
 ament_python_install_package(${PROJECT_NAME}
   PACKAGE_DIR src/${PROJECT_NAME})
 
-add_subdirectory(src)
+set(qt_gui_cpp_SRCS
+  src/qt_gui_cpp/composite_plugin_provider.cpp
+  src/qt_gui_cpp/generic_proxy.cpp
+  src/qt_gui_cpp/plugin_bridge.cpp
+  src/qt_gui_cpp/plugin_context.cpp
+  src/qt_gui_cpp/plugin_descriptor.cpp
+  src/qt_gui_cpp/plugin_provider.cpp
+  src/qt_gui_cpp/recursive_plugin_provider.cpp
+  src/qt_gui_cpp/settings.cpp
+)
+
+set(qt_gui_cpp_HDRS
+  include/qt_gui_cpp/plugin.h
+  include/qt_gui_cpp/plugin_bridge.h
+  include/qt_gui_cpp/plugin_context.h
+)
+
+qt5_wrap_cpp(qt_gui_cpp_MOCS ${qt_gui_cpp_HDRS})
+
+add_library(${PROJECT_NAME} SHARED ${qt_gui_cpp_SRCS} ${qt_gui_cpp_MOCS})
+target_include_directories(${PROJECT_NAME} PUBLIC
+  "$<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include>"
+  "$<INSTALL_INTERFACE:include>")
+
+target_link_libraries(${PROJECT_NAME}
+  ${QT_QTCORE_LIBRARY}
+  ${QT_QTGUI_LIBRARY}
+  Qt5::Widgets
+  pluginlib::pluginlib
+  rcpputils::rcpputils
+  tinyxml2::tinyxml2)
+
+add_subdirectory(src/qt_gui_cpp_shiboken)
+add_subdirectory(src/qt_gui_cpp_sip)
+
+message(STATUS "Python binding generators: ${qt_gui_cpp_BINDINGS}")
+if(NOT qt_gui_cpp_BINDINGS)
+  message(FATAL_ERROR "No Python binding generator found.")
+endif()
 
 install(FILES plugin.xml
   DESTINATION share/${PROJECT_NAME})
@@ -36,11 +75,14 @@ install(
   DESTINATION include
 )
 
-ament_export_dependencies(pluginlib rcpputils)
-ament_export_include_directories(include)
+ament_export_dependencies(pluginlib rcpputils TinyXML2)
+ament_export_targets(export_${PROJECT_NAME} HAS_LIBRARY_TARGET)
 
-ament_export_include_directories(include)
-ament_export_libraries(${PROJECT_NAME})
+install(TARGETS ${PROJECT_NAME}
+  EXPORT export_${PROJECT_NAME}
+  ARCHIVE DESTINATION lib
+  LIBRARY DESTINATION lib
+  RUNTIME DESTINATION bin)
 
 # TODO(brawner) add ament_lint_auto tests here. Much of the c++ code needs to
 # be updated for ROS2 style
