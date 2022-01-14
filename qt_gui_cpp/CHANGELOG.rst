@@ -2,6 +2,11 @@
 Changelog for package qt_gui_cpp
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+2.1.1 (2022-01-14)
+------------------
+* Export targets instead of old-style CMake variables (`#257 <https://github.com/ros-visualization/qt_gui_core/issues/257>`_)
+* Contributors: Shane Loretz
+
 2.1.0 (2021-11-02)
 ------------------
 * FindPython3 explicitly instead of FindPythonInterp implicitly (`#254 <https://github.com/ros-visualization/qt_gui_core/issues/254>`_)
