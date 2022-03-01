@@ -2,8 +2,8 @@
 Changelog for package qt_gui_cpp
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+2.2.0 (2022-03-01)
+------------------
 * Install headers to include${PROJECT_NAME} (`#259 <https://github.com/ros-visualization/qt_gui_core/issues/259>`_)
 * Contributors: Shane Loretz
 
