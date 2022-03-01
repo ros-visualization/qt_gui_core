@@ -2,6 +2,11 @@
 Changelog for package qt_gui_cpp
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Install headers to include${PROJECT_NAME} (`#259 <https://github.com/ros-visualization/qt_gui_core/issues/259>`_)
+* Contributors: Shane Loretz
+
 2.1.1 (2022-01-14)
 ------------------
 * Export targets instead of old-style CMake variables (`#257 <https://github.com/ros-visualization/qt_gui_core/issues/257>`_)
