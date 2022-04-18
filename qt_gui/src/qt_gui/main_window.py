@@ -28,8 +28,9 @@
 # ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-from python_qt_binding.QtCore import qDebug, Qt, Signal
-from python_qt_binding.QtWidgets import QToolBar
+from python_qt_binding.QtCore import qDebug, Qt, Signal, QRect
+from python_qt_binding.QtWidgets import QToolBar, QTextBrowser
+from python_qt_binding.QtGui import QFont
 
 from qt_gui.dockable_main_window import DockableMainWindow
 from qt_gui.settings import Settings
@@ -44,10 +45,38 @@ class MainWindow(DockableMainWindow):
         super(MainWindow, self).__init__()
         self.setObjectName('MainWindow')
 
+        font = QFont()
+        font.setPointSize(14)
+
+        self._info = QTextBrowser(self)
+        self._info.setFont(font)
+        self._info.setReadOnly(True)
+        self._info.setTextInteractionFlags(Qt.TextBrowserInteraction)
+        self._info.setOpenExternalLinks(True)
+        self._info.setHtml(
+            """<p><b>rqt</b> is a GUI framework that is able to load various plug-in tools as dockable windows.
+There are currently no plug-ins selected. To add plug-ins, select items from the <b>Plugins</b> menu.</p>
+<p>You may also save a particular arrangement of plug-ins as a <i>perspective</i> using the <b>Perspectives</b> menu.
+<p>See <a href="http://wiki.ros.org/rqt/">the rqt Wiki page</a> for more information</p>
+""")
+
         self._save_on_close_signaled = False
         self._global_settings = None
         self._perspective_settings = None
         self._settings = None
+
+    def plugins_changed(self, num_plugins):
+        self._info.hide() if num_plugins else self._info.show()
+
+    def resizeEvent(self, event):
+        size = self.size()
+        info_percentage = 0.75
+        margin_percentage = (1.0 - info_percentage) / 2
+        self._info.setGeometry(
+            QRect(size.width() * margin_percentage,
+                  size.height() * margin_percentage,
+                  size.width() * info_percentage,
+                  size.height() * info_percentage))
 
     def closeEvent(self, event):
         qDebug('MainWindow.closeEvent()')

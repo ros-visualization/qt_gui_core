@@ -512,6 +512,7 @@ class Main(object):
         if main_window is not None:
             container_manager = ContainerManager(main_window, plugin_manager)
             plugin_manager.set_main_window(main_window, menu_bar, container_manager)
+            plugin_manager.plugin_load_unload_signal.connect(main_window.plugins_changed)
 
             if not self._options.freeze_layout:
                 minimized_dock_widgets_toolbar = MinimizedDockWidgetsToolbar(
