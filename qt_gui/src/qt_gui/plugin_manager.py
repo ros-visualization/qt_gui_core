@@ -293,7 +293,7 @@ class PluginManager(QObject):
         handler.close_signal.connect(self.unload_plugin)
         handler.reload_signal.connect(self.reload_plugin)
         handler.help_signal.connect(self._emit_plugin_help_signal)
-        self.plugin_load_unload_signal.emit(len(self._running_plugins))
+        self.plugin_load_unload_signal.emit(len(self._running_plugins) == 0)
 
     def _emit_plugin_help_signal(self, instance_id_str):
         instance_id = PluginInstanceId(instance_id=instance_id_str)
@@ -368,7 +368,7 @@ class PluginManager(QObject):
     def _unload_plugin_completed(self, instance_id):
         qDebug('PluginManager._unload_plugin_completed(%s)' % str(instance_id))
         self._remove_running_plugin(instance_id)
-        self.plugin_load_unload_signal.emit(len(self._running_plugins))
+        self.plugin_load_unload_signal.emit(len(self._running_plugins) == 0)
 
     def _remove_running_plugin(self, instance_id):
         info = self._running_plugins[str(instance_id)]

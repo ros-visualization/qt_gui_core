@@ -214,7 +214,7 @@ class Main(object):
         return app
 
     def main(self, argv=None, standalone=None, plugin_argument_provider=None,
-             plugin_manager_settings_prefix=''):
+             plugin_manager_settings_prefix='', help_text=None):
         if argv is None:
             argv = sys.argv
 
@@ -452,7 +452,7 @@ class Main(object):
             if self._options.clear_config:
                 settings.clear()
 
-            main_window = MainWindow()
+            main_window = MainWindow(help_text)
             if self._options.on_top:
                 main_window.setWindowFlags(Qt.WindowStaysOnTopHint)
 
@@ -512,7 +512,7 @@ class Main(object):
         if main_window is not None:
             container_manager = ContainerManager(main_window, plugin_manager)
             plugin_manager.set_main_window(main_window, menu_bar, container_manager)
-            plugin_manager.plugin_load_unload_signal.connect(main_window.plugins_changed)
+            plugin_manager.plugin_load_unload_signal.connect(main_window.showHelpWidget)
 
             if not self._options.freeze_layout:
                 minimized_dock_widgets_toolbar = MinimizedDockWidgetsToolbar(

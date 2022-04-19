@@ -41,42 +41,41 @@ class MainWindow(DockableMainWindow):
 
     save_settings_before_close_signal = Signal(Settings, Settings)
 
-    def __init__(self):
+    def __init__(self, help_text=None):
         super(MainWindow, self).__init__()
         self.setObjectName('MainWindow')
+        self._help_widget = None
 
-        font = QFont()
-        font.setPointSize(14)
+        if help_text:
+            font = QFont()
+            font.setPointSize(14)
 
-        self._info = QTextBrowser(self)
-        self._info.setFont(font)
-        self._info.setReadOnly(True)
-        self._info.setTextInteractionFlags(Qt.TextBrowserInteraction)
-        self._info.setOpenExternalLinks(True)
-        self._info.setHtml(
-            """<p><b>rqt</b> is a GUI framework that is able to load various plug-in tools as dockable windows.
-There are currently no plug-ins selected. To add plug-ins, select items from the <b>Plugins</b> menu.</p>
-<p>You may also save a particular arrangement of plug-ins as a <i>perspective</i> using the <b>Perspectives</b> menu.
-<p>See <a href="http://wiki.ros.org/rqt/">the rqt Wiki page</a> for more information</p>
-""")
+            self._help_widget = QTextBrowser(self)
+            self._help_widget.setFont(font)
+            self._help_widget.setReadOnly(True)
+            self._help_widget.setTextInteractionFlags(Qt.TextBrowserInteraction)
+            self._help_widget.setOpenExternalLinks(True)
+            self._help_widget.setHtml(help_text)
 
         self._save_on_close_signaled = False
         self._global_settings = None
         self._perspective_settings = None
         self._settings = None
 
-    def plugins_changed(self, num_plugins):
-        self._info.hide() if num_plugins else self._info.show()
+    def showHelpWidget(self, should_show):
+        if self._help_widget:
+            self._help_widget.show() if should_show else self._help_widget.hide()
 
     def resizeEvent(self, event):
         size = self.size()
         info_percentage = 0.75
         margin_percentage = (1.0 - info_percentage) / 2
-        self._info.setGeometry(
-            QRect(size.width() * margin_percentage,
-                  size.height() * margin_percentage,
-                  size.width() * info_percentage,
-                  size.height() * info_percentage))
+        if self._help_widget:
+            self._help_widget.setGeometry(
+                QRect(size.width() * margin_percentage,
+                      size.height() * margin_percentage,
+                      size.width() * info_percentage,
+                      size.height() * info_percentage))
 
     def closeEvent(self, event):
         qDebug('MainWindow.closeEvent()')
