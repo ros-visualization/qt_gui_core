@@ -56,6 +56,7 @@ class MainWindow(DockableMainWindow):
             self._help_widget.setTextInteractionFlags(Qt.TextBrowserInteraction)
             self._help_widget.setOpenExternalLinks(True)
             self._help_widget.setHtml(help_text)
+            self._help_widget.setStyleSheet("background:transparent;")
 
         self._save_on_close_signaled = False
         self._global_settings = None
