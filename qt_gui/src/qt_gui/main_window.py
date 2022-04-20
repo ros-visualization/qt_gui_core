@@ -68,10 +68,10 @@ class MainWindow(DockableMainWindow):
             self._help_widget.show() if should_show else self._help_widget.hide()
 
     def resizeEvent(self, event):
-        size = self.size()
-        info_percentage = 0.75
-        margin_percentage = (1.0 - info_percentage) / 2
         if self._help_widget:
+            size = self.size()
+            info_percentage = 0.75
+            margin_percentage = (1.0 - info_percentage) / 2
             self._help_widget.setGeometry(
                 QRect(int(size.width() * margin_percentage),
                       int(size.height() * margin_percentage),
