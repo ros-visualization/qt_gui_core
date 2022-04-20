@@ -72,10 +72,10 @@ class MainWindow(DockableMainWindow):
         margin_percentage = (1.0 - info_percentage) / 2
         if self._help_widget:
             self._help_widget.setGeometry(
-                QRect(size.width() * margin_percentage,
-                      size.height() * margin_percentage,
-                      size.width() * info_percentage,
-                      size.height() * info_percentage))
+                QRect(int(size.width() * margin_percentage),
+                      int(size.height() * margin_percentage),
+                      int(size.width() * info_percentage),
+                      int(size.height() * info_percentage)))
 
     def closeEvent(self, event):
         qDebug('MainWindow.closeEvent()')
