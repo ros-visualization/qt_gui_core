@@ -28,8 +28,9 @@
 # ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-from python_qt_binding.QtCore import qDebug, Qt, Signal
-from python_qt_binding.QtWidgets import QToolBar
+from python_qt_binding.QtCore import qDebug, Qt, Signal, QRect
+from python_qt_binding.QtWidgets import QToolBar, QTextBrowser
+from python_qt_binding.QtGui import QFont
 
 from qt_gui.dockable_main_window import DockableMainWindow
 from qt_gui.settings import Settings
@@ -40,14 +41,42 @@ class MainWindow(DockableMainWindow):
 
     save_settings_before_close_signal = Signal(Settings, Settings)
 
-    def __init__(self):
+    def __init__(self, help_text=None):
         super(MainWindow, self).__init__()
         self.setObjectName('MainWindow')
+        self._help_widget = None
+
+        if help_text:
+            font = QFont()
+            font.setPointSize(14)
+
+            self._help_widget = QTextBrowser(self)
+            self._help_widget.setFont(font)
+            self._help_widget.setReadOnly(True)
+            self._help_widget.setTextInteractionFlags(Qt.TextBrowserInteraction)
+            self._help_widget.setOpenExternalLinks(True)
+            self._help_widget.setHtml(help_text)
+            self._help_widget.setStyleSheet("background:transparent;")
 
         self._save_on_close_signaled = False
         self._global_settings = None
         self._perspective_settings = None
         self._settings = None
+
+    def showHelpWidget(self, should_show):
+        if self._help_widget:
+            self._help_widget.show() if should_show else self._help_widget.hide()
+
+    def resizeEvent(self, event):
+        if self._help_widget:
+            size = self.size()
+            info_percentage = 0.75
+            margin_percentage = (1.0 - info_percentage) / 2
+            self._help_widget.setGeometry(
+                QRect(int(size.width() * margin_percentage),
+                      int(size.height() * margin_percentage),
+                      int(size.width() * info_percentage),
+                      int(size.height() * info_percentage)))
 
     def closeEvent(self, event):
         qDebug('MainWindow.closeEvent()')
