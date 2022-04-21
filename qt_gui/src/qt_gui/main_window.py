@@ -28,9 +28,9 @@
 # ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-from python_qt_binding.QtCore import qDebug, Qt, Signal, QRect
-from python_qt_binding.QtWidgets import QToolBar, QTextBrowser
+from python_qt_binding.QtCore import qDebug, QRect, Qt, Signal
 from python_qt_binding.QtGui import QFont
+from python_qt_binding.QtWidgets import QTextBrowser, QToolBar
 
 from qt_gui.dockable_main_window import DockableMainWindow
 from qt_gui.settings import Settings
@@ -56,7 +56,7 @@ class MainWindow(DockableMainWindow):
             self._help_widget.setTextInteractionFlags(Qt.TextBrowserInteraction)
             self._help_widget.setOpenExternalLinks(True)
             self._help_widget.setHtml(help_text)
-            self._help_widget.setStyleSheet("background:transparent;")
+            self._help_widget.setStyleSheet('background:transparent;')
 
         self._save_on_close_signaled = False
         self._global_settings = None
