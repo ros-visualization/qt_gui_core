@@ -13,7 +13,7 @@ class QGraphicsBox3dItem(QAbstractGraphicsShapeItem):
 
     def paint(self, painter, option, widget):
         # Main rectangle
-        rectangle = QRectF((int)(self._bounding_box.topLeft().x()),
+        rectangle = QRectF(self._bounding_box.topLeft().x(),
                            self._bounding_box.topLeft().y() + self._bounding_box.height() * 0.1,
                            self._bounding_box.width() - self._bounding_box.height() * 0.1,
                            self._bounding_box.height() - self._bounding_box.height() * 0.1)
