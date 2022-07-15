@@ -42,4 +42,5 @@ class QGraphicsBox3dItem(QAbstractGraphicsShapeItem):
         painter.drawLine((int)(self._bounding_box.topRight().x()),
                          (int)(self._bounding_box.topRight().y()),
                          (int)(self._bounding_box.topRight().x()),
-                         (int)(self._bounding_box.bottomRight().y() - self._bounding_box.height() * 0.1))
+                         ((int)(self._bounding_box.bottomRight().y()
+                                - self._bounding_box.height() * 0.1)))
