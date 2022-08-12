@@ -19,28 +19,28 @@ class QGraphicsBox3dItem(QAbstractGraphicsShapeItem):
                            self._bounding_box.height() - self._bounding_box.height() * 0.1)
         painter.drawRect(rectangle)
         # Top line
-        painter.drawLine((int)(rectangle.topLeft().x() + self._bounding_box.height() * 0.1),
-                         (int)(self._bounding_box.topLeft().y()),
-                         (int)(self._bounding_box.topRight().x()),
-                         (int)(self._bounding_box.topRight().y()))
+        painter.drawLine(int(rectangle.topLeft().x() + self._bounding_box.height() * 0.1),
+                         int(self._bounding_box.topLeft().y()),
+                         int(self._bounding_box.topRight().x()),
+                         int(self._bounding_box.topRight().y()))
         # Top left corner
-        painter.drawLine((int)(rectangle.topLeft().x() + self._bounding_box.height() * 0.1),
-                         (int)(self._bounding_box.topLeft().y()),
-                         (int)(self._bounding_box.topLeft().x() + 1),
-                         (int)(rectangle.topLeft().y()))
+        painter.drawLine(int(rectangle.topLeft().x() + self._bounding_box.height() * 0.1),
+                         int(self._bounding_box.topLeft().y()),
+                         int(self._bounding_box.topLeft().x() + 1),
+                         int(rectangle.topLeft().y()))
         # Top right corner
-        painter.drawLine((int)(self._bounding_box.topRight().x()),
-                         (int)(self._bounding_box.topRight().y()),
-                         (int)(rectangle.topRight().x()),
-                         (int)(rectangle.topRight().y()))
+        painter.drawLine(int(self._bounding_box.topRight().x()),
+                         int(self._bounding_box.topRight().y()),
+                         int(rectangle.topRight().x()),
+                         int(rectangle.topRight().y()))
         # Bottom right corner
-        painter.drawLine((int)(rectangle.bottomRight().x() + 1),
-                         (int)(rectangle.bottomRight().y() - 1),
-                         (int)(self._bounding_box.bottomRight().x()),
-                         (int)(rectangle.bottomRight().y() - self._bounding_box.height() * 0.1))
+        painter.drawLine(int(rectangle.bottomRight().x() + 1),
+                         int(rectangle.bottomRight().y() - 1),
+                         int(self._bounding_box.bottomRight().x()),
+                         int(rectangle.bottomRight().y() - self._bounding_box.height() * 0.1))
         # Right line
-        painter.drawLine((int)(self._bounding_box.topRight().x()),
-                         (int)(self._bounding_box.topRight().y()),
-                         (int)(self._bounding_box.topRight().x()),
-                         ((int)(self._bounding_box.bottomRight().y()
-                                - self._bounding_box.height() * 0.1)))
+        painter.drawLine(int(self._bounding_box.topRight().x()),
+                         int(self._bounding_box.topRight().y()),
+                         int(self._bounding_box.topRight().x()),
+                         int(self._bounding_box.bottomRight().y()
+                             - self._bounding_box.height() * 0.1))
