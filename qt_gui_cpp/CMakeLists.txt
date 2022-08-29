@@ -19,7 +19,7 @@ if(WIN32)
 endif()
 
 find_package(pluginlib REQUIRED)
-find_package(Qt5 REQUIRED COMPONENTS Widgets)
+find_package(Qt5 REQUIRED COMPONENTS Core Gui Widgets)
 find_package(rcpputils REQUIRED)
 find_package(tinyxml2_vendor REQUIRED)
 find_package(TinyXML2 REQUIRED)
@@ -60,7 +60,9 @@ target_link_libraries(${PROJECT_NAME}
   tinyxml2::tinyxml2)
 
 add_subdirectory(src/qt_gui_cpp_shiboken)
-add_subdirectory(src/qt_gui_cpp_sip)
+if (NOT APPLE)
+  add_subdirectory(src/qt_gui_cpp_sip)
+endif()
 
 message(STATUS "Python binding generators: ${qt_gui_cpp_BINDINGS}")
 if(NOT qt_gui_cpp_BINDINGS)
