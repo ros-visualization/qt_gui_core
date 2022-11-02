@@ -2,6 +2,11 @@
 Changelog for package qt_gui_cpp
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Add in LICENSE file
+* Contributors: Chris Lalancette
+
 2.3.1 (2022-08-15)
 ------------------
 
