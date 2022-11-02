@@ -2,8 +2,8 @@
 Changelog for package qt_gui_app
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+2.3.2 (2022-11-02)
+------------------
 * Add in LICENSE file
 * Contributors: Chris Lalancette
 
