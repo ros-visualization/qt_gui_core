@@ -90,9 +90,17 @@ install(TARGETS ${PROJECT_NAME}
 if(BUILD_TESTING)
   find_package(ament_cmake_pytest REQUIRED)
 
-  ament_add_pytest_test(qt_gui_cpp test
-    APPEND_ENV PYTHONPATH=${CMAKE_CURRENT_BINARY_DIR}
-    TIMEOUT 90)
+  if(TARGET qt_gui_cpp_shiboken)
+    ament_add_pytest_test(qt_gui_cpp_shiboken test/test_imports_shiboken.py
+      APPEND_ENV PYTHONPATH=${CMAKE_CURRENT_BINARY_DIR}
+      TIMEOUT 90)
+  endif()
+
+  if(TARGET qt_gui_cpp_sip)
+    ament_add_pytest_test(qt_gui_cpp_sip test/test_imports_sip.py
+      APPEND_ENV PYTHONPATH=${CMAKE_CURRENT_BINARY_DIR}
+      TIMEOUT 90)
+  endif()
 endif()
 
 ament_package(CONFIG_EXTRAS cmake/${PROJECT_NAME}-extras.cmake)
