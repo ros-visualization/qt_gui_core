@@ -35,7 +35,8 @@ ament_get_recursive_properties(deps_include_dirs deps_libraries ${pluginlib_TARG
 list(APPEND deps_include_dirs ${TinyXML2_INCLUDE_DIRS})
 list(APPEND deps_libraries ${TinyXML2_LIBRARIES})
 
-find_package(Python3 REQUIRED COMPONENTS Development)
+# Find python before pybind11
+find_package(Python3 REQUIRED COMPONENTS Interpreter Development)
 
 set(_qt_gui_cpp_sip_LIBRARIES
   ${deps_libraries}
