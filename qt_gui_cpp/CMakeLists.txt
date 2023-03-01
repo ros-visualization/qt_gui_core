@@ -18,8 +18,17 @@ if(WIN32)
   return()
 endif()
 
+# FindPythonLibs deprecated since 3.12
+# https://cmake.org/cmake/help/latest/module/FindPythonLibs.html
+# Use FindPython to set the cache variables.
+find_package(Python 3 REQUIRED
+  COMPONENTS Interpreter Development
+)
+set(PYTHON_LIBRARY ${Python_LIBRARY_DIRS})
+set(PYTHON_INCLUDE_DIR ${Python_INCLUDE_DIRS})
+
 find_package(pluginlib REQUIRED)
-find_package(Qt5 REQUIRED COMPONENTS Widgets)
+find_package(Qt5 REQUIRED COMPONENTS Core Gui Widgets)
 find_package(rcpputils REQUIRED)
 find_package(tinyxml2_vendor REQUIRED)
 find_package(TinyXML2 REQUIRED)
@@ -60,7 +69,9 @@ target_link_libraries(${PROJECT_NAME}
   tinyxml2::tinyxml2)
 
 add_subdirectory(src/qt_gui_cpp_shiboken)
-add_subdirectory(src/qt_gui_cpp_sip)
+if (NOT APPLE)
+  add_subdirectory(src/qt_gui_cpp_sip)
+endif()
 
 message(STATUS "Python binding generators: ${qt_gui_cpp_BINDINGS}")
 if(NOT qt_gui_cpp_BINDINGS)

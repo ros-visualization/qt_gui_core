@@ -50,6 +50,15 @@ if(shiboken_helper_FOUND)
     list(APPEND qt_gui_cpp_BINDINGS "shiboken")
     set(qt_gui_cpp_BINDINGS "${qt_gui_cpp_BINDINGS}" PARENT_SCOPE)
 
+    if (APPLE)
+      # The shiboken_generator fails without these includes.
+      # TODO: resolve why these cannot be set using the component variables
+      #       Qt5Core_INCLUDE_DIRS etc.
+      list(APPEND qt_gui_cpp_INCLUDE_PATH "${Qt5_DIR}/../../../include")
+      list(APPEND qt_gui_cpp_INCLUDE_PATH "${Qt5_DIR}/../../../include/QtCore")
+      list(APPEND qt_gui_cpp_INCLUDE_PATH "${Qt5_DIR}/../../../include/QtWidgets")
+    endif()
+
     set(QT_INCLUDE_DIR "${Qt5Widgets_INCLUDE_DIRS}")
     shiboken_generator(libqt_gui_cpp global.h typesystem.xml ${PROJECT_SOURCE_DIR}/src/qt_gui_cpp_shiboken "${qt_gui_cpp_shiboken_SRCS}" "${qt_gui_cpp_HDRS}" "${qt_gui_cpp_INCLUDE_PATH}" "${CMAKE_CURRENT_BINARY_DIR}")
 
@@ -57,9 +66,20 @@ if(shiboken_helper_FOUND)
 
     add_library(qt_gui_cpp_shiboken SHARED ${qt_gui_cpp_shiboken_SRCS})
     target_include_directories(qt_gui_cpp_shiboken PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../../include)
-    target_link_libraries(qt_gui_cpp_shiboken ${PROJECT_NAME})
+    target_link_libraries(qt_gui_cpp_shiboken
+      ${PROJECT_NAME}
+      Qt5::Core
+      Qt5::Gui
+      Qt5::Widgets
+    )
     ament_target_dependencies(qt_gui_cpp_shiboken pluginlib TinyXML2)
     shiboken_target_link_libraries(qt_gui_cpp_shiboken "${qt_gui_cpp_shiboken_QT_COMPONENTS}")
+
+    if (APPLE)
+      # the brew installed version of cmake (>3.24) supports Python3_SOABI
+      find_package(Python3 COMPONENTS Development)
+      set_target_properties(qt_gui_cpp_shiboken PROPERTIES SUFFIX ".${Python3_SOABI}.so")
+    endif()
 
     install(TARGETS qt_gui_cpp_shiboken
       DESTINATION ${PYTHON_INSTALL_DIR}/${PROJECT_NAME})
