@@ -13,8 +13,12 @@
     <object-type name="PluginProvider"/>
     <object-type name="RecursivePluginProvider"/>
     <object-type name="RosPluginlibPluginProvider" generate="no"/>
-    <object-type name="RosPluginlibPluginProvider_ForPluginProviders"/>
-    <object-type name="RosPluginlibPluginProvider_ForPlugins"/>
+    <object-type name="RosPluginlibPluginProvider_ForPluginProviders">
+    <add-function signature="shutdown" return-type="void" access="public" static="no"/>
+    </object-type>
+    <object-type name="RosPluginlibPluginProvider_ForPlugins">
+    <add-function signature="shutdown" return-type="void" access="public" static="no"/>
+    </object-type>
     <object-type name="Settings"/>
   </namespace-type>
 </typesystem>
