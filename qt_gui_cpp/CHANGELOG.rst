@@ -2,6 +2,11 @@
 Changelog for package qt_gui_cpp
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* fix shiboken error (`#267 <https://github.com/ros-visualization/qt_gui_core/issues/267>`_)
+* Contributors: Christoph Hellmann Santos, Michael Carroll, Rhys Mainwaring
+
 2.4.0 (2023-02-14)
 ------------------
 * Conditionally run import tests when generators are built (`#269 <https://github.com/ros-visualization/qt_gui_core/issues/269>`_)
