@@ -2,8 +2,8 @@
 Changelog for package qt_gui_cpp
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+2.4.1 (2023-04-11)
+------------------
 * fix shiboken error (`#267 <https://github.com/ros-visualization/qt_gui_core/issues/267>`_)
 * Contributors: Christoph Hellmann Santos, Michael Carroll, Rhys Mainwaring
 
