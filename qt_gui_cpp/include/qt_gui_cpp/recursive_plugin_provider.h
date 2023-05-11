@@ -36,8 +36,8 @@
 #include "composite_plugin_provider.h"
 #include "ros_pluginlib_plugin_provider_for_plugin_providers.h"
 
-#include <QMap>
 #include <QList>
+#include <QMap>
 #include <QString>
 
 namespace qt_gui_cpp
