@@ -37,6 +37,7 @@
 #include "ros_pluginlib_plugin_provider_for_plugin_providers.h"
 
 #include <QMap>
+#include <QList>
 #include <QString>
 
 namespace qt_gui_cpp
@@ -54,9 +55,12 @@ public:
 
   virtual QMap<QString, QString> discover(QObject* discovery_data);
 
+  virtual void shutdown();
+
 private:
 
   RosPluginlibPluginProvider_ForPluginProviders* plugin_provider_;
+  QList<PluginProvider*> providers_;
 
 };
 
