@@ -16,6 +16,7 @@ public:
 
   virtual QMap<QString, QString> discover(QObject* discovery_data);
 
+  virtual void shutdown();
 };
 
 };
