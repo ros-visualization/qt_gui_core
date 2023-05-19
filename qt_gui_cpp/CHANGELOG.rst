@@ -2,6 +2,11 @@
 Changelog for package qt_gui_cpp
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Fix ClassLoader warning by unloading plugin providers. (`#275 <https://github.com/ros-visualization/qt_gui_core/issues/275>`_)
+* Chen Lihui
+
 2.4.1 (2023-04-11)
 ------------------
 * fix shiboken error (`#267 <https://github.com/ros-visualization/qt_gui_core/issues/267>`_)
