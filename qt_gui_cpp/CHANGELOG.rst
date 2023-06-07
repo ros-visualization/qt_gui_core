@@ -2,6 +2,11 @@
 Changelog for package qt_gui_cpp
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* fix unload warning (`#274 <https://github.com/ros-visualization/qt_gui_core/issues/274>`_)
+* Contributors: Chen Lihui
+
 2.5.0 (2023-04-28)
 ------------------
 
