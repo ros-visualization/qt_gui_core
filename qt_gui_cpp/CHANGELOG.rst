@@ -2,8 +2,8 @@
 Changelog for package qt_gui_cpp
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+2.7.0 (2023-08-21)
+------------------
 * Update to C++17 (`#278 <https://github.com/ros-visualization/qt_gui_core/issues/278>`_)
 * Contributors: Chris Lalancette
 
