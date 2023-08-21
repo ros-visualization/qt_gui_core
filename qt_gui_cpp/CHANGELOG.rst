@@ -2,6 +2,11 @@
 Changelog for package qt_gui_cpp
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Update to C++17 (`#278 <https://github.com/ros-visualization/qt_gui_core/issues/278>`_)
+* Contributors: Chris Lalancette
+
 2.6.0 (2023-06-07)
 ------------------
 * fix unload warning (`#274 <https://github.com/ros-visualization/qt_gui_core/issues/274>`_)
