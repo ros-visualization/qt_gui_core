@@ -424,23 +424,21 @@ class Main(object):
         from qt_gui.perspective_manager import PerspectiveManager
         from qt_gui.plugin_manager import PluginManager
 
-        # TODO PySide2 segfaults when invoking this custom message handler atm
-        if QT_BINDING != 'pyside':
-            def message_handler(type_, context, msg):
-                colored_output = 'TERM' in os.environ and 'ANSI_COLORS_DISABLED' not in os.environ
-                cyan_color = '\033[36m' if colored_output else ''
-                red_color = '\033[31m' if colored_output else ''
-                reset_color = '\033[0m' if colored_output else ''
-                if type_ == QtDebugMsg and self._options.verbose:
-                    print(msg, file=sys.stderr)
-                elif type_ == QtWarningMsg:
-                    print(cyan_color + msg + reset_color, file=sys.stderr)
-                elif type_ == QtCriticalMsg:
-                    print(red_color + msg + reset_color, file=sys.stderr)
-                elif type_ == QtFatalMsg:
-                    print(red_color + msg + reset_color, file=sys.stderr)
-                    sys.exit(1)
-            qInstallMessageHandler(message_handler)
+        def message_handler(type_, context, msg):
+            colored_output = 'TERM' in os.environ and 'ANSI_COLORS_DISABLED' not in os.environ
+            cyan_color = '\033[36m' if colored_output else ''
+            red_color = '\033[31m' if colored_output else ''
+            reset_color = '\033[0m' if colored_output else ''
+            if type_ == QtDebugMsg and self._options.verbose:
+                print(msg, file=sys.stderr)
+            elif type_ == QtWarningMsg:
+                print(cyan_color + msg + reset_color, file=sys.stderr)
+            elif type_ == QtCriticalMsg:
+                print(red_color + msg + reset_color, file=sys.stderr)
+            elif type_ == QtFatalMsg:
+                print(red_color + msg + reset_color, file=sys.stderr)
+                sys.exit(1)
+        qInstallMessageHandler(message_handler)
 
         app = self.create_application(argv)
 
