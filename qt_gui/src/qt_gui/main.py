@@ -200,11 +200,21 @@ class Main(object):
                 os.path.join(package_path, 'share', 'tango_icons_vendor', 'resource', 'icons')
             ] + icon_paths
             QIcon.setThemeSearchPaths(icon_paths)
+
         # Use Tango if possible, fall back to system default
         original_theme = QIcon.themeName()
+        if original_theme == 'Tango':
+            # We don't have any back-up behaviour in case Tango is the default
+            return
+        # Set Tango as default and try to get an icon
         QIcon.setThemeName('Tango')
         if QIcon.fromTheme('document-save').isNull():
+            # When Tango icon can't be found, use the system default theme
             QIcon.setThemeName(original_theme)
+            return
+        # In case we overruled the default theme to be Tango, set fallback theme to the original
+        # theme. Any original fallback theme is dropped in this case.
+        QIcon.setFallbackThemeName(original_theme)
 
     def create_application(self, argv):
         from python_qt_binding.QtCore import Qt
