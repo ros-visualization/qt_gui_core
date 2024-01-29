@@ -93,14 +93,14 @@ class PluginHandlerXEmbedClient(PluginHandlerDirect):
 
     def shutdown_plugin(self, callback):
         # this method should never be called for embedded clients
-        assert(False)
+        assert False
 
     def emit_shutdown_plugin_completed(self):
         self._remote_container.shutdown_plugin_completed()
 
     def save_settings(self, plugin_settings, instance_settings, callback=None):
         # this method should never be called for embedded clients
-        assert(False)
+        assert False
 
     def _save_settings_from_remote(self):
         qDebug('PluginHandlerXEmbedClient._save_settings_from_remote()')
@@ -119,7 +119,7 @@ class PluginHandlerXEmbedClient(PluginHandlerDirect):
 
     def restore_settings(self, plugin_settings, instance_settings, callback=None):
         # this method should never be called for embedded clients
-        assert(False)
+        assert False
 
     def _restore_settings_from_remote(self):
         qDebug('PluginHandlerXEmbedClient._restore_settings_from_remote()')
