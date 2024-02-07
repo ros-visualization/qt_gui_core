@@ -2,6 +2,11 @@
 Changelog for package qt_gui
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Remove unnecessary parentheses for assert. (`#286 <https://github.com/ros-visualization/qt_gui_core/issues/286>`_)
+* Contributors: Chris Lalancette
+
 2.7.1 (2023-12-26)
 ------------------
 * (qt_gui) extended theme logic to get icons (`#279 <https://github.com/ros-visualization/qt_gui_core/issues/279>`_)
