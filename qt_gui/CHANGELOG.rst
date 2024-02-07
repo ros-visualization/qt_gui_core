@@ -2,6 +2,11 @@
 Changelog for package qt_gui
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Extended theme logic to get icons (`#281 <https://github.com/ros-visualization/qt_gui_core/issues/281>`_)
+* Contributors: Matthijs van der Burgh
+
 2.4.2 (2023-05-19)
 ------------------
 
