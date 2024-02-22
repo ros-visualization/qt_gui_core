@@ -21,7 +21,6 @@ endif()
 
 find_package(pluginlib REQUIRED)
 find_package(Qt5 REQUIRED COMPONENTS Widgets)
-find_package(rcpputils REQUIRED)
 find_package(tinyxml2_vendor REQUIRED)
 find_package(TinyXML2 REQUIRED)
 
@@ -57,7 +56,6 @@ target_link_libraries(${PROJECT_NAME}
   ${QT_QTGUI_LIBRARY}
   Qt5::Widgets
   pluginlib::pluginlib
-  rcpputils::rcpputils
   tinyxml2::tinyxml2)
 
 add_subdirectory(src/qt_gui_cpp_shiboken)
@@ -76,7 +74,7 @@ install(
   DESTINATION include/${PROJECT_NAME}
 )
 
-ament_export_dependencies(pluginlib rcpputils TinyXML2)
+ament_export_dependencies(pluginlib TinyXML2)
 ament_export_targets(export_${PROJECT_NAME} HAS_LIBRARY_TARGET)
 
 install(TARGETS ${PROJECT_NAME}
