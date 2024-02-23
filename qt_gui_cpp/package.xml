@@ -20,12 +20,10 @@
   <build_depend version_gte="0.3.0">python_qt_binding</build_depend>
   <build_depend>qt5-qmake</build_depend>
   <build_depend>qtbase5-dev</build_depend>
-  <build_depend>rcpputils</build_depend>
   <build_depend>tinyxml2_vendor</build_depend>
 
   <exec_depend version_gte="1.9.23">pluginlib</exec_depend>
   <exec_depend version_gte="0.3.0">qt_gui</exec_depend>
-  <exec_depend>rcpputils</exec_depend>
   <exec_depend>tinyxml2_vendor</exec_depend>
 
   <test_depend>ament_cmake_pytest</test_depend>
