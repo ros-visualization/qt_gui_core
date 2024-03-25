@@ -176,7 +176,7 @@ class PydotFactory():
 
     def create_dot(self, graph):
         dot = graph.create_dot()
-        if type(dot) != str:
+        if not isinstance(dot, str):
             dot = dot.decode()
         # sadly pydot generates line wraps cutting between numbers
         return dot.replace('\\%s' % os.linesep, '').replace('\\\n', '')
