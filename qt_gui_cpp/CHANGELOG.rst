@@ -2,8 +2,8 @@
 Changelog for package qt_gui_cpp
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+2.7.3 (2024-03-28)
+------------------
 * Switch from rcpputils::fs to std::filesystem (`#288 <https://github.com/ros-visualization/qt_gui_core/issues/288>`_)
 * Set hints to find the python version we actually want. (`#287 <https://github.com/ros-visualization/qt_gui_core/issues/287>`_)
 * Contributors: Chris Lalancette, Christophe Bedard
