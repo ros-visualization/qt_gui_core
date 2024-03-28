@@ -2,6 +2,11 @@
 Changelog for package qt_dotgraph
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Small fix for modern flake8. (`#289 <https://github.com/ros-visualization/qt_gui_core/issues/289>`_)
+* Contributors: Chris Lalancette
+
 2.7.2 (2024-02-07)
 ------------------
 

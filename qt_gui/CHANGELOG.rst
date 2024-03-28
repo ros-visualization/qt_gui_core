@@ -2,6 +2,9 @@
 Changelog for package qt_gui
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+
 2.7.2 (2024-02-07)
 ------------------
 * Remove unnecessary parentheses for assert. (`#286 <https://github.com/ros-visualization/qt_gui_core/issues/286>`_)
