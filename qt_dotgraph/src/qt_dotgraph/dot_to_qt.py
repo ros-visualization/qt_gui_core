@@ -257,9 +257,6 @@ class DotToQtGenerator():
         if isinstance(graph, list):
             graph = graph[0]
 
-        # graph = pygraphviz.AGraph(string=self._current_dotcode, strict=False, directed=True)
-        # graph.layout(prog='dot')
-
         nodes = self.parse_nodes(graph, highlight_level, scene=scene)
         edges = self.parse_edges(graph, nodes, highlight_level, same_label_siblings, scene=scene)
         return nodes, edges
@@ -281,6 +278,8 @@ class DotToQtGenerator():
             subgraph.nodes_iter = subgraph.get_node_list
             nodes[subgraph.get_name()] = subgraph_nodeitem
             for node in subgraph.nodes_iter():
+                if node.get_name() == r'"\n"':
+                    continue
                 # hack required by pydot
                 if node.get_name() in ('graph', 'node', 'empty'):
                     continue
@@ -288,6 +287,8 @@ class DotToQtGenerator():
                     self.getNodeItemForNode(node, highlight_level, scene=scene)
         for node in graph.nodes_iter():
             # hack required by pydot
+            if node.get_name() == r'"\n"':
+                continue
             if node.get_name() in ('graph', 'node', 'empty'):
                 continue
             nodes[node.get_name()] = self.getNodeItemForNode(node, highlight_level, scene=scene)
