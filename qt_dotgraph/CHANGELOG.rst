@@ -2,6 +2,9 @@
 Changelog for package qt_dotgraph
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+
 2.7.4 (2024-04-16)
 ------------------
 * Handle empty dotcode nodes. (`#290 <https://github.com/ros-visualization/qt_gui_core/issues/290>`_)
