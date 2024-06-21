@@ -38,8 +38,18 @@ import subprocess
 import sys
 import unittest
 
-from python_qt_binding.QtWidgets import QApplication
-from qt_dotgraph.dot_to_qt import DotToQtGenerator, get_unquoted
+try:
+    from python_qt_binding.QtWidgets import QApplication
+    from qt_dotgraph.dot_to_qt import DotToQtGenerator, get_unquoted
+    qt_import_failed = False
+except ImportError:
+    # If we are on Windows Debug, skip running these tests because we do not have the debug
+    # libraries available for PyQt.  Note that we can't directly fail here (as import
+    # failures cause pytest failures), so we just mark the situation and skip below.
+    if sys.platform == 'win32' and sys.executable.endswith('python_d.exe'):
+        qt_import_failed = True
+    else:
+        raise
 
 
 def check_x_server():
@@ -54,6 +64,7 @@ def check_x_server():
     return p.returncode == 0
 
 
+@unittest.skipIf(qt_import_failed, 'Skipping test on Windows Debug')
 class DotToQtGeneratorTest(unittest.TestCase):
 
     DOT_CODE = r'''
