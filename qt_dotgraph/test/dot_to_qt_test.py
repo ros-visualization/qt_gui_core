@@ -34,6 +34,7 @@
 # This file does not pass flake8 due to the raw string literals below.
 # flake8: noqa
 
+import importlib.machinery
 import subprocess
 import sys
 import unittest
@@ -43,10 +44,12 @@ try:
     from qt_dotgraph.dot_to_qt import DotToQtGenerator, get_unquoted
     qt_import_failed = False
 except ImportError:
-    # If we are on Windows Debug, skip running these tests because we do not have the debug
-    # libraries available for PyQt.  Note that we can't directly fail here (as import
-    # failures cause pytest failures), so we just mark the situation and skip below.
-    if sys.platform == 'win32' and sys.executable.endswith('python_d.exe'):
+    # If this is running on a Python Windows interpreter built in debug mode, skip running tests
+    # because we do not have the debug libraries available for PyQt.  It is surprisingly tricky to
+    # discover whether the current interpreter was built in debug mode (note that this is different
+    # than running the interpreter in debug mode, i.e. PYTHONDEBUG=1).  The only non-deprecated way
+    # we've found is to look for _d.pyd in the extension suffixes, so that is what we do here.
+    if sys.platform == 'win32' and '_d.pyd' in importlib.machinery.EXTENSION_SUFFIXES:
         qt_import_failed = True
     else:
         raise
