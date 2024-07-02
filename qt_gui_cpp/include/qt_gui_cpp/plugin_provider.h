@@ -38,7 +38,7 @@
 #include "plugin_descriptor.h"
 
 #include <QList>
-#include <QMap>
+#include <QMultiMap>
 #include <QString>
 
 namespace qt_gui_cpp
@@ -53,7 +53,7 @@ public:
 
   virtual ~PluginProvider();
 
-  virtual QMap<QString, QString> discover(QObject* discovery_data);
+  virtual QMultiMap<QString, QString> discover(QObject* discovery_data);
 
   /**
    * @attention Ownership of returned PluginDescriptor's is transfered to the caller

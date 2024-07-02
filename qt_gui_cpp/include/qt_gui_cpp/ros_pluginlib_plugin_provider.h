@@ -92,7 +92,7 @@ public:
     }
   }
 
-  virtual QMap<QString, QString> discover(QObject* discovery_data)
+  virtual QMultiMap<QString, QString> discover(QObject* discovery_data)
   {
     return PluginProvider::discover(discovery_data);
   }
