@@ -30,10 +30,8 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef qt_gui_cpp__Settings_HPP
-#define qt_gui_cpp__Settings_HPP
-
-#include "generic_proxy.hpp"
+#ifndef QT_GUI_CPP__SETTINGS_HPP_
+#define QT_GUI_CPP__SETTINGS_HPP_
 
 #include <QString>
 #include <QStringList>
@@ -46,18 +44,17 @@
 #if __GNUC__ >= 9
 # pragma GCC diagnostic pop
 #endif
+#include "generic_proxy.hpp"
 
 namespace qt_gui_cpp
 {
 
 class Settings
 {
-
 public:
+  explicit Settings(QObject * obj);
 
-  Settings(QObject* obj);
-
-  Settings getSettings(const QString& prefix);
+  Settings getSettings(const QString & prefix);
 
   QStringList allKeys() const;
 
@@ -69,24 +66,21 @@ public:
 
   QStringList childKeys() const;
 
-  bool contains(const QString& key) const;
+  bool contains(const QString & key) const;
 
 //  void endArray();
 
-  void remove(const QString& key);
+  void remove(const QString & key);
 
 //  void setArrayIndex(int i);
 
-  void setValue(const QString& key, const QVariant& value);
+  void setValue(const QString & key, const QVariant & value);
 
-  QVariant value(const QString& key, const QVariant& defaultValue = QVariant()) const;
+  QVariant value(const QString & key, const QVariant & defaultValue = QVariant()) const;
 
 protected:
-
   GenericProxy proxy_;
-
 };
+}  // namespace qt_gui_cpp
 
-} // namespace
-
-#endif // qt_gui_cpp__Settings_HPP
+#endif  // QT_GUI_CPP__SETTINGS_HPP_

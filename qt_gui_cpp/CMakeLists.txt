@@ -42,6 +42,9 @@ set(qt_gui_cpp_HDRS
   include/qt_gui_cpp/plugin.h
   include/qt_gui_cpp/plugin_bridge.h
   include/qt_gui_cpp/plugin_context.h
+  include/qt_gui_cpp/plugin.hpp
+  include/qt_gui_cpp/plugin_bridge.hpp
+  include/qt_gui_cpp/plugin_context.hpp
 )
 
 qt5_wrap_cpp(qt_gui_cpp_MOCS ${qt_gui_cpp_HDRS})
@@ -87,6 +90,13 @@ install(TARGETS ${PROJECT_NAME}
 # be updated for ROS2 style
 
 if(BUILD_TESTING)
+  find_package(ament_lint_auto REQUIRED)
+
+  # Disabling copyright test. The copyright used in this package does not conform to
+  # ament's copyright tests
+  set(ament_cmake_copyright_FOUND TRUE)
+  ament_lint_auto_find_test_dependencies()
+
   find_package(ament_cmake_pytest REQUIRED)
 
   if(TARGET qt_gui_cpp_shiboken)

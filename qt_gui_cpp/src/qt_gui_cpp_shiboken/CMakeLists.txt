@@ -45,13 +45,23 @@ ament_export_dependencies(pluginlib)
 if(shiboken_helper_FOUND)
   if(Shiboken_VERSION VERSION_GREATER "1.1.1")
     # shiboken 1.1.2 and higher will segfault until https://bugreports.qt-project.org/browse/PYSIDE-218 is fixed
-    message(WARNING "Shiboken version ${Shiboken_VERSION} would segfault when trying to process qt_gui_cpp (see https://bugreports.qt-project.org/browse/PYSIDE-218). Therefore shiboken bindings are being skipped.")
+    message(WARNING "Shiboken version ${Shiboken_VERSION} would segfault when trying to process qt_gui_cpp "
+    "(see https://bugreports.qt-project.org/browse/PYSIDE-218)"
+    " Therefore shiboken bindings are being skipped.")
   else()
     list(APPEND qt_gui_cpp_BINDINGS "shiboken")
     set(qt_gui_cpp_BINDINGS "${qt_gui_cpp_BINDINGS}" PARENT_SCOPE)
 
     set(QT_INCLUDE_DIR "${Qt5Widgets_INCLUDE_DIRS}")
-    shiboken_generator(libqt_gui_cpp global.h typesystem.xml ${PROJECT_SOURCE_DIR}/src/qt_gui_cpp_shiboken "${qt_gui_cpp_shiboken_SRCS}" "${qt_gui_cpp_HDRS}" "${qt_gui_cpp_INCLUDE_PATH}" "${CMAKE_CURRENT_BINARY_DIR}")
+    shiboken_generator(
+      libqt_gui_cpp
+      global.h
+      typesystem.xml
+      ${PROJECT_SOURCE_DIR}/src/qt_gui_cpp_shiboken
+      "${qt_gui_cpp_shiboken_SRCS}"
+      "${qt_gui_cpp_HDRS}"
+      "${qt_gui_cpp_INCLUDE_PATH}"
+      "${CMAKE_CURRENT_BINARY_DIR}")
 
     shiboken_include_directories(qt_gui_cpp_shiboken "${qt_gui_cpp_shiboken_QT_COMPONENTS}")
 

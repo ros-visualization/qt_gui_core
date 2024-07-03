@@ -30,8 +30,8 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef qt_gui_cpp__PluginContext_H
-#define qt_gui_cpp__PluginContext_H
+#ifndef QT_GUI_CPP__PLUGIN_CONTEXT_H_
+#define QT_GUI_CPP__PLUGIN_CONTEXT_H_
 
 // *INDENT-OFF* (prevent uncrustify from adding indention below)
 #warning Including header <qt_gui_cpp/plugin_context.h> is deprecated, \
@@ -39,5 +39,4 @@ include <qt_gui_cpp/plugin_context.hpp> instead.
 
 #include "./plugin_context.hpp"
 
-
-#endif // qt_gui_cpp__PluginContext_H
+#endif  // QT_GUI_CPP__PLUGIN_CONTEXT_H_

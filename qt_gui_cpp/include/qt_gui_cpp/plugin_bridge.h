@@ -30,8 +30,8 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef qt_gui_cpp__PluginBridge_H
-#define qt_gui_cpp__PluginBridge_H
+#ifndef QT_GUI_CPP__PLUGIN_BRIDGE_H_
+#define QT_GUI_CPP__PLUGIN_BRIDGE_H_
 
 // *INDENT-OFF* (prevent uncrustify from adding indention below)
 #warning Including header <qt_gui_cpp/plugin_bridge.h> is deprecated, \
@@ -39,4 +39,4 @@ include <qt_gui_cpp/plugin_bridge.hpp> instead.
 
 #include "./plugin_bridge.hpp"
 
-#endif // qt_gui_cpp__PluginBridge_H
+#endif  // QT_GUI_CPP__PLUGIN_BRIDGE_H_

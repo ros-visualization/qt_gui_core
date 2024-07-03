@@ -30,16 +30,16 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef qt_gui_cpp__CompositePluginProvider_HPP
-#define qt_gui_cpp__CompositePluginProvider_HPP
-
-#include "plugin_descriptor.hpp"
-#include "plugin_provider.hpp"
+#ifndef QT_GUI_CPP__COMPOSITE_PLUGIN_PROVIDER_HPP_
+#define QT_GUI_CPP__COMPOSITE_PLUGIN_PROVIDER_HPP_
 
 #include <QList>
 #include <QMap>
 #include <QSet>
 #include <QString>
+
+#include "plugin_descriptor.hpp"
+#include "plugin_provider.hpp"
 
 namespace qt_gui_cpp
 {
@@ -47,38 +47,35 @@ namespace qt_gui_cpp
 class CompositePluginProvider
   : public PluginProvider
 {
-
 public:
-
-  CompositePluginProvider(const QList<PluginProvider*>& plugin_providers = QList<PluginProvider*>());
+  CompositePluginProvider(
+    const QList<PluginProvider *> & plugin_providers = QList<PluginProvider *>());
 
   virtual ~CompositePluginProvider();
 
   /**
    * @note The ownership of the plugin providers is transferred to the callee.
    */
-  virtual void set_plugin_providers(const QList<PluginProvider*>& plugin_providers);
+  virtual void set_plugin_providers(const QList<PluginProvider *> & plugin_providers);
 
-  virtual QList<PluginDescriptor*> discover_descriptors(QObject* discovery_data);
+  virtual QList<PluginDescriptor *> discover_descriptors(QObject * discovery_data);
 
-  virtual void* load(const QString& plugin_id, PluginContext* plugin_context);
+  virtual void * load(const QString & plugin_id, PluginContext * plugin_context);
 
-  virtual Plugin* load_plugin(const QString& plugin_id, PluginContext* plugin_context);
+  virtual Plugin * load_plugin(const QString & plugin_id, PluginContext * plugin_context);
 
-  virtual void unload(void* plugin_instance);
+  virtual void unload(void * plugin_instance);
 
   virtual void shutdown();
 
 private:
+  QList<PluginProvider *> plugin_providers_;
 
-  QList<PluginProvider*> plugin_providers_;
+  QMap<PluginProvider *, QSet<QString>> discovered_plugins_;
 
-  QMap<PluginProvider*, QSet<QString> > discovered_plugins_;
-
-  QMap<void*, PluginProvider*> running_plugins_;
-
+  QMap<void *, PluginProvider *> running_plugins_;
 };
 
-} // namespace
+}  // namespace qt_gui_cpp
 
-#endif // qt_gui_cpp__CompositePluginProvider_HPP
+#endif  // QT_GUI_CPP__COMPOSITE_PLUGIN_PROVIDER_HPP_

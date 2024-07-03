@@ -37,23 +37,25 @@
 
 #include <QEvent>
 
-namespace qt_gui_cpp {
+namespace qt_gui_cpp
+{
 
 PluginBridge::PluginBridge()
-  : QObject()
+: QObject()
   , provider_(0)
   , plugin_(0)
 {
   setObjectName("PluginBridge");
 }
 
-bool PluginBridge::load_plugin(PluginProvider* provider, const QString& plugin_id, PluginContext* plugin_context)
+bool PluginBridge::load_plugin(
+  PluginProvider * provider, const QString & plugin_id,
+  PluginContext * plugin_context)
 {
   qDebug("PluginBridge::load_plugin() %s", plugin_id.toStdString().c_str());
   provider_ = provider;
   plugin_ = provider_->load_plugin(plugin_id, plugin_context);
-  if (plugin_)
-  {
+  if (plugin_) {
     plugin_->installEventFilter(this);
   }
   return plugin_ != 0;
@@ -68,8 +70,7 @@ void PluginBridge::unload_plugin()
 
 bool PluginBridge::has_configuration() const
 {
-  if (plugin_)
-  {
+  if (plugin_) {
     return plugin_->hasConfiguration();
   }
   return false;
@@ -77,39 +78,34 @@ bool PluginBridge::has_configuration() const
 
 void PluginBridge::trigger_configuration()
 {
-  if (plugin_)
-  {
+  if (plugin_) {
     plugin_->triggerConfiguration();
   }
 }
 
 void PluginBridge::shutdown_plugin()
 {
-  if (plugin_)
-  {
+  if (plugin_) {
     plugin_->removeEventFilter(this);
     plugin_->shutdownPlugin();
   }
 }
 
-void PluginBridge::save_settings(QObject* plugin_settings, QObject* instance_settings)
+void PluginBridge::save_settings(QObject * plugin_settings, QObject * instance_settings)
 {
-  if (plugin_)
-  {
+  if (plugin_) {
     Settings plugin(plugin_settings);
     Settings instance(instance_settings);
     plugin_->saveSettings(plugin, instance);
   }
 }
 
-void PluginBridge::restore_settings(QObject* plugin_settings, QObject* instance_settings)
+void PluginBridge::restore_settings(QObject * plugin_settings, QObject * instance_settings)
 {
-  if (plugin_)
-  {
+  if (plugin_) {
     Settings plugin(plugin_settings);
     Settings instance(instance_settings);
     plugin_->restoreSettings(plugin, instance);
   }
 }
-
-} // namespace
+}  // namespace qt_gui_cpp

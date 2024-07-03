@@ -30,8 +30,8 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef qt_gui_cpp__GenericProxy_H
-#define qt_gui_cpp__GenericProxy_H
+#ifndef QT_GUI_CPP__GENERIC_PROXY_H_
+#define QT_GUI_CPP__GENERIC_PROXY_H_
 
 // *INDENT-OFF* (prevent uncrustify from adding indention below)
 #warning Including header <qt_gui_cpp/generic_proxy.h> is deprecated, \
@@ -39,4 +39,4 @@ include <qt_gui_cpp/generic_proxy.hpp> instead.
 
 #include "./generic_proxy.hpp"
 
-#endif // qt_gui_cpp__GenericProxy_H
+#endif  // QT_GUI_CPP__GENERIC_PROXY_H_

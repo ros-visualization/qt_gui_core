@@ -30,10 +30,8 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef qt_gui_cpp__PluginContext_HPP
-#define qt_gui_cpp__PluginContext_HPP
-
-#include "generic_proxy.hpp"
+#ifndef QT_GUI_CPP__PLUGIN_CONTEXT_HPP_
+#define QT_GUI_CPP__PLUGIN_CONTEXT_HPP_
 
 #include <QMap>
 #include <QObject>
@@ -50,6 +48,8 @@
 #endif
 #include <QWidget>
 
+#include "generic_proxy.hpp"
+
 namespace qt_gui_cpp
 {
 
@@ -60,14 +60,12 @@ namespace qt_gui_cpp
 class PluginContext
   : public QObject
 {
-
   Q_OBJECT
 
 public:
+  PluginContext(QObject * obj, int serial_number, const QStringList & argv);
 
-  PluginContext(QObject* obj, int serial_number, const QStringList& argv);
-
-  PluginContext(const PluginContext& other);
+  PluginContext(const PluginContext & other);
 
   /**
    * Return the serial number of the plugin.
@@ -80,7 +78,7 @@ public:
    * Return the command line arguments of the plugin.
    * @return The arguments without a program name at the beginning
    */
-  const QStringList& argv() const;
+  const QStringList & argv() const;
 
   /**
    * Add a widget to the UI.
@@ -89,14 +87,14 @@ public:
    * @note The ownership of the widget pointer is transferred to the callee which will delete it when the plugin is shut down.
    * @param widget The widget to add
    */
-  void addWidget(QWidget* widget);
+  void addWidget(QWidget * widget);
 
   /**
    * Remove a previously added widget from the UI.
    * @note The ownership of the widget pointer is transferred back to the caller which is responsible of deleting it.
    * @param widget The widget to remove
    */
-  void removeWidget(QWidget* widget);
+  void removeWidget(QWidget * widget);
 
   /**
    * Close the plugin.
@@ -110,15 +108,11 @@ public:
   void reloadPlugin();
 
 protected:
-
   GenericProxy proxy_;
 
   int serial_number_;
 
   QStringList argv_;
-
 };
-
-} // namespace
-
-#endif // qt_gui_cpp__PluginContext_HPP
+}  // namespace qt_gui_cpp
+#endif  // QT_GUI_CPP__PLUGIN_CONTEXT_HPP_

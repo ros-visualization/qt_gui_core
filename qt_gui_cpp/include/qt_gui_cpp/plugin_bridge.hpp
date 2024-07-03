@@ -30,8 +30,8 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef qt_gui_cpp__PluginBridge_HPP
-#define qt_gui_cpp__PluginBridge_HPP
+#ifndef QT_GUI_CPP__PLUGIN_BRIDGE_HPP_
+#define QT_GUI_CPP__PLUGIN_BRIDGE_HPP_
 
 #include <QObject>
 
@@ -45,14 +45,14 @@ class PluginProvider;
 class PluginBridge
   : public QObject
 {
-
   Q_OBJECT
 
 public:
-
   PluginBridge();
 
-  virtual bool load_plugin(PluginProvider* provider, const QString& plugin_id, PluginContext* plugin_context);
+  virtual bool load_plugin(
+    PluginProvider * provider, const QString & plugin_id,
+    PluginContext * plugin_context);
 
   virtual void unload_plugin();
 
@@ -61,21 +61,17 @@ public:
   virtual void trigger_configuration();
 
 public slots:
-
   virtual void shutdown_plugin();
 
-  virtual void save_settings(QObject* plugin_settings, QObject* instance_settings);
+  virtual void save_settings(QObject * plugin_settings, QObject * instance_settings);
 
-  virtual void restore_settings(QObject* plugin_settings, QObject* instance_settings);
+  virtual void restore_settings(QObject * plugin_settings, QObject * instance_settings);
 
 private:
+  PluginProvider * provider_;
 
-  PluginProvider* provider_;
-
-  Plugin* plugin_;
-
+  Plugin * plugin_;
 };
+}  // namespace qt_gui_cpp
 
-} // namespace
-
-#endif // qt_gui_cpp__PluginBridge_HPP
+#endif  // QT_GUI_CPP__PLUGIN_BRIDGE_HPP_
