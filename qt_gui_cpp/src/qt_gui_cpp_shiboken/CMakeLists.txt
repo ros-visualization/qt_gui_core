@@ -1,4 +1,6 @@
-find_package(Qt5Widgets REQUIRED)
+find_package(QTWidgets NAMES Qt5Widgets Qt6Widgets)
+find_package(Qt${QTWidgets_VERSION_MAJOR}Widgets REQUIRED)
+
 set(qt_gui_cpp_shiboken_QT_COMPONENTS
   QtCore
   QtGui
@@ -50,18 +52,23 @@ if(shiboken_helper_FOUND)
     list(APPEND qt_gui_cpp_BINDINGS "shiboken")
     set(qt_gui_cpp_BINDINGS "${qt_gui_cpp_BINDINGS}" PARENT_SCOPE)
 
-    set(QT_INCLUDE_DIR "${Qt5Widgets_INCLUDE_DIRS}")
-    shiboken_generator(libqt_gui_cpp global.h typesystem.xml ${PROJECT_SOURCE_DIR}/src/qt_gui_cpp_shiboken "${qt_gui_cpp_shiboken_SRCS}" "${qt_gui_cpp_HDRS}" "${qt_gui_cpp_INCLUDE_PATH}" "${CMAKE_CURRENT_BINARY_DIR}")
+    set(QT_INCLUDE_DIR "${Qt${QT_VERSION_MAJOR}Widgets_INCLUDE_DIRS}")
+    if(${QTWidgets_VERSION_MAJOR} GREATER "5")
+      shiboken_generator6(libqt_gui_cpp global.h typesystem.xml ${PROJECT_SOURCE_DIR}/src/qt_gui_cpp_shiboken "${qt_gui_cpp_shiboken_SRCS}" "${qt_gui_cpp_HDRS}" "${qt_gui_cpp_INCLUDE_PATH}" "${CMAKE_CURRENT_BINARY_DIR}")
+    else()
+      shiboken_generator(libqt_gui_cpp global.h typesystem.xml ${PROJECT_SOURCE_DIR}/src/qt_gui_cpp_shiboken "${qt_gui_cpp_shiboken_SRCS}" "${qt_gui_cpp_HDRS}" "${qt_gui_cpp_INCLUDE_PATH}" "${CMAKE_CURRENT_BINARY_DIR}")
+    endif()
 
     shiboken_include_directories(qt_gui_cpp_shiboken "${qt_gui_cpp_shiboken_QT_COMPONENTS}")
 
     add_library(qt_gui_cpp_shiboken SHARED ${qt_gui_cpp_shiboken_SRCS})
+    set_property(TARGET qt_gui_cpp_shiboken PROPERTY PREFIX "")
+    target_compile_definitions(qt_gui_cpp_shiboken PRIVATE BINDINGS_BUILD)
     target_include_directories(qt_gui_cpp_shiboken PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../../include)
-    target_link_libraries(qt_gui_cpp_shiboken ${PROJECT_NAME})
-    ament_target_dependencies(qt_gui_cpp_shiboken pluginlib TinyXML2)
+    target_link_libraries(qt_gui_cpp_shiboken ${PROJECT_NAME} pluginlib::pluginlib tinyxml2::tinyxml2)
     shiboken_target_link_libraries(qt_gui_cpp_shiboken "${qt_gui_cpp_shiboken_QT_COMPONENTS}")
 
     install(TARGETS qt_gui_cpp_shiboken
       DESTINATION ${PYTHON_INSTALL_DIR}/${PROJECT_NAME})
-  endif()
+    endif()
 endif()

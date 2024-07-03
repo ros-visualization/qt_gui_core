@@ -62,25 +62,25 @@ const QStringList& PluginContext::argv() const
 
 void PluginContext::addWidget(QWidget* widget)
 {
-  bool rc = proxy_.invokeMethod("add_widget", Q_ARG(QWidget*, widget));
+  bool rc = QMetaObject::invokeMethod(proxy_.proxiedObject(), "add_widget", Qt::DirectConnection, Q_ARG(QWidget*, widget));
   if (!rc) throw std::runtime_error("PluginContext::addWidget() invoke method failed");
 }
 
 void PluginContext::removeWidget(QWidget* widget)
 {
-  bool rc = proxy_.invokeMethod("remove_widget", Q_ARG(QWidget*, widget));
+  bool rc = QMetaObject::invokeMethod(proxy_.proxiedObject(), "remove_widget", Qt::DirectConnection, Q_ARG(QWidget*, widget));
   if (!rc) throw std::runtime_error("PluginContext::removeWidget() invoke method failed");
 }
 
 void PluginContext::closePlugin()
 {
-  bool rc = proxy_.invokeMethod("close_plugin");
+  bool rc = QMetaObject::invokeMethod(proxy_.proxiedObject(), "close_plugin", Qt::DirectConnection);
   if (!rc) throw std::runtime_error("PluginContext::closePlugin() invoke method failed");
 }
 
 void PluginContext::reloadPlugin()
 {
-  bool rc = proxy_.invokeMethod("reload_plugin");
+  bool rc = QMetaObject::invokeMethod(proxy_.proxiedObject(), "reload_plugin", Qt::DirectConnection);
   if (!rc) throw std::runtime_error("PluginContext::reloadPlugin() invoke method failed");
 }
 
