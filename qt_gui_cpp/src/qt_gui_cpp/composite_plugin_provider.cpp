@@ -30,7 +30,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <qt_gui_cpp/composite_plugin_provider.h>
+#include <qt_gui_cpp/composite_plugin_provider.hpp>
 
 #include <stdexcept>
 

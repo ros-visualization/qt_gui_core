@@ -30,13 +30,48 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef qt_gui_cpp__RecursivePluginProvider_H
-#define qt_gui_cpp__RecursivePluginProvider_H
+#ifndef qt_gui_cpp__PluginProvider_HPP
+#define qt_gui_cpp__PluginProvider_HPP
 
-// *INDENT-OFF* (prevent uncrustify from adding indention below)
-#warning Including header <qt_gui_cpp/recursive_plugin_provider.h> is deprecated, \
-include <qt_gui_cpp/recursive_plugin_provider.hpp> instead.
+#include "plugin.hpp"
+#include "plugin_context.hpp"
+#include "plugin_descriptor.hpp"
 
-#include "./recursive_plugin_provider.hpp"
+#include <QList>
+#include <QMap>
+#include <QString>
 
-#endif // qt_gui_cpp__RecursivePluginProvider_H
+namespace qt_gui_cpp
+{
+
+class PluginProvider
+{
+
+public:
+
+  PluginProvider();
+
+  virtual ~PluginProvider();
+
+  virtual QMap<QString, QString> discover(QObject* discovery_data);
+
+  /**
+   * @attention Ownership of returned PluginDescriptor's is transfered to the caller
+   */
+  virtual QList<PluginDescriptor*> discover_descriptors(QObject* discovery_data);
+
+  virtual void* load(const QString& plugin_id, PluginContext* plugin_context);
+
+  virtual Plugin* load_plugin(const QString& plugin_id, PluginContext* plugin_context);
+
+  virtual void unload(void* plugin_instance);
+
+  virtual void unload_plugin(Plugin* plugin_instance);
+
+  virtual void shutdown();
+
+};
+
+} // namespace
+
+#endif // qt_gui_cpp__PluginProvider_HPP

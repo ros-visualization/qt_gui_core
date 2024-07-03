@@ -30,13 +30,52 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef qt_gui_cpp__RecursivePluginProvider_H
-#define qt_gui_cpp__RecursivePluginProvider_H
+#ifndef qt_gui_cpp__PluginBridge_HPP
+#define qt_gui_cpp__PluginBridge_HPP
 
-// *INDENT-OFF* (prevent uncrustify from adding indention below)
-#warning Including header <qt_gui_cpp/recursive_plugin_provider.h> is deprecated, \
-include <qt_gui_cpp/recursive_plugin_provider.hpp> instead.
+#include <QObject>
 
-#include "./recursive_plugin_provider.hpp"
+namespace qt_gui_cpp
+{
 
-#endif // qt_gui_cpp__RecursivePluginProvider_H
+class Plugin;
+class PluginContext;
+class PluginProvider;
+
+class PluginBridge
+  : public QObject
+{
+
+  Q_OBJECT
+
+public:
+
+  PluginBridge();
+
+  virtual bool load_plugin(PluginProvider* provider, const QString& plugin_id, PluginContext* plugin_context);
+
+  virtual void unload_plugin();
+
+  virtual bool has_configuration() const;
+
+  virtual void trigger_configuration();
+
+public slots:
+
+  virtual void shutdown_plugin();
+
+  virtual void save_settings(QObject* plugin_settings, QObject* instance_settings);
+
+  virtual void restore_settings(QObject* plugin_settings, QObject* instance_settings);
+
+private:
+
+  PluginProvider* provider_;
+
+  Plugin* plugin_;
+
+};
+
+} // namespace
+
+#endif // qt_gui_cpp__PluginBridge_HPP

@@ -30,11 +30,10 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <qt_gui_cpp/plugin_bridge.h>
-
-#include <qt_gui_cpp/plugin.h>
-#include <qt_gui_cpp/plugin_context.h>
-#include <qt_gui_cpp/plugin_provider.h>
+#include <qt_gui_cpp/plugin.hpp>
+#include <qt_gui_cpp/plugin_bridge.hpp>
+#include <qt_gui_cpp/plugin_context.hpp>
+#include <qt_gui_cpp/plugin_provider.hpp>
 
 #include <QEvent>
 

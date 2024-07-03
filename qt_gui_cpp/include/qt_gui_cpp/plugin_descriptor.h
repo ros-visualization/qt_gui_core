@@ -33,50 +33,10 @@
 #ifndef qt_gui_cpp__PluginDescriptor_H
 #define qt_gui_cpp__PluginDescriptor_H
 
-#include <QMap>
-#include <QString>
-#include <QVector>
+// *INDENT-OFF* (prevent uncrustify from adding indention below)
+#warning Including header <qt_gui_cpp/plugin_descriptor.h> is deprecated, \
+include <qt_gui_cpp/plugin_descriptor.hpp> instead.
 
-namespace qt_gui_cpp
-{
-
-class PluginDescriptor
-{
-
-public:
-
-  PluginDescriptor(const QString& plugin_id, const QMap<QString, QString>& attributes = (QMap<QString, QString>()));
-
-  const QString& pluginId() const;
-
-  const QMap<QString, QString>& attributes() const;
-
-  QMap<QString, QString>& attributes();
-
-  const QMap<QString, QString>& actionAttributes() const;
-
-  void setActionAttributes(const QString& label, const QString& statustip = QString(), const QString& icon = QString(), const QString& icontype = QString());
-
-  int countGroups() const;
-
-  QMap<QString, QString> group(int index) const;
-
-  void addGroupAttributes(const QString& label, const QString& statustip = QString(), const QString& icon = QString(), const QString& icontype = QString());
-
-  QMap<QString, QString> toDictionary() const;
-
-protected:
-
-  QString plugin_id_;
-
-  QMap<QString, QString> attributes_;
-
-  QMap<QString, QString> action_attributes_;
-
-  QVector<QMap<QString, QString> > groups_;
-
-};
-
-} // namespace
+#include "./plugin_descriptor.hpp"
 
 #endif // qt_gui_cpp__PluginDescriptor_H
