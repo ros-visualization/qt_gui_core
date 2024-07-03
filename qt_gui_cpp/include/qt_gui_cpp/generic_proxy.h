@@ -36,6 +36,7 @@
 // *INDENT-OFF* (prevent uncrustify from adding indention below)
 #warning Including header <qt_gui_cpp/generic_proxy.h> is deprecated, \
 include <qt_gui_cpp/generic_proxy.hpp> instead.
+// *INDENT-ON*
 
 #include "./generic_proxy.hpp"
 
