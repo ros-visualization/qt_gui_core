@@ -86,9 +86,6 @@ install(TARGETS ${PROJECT_NAME}
   LIBRARY DESTINATION lib
   RUNTIME DESTINATION bin)
 
-# TODO(brawner) add ament_lint_auto tests here. Much of the c++ code needs to
-# be updated for ROS2 style
-
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
 

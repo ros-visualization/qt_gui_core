@@ -37,6 +37,7 @@
 #warning Including header <qt_gui_cpp/ros_pluginlib_plugin_provider_for_plugin_providers.h> \
 is deprecated, include <qt_gui_cpp/ros_pluginlib_plugin_provider_for_plugin_providers.hpp> \
 instead.
+// *INDENT-ON*
 
 #include "./ros_pluginlib_plugin_provider_for_plugin_providers.hpp"
 

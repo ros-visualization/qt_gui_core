@@ -36,6 +36,7 @@
 // *INDENT-OFF* (prevent uncrustify from adding indention below)
 #warning Including header <qt_gui_cpp/plugin.h> is deprecated, \
 include <qt_gui_cpp/plugin.hpp> instead.
+// *INDENT-ON*
 
 #include "./plugin.hpp"
 
