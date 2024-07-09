@@ -30,7 +30,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <qt_gui_cpp/generic_proxy.h>
+#include <qt_gui_cpp/generic_proxy.hpp>
 
 #include <QMetaObject>
 

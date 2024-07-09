@@ -5,7 +5,7 @@ class PluginBridge
   : QObject
 {
 %TypeHeaderCode
-#include <qt_gui_cpp/plugin_bridge.h>
+#include <qt_gui_cpp/plugin_bridge.hpp>
 %End
 
 public:

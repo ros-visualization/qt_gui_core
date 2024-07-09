@@ -30,58 +30,52 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <qt_gui_cpp/plugin_context.hpp>
+#ifndef qt_gui_cpp__PluginBridge_HPP
+#define qt_gui_cpp__PluginBridge_HPP
 
-#include <stdexcept>
+#include <QObject>
 
-namespace qt_gui_cpp {
-
-PluginContext::PluginContext(QObject* obj, int serial_number, const QStringList& argv)
-  : QObject(obj)
-  , proxy_(obj)
-  , serial_number_(serial_number)
-  , argv_(argv)
-{}
-
-PluginContext::PluginContext(const PluginContext& other)
-  : QObject(other.parent())
-  , proxy_(other.parent())
-  , serial_number_(other.serial_number_)
-  , argv_(other.argv_)
-{}
-
-int PluginContext::serialNumber() const
+namespace qt_gui_cpp
 {
-  return serial_number_;
-}
 
-const QStringList& PluginContext::argv() const
-{
-  return argv_;
-}
+class Plugin;
+class PluginContext;
+class PluginProvider;
 
-void PluginContext::addWidget(QWidget* widget)
+class PluginBridge
+  : public QObject
 {
-  bool rc = proxy_.invokeMethod("add_widget", Q_ARG(QWidget*, widget));
-  if (!rc) throw std::runtime_error("PluginContext::addWidget() invoke method failed");
-}
 
-void PluginContext::removeWidget(QWidget* widget)
-{
-  bool rc = proxy_.invokeMethod("remove_widget", Q_ARG(QWidget*, widget));
-  if (!rc) throw std::runtime_error("PluginContext::removeWidget() invoke method failed");
-}
+  Q_OBJECT
 
-void PluginContext::closePlugin()
-{
-  bool rc = proxy_.invokeMethod("close_plugin");
-  if (!rc) throw std::runtime_error("PluginContext::closePlugin() invoke method failed");
-}
+public:
 
-void PluginContext::reloadPlugin()
-{
-  bool rc = proxy_.invokeMethod("reload_plugin");
-  if (!rc) throw std::runtime_error("PluginContext::reloadPlugin() invoke method failed");
-}
+  PluginBridge();
+
+  virtual bool load_plugin(PluginProvider* provider, const QString& plugin_id, PluginContext* plugin_context);
+
+  virtual void unload_plugin();
+
+  virtual bool has_configuration() const;
+
+  virtual void trigger_configuration();
+
+public slots:
+
+  virtual void shutdown_plugin();
+
+  virtual void save_settings(QObject* plugin_settings, QObject* instance_settings);
+
+  virtual void restore_settings(QObject* plugin_settings, QObject* instance_settings);
+
+private:
+
+  PluginProvider* provider_;
+
+  Plugin* plugin_;
+
+};
 
 } // namespace
+
+#endif // qt_gui_cpp__PluginBridge_HPP

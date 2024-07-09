@@ -6,7 +6,7 @@ class RosPluginlibPluginProvider_ForPlugins
   , qt_gui_cpp::PluginProvider
 {
 %TypeHeaderCode
-#include <qt_gui_cpp/ros_pluginlib_plugin_provider_for_plugins.h>
+#include <qt_gui_cpp/ros_pluginlib_plugin_provider_for_plugins.hpp>
 %End
 
 public:

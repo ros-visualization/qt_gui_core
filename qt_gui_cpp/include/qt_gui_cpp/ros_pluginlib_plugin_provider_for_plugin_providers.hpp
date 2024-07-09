@@ -30,58 +30,17 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <qt_gui_cpp/plugin_context.hpp>
+#ifndef qt_gui_cpp__RosPluginlibPluginProvider_ForPluginProviders_HPP
+#define qt_gui_cpp__RosPluginlibPluginProvider_ForPluginProviders_HPP
 
-#include <stdexcept>
+#include "plugin_provider.hpp"
+#include "ros_pluginlib_plugin_provider.hpp"
 
-namespace qt_gui_cpp {
-
-PluginContext::PluginContext(QObject* obj, int serial_number, const QStringList& argv)
-  : QObject(obj)
-  , proxy_(obj)
-  , serial_number_(serial_number)
-  , argv_(argv)
-{}
-
-PluginContext::PluginContext(const PluginContext& other)
-  : QObject(other.parent())
-  , proxy_(other.parent())
-  , serial_number_(other.serial_number_)
-  , argv_(other.argv_)
-{}
-
-int PluginContext::serialNumber() const
+namespace qt_gui_cpp
 {
-  return serial_number_;
-}
 
-const QStringList& PluginContext::argv() const
-{
-  return argv_;
-}
-
-void PluginContext::addWidget(QWidget* widget)
-{
-  bool rc = proxy_.invokeMethod("add_widget", Q_ARG(QWidget*, widget));
-  if (!rc) throw std::runtime_error("PluginContext::addWidget() invoke method failed");
-}
-
-void PluginContext::removeWidget(QWidget* widget)
-{
-  bool rc = proxy_.invokeMethod("remove_widget", Q_ARG(QWidget*, widget));
-  if (!rc) throw std::runtime_error("PluginContext::removeWidget() invoke method failed");
-}
-
-void PluginContext::closePlugin()
-{
-  bool rc = proxy_.invokeMethod("close_plugin");
-  if (!rc) throw std::runtime_error("PluginContext::closePlugin() invoke method failed");
-}
-
-void PluginContext::reloadPlugin()
-{
-  bool rc = proxy_.invokeMethod("reload_plugin");
-  if (!rc) throw std::runtime_error("PluginContext::reloadPlugin() invoke method failed");
-}
+typedef RosPluginlibPluginProvider<PluginProvider> RosPluginlibPluginProvider_ForPluginProviders;
 
 } // namespace
+
+#endif // qt_gui_cpp__RosPluginlibPluginProvider_ForPluginProviders_HPP

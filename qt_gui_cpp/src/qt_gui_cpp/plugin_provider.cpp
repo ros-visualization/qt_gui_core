@@ -30,7 +30,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <qt_gui_cpp/plugin_provider.h>
+#include <qt_gui_cpp/plugin_provider.hpp>
 
 namespace qt_gui_cpp {
 

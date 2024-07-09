@@ -30,58 +30,35 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <qt_gui_cpp/plugin_context.hpp>
+#ifndef qt_gui_cpp__GenericProxy_HPP
+#define qt_gui_cpp__GenericProxy_HPP
 
-#include <stdexcept>
+#include <QObject>
 
-namespace qt_gui_cpp {
-
-PluginContext::PluginContext(QObject* obj, int serial_number, const QStringList& argv)
-  : QObject(obj)
-  , proxy_(obj)
-  , serial_number_(serial_number)
-  , argv_(argv)
-{}
-
-PluginContext::PluginContext(const PluginContext& other)
-  : QObject(other.parent())
-  , proxy_(other.parent())
-  , serial_number_(other.serial_number_)
-  , argv_(other.argv_)
-{}
-
-int PluginContext::serialNumber() const
+namespace qt_gui_cpp
 {
-  return serial_number_;
-}
 
-const QStringList& PluginContext::argv() const
+class GenericProxy
 {
-  return argv_;
-}
 
-void PluginContext::addWidget(QWidget* widget)
-{
-  bool rc = proxy_.invokeMethod("add_widget", Q_ARG(QWidget*, widget));
-  if (!rc) throw std::runtime_error("PluginContext::addWidget() invoke method failed");
-}
+public:
 
-void PluginContext::removeWidget(QWidget* widget)
-{
-  bool rc = proxy_.invokeMethod("remove_widget", Q_ARG(QWidget*, widget));
-  if (!rc) throw std::runtime_error("PluginContext::removeWidget() invoke method failed");
-}
+  GenericProxy(QObject* obj = 0);
 
-void PluginContext::closePlugin()
-{
-  bool rc = proxy_.invokeMethod("close_plugin");
-  if (!rc) throw std::runtime_error("PluginContext::closePlugin() invoke method failed");
-}
+  QObject* proxiedObject();
 
-void PluginContext::reloadPlugin()
-{
-  bool rc = proxy_.invokeMethod("reload_plugin");
-  if (!rc) throw std::runtime_error("PluginContext::reloadPlugin() invoke method failed");
-}
+  void setProxiedObject(QObject* obj);
+
+  bool invokeMethod(const char* member, QGenericArgument val0 = QGenericArgument(), QGenericArgument val1 = QGenericArgument(), QGenericArgument val2 = QGenericArgument(), QGenericArgument val3 = QGenericArgument(), QGenericArgument val4 = QGenericArgument(), QGenericArgument val5 = QGenericArgument(), QGenericArgument val6 = QGenericArgument(), QGenericArgument val7 = QGenericArgument(), QGenericArgument val8 = QGenericArgument(), QGenericArgument val9 = QGenericArgument());
+
+  bool invokeMethodWithReturn(const char* member, QGenericReturnArgument ret = QGenericReturnArgument(0, 0), QGenericArgument val0 = QGenericArgument(), QGenericArgument val1 = QGenericArgument(), QGenericArgument val2 = QGenericArgument(), QGenericArgument val3 = QGenericArgument(), QGenericArgument val4 = QGenericArgument(), QGenericArgument val5 = QGenericArgument(), QGenericArgument val6 = QGenericArgument(), QGenericArgument val7 = QGenericArgument(), QGenericArgument val8 = QGenericArgument(), QGenericArgument val9 = QGenericArgument());
+
+private:
+
+  QObject* object_;
+
+};
 
 } // namespace
+
+#endif // qt_gui_cpp__GenericProxy_HPP

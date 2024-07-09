@@ -30,58 +30,63 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <qt_gui_cpp/plugin_context.hpp>
+#ifndef qt_gui_cpp__Settings_HPP
+#define qt_gui_cpp__Settings_HPP
 
-#include <stdexcept>
+#include "generic_proxy.hpp"
 
-namespace qt_gui_cpp {
+#include <QString>
+#include <QStringList>
+// Upstream issue: https://codereview.qt-project.org/c/qt/qtbase/+/272258
+#if __GNUC__ >= 9
+# pragma GCC diagnostic push
+# pragma GCC diagnostic ignored "-Wdeprecated-copy"
+#endif
+#include <QVariant>
+#if __GNUC__ >= 9
+# pragma GCC diagnostic pop
+#endif
 
-PluginContext::PluginContext(QObject* obj, int serial_number, const QStringList& argv)
-  : QObject(obj)
-  , proxy_(obj)
-  , serial_number_(serial_number)
-  , argv_(argv)
-{}
-
-PluginContext::PluginContext(const PluginContext& other)
-  : QObject(other.parent())
-  , proxy_(other.parent())
-  , serial_number_(other.serial_number_)
-  , argv_(other.argv_)
-{}
-
-int PluginContext::serialNumber() const
+namespace qt_gui_cpp
 {
-  return serial_number_;
-}
 
-const QStringList& PluginContext::argv() const
+class Settings
 {
-  return argv_;
-}
 
-void PluginContext::addWidget(QWidget* widget)
-{
-  bool rc = proxy_.invokeMethod("add_widget", Q_ARG(QWidget*, widget));
-  if (!rc) throw std::runtime_error("PluginContext::addWidget() invoke method failed");
-}
+public:
 
-void PluginContext::removeWidget(QWidget* widget)
-{
-  bool rc = proxy_.invokeMethod("remove_widget", Q_ARG(QWidget*, widget));
-  if (!rc) throw std::runtime_error("PluginContext::removeWidget() invoke method failed");
-}
+  Settings(QObject* obj);
 
-void PluginContext::closePlugin()
-{
-  bool rc = proxy_.invokeMethod("close_plugin");
-  if (!rc) throw std::runtime_error("PluginContext::closePlugin() invoke method failed");
-}
+  Settings getSettings(const QString& prefix);
 
-void PluginContext::reloadPlugin()
-{
-  bool rc = proxy_.invokeMethod("reload_plugin");
-  if (!rc) throw std::runtime_error("PluginContext::reloadPlugin() invoke method failed");
-}
+  QStringList allKeys() const;
+
+//  int beginReadArray(const QString& prefix);
+
+//  void beginWriteArray(const QString& prefix, int size = -1);
+
+  QStringList childGroups() const;
+
+  QStringList childKeys() const;
+
+  bool contains(const QString& key) const;
+
+//  void endArray();
+
+  void remove(const QString& key);
+
+//  void setArrayIndex(int i);
+
+  void setValue(const QString& key, const QVariant& value);
+
+  QVariant value(const QString& key, const QVariant& defaultValue = QVariant()) const;
+
+protected:
+
+  GenericProxy proxy_;
+
+};
 
 } // namespace
+
+#endif // qt_gui_cpp__Settings_HPP

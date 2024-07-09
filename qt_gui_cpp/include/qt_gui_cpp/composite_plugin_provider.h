@@ -33,52 +33,10 @@
 #ifndef qt_gui_cpp__CompositePluginProvider_H
 #define qt_gui_cpp__CompositePluginProvider_H
 
-#include "plugin_descriptor.h"
-#include "plugin_provider.h"
-
-#include <QList>
-#include <QMap>
-#include <QSet>
-#include <QString>
-
-namespace qt_gui_cpp
-{
-
-class CompositePluginProvider
-  : public PluginProvider
-{
-
-public:
-
-  CompositePluginProvider(const QList<PluginProvider*>& plugin_providers = QList<PluginProvider*>());
-
-  virtual ~CompositePluginProvider();
-
-  /**
-   * @note The ownership of the plugin providers is transferred to the callee.
-   */
-  virtual void set_plugin_providers(const QList<PluginProvider*>& plugin_providers);
-
-  virtual QList<PluginDescriptor*> discover_descriptors(QObject* discovery_data);
-
-  virtual void* load(const QString& plugin_id, PluginContext* plugin_context);
-
-  virtual Plugin* load_plugin(const QString& plugin_id, PluginContext* plugin_context);
-
-  virtual void unload(void* plugin_instance);
-
-  virtual void shutdown();
-
-private:
-
-  QList<PluginProvider*> plugin_providers_;
-
-  QMap<PluginProvider*, QSet<QString> > discovered_plugins_;
-
-  QMap<void*, PluginProvider*> running_plugins_;
-
-};
-
-} // namespace
+// *INDENT-OFF* (prevent uncrustify from adding indention below)
+#warning Including header <qt_gui_cpp/composite_plugin_provider.h> is deprecated, \
+include <qt_gui_cpp/composite_plugin_provider.hpp> instead.
+// *INDENT-ON*
+#include "./composite_plugin_provider.hpp"
 
 #endif // qt_gui_cpp__CompositePluginProvider_H

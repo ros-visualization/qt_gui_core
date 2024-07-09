@@ -4,7 +4,7 @@ namespace qt_gui_cpp
 class PluginProvider
 {
 %TypeHeaderCode
-#include <qt_gui_cpp/plugin_provider.h>
+#include <qt_gui_cpp/plugin_provider.hpp>
 %End
 
 public:

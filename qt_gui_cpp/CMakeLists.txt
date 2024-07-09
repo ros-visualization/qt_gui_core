@@ -39,9 +39,9 @@ set(qt_gui_cpp_SRCS
 )
 
 set(qt_gui_cpp_HDRS
-  include/qt_gui_cpp/plugin.h
-  include/qt_gui_cpp/plugin_bridge.h
-  include/qt_gui_cpp/plugin_context.h
+  include/qt_gui_cpp/plugin.hpp
+  include/qt_gui_cpp/plugin_bridge.hpp
+  include/qt_gui_cpp/plugin_context.hpp
 )
 
 qt5_wrap_cpp(qt_gui_cpp_MOCS ${qt_gui_cpp_HDRS})
@@ -82,9 +82,6 @@ install(TARGETS ${PROJECT_NAME}
   ARCHIVE DESTINATION lib
   LIBRARY DESTINATION lib
   RUNTIME DESTINATION bin)
-
-# TODO(brawner) add ament_lint_auto tests here. Much of the c++ code needs to
-# be updated for ROS2 style
 
 if(BUILD_TESTING)
   find_package(ament_cmake_pytest REQUIRED)
