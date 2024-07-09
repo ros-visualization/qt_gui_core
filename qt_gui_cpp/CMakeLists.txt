@@ -39,9 +39,6 @@ set(qt_gui_cpp_SRCS
 )
 
 set(qt_gui_cpp_HDRS
-  include/qt_gui_cpp/plugin.h
-  include/qt_gui_cpp/plugin_bridge.h
-  include/qt_gui_cpp/plugin_context.h
   include/qt_gui_cpp/plugin.hpp
   include/qt_gui_cpp/plugin_bridge.hpp
   include/qt_gui_cpp/plugin_context.hpp
