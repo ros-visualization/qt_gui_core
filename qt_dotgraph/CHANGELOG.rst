@@ -2,6 +2,9 @@
 Changelog for package qt_dotgraph
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+2.8.2 (2024-07-10)
+------------------
+
 2.8.1 (2024-06-25)
 ------------------
 * Skip running the tests on Windows Debug. (`#292 <https://github.com/ros-visualization/qt_gui_core/issues/292>`_)
