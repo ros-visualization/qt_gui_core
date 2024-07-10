@@ -30,8 +30,8 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef qt_gui_cpp__CompositePluginProvider_H
-#define qt_gui_cpp__CompositePluginProvider_H
+#ifndef QT_GUI_CPP__COMPOSITE_PLUGIN_PROVIDER_H_
+#define QT_GUI_CPP__COMPOSITE_PLUGIN_PROVIDER_H_
 
 // *INDENT-OFF* (prevent uncrustify from adding indention below)
 #warning Including header <qt_gui_cpp/composite_plugin_provider.h> is deprecated, \
@@ -39,4 +39,4 @@ include <qt_gui_cpp/composite_plugin_provider.hpp> instead.
 // *INDENT-ON*
 #include "./composite_plugin_provider.hpp"
 
-#endif // qt_gui_cpp__CompositePluginProvider_H
+#endif  // QT_GUI_CPP__COMPOSITE_PLUGIN_PROVIDER_H_

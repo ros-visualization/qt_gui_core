@@ -30,8 +30,8 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef qt_gui_cpp__RosPluginlibPluginProvider_ForPlugins_HPP
-#define qt_gui_cpp__RosPluginlibPluginProvider_ForPlugins_HPP
+#ifndef QT_GUI_CPP__ROS_PLUGINLIB_PLUGIN_PROVIDER_FOR_PLUGINS_HPP_
+#define QT_GUI_CPP__ROS_PLUGINLIB_PLUGIN_PROVIDER_FOR_PLUGINS_HPP_
 
 #include "plugin.hpp"
 #include "ros_pluginlib_plugin_provider.hpp"
@@ -41,6 +41,6 @@ namespace qt_gui_cpp
 
 typedef RosPluginlibPluginProvider<Plugin> RosPluginlibPluginProvider_ForPlugins;
 
-} // namespace
+}  // namespace qt_gui_cpp
 
-#endif // qt_gui_cpp__RosPluginlibPluginProvider_ForPlugins_HPP
+#endif  // QT_GUI_CPP__ROS_PLUGINLIB_PLUGIN_PROVIDER_FOR_PLUGINS_HPP_

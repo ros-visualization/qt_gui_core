@@ -30,8 +30,8 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef qt_gui_cpp__Settings_H
-#define qt_gui_cpp__Settings_H
+#ifndef QT_GUI_CPP__SETTINGS_H_
+#define QT_GUI_CPP__SETTINGS_H_
 
 // *INDENT-OFF* (prevent uncrustify from adding indention below)
 #warning Including header <qt_gui_cpp/settings.h> is deprecated, \
@@ -40,4 +40,4 @@ include <qt_gui_cpp/settings.hpp> instead.
 
 #include "./settings.hpp"
 
-#endif // qt_gui_cpp__Settings_H
+#endif  // QT_GUI_CPP__SETTINGS_H_

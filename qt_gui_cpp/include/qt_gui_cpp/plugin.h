@@ -30,8 +30,8 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef qt_gui_cpp__Plugin_H
-#define qt_gui_cpp__Plugin_H
+#ifndef QT_GUI_CPP__PLUGIN_H_
+#define QT_GUI_CPP__PLUGIN_H_
 
 // *INDENT-OFF* (prevent uncrustify from adding indention below)
 #warning Including header <qt_gui_cpp/plugin.h> is deprecated, \
@@ -40,4 +40,4 @@ include <qt_gui_cpp/plugin.hpp> instead.
 
 #include "./plugin.hpp"
 
-#endif // qt_gui_cpp__Plugin_H
+#endif  // QT_GUI_CPP__PLUGIN_H_

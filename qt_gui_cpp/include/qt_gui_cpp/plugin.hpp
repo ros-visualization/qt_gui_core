@@ -30,14 +30,14 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef qt_gui_cpp__Plugin_HPP
-#define qt_gui_cpp__Plugin_HPP
+#ifndef QT_GUI_CPP__PLUGIN_HPP_
+#define QT_GUI_CPP__PLUGIN_HPP_
+
+#include <QObject>
 
 #include "plugin_bridge.hpp"
 #include "plugin_context.hpp"
 #include "settings.hpp"
-
-#include <QObject>
 
 namespace qt_gui_cpp
 {
@@ -48,24 +48,22 @@ namespace qt_gui_cpp
 class Plugin
   : public QObject
 {
-
   Q_OBJECT
 
 public:
-
   /**
    * Construct the plugin.
    * All initialization should be performed in initPlugin().
    */
   Plugin()
-    : QObject()
+  : QObject()
   {}
 
   /**
    * Instantiate the plugin.
    * @param the plugin context
    */
-  virtual void initPlugin(PluginContext& /*context*/)
+  virtual void initPlugin(PluginContext & /*context*/)
   {}
 
   /**
@@ -79,7 +77,7 @@ public:
    * @param the plugin-specific settings
    * @param the instance-specific settings
    */
-  virtual void saveSettings(Settings& /*plugin_settings*/, Settings& /*instance_settings*/) const
+  virtual void saveSettings(Settings & /*plugin_settings*/, Settings & /*instance_settings*/) const
   {}
 
   /**
@@ -87,7 +85,9 @@ public:
    * @param the plugin-specific settings
    * @param the instance-specific settings
    */
-  virtual void restoreSettings(const Settings& /*plugin_settings*/, const Settings& /*instance_settings*/)
+  virtual void restoreSettings(
+    const Settings & /*plugin_settings*/,
+    const Settings & /*instance_settings*/)
   {}
 
   /**
@@ -105,9 +105,7 @@ public:
    */
   virtual void triggerConfiguration()
   {}
-
 };
+}  // namespace qt_gui_cpp
 
-} // namespace
-
-#endif // qt_gui_cpp__Plugin_HPP
+#endif  // QT_GUI_CPP__PLUGIN_HPP_

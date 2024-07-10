@@ -30,8 +30,8 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef qt_gui_cpp__PluginDescriptor_HPP
-#define qt_gui_cpp__PluginDescriptor_HPP
+#ifndef QT_GUI_CPP__PLUGIN_DESCRIPTOR_HPP_
+#define QT_GUI_CPP__PLUGIN_DESCRIPTOR_HPP_
 
 #include <QMap>
 #include <QString>
@@ -42,41 +42,42 @@ namespace qt_gui_cpp
 
 class PluginDescriptor
 {
-
 public:
+  PluginDescriptor(
+    const QString & plugin_id,
+    const QMap<QString, QString> & attributes = (QMap<QString, QString>()));
 
-  PluginDescriptor(const QString& plugin_id, const QMap<QString, QString>& attributes = (QMap<QString, QString>()));
+  const QString & pluginId() const;
 
-  const QString& pluginId() const;
+  const QMap<QString, QString> & attributes() const;
 
-  const QMap<QString, QString>& attributes() const;
+  QMap<QString, QString> & attributes();
 
-  QMap<QString, QString>& attributes();
+  const QMap<QString, QString> & actionAttributes() const;
 
-  const QMap<QString, QString>& actionAttributes() const;
-
-  void setActionAttributes(const QString& label, const QString& statustip = QString(), const QString& icon = QString(), const QString& icontype = QString());
+  void setActionAttributes(
+    const QString & label, const QString & statustip = QString(),
+    const QString & icon = QString(), const QString & icontype = QString());
 
   int countGroups() const;
 
   QMap<QString, QString> group(int index) const;
 
-  void addGroupAttributes(const QString& label, const QString& statustip = QString(), const QString& icon = QString(), const QString& icontype = QString());
+  void addGroupAttributes(
+    const QString & label, const QString & statustip = QString(),
+    const QString & icon = QString(), const QString & icontype = QString());
 
   QMap<QString, QString> toDictionary() const;
 
 protected:
-
   QString plugin_id_;
 
   QMap<QString, QString> attributes_;
 
   QMap<QString, QString> action_attributes_;
 
-  QVector<QMap<QString, QString> > groups_;
-
+  QVector<QMap<QString, QString>> groups_;
 };
+}  // namespace qt_gui_cpp
 
-} // namespace
-
-#endif // qt_gui_cpp__PluginDescriptor_HPP
+#endif  // QT_GUI_CPP__PLUGIN_DESCRIPTOR_HPP_
