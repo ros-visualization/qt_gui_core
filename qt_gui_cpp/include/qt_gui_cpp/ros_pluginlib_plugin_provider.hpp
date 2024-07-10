@@ -33,11 +33,6 @@
 #ifndef QT_GUI_CPP__ROS_PLUGINLIB_PLUGIN_PROVIDER_HPP_
 #define QT_GUI_CPP__ROS_PLUGINLIB_PLUGIN_PROVIDER_HPP_
 
-// Pluginlib has an optional dependency on boost::shared_ptr, which is not required here
-// On machines without boost, including pluginlib/class_loader.hpp requires defining this flag to
-// disable that dependency. Mosty notably these are the machines configured on ci.ros2.org
-#define PLUGINLIB__DISABLE_BOOST_FUNCTIONS
-
 #include <QCoreApplication>
 #include <QEvent>
 #include <QList>
