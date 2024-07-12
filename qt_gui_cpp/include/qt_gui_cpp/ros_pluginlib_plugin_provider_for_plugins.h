@@ -30,17 +30,14 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef qt_gui_cpp__RosPluginlibPluginProvider_ForPlugins_H
-#define qt_gui_cpp__RosPluginlibPluginProvider_ForPlugins_H
+#ifndef QT_GUI_CPP__ROS_PLUGINLIB_PLUGIN_PROVIDER_FOR_PLUGINS_H_
+#define QT_GUI_CPP__ROS_PLUGINLIB_PLUGIN_PROVIDER_FOR_PLUGINS_H_
 
-#include "plugin.h"
-#include "ros_pluginlib_plugin_provider.h"
+// *INDENT-OFF* (prevent uncrustify from adding indention below)
+#warning Including header <qt_gui_cpp/ros_pluginlib_plugin_provider_for_plugins.h> is deprecated, \
+include <qt_gui_cpp/ros_pluginlib_plugin_provider_for_plugins.hpp> instead.
+// *INDENT-ON*
 
-namespace qt_gui_cpp
-{
+#include "./ros_pluginlib_plugin_provider_for_plugins.hpp"
 
-typedef RosPluginlibPluginProvider<Plugin> RosPluginlibPluginProvider_ForPlugins;
-
-} // namespace
-
-#endif // qt_gui_cpp__RosPluginlibPluginProvider_ForPlugins_H
+#endif  // QT_GUI_CPP__ROS_PLUGINLIB_PLUGIN_PROVIDER_FOR_PLUGINS_H_

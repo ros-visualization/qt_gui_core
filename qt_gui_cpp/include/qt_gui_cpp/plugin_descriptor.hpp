@@ -30,14 +30,54 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef QT_GUI_CPP__PLUGIN_BRIDGE_H_
-#define QT_GUI_CPP__PLUGIN_BRIDGE_H_
+#ifndef QT_GUI_CPP__PLUGIN_DESCRIPTOR_HPP_
+#define QT_GUI_CPP__PLUGIN_DESCRIPTOR_HPP_
 
-// *INDENT-OFF* (prevent uncrustify from adding indention below)
-#warning Including header <qt_gui_cpp/plugin_bridge.h> is deprecated, \
-include <qt_gui_cpp/plugin_bridge.hpp> instead.
-// *INDENT-ON*
+#include <QMap>
+#include <QString>
+#include <QVector>
 
-#include "./plugin_bridge.hpp"
+namespace qt_gui_cpp
+{
 
-#endif  // QT_GUI_CPP__PLUGIN_BRIDGE_H_
+class PluginDescriptor
+{
+public:
+  PluginDescriptor(
+    const QString & plugin_id,
+    const QMap<QString, QString> & attributes = (QMap<QString, QString>()));
+
+  const QString & pluginId() const;
+
+  const QMap<QString, QString> & attributes() const;
+
+  QMap<QString, QString> & attributes();
+
+  const QMap<QString, QString> & actionAttributes() const;
+
+  void setActionAttributes(
+    const QString & label, const QString & statustip = QString(),
+    const QString & icon = QString(), const QString & icontype = QString());
+
+  int countGroups() const;
+
+  QMap<QString, QString> group(int index) const;
+
+  void addGroupAttributes(
+    const QString & label, const QString & statustip = QString(),
+    const QString & icon = QString(), const QString & icontype = QString());
+
+  QMap<QString, QString> toDictionary() const;
+
+protected:
+  QString plugin_id_;
+
+  QMap<QString, QString> attributes_;
+
+  QMap<QString, QString> action_attributes_;
+
+  QVector<QMap<QString, QString>> groups_;
+};
+}  // namespace qt_gui_cpp
+
+#endif  // QT_GUI_CPP__PLUGIN_DESCRIPTOR_HPP_

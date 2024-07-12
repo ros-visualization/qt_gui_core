@@ -30,14 +30,17 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef QT_GUI_CPP__PLUGIN_BRIDGE_H_
-#define QT_GUI_CPP__PLUGIN_BRIDGE_H_
+#ifndef QT_GUI_CPP__ROS_PLUGINLIB_PLUGIN_PROVIDER_FOR_PLUGINS_HPP_
+#define QT_GUI_CPP__ROS_PLUGINLIB_PLUGIN_PROVIDER_FOR_PLUGINS_HPP_
 
-// *INDENT-OFF* (prevent uncrustify from adding indention below)
-#warning Including header <qt_gui_cpp/plugin_bridge.h> is deprecated, \
-include <qt_gui_cpp/plugin_bridge.hpp> instead.
-// *INDENT-ON*
+#include "plugin.hpp"
+#include "ros_pluginlib_plugin_provider.hpp"
 
-#include "./plugin_bridge.hpp"
+namespace qt_gui_cpp
+{
 
-#endif  // QT_GUI_CPP__PLUGIN_BRIDGE_H_
+typedef RosPluginlibPluginProvider<Plugin> RosPluginlibPluginProvider_ForPlugins;
+
+}  // namespace qt_gui_cpp
+
+#endif  // QT_GUI_CPP__ROS_PLUGINLIB_PLUGIN_PROVIDER_FOR_PLUGINS_HPP_

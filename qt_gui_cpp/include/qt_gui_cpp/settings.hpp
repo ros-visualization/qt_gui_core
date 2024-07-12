@@ -30,14 +30,57 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef QT_GUI_CPP__PLUGIN_BRIDGE_H_
-#define QT_GUI_CPP__PLUGIN_BRIDGE_H_
+#ifndef QT_GUI_CPP__SETTINGS_HPP_
+#define QT_GUI_CPP__SETTINGS_HPP_
 
-// *INDENT-OFF* (prevent uncrustify from adding indention below)
-#warning Including header <qt_gui_cpp/plugin_bridge.h> is deprecated, \
-include <qt_gui_cpp/plugin_bridge.hpp> instead.
-// *INDENT-ON*
+#include <QString>
+#include <QStringList>
+// Upstream issue: https://codereview.qt-project.org/c/qt/qtbase/+/272258
+#if __GNUC__ >= 9
+# pragma GCC diagnostic push
+# pragma GCC diagnostic ignored "-Wdeprecated-copy"
+#endif
+#include <QVariant>
+#if __GNUC__ >= 9
+# pragma GCC diagnostic pop
+#endif
+#include "generic_proxy.hpp"
 
-#include "./plugin_bridge.hpp"
+namespace qt_gui_cpp
+{
 
-#endif  // QT_GUI_CPP__PLUGIN_BRIDGE_H_
+class Settings
+{
+public:
+  explicit Settings(QObject * obj);
+
+  Settings getSettings(const QString & prefix);
+
+  QStringList allKeys() const;
+
+//  int beginReadArray(const QString& prefix);
+
+//  void beginWriteArray(const QString& prefix, int size = -1);
+
+  QStringList childGroups() const;
+
+  QStringList childKeys() const;
+
+  bool contains(const QString & key) const;
+
+//  void endArray();
+
+  void remove(const QString & key);
+
+//  void setArrayIndex(int i);
+
+  void setValue(const QString & key, const QVariant & value);
+
+  QVariant value(const QString & key, const QVariant & defaultValue = QVariant()) const;
+
+protected:
+  GenericProxy proxy_;
+};
+}  // namespace qt_gui_cpp
+
+#endif  // QT_GUI_CPP__SETTINGS_HPP_

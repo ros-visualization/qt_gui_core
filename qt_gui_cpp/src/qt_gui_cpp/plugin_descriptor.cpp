@@ -30,37 +30,42 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <qt_gui_cpp/plugin_descriptor.h>
+#include <qt_gui_cpp/plugin_descriptor.hpp>
 
-namespace qt_gui_cpp {
+namespace qt_gui_cpp
+{
 
-PluginDescriptor::PluginDescriptor(const QString& plugin_id, const QMap<QString, QString>& attributes)
+PluginDescriptor::PluginDescriptor(
+  const QString & plugin_id,
+  const QMap<QString, QString> & attributes)
 {
   plugin_id_ = plugin_id;
   attributes_ = attributes;
 }
 
-const QString& PluginDescriptor::pluginId() const
+const QString & PluginDescriptor::pluginId() const
 {
   return plugin_id_;
 }
 
-const QMap<QString, QString>& PluginDescriptor::attributes() const
+const QMap<QString, QString> & PluginDescriptor::attributes() const
 {
   return attributes_;
 }
 
-QMap<QString, QString>& PluginDescriptor::attributes()
+QMap<QString, QString> & PluginDescriptor::attributes()
 {
   return attributes_;
 }
 
-const QMap<QString, QString>& PluginDescriptor::actionAttributes() const
+const QMap<QString, QString> & PluginDescriptor::actionAttributes() const
 {
   return action_attributes_;
 }
 
-void PluginDescriptor::setActionAttributes(const QString& label, const QString& statustip, const QString& icon, const QString& icontype)
+void PluginDescriptor::setActionAttributes(
+  const QString & label, const QString & statustip,
+  const QString & icon, const QString & icontype)
 {
   action_attributes_["label"] = label;
   action_attributes_["statustip"] = statustip;
@@ -78,7 +83,9 @@ QMap<QString, QString> PluginDescriptor::group(int index) const
   return groups_[index];
 }
 
-void PluginDescriptor::addGroupAttributes(const QString& label, const QString& statustip, const QString& icon, const QString& icontype)
+void PluginDescriptor::addGroupAttributes(
+  const QString & label, const QString & statustip,
+  const QString & icon, const QString & icontype)
 {
   QMap<QString, QString> attributes;
   attributes["label"] = label;
@@ -93,25 +100,26 @@ QMap<QString, QString> PluginDescriptor::toDictionary() const
   QMap<QString, QString> dict;
   QString plugin_prefix = plugin_id_ + ".";
   dict[plugin_prefix + "plugin_id"] = plugin_id_;
-  for (QMap<QString, QString>::const_iterator it = attributes_.constBegin(); it != attributes_.constEnd(); it++)
+  for (QMap<QString, QString>::const_iterator it = attributes_.constBegin();
+    it != attributes_.constEnd(); it++)
   {
     dict[plugin_prefix + QString("attributes.") + it.key()] = it.value();
   }
-  for (QMap<QString, QString>::const_iterator it = action_attributes_.constBegin(); it != action_attributes_.constEnd(); it++)
+  for (QMap<QString, QString>::const_iterator it = action_attributes_.constBegin();
+    it != action_attributes_.constEnd(); it++)
   {
     dict[plugin_prefix + QString("action.") + it.key()] = it.value();
   }
   int group_index = 1;
-  for (QVector<QMap<QString, QString> >::const_iterator it = groups_.constBegin(); it != groups_.constEnd(); it++)
+  for (QVector<QMap<QString, QString>>::const_iterator it = groups_.constBegin();
+    it != groups_.constEnd(); it++)
   {
     QString prefix = QString("groups.") + QString::number(group_index) + QString(".");
-    for (QMap<QString, QString>::const_iterator jt = it->constBegin(); jt != it->constEnd(); jt++)
-    {
+    for (QMap<QString, QString>::const_iterator jt = it->constBegin(); jt != it->constEnd(); jt++) {
       dict[plugin_prefix + prefix + jt.key()] = jt.value();
     }
     group_index++;
   }
   return dict;
 }
-
-} // namespace
+}  // namespace qt_gui_cpp

@@ -4,7 +4,7 @@ namespace qt_gui_cpp
 class PluginDescriptor
 {
 %TypeHeaderCode
-#include <qt_gui_cpp/plugin_descriptor.h>
+#include <qt_gui_cpp/plugin_descriptor.hpp>
 %End
 
 public:

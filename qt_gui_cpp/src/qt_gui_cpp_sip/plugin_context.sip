@@ -4,7 +4,7 @@ namespace qt_gui_cpp
 class PluginContext
 {
 %TypeHeaderCode
-#include <qt_gui_cpp/plugin_context.h>
+#include <qt_gui_cpp/plugin_context.hpp>
 %End
 
 public:

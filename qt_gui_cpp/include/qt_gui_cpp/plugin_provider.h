@@ -30,48 +30,14 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef qt_gui_cpp__PluginProvider_H
-#define qt_gui_cpp__PluginProvider_H
+#ifndef QT_GUI_CPP__PLUGIN_PROVIDER_H_
+#define QT_GUI_CPP__PLUGIN_PROVIDER_H_
 
-#include "plugin.h"
-#include "plugin_context.h"
-#include "plugin_descriptor.h"
+// *INDENT-OFF* (prevent uncrustify from adding indention below)
+#warning Including header <qt_gui_cpp/plugin_provider.h> is deprecated, \
+include <qt_gui_cpp/plugin_provider.hpp> instead.
+// *INDENT-ON*
 
-#include <QList>
-#include <QMultiMap>
-#include <QString>
+#include "./plugin_provider.hpp"
 
-namespace qt_gui_cpp
-{
-
-class PluginProvider
-{
-
-public:
-
-  PluginProvider();
-
-  virtual ~PluginProvider();
-
-  virtual QMultiMap<QString, QString> discover(QObject* discovery_data);
-
-  /**
-   * @attention Ownership of returned PluginDescriptor's is transfered to the caller
-   */
-  virtual QList<PluginDescriptor*> discover_descriptors(QObject* discovery_data);
-
-  virtual void* load(const QString& plugin_id, PluginContext* plugin_context);
-
-  virtual Plugin* load_plugin(const QString& plugin_id, PluginContext* plugin_context);
-
-  virtual void unload(void* plugin_instance);
-
-  virtual void unload_plugin(Plugin* plugin_instance);
-
-  virtual void shutdown();
-
-};
-
-} // namespace
-
-#endif // qt_gui_cpp__PluginProvider_H
+#endif  // QT_GUI_CPP__PLUGIN_PROVIDER_H_

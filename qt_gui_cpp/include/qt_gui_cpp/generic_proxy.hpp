@@ -30,14 +30,43 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef QT_GUI_CPP__PLUGIN_BRIDGE_H_
-#define QT_GUI_CPP__PLUGIN_BRIDGE_H_
+#ifndef QT_GUI_CPP__GENERIC_PROXY_HPP_
+#define QT_GUI_CPP__GENERIC_PROXY_HPP_
 
-// *INDENT-OFF* (prevent uncrustify from adding indention below)
-#warning Including header <qt_gui_cpp/plugin_bridge.h> is deprecated, \
-include <qt_gui_cpp/plugin_bridge.hpp> instead.
-// *INDENT-ON*
+#include <QObject>
 
-#include "./plugin_bridge.hpp"
+namespace qt_gui_cpp
+{
 
-#endif  // QT_GUI_CPP__PLUGIN_BRIDGE_H_
+class GenericProxy
+{
+public:
+  explicit GenericProxy(QObject * obj = 0);
+
+  QObject * proxiedObject();
+
+  void setProxiedObject(QObject * obj);
+
+  bool invokeMethod(
+    const char * member, QGenericArgument val0 = QGenericArgument(),
+    QGenericArgument val1 = QGenericArgument(), QGenericArgument val2 = QGenericArgument(),
+    QGenericArgument val3 = QGenericArgument(), QGenericArgument val4 = QGenericArgument(),
+    QGenericArgument val5 = QGenericArgument(), QGenericArgument val6 = QGenericArgument(),
+    QGenericArgument val7 = QGenericArgument(), QGenericArgument val8 = QGenericArgument(),
+    QGenericArgument val9 = QGenericArgument());
+
+  bool invokeMethodWithReturn(
+    const char * member,
+    QGenericReturnArgument ret = QGenericReturnArgument(0, 0),
+    QGenericArgument val0 = QGenericArgument(), QGenericArgument val1 = QGenericArgument(),
+    QGenericArgument val2 = QGenericArgument(), QGenericArgument val3 = QGenericArgument(),
+    QGenericArgument val4 = QGenericArgument(), QGenericArgument val5 = QGenericArgument(),
+    QGenericArgument val6 = QGenericArgument(), QGenericArgument val7 = QGenericArgument(),
+    QGenericArgument val8 = QGenericArgument(), QGenericArgument val9 = QGenericArgument());
+
+private:
+  QObject * object_;
+};
+}  // namespace qt_gui_cpp
+
+#endif  // QT_GUI_CPP__GENERIC_PROXY_HPP_

@@ -48,9 +48,9 @@ set(qt_gui_cpp_SRCS
 )
 
 set(qt_gui_cpp_HDRS
-  include/qt_gui_cpp/plugin.h
-  include/qt_gui_cpp/plugin_bridge.h
-  include/qt_gui_cpp/plugin_context.h
+  include/qt_gui_cpp/plugin.hpp
+  include/qt_gui_cpp/plugin_bridge.hpp
+  include/qt_gui_cpp/plugin_context.hpp
 )
 
 if (${QT_VERSION_MAJOR} GREATER "5")
@@ -97,10 +97,10 @@ install(TARGETS ${PROJECT_NAME}
   LIBRARY DESTINATION lib
   RUNTIME DESTINATION bin)
 
-# TODO(brawner) add ament_lint_auto tests here. Much of the c++ code needs to
-# be updated for ROS2 style
-
 if(BUILD_TESTING)
+  find_package(ament_lint_auto REQUIRED)
+  ament_lint_auto_find_test_dependencies()
+
   find_package(ament_cmake_pytest REQUIRED)
 
   if(TARGET qt_gui_cpp_shiboken)

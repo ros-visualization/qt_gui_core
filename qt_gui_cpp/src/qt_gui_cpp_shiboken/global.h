@@ -30,6 +30,9 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
+#ifndef QT_GUI_CPP_SHIBOKEN__GLOBAL_H_
+#define QT_GUI_CPP_SHIBOKEN__GLOBAL_H_
+
 #ifndef NULL
 #define NULL 0
 #endif
@@ -38,15 +41,17 @@
 #include <QtGui/QtGui>
 #include <QtWidgets/QtWidgets>
 
-#include <qt_gui_cpp/composite_plugin_provider.h>
-#include <qt_gui_cpp/generic_proxy.h>
-#include <qt_gui_cpp/plugin.h>
-#include <qt_gui_cpp/plugin_bridge.h>
-#include <qt_gui_cpp/plugin_context.h>
-#include <qt_gui_cpp/plugin_descriptor.h>
-#include <qt_gui_cpp/plugin_provider.h>
-#include <qt_gui_cpp/recursive_plugin_provider.h>
-#include <qt_gui_cpp/ros_pluginlib_plugin_provider.h>
-#include <qt_gui_cpp/ros_pluginlib_plugin_provider_for_plugin_providers.h>
-#include <qt_gui_cpp/ros_pluginlib_plugin_provider_for_plugins.h>
-#include <qt_gui_cpp/settings.h>
+#include <qt_gui_cpp/composite_plugin_provider.hpp>
+#include <qt_gui_cpp/generic_proxy.hpp>
+#include <qt_gui_cpp/plugin.hpp>
+#include <qt_gui_cpp/plugin_bridge.hpp>
+#include <qt_gui_cpp/plugin_context.hpp>
+#include <qt_gui_cpp/plugin_descriptor.hpp>
+#include <qt_gui_cpp/plugin_provider.hpp>
+#include <qt_gui_cpp/recursive_plugin_provider.hpp>
+#include <qt_gui_cpp/ros_pluginlib_plugin_provider.hpp>
+#include <qt_gui_cpp/ros_pluginlib_plugin_provider_for_plugin_providers.hpp>
+#include <qt_gui_cpp/ros_pluginlib_plugin_provider_for_plugins.hpp>
+#include <qt_gui_cpp/settings.hpp>
+
+#endif  // QT_GUI_CPP_SHIBOKEN__GLOBAL_H_

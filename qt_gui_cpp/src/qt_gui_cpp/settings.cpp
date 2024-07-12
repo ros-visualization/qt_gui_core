@@ -30,17 +30,18 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <qt_gui_cpp/settings.h>
+#include <qt_gui_cpp/settings.hpp>
 
 #include <stdexcept>
 
-namespace qt_gui_cpp {
+namespace qt_gui_cpp
+{
 
-Settings::Settings(QObject* obj)
-  : proxy_(obj)
+Settings::Settings(QObject * obj)
+: proxy_(obj)
 {}
 
-Settings Settings::getSettings(const QString& prefix)
+Settings Settings::getSettings(const QString & prefix)
 {
   Settings settings(proxy_.proxiedObject());
   bool rc = QMetaObject::invokeMethod(proxy_.proxiedObject(), "get_settings", Qt::DirectConnection, Q_RETURN_ARG(Settings, settings), Q_ARG(QString, prefix));
@@ -78,7 +79,7 @@ QStringList Settings::childKeys() const
   return list;
 }
 
-bool Settings::contains(const QString& key) const
+bool Settings::contains(const QString & key) const
 {
   bool flag = false;
   bool rc;
@@ -87,14 +88,14 @@ bool Settings::contains(const QString& key) const
   return flag;
 }
 
-void Settings::remove(const QString& key)
+void Settings::remove(const QString & key)
 {
   bool rc;
   // bool rc = proxy_.invokeMethod("remove", Q_ARG(QString, key));
   if (!rc) throw std::runtime_error("Settings::remove() invoke method failed");
 }
 
-void Settings::setValue(const QString& key, const QVariant& value)
+void Settings::setValue(const QString & key, const QVariant & value)
 {
   bool rc;
 
@@ -102,7 +103,7 @@ void Settings::setValue(const QString& key, const QVariant& value)
   if (!rc) throw std::runtime_error("Settings::set_value() invoke method failed");
 }
 
-QVariant Settings::value(const QString& key, const QVariant& defaultValue) const
+QVariant Settings::value(const QString & key, const QVariant & defaultValue) const
 {
   QVariant val;
   bool rc;
@@ -111,5 +112,4 @@ QVariant Settings::value(const QString& key, const QVariant& defaultValue) const
   if (!rc) throw std::runtime_error("Settings::value() invoke method failed");
   return val;
 }
-
-} // namespace
+}  // namespace qt_gui_cpp

@@ -30,14 +30,44 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef QT_GUI_CPP__PLUGIN_BRIDGE_H_
-#define QT_GUI_CPP__PLUGIN_BRIDGE_H_
+#ifndef QT_GUI_CPP__PLUGIN_PROVIDER_HPP_
+#define QT_GUI_CPP__PLUGIN_PROVIDER_HPP_
 
-// *INDENT-OFF* (prevent uncrustify from adding indention below)
-#warning Including header <qt_gui_cpp/plugin_bridge.h> is deprecated, \
-include <qt_gui_cpp/plugin_bridge.hpp> instead.
-// *INDENT-ON*
+#include "plugin.hpp"
+#include "plugin_context.hpp"
+#include "plugin_descriptor.hpp"
 
-#include "./plugin_bridge.hpp"
+#include <QList>
+#include <QMultiMap>
+#include <QString>
 
-#endif  // QT_GUI_CPP__PLUGIN_BRIDGE_H_
+namespace qt_gui_cpp
+{
+
+class PluginProvider
+{
+public:
+  PluginProvider();
+
+  virtual ~PluginProvider();
+
+  virtual QMultiMap<QString, QString> discover(QObject * discovery_data);
+
+  /**
+   * @attention Ownership of returned PluginDescriptor's is transfered to the caller
+   */
+  virtual QList<PluginDescriptor *> discover_descriptors(QObject * discovery_data);
+
+  virtual void * load(const QString & plugin_id, PluginContext * plugin_context);
+
+  virtual Plugin * load_plugin(const QString & plugin_id, PluginContext * plugin_context);
+
+  virtual void unload(void * plugin_instance);
+
+  virtual void unload_plugin(Plugin * plugin_instance);
+
+  virtual void shutdown();
+};
+}  // namespace qt_gui_cpp
+
+#endif  // QT_GUI_CPP__PLUGIN_PROVIDER_HPP_
