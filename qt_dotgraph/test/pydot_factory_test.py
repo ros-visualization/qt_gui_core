@@ -114,6 +114,6 @@ class PyDotFactoryTest(unittest.TestCase):
         except FileNotFoundError:
             raise unittest.SkipTest('skipping test since dot is unavailable')
         # get rid of version specific whitespaces
-        result = re.sub('[\n\t ]+', ' ', result)
+        result = re.sub('[\n\t\r ]+', ' ', result)
         for sn in snippets:
             self.assertTrue(sn in result, '%s \nmissing in\n %s' % (sn, result))

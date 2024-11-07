@@ -30,13 +30,8 @@
 # ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-from distutils.version import LooseVersion
-try:
-    from urllib.request import quote
-except ImportError:
-    from urllib import quote
-
 import os
+from urllib.request import quote
 
 import pydot
 
@@ -64,22 +59,15 @@ class PydotFactory():
     def get_graph(
             self, graph_type='digraph', rank='same', simplify=True,
             rankdir='TB', ranksep=0.2, compound=True):
-        # Lucid version of pydot bugs with certain settings, not sure which
-        # version exactly fixes those
-        if LooseVersion(pydot.__version__) > LooseVersion('1.0.10'):
-            graph = pydot.Dot('graphname',
-                              graph_type=graph_type,
-                              rank=rank,
-                              rankdir=rankdir,
-                              simplify=simplify
-                              )
-            graph.set_ranksep(ranksep)
-            graph.set_compound(compound)
-        else:
-            graph = pydot.Dot('graphname',
-                              graph_type=graph_type,
-                              rank=rank,
-                              rankdir=rankdir)
+        graph = pydot.Dot('graphname',
+                          graph_type=graph_type,
+                          rank=rank,
+                          rankdir=rankdir,
+                          simplify=simplify
+                          )
+        graph.set_ranksep(ranksep)
+        graph.set_compound(compound)
+
         return graph
 
     def add_node_to_graph(self,
@@ -138,9 +126,8 @@ class PydotFactory():
             g.set_style(style)
         if 'set_shape' in g.__dict__:
             g.set_shape(shape)
-        if LooseVersion(pydot.__version__) > LooseVersion('1.0.10'):
-            g.set_compound(compound)
-            g.set_ranksep(ranksep)
+        g.set_compound(compound)
+        g.set_ranksep(ranksep)
         subgraphlabel = subgraphname if subgraphlabel is None else subgraphlabel
         subgraphlabel = self.escape_label(subgraphlabel)
         if subgraphlabel:
@@ -153,11 +140,7 @@ class PydotFactory():
 
     def add_edge_to_graph(
             self, graph, nodename1, nodename2, label=None, url=None,
-            simplify=True, style=None, penwidth=1, color=None,
-            edgetooltip=None):
-        if simplify and LooseVersion(pydot.__version__) < LooseVersion('1.0.10'):
-            if graph.get_edge(self.escape_name(nodename1), self.escape_name(nodename2)) != []:
-                return
+            style=None, penwidth=1, color=None, edgetooltip=None):
         edge = pydot.Edge(self.escape_name(nodename1), self.escape_name(nodename2))
         if label is not None and label != '':
             edge.set_label(label)
