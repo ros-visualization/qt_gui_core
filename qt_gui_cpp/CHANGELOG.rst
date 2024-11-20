@@ -2,6 +2,9 @@
 Changelog for package qt_gui_cpp
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+
 2.8.2 (2024-07-10)
 ------------------
 * Add common linters and make them happy to qt_gui_cpp (`#295 <https://github.com/ros-visualization/qt_gui_core/issues/295>`_)
