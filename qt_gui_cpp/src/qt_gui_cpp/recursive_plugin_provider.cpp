@@ -48,7 +48,7 @@ RecursivePluginProvider::~RecursivePluginProvider()
   delete plugin_provider_;
 }
 
-QMap<QString, QString> RecursivePluginProvider::discover(QObject * discovery_data)
+QMultiMap<QString, QString> RecursivePluginProvider::discover(QObject* discovery_data)
 {
   // discover plugins, which are providers themselves
   QList<PluginDescriptor *> descriptors = plugin_provider_->discover_descriptors(discovery_data);

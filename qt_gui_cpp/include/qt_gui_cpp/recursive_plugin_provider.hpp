@@ -34,7 +34,7 @@
 #define QT_GUI_CPP__RECURSIVE_PLUGIN_PROVIDER_HPP_
 
 #include <QList>
-#include <QMap>
+#include <QMultiMap>
 #include <QString>
 
 #include "composite_plugin_provider.hpp"
@@ -51,7 +51,7 @@ public:
 
   virtual ~RecursivePluginProvider();
 
-  virtual QMap<QString, QString> discover(QObject * discovery_data);
+  virtual QMultiMap<QString, QString> discover(QObject * discovery_data);
 
   virtual void shutdown();
 

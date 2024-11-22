@@ -13,7 +13,7 @@ public:
 
   virtual ~PluginProvider();
 
-  virtual QMap<QString, QString> discover(QObject* discovery_data);
+  virtual QMultiMap<QString, QString> discover(QObject* discovery_data);
 
   /**
    * @attention Ownership of returned PluginDescriptor's is transfered to the caller

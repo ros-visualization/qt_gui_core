@@ -9,6 +9,14 @@ endif()
 
 find_package(ament_cmake REQUIRED)
 
+# set(CMAKE_SKIP_BUILD_RPATH FALSE)
+# set(CMAKE_BUILD_WITH_INSTALL_RPATH TRUE)
+# set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
+
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTORCC ON)
+set(CMAKE_AUTOUIC ON)
+
 if(WIN32)
   message(STATUS "${PROJECT_NAME} is not yet supported on Windows. Package will not be built.")
   ament_package()
@@ -20,7 +28,8 @@ if(WIN32)
 endif()
 
 find_package(pluginlib REQUIRED)
-find_package(Qt5 REQUIRED COMPONENTS Widgets)
+find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets Core)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets Core)
 find_package(tinyxml2_vendor REQUIRED)
 find_package(TinyXML2 REQUIRED)
 
@@ -44,7 +53,12 @@ set(qt_gui_cpp_HDRS
   include/qt_gui_cpp/plugin_context.hpp
 )
 
-qt5_wrap_cpp(qt_gui_cpp_MOCS ${qt_gui_cpp_HDRS})
+if (${QT_VERSION_MAJOR} GREATER "5")
+  qt_standard_project_setup()
+  qt_wrap_cpp(turtlesim_node_MOCS ${qt_gui_cpp_HDRS})
+else()
+  qt5_wrap_cpp(turtlesim_node_MOCS ${qt_gui_cpp_HDRS})
+endif()
 
 add_library(${PROJECT_NAME} SHARED ${qt_gui_cpp_SRCS} ${qt_gui_cpp_MOCS})
 target_include_directories(${PROJECT_NAME} PUBLIC
@@ -54,17 +68,17 @@ target_include_directories(${PROJECT_NAME} PUBLIC
 target_link_libraries(${PROJECT_NAME}
   ${QT_QTCORE_LIBRARY}
   ${QT_QTGUI_LIBRARY}
-  Qt5::Widgets
+  Qt${QT_VERSION_MAJOR}::Widgets
   pluginlib::pluginlib
   tinyxml2::tinyxml2)
 
 add_subdirectory(src/qt_gui_cpp_shiboken)
 add_subdirectory(src/qt_gui_cpp_sip)
 
-message(STATUS "Python binding generators: ${qt_gui_cpp_BINDINGS}")
-if(NOT qt_gui_cpp_BINDINGS)
-  message(FATAL_ERROR "No Python binding generator found.")
-endif()
+# message(STATUS "Python binding generators: ${qt_gui_cpp_BINDINGS}")
+# if(NOT qt_gui_cpp_BINDINGS)
+#   message(FATAL_ERROR "No Python binding generator found.")
+# endif()
 
 install(FILES plugin.xml
   DESTINATION share/${PROJECT_NAME})
