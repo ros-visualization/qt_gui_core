@@ -4,26 +4,24 @@
   <description>
     qt_dotgraph provides helpers to work with dot graphs.
   </description>
-  <maintainer email="dthomas@osrfoundation.org">Dirk Thomas</maintainer>
+  <maintainer email="clalancette@gmail.com">Chris Lalancette</maintainer>
   <license>BSD</license>
 
-  <url type="website">http://ros.org/wiki/qt_dotgraph</url>
   <url type="repository">https://github.com/ros-visualization/qt_gui_core</url>
   <url type="bugtracker">https://github.com/ros-visualization/qt_gui_core/issues</url>
   <author>Thibault Kruse</author>
 
-  <buildtool_depend>ament_cmake</buildtool_depend>
-
   <exec_depend>python3-pydot</exec_depend>
+  <exec_depend>python3-pygraphviz</exec_depend>
   <exec_depend version_gte="0.3.0">python_qt_binding</exec_depend>
 
-  <test_depend>ament_cmake_pytest</test_depend>
-  <test_depend>ament_lint_auto</test_depend>
-  <test_depend>ament_lint_common</test_depend>
-
-  <test_depend>python3-pygraphviz</test_depend>
+  <test_depend>ament_copyright</test_depend>
+  <test_depend>ament_flake8</test_depend>
+  <test_depend>ament_pep257</test_depend>
+  <test_depend>ament_xmllint</test_depend>
+  <test_depend>python3-pytest</test_depend>
 
   <export>
-    <build_type>ament_cmake</build_type>
+    <build_type>ament_python</build_type>
   </export>
 </package>
