@@ -1,4 +1,4 @@
-# Copyright (c) 2011, Dirk Thomas, TU Darmstadt
+# Copyright 2024 Open Source Robotics Foundation, Inc.
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -11,7 +11,7 @@
 #      notice, this list of conditions and the following disclaimer in the
 #      documentation and/or other materials provided with the distribution.
 #
-#    * Neither the name of the TU Darmstadt nor the names of its
+#    * Neither the name of the copyright holder nor the names of its
 #      contributors may be used to endorse or promote products derived from
 #      this software without specific prior written permission.
 #
@@ -27,16 +27,12 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-import colorsys
+from ament_flake8.main import main
+import pytest
 
 
-def get_color_for_string(name):
-    hue = float(name.__hash__() % 0xFFFFFFFFFFFF) / 0xFFFFFFFFFFFF
-    # choose colors with high saturation and value
-    (r, g, b) = colorsys.hsv_to_rgb(hue, 1, 0.8)
-    # convert floats into hexadecimal
-    (r, g, b) = (int(r * 0xFF), int(g * 0xFF), int(b * 0xFF))
-    # build a hex string like #a3bbc0
-    code = '#%s%s%s' % (hex(r)[-2:], hex(g)[-2:], hex(b)[-2:])
-    # single digit hexes yield 'x4''
-    return code.replace('x', '0')
+@pytest.mark.flake8
+@pytest.mark.linter
+def test_flake8():
+    rc = main(argv=[])
+    assert rc == 0, 'Found errors'
