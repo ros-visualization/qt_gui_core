@@ -2,8 +2,8 @@
 Changelog for package qt_dotgraph
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+2.7.5 (2024-12-18)
+------------------
 * Cleanup qt_dotgraph and make the tests more robust. (`#296 <https://github.com/ros-visualization/qt_gui_core/issues/296>`_) (`#298 <https://github.com/ros-visualization/qt_gui_core/issues/298>`_)
   1.  Remove all uses of LooseVersion here.  The issue it
   was protecting against is long gone, and LooseVersion is
