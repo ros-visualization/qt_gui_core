@@ -2,6 +2,21 @@
 Changelog for package qt_dotgraph
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Cleanup qt_dotgraph and make the tests more robust. (`#296 <https://github.com/ros-visualization/qt_gui_core/issues/296>`_) (`#298 <https://github.com/ros-visualization/qt_gui_core/issues/298>`_)
+  1.  Remove all uses of LooseVersion here.  The issue it
+  was protecting against is long gone, and LooseVersion is
+  deprecated.  Just remove it.
+  2.  Remove the "simplify" parameter from "add_edge_to_graph".
+  While this is technically an API change, there are no downstream
+  users as far as I can tell and it had no effect.
+  3.  During the test, make sure to replace carriage return with
+  spaces.  This ensures that on Windows, the tests will pass
+  correctly.
+  (cherry picked from commit 4a11ebc5d97ebe718c5a09c98814c186bfb7a4f4)
+* Contributors: mergify[bot]
+
 2.7.4 (2024-04-16)
 ------------------
 * Handle empty dotcode nodes. (`#290 <https://github.com/ros-visualization/qt_gui_core/issues/290>`_)
