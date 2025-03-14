@@ -67,8 +67,11 @@ if(shiboken_helper_FOUND)
 
     add_library(qt_gui_cpp_shiboken SHARED ${qt_gui_cpp_shiboken_SRCS})
     target_include_directories(qt_gui_cpp_shiboken PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../../include)
-    target_link_libraries(qt_gui_cpp_shiboken ${PROJECT_NAME})
-    ament_target_dependencies(qt_gui_cpp_shiboken pluginlib TinyXML2)
+    target_link_libraries(qt_gui_cpp_shiboken
+      ${PROJECT_NAME}
+      pluginlib::pluginlib
+      tinyxml2::tinyxml2
+    )
     shiboken_target_link_libraries(qt_gui_cpp_shiboken "${qt_gui_cpp_shiboken_QT_COMPONENTS}")
 
     install(TARGETS qt_gui_cpp_shiboken
