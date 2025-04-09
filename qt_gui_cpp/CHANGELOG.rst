@@ -2,8 +2,8 @@
 Changelog for package qt_gui_cpp
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.4.3 (2025-04-09)
+------------------
 * Backport https://github.com/ros-visualization/qt_gui_core/pull/176 (`#260 <https://github.com/ros-visualization/qt_gui_core/issues/260>`_)
 * Update Maintainers (`#240 <https://github.com/ros-visualization/qt_gui_core/issues/240>`_)
 * Contributors: Shane Loretz, Tobias Fischer
