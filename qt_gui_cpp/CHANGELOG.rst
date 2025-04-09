@@ -2,6 +2,12 @@
 Changelog for package qt_gui_cpp
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Backport https://github.com/ros-visualization/qt_gui_core/pull/176 (`#260 <https://github.com/ros-visualization/qt_gui_core/issues/260>`_)
+* Update Maintainers (`#240 <https://github.com/ros-visualization/qt_gui_core/issues/240>`_)
+* Contributors: Shane Loretz, Tobias Fischer
+
 0.4.2 (2020-07-24)
 ------------------
 * quiet upstream Qt5 warnings (`#210 <https://github.com/ros-visualization/qt_gui_core/issues/210>`_) (`#229 <https://github.com/ros-visualization/qt_gui_core/issues/229>`_)

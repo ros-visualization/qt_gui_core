@@ -2,6 +2,13 @@
 Changelog for package qt_gui
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Fix 'dict_keys' object not subscriptable (`#245 <https://github.com/ros-visualization/qt_gui_core/issues/245>`_)
+* Update Maintainers (`#240 <https://github.com/ros-visualization/qt_gui_core/issues/240>`_)
+* Allow hide title in standalone (`#235 <https://github.com/ros-visualization/qt_gui_core/issues/235>`_)
+* Contributors: Adi Vardi, Michael Jeronimo, Shane Loretz
+
 0.4.2 (2020-07-24)
 ------------------
 * fix exporting perspective for Python 3.6 (`#228 <https://github.com/ros-visualization/qt_gui_core/issues/228>`_)

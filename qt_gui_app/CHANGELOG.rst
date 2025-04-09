@@ -2,6 +2,11 @@
 Changelog for package qt_gui_app
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Update Maintainers (`#240 <https://github.com/ros-visualization/qt_gui_core/issues/240>`_)
+* Contributors: Shane Loretz
+
 0.4.2 (2020-07-24)
 ------------------
 * fix shebang line for python3 (`#223 <https://github.com/ros-visualization/qt_gui_core/issues/223>`_)
