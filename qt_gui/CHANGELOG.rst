@@ -2,6 +2,11 @@
 Changelog for package qt_gui
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Bump cmake_minimum_required to avoid deprecation (`#303 <https://github.com/ros-visualization/qt_gui_core/issues/303>`_)
+* Contributors: Arne Hitzmann
+
 0.4.3 (2025-04-09)
 ------------------
 * Fix 'dict_keys' object not subscriptable (`#245 <https://github.com/ros-visualization/qt_gui_core/issues/245>`_)
