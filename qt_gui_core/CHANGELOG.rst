@@ -2,8 +2,8 @@
 Changelog for package qt_gui_core
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.4.4 (2025-04-26)
+------------------
 * Use 3 term cmake version for metapackage
 * Bump cmake_minimum_required to avoid deprecation (`#303 <https://github.com/ros-visualization/qt_gui_core/issues/303>`_)
 * Contributors: Arne Hitzmann, Shane Loretz
