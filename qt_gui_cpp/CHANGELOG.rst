@@ -2,6 +2,11 @@
 Changelog for package qt_gui_cpp
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+2.9.1 (2025-04-28)
+------------------
+* Use target_link_libraries instead of ament_target_dependencies (`#302 <https://github.com/ros-visualization/qt_gui_core/issues/302>`_)
+* Contributors: Shane Loretz
+
 2.9.0 (2024-12-20)
 ------------------
 
