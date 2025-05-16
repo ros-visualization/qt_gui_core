@@ -12,18 +12,18 @@ set(qt_gui_cpp_sip_DEPENDENT_FILES
   ros_pluginlib_plugin_provider_for_plugin_providers.sip
   ros_pluginlib_plugin_provider_for_plugins.sip
   settings.sip
-  ${qt_gui_cpp_HDRS_DIR}/composite_plugin_provider.h
-  ${qt_gui_cpp_HDRS_DIR}/generic_proxy.h
-  ${qt_gui_cpp_HDRS_DIR}/plugin.h
-  ${qt_gui_cpp_HDRS_DIR}/plugin_bridge.h
-  ${qt_gui_cpp_HDRS_DIR}/plugin_context.h
-  ${qt_gui_cpp_HDRS_DIR}/plugin_descriptor.h
-  ${qt_gui_cpp_HDRS_DIR}/plugin_provider.h
-  ${qt_gui_cpp_HDRS_DIR}/recursive_plugin_provider.h
-  ${qt_gui_cpp_HDRS_DIR}/ros_pluginlib_plugin_provider.h
-  ${qt_gui_cpp_HDRS_DIR}/ros_pluginlib_plugin_provider_for_plugin_providers.h
-  ${qt_gui_cpp_HDRS_DIR}/ros_pluginlib_plugin_provider_for_plugins.h
-  ${qt_gui_cpp_HDRS_DIR}/settings.h
+  ${qt_gui_cpp_HDRS_DIR}/composite_plugin_provider.hpp
+  ${qt_gui_cpp_HDRS_DIR}/generic_proxy.hpp
+  ${qt_gui_cpp_HDRS_DIR}/plugin.hpp
+  ${qt_gui_cpp_HDRS_DIR}/plugin_bridge.hpp
+  ${qt_gui_cpp_HDRS_DIR}/plugin_context.hpp
+  ${qt_gui_cpp_HDRS_DIR}/plugin_descriptor.hpp
+  ${qt_gui_cpp_HDRS_DIR}/plugin_provider.hpp
+  ${qt_gui_cpp_HDRS_DIR}/recursive_plugin_provider.hpp
+  ${qt_gui_cpp_HDRS_DIR}/ros_pluginlib_plugin_provider.hpp
+  ${qt_gui_cpp_HDRS_DIR}/ros_pluginlib_plugin_provider_for_plugin_providers.hpp
+  ${qt_gui_cpp_HDRS_DIR}/ros_pluginlib_plugin_provider_for_plugins.hpp
+  ${qt_gui_cpp_HDRS_DIR}/settings.hpp
 )
 
 # maintain context for different named target
