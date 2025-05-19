@@ -2,6 +2,11 @@
 Changelog for package qt_gui_cpp
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+2.10.1 (2025-05-19)
+-------------------
+* Removed deprecated headers (`#305 <https://github.com/ros-visualization/qt_gui_core/issues/305>`_)
+* Contributors: Alejandro Hernández Cordero
+
 2.10.0 (2025-04-28)
 -------------------
 
