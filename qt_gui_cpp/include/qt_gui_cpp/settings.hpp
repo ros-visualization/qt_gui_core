@@ -58,21 +58,13 @@ public:
 
   QStringList allKeys() const;
 
-//  int beginReadArray(const QString& prefix);
-
-//  void beginWriteArray(const QString& prefix, int size = -1);
-
   QStringList childGroups() const;
 
   QStringList childKeys() const;
 
   bool contains(const QString & key) const;
 
-//  void endArray();
-
   void remove(const QString & key);
-
-//  void setArrayIndex(int i);
 
   void setValue(const QString & key, const QVariant & value);
 

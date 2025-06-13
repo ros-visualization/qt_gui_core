@@ -145,13 +145,6 @@ public:
       attributes["class_base_class_type"] = class_loader_->getBaseClassType().c_str();
       attributes["package_name"] = class_loader_->getClassPackage(lookup_name).c_str();
       attributes["plugin_path"] = plugin_path.c_str();
-
-      // check if plugin is available
-      // std::string library_path = class_loader_->getClassLibraryPath(lookup_name);
-      // attributes["not_available"] =
-      //   !std::ifstream(library_path.c_str()) ?
-      //      QString("library ").append(lookup_name.c_str()).append(
-      //        " not found (may be it must be built?)") : "";
       attributes["not_available"] = "";
 
       PluginDescriptor * plugin_descriptor = new PluginDescriptor(lookup_name.c_str(), attributes);
@@ -230,8 +223,6 @@ public:
         return 0;
       }
     }
-
-    // qDebug("RosPluginlibPluginProvider::load_explicit_type(%s) succeeded", lookup_name.c_str());
     instances_[&*instance] = instance;
 
     return &*instance;
@@ -314,11 +305,7 @@ private:
     QString & label, QString & statustip, QString & icon, QString & icontype,
     PluginDescriptor * plugin_descriptor)
   {
-    // qDebug("RosPluginlibPluginProvider::parseManifest()");
-
     std::string manifest_path = class_loader_->getPluginManifestPath(lookup_name);
-    // qDebug("RosPluginlibPluginProvider::parseManifest() manifest_path \"%s\"",
-    //    manifest_path.c_str());
     tinyxml2::XMLDocument doc;
     tinyxml2::XMLError result = doc.LoadFile(manifest_path.c_str());
     if (result != tinyxml2::XML_SUCCESS) {

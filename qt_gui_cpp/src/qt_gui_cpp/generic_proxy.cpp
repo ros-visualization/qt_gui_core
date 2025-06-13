@@ -57,8 +57,7 @@ bool GenericProxy::invokeMethod(
   QGenericArgument val6, QGenericArgument val7, QGenericArgument val8, QGenericArgument val9)
 {
   if (!object_) {return false;}
-  // qDebug("GenericProxy::invokeMethod(%s, %s)",
-  //   object_->objectName().toStdString().c_str(), member);
+
   return QMetaObject::invokeMethod(object_, member, Qt::DirectConnection, val0, val1, val2, val3,
       val4, val5, val6, val7, val8, val9);
 }
@@ -70,8 +69,7 @@ bool GenericProxy::invokeMethodWithReturn(
   QGenericArgument val8, QGenericArgument val9)
 {
   if (!object_) {return false;}
-  // qDebug("GenericProxy::invokeMethodWithReturn(%s, %s)",
-  //    object_->objectName().toStdString().c_str(), member);
+
   return QMetaObject::invokeMethod(object_, member, Qt::DirectConnection, ret, val0, val1, val2,
       val3, val4, val5, val6, val7, val8, val9);
 }
