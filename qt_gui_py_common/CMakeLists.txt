@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.20)
 project(qt_gui_py_common)
 
 find_package(ament_cmake REQUIRED)
