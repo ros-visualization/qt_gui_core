@@ -21,7 +21,6 @@ endif()
 
 find_package(pluginlib REQUIRED)
 find_package(Qt5 REQUIRED COMPONENTS Widgets)
-find_package(tinyxml2_vendor REQUIRED)
 find_package(TinyXML2 REQUIRED)
 
 ament_python_install_package(${PROJECT_NAME}
