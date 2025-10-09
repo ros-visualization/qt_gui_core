@@ -2,6 +2,11 @@
 Changelog for package qt_gui
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+2.10.2 (2025-10-09)
+-------------------
+* Fix cmake deprecations (`#307 <https://github.com/ros-visualization/qt_gui_core/issues/307>`_)
+* Contributors: mosfet80
+
 2.10.1 (2025-05-19)
 -------------------
 
