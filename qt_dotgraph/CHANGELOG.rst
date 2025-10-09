@@ -2,6 +2,11 @@
 Changelog for package qt_dotgraph
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+2.9.2 (2025-10-09)
+------------------
+* Fix setupTools deprecations (`#308 <https://github.com/ros-visualization/qt_gui_core/issues/308>`_) (`#311 <https://github.com/ros-visualization/qt_gui_core/issues/311>`_)
+* Contributors: mergify[bot]
+
 2.9.1 (2025-04-28)
 ------------------
 

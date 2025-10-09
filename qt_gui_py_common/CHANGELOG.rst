@@ -2,6 +2,14 @@
 Changelog for package qt_gui_py_common
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+2.9.2 (2025-10-09)
+------------------
+* Fix cmake deprecations (`#307 <https://github.com/ros-visualization/qt_gui_core/issues/307>`_) (`#310 <https://github.com/ros-visualization/qt_gui_core/issues/310>`_)
+  cmake version < then 3.10 is deprecated
+  (cherry picked from commit 9635717a56d1c034ae0c6d4ef0280b7ddbfb8801)
+  Co-authored-by: mosfet80 <10235105+mosfet80@users.noreply.github.com>
+* Contributors: mergify[bot]
+
 2.9.1 (2025-04-28)
 ------------------
 
