@@ -25,18 +25,18 @@ set(qt_gui_cpp_shiboken_SRCS
 
 set(qt_gui_cpp_INCLUDE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../../include)
 set(qt_gui_cpp_HDRS
-  ${qt_gui_cpp_INCLUDE_PATH}/qt_gui_cpp/composite_plugin_provider.h
-  ${qt_gui_cpp_INCLUDE_PATH}/qt_gui_cpp/generic_proxy.h
-  ${qt_gui_cpp_INCLUDE_PATH}/qt_gui_cpp/plugin.h
-  ${qt_gui_cpp_INCLUDE_PATH}/qt_gui_cpp/plugin_bridge.h
-  ${qt_gui_cpp_INCLUDE_PATH}/qt_gui_cpp/plugin_context.h
-  ${qt_gui_cpp_INCLUDE_PATH}/qt_gui_cpp/plugin_descriptor.h
-  ${qt_gui_cpp_INCLUDE_PATH}/qt_gui_cpp/plugin_provider.h
-  ${qt_gui_cpp_INCLUDE_PATH}/qt_gui_cpp/recursive_plugin_provider.h
-  ${qt_gui_cpp_INCLUDE_PATH}/qt_gui_cpp/ros_pluginlib_plugin_provider.h
-  ${qt_gui_cpp_INCLUDE_PATH}/qt_gui_cpp/ros_pluginlib_plugin_provider_for_plugin_providers.h
-  ${qt_gui_cpp_INCLUDE_PATH}/qt_gui_cpp/ros_pluginlib_plugin_provider_for_plugins.h
-  ${qt_gui_cpp_INCLUDE_PATH}/qt_gui_cpp/settings.h
+  ${qt_gui_cpp_INCLUDE_PATH}/qt_gui_cpp/composite_plugin_provider.hpp
+  ${qt_gui_cpp_INCLUDE_PATH}/qt_gui_cpp/generic_proxy.hpp
+  ${qt_gui_cpp_INCLUDE_PATH}/qt_gui_cpp/plugin.hpp
+  ${qt_gui_cpp_INCLUDE_PATH}/qt_gui_cpp/plugin_bridge.hpp
+  ${qt_gui_cpp_INCLUDE_PATH}/qt_gui_cpp/plugin_context.hpp
+  ${qt_gui_cpp_INCLUDE_PATH}/qt_gui_cpp/plugin_descriptor.hpp
+  ${qt_gui_cpp_INCLUDE_PATH}/qt_gui_cpp/plugin_provider.hpp
+  ${qt_gui_cpp_INCLUDE_PATH}/qt_gui_cpp/recursive_plugin_provider.hpp
+  ${qt_gui_cpp_INCLUDE_PATH}/qt_gui_cpp/ros_pluginlib_plugin_provider.hpp
+  ${qt_gui_cpp_INCLUDE_PATH}/qt_gui_cpp/ros_pluginlib_plugin_provider_for_plugin_providers.hpp
+  ${qt_gui_cpp_INCLUDE_PATH}/qt_gui_cpp/ros_pluginlib_plugin_provider_for_plugins.hpp
+  ${qt_gui_cpp_INCLUDE_PATH}/qt_gui_cpp/settings.hpp
 )
 ament_get_recursive_properties(deps_include_dirs _ ${TinyXML2_TARGETS} ${pluginlib_TARGETS})
 list(APPEND qt_gui_cpp_INCLUDE_PATH ${deps_include_dirs})
@@ -67,7 +67,11 @@ if(shiboken_helper_FOUND)
     set_property(TARGET qt_gui_cpp_shiboken PROPERTY PREFIX "")
     target_compile_definitions(qt_gui_cpp_shiboken PRIVATE BINDINGS_BUILD)
     target_include_directories(qt_gui_cpp_shiboken PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../../include)
-    target_link_libraries(qt_gui_cpp_shiboken ${PROJECT_NAME} pluginlib::pluginlib tinyxml2::tinyxml2)
+    target_link_libraries(qt_gui_cpp_shiboken
+      ${PROJECT_NAME}
+      pluginlib::pluginlib
+      tinyxml2::tinyxml2
+    )
     shiboken_target_link_libraries(qt_gui_cpp_shiboken "${qt_gui_cpp_shiboken_QT_COMPONENTS}")
 
     install(TARGETS qt_gui_cpp_shiboken

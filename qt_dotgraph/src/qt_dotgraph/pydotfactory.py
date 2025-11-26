@@ -1,42 +1,34 @@
-# Software License Agreement (BSD License)
-#
 # Copyright (c) 2008, Willow Garage, Inc.
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
-# modification, are permitted provided that the following conditions
-# are met:
+# modification, are permitted provided that the following conditions are met:
 #
-#  * Redistributions of source code must retain the above copyright
-#    notice, this list of conditions and the following disclaimer.
-#  * Redistributions in binary form must reproduce the above
-#    copyright notice, this list of conditions and the following
-#    disclaimer in the documentation and/or other materials provided
-#    with the distribution.
-#  * Neither the name of Willow Garage, Inc. nor the names of its
-#    contributors may be used to endorse or promote products derived
-#    from this software without specific prior written permission.
+#    * Redistributions of source code must retain the above copyright
+#      notice, this list of conditions and the following disclaimer.
 #
-# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-# "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-# LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
-# FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
-# COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
-# INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
-# BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-# LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
-# CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
-# LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
-# ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+#    * Redistributions in binary form must reproduce the above copyright
+#      notice, this list of conditions and the following disclaimer in the
+#      documentation and/or other materials provided with the distribution.
+#
+#    * Neither the name of the Willow Garage, Inc. nor the names of its
+#      contributors may be used to endorse or promote products derived from
+#      this software without specific prior written permission.
+#
+# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+# AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+# IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+# ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
+# LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+# CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+# SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+# INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+# CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+# ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-from distutils.version import LooseVersion
-try:
-    from urllib.request import quote
-except ImportError:
-    from urllib import quote
-
 import os
+from urllib.request import quote
 
 import pydot
 
@@ -64,22 +56,15 @@ class PydotFactory():
     def get_graph(
             self, graph_type='digraph', rank='same', simplify=True,
             rankdir='TB', ranksep=0.2, compound=True):
-        # Lucid version of pydot bugs with certain settings, not sure which
-        # version exactly fixes those
-        if LooseVersion(pydot.__version__) > LooseVersion('1.0.10'):
-            graph = pydot.Dot('graphname',
-                              graph_type=graph_type,
-                              rank=rank,
-                              rankdir=rankdir,
-                              simplify=simplify
-                              )
-            graph.set_ranksep(ranksep)
-            graph.set_compound(compound)
-        else:
-            graph = pydot.Dot('graphname',
-                              graph_type=graph_type,
-                              rank=rank,
-                              rankdir=rankdir)
+        graph = pydot.Dot('graphname',
+                          graph_type=graph_type,
+                          rank=rank,
+                          rankdir=rankdir,
+                          simplify=simplify
+                          )
+        graph.set_ranksep(ranksep)
+        graph.set_compound(compound)
+
         return graph
 
     def add_node_to_graph(self,
@@ -138,9 +123,8 @@ class PydotFactory():
             g.set_style(style)
         if 'set_shape' in g.__dict__:
             g.set_shape(shape)
-        if LooseVersion(pydot.__version__) > LooseVersion('1.0.10'):
-            g.set_compound(compound)
-            g.set_ranksep(ranksep)
+        g.set_compound(compound)
+        g.set_ranksep(ranksep)
         subgraphlabel = subgraphname if subgraphlabel is None else subgraphlabel
         subgraphlabel = self.escape_label(subgraphlabel)
         if subgraphlabel:
@@ -153,11 +137,7 @@ class PydotFactory():
 
     def add_edge_to_graph(
             self, graph, nodename1, nodename2, label=None, url=None,
-            simplify=True, style=None, penwidth=1, color=None,
-            edgetooltip=None):
-        if simplify and LooseVersion(pydot.__version__) < LooseVersion('1.0.10'):
-            if graph.get_edge(self.escape_name(nodename1), self.escape_name(nodename2)) != []:
-                return
+            style=None, penwidth=1, color=None, edgetooltip=None):
         edge = pydot.Edge(self.escape_name(nodename1), self.escape_name(nodename2))
         if label is not None and label != '':
             edge.set_label(label)

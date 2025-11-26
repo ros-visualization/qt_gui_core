@@ -2,6 +2,30 @@
 Changelog for package qt_dotgraph
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+2.10.2 (2025-10-09)
+-------------------
+* Fix setupTools deprecations (`#308 <https://github.com/ros-visualization/qt_gui_core/issues/308>`_)
+* Contributors: mosfet80
+
+2.10.1 (2025-05-19)
+-------------------
+
+2.10.0 (2025-04-28)
+-------------------
+
+2.9.1 (2025-04-28)
+------------------
+
+2.9.0 (2024-12-20)
+------------------
+* Convert qt_dotgraph to a pure Python package. (`#300 <https://github.com/ros-visualization/qt_gui_core/issues/300>`_)
+* Contributors: Chris Lalancette
+
+2.8.3 (2024-11-20)
+------------------
+* Cleanup qt_dotgraph and make the tests more robust. (`#296 <https://github.com/ros-visualization/qt_gui_core/issues/296>`_)
+* Contributors: Chris Lalancette
+
 2.8.2 (2024-07-10)
 ------------------
 

@@ -2,6 +2,31 @@
 Changelog for package qt_gui_cpp
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+2.10.2 (2025-10-09)
+-------------------
+* Removed tinyxml2_vendor dependency (`#309 <https://github.com/ros-visualization/qt_gui_core/issues/309>`_)
+* Fix cmake deprecations (`#307 <https://github.com/ros-visualization/qt_gui_core/issues/307>`_)
+* Contributors: Alejandro Hernández Cordero, mosfet80
+
+2.10.1 (2025-05-19)
+-------------------
+* Removed deprecated headers (`#305 <https://github.com/ros-visualization/qt_gui_core/issues/305>`_)
+* Contributors: Alejandro Hernández Cordero
+
+2.10.0 (2025-04-28)
+-------------------
+
+2.9.1 (2025-04-28)
+------------------
+* Use target_link_libraries instead of ament_target_dependencies (`#302 <https://github.com/ros-visualization/qt_gui_core/issues/302>`_)
+* Contributors: Shane Loretz
+
+2.9.0 (2024-12-20)
+------------------
+
+2.8.3 (2024-11-20)
+------------------
+
 2.8.2 (2024-07-10)
 ------------------
 * Add common linters and make them happy to qt_gui_cpp (`#295 <https://github.com/ros-visualization/qt_gui_core/issues/295>`_)
