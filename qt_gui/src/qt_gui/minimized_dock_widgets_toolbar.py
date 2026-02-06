@@ -29,8 +29,8 @@
 # POSSIBILITY OF SUCH DAMAGE.
 
 from python_qt_binding.QtCore import QSignalMapper, Qt
-from python_qt_binding.QtGui import QIcon
-from python_qt_binding.QtWidgets import QAction, QToolBar, QWidget
+from python_qt_binding.QtGui import QAction, QIcon
+from python_qt_binding.QtWidgets import QToolBar, QWidget
 
 
 class MinimizedDockWidgetsToolbar(QToolBar):
@@ -41,10 +41,10 @@ class MinimizedDockWidgetsToolbar(QToolBar):
         super(MinimizedDockWidgetsToolbar, self).__init__(parent=parent)
         self.setWindowTitle(self.tr('Minimized dock widgets'))
         self.setObjectName('MinimizedDockWidgetsToolbar')
-        self.setToolButtonStyle(Qt.ToolButtonTextBesideIcon)
+        self.setToolButtonStyle(Qt.ToolButtonStyle.ToolButtonTextBesideIcon)
         self._container_manager = container_manager
         self._signal_mapper = QSignalMapper(self)
-        self._signal_mapper.mapped[QWidget].connect(self._on_action_triggered)
+        # self._signal_mapper.mapping(QWidget).connect(self._on_action_triggered)
         self._dock_widgets = {}
 
         self.hide()

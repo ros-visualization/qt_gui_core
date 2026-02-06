@@ -39,7 +39,8 @@ class SettingsProxy(QObject):
         self.setObjectName('SettingsProxy')
 
         self._qsettings = qsettings
-        self._mutex = QMutex(QMutex.Recursive)
+        # self._mutex = QMutex(QMutex.Recursive)
+        self._mutex = QMutex()
 
     def all_keys(self, group):
         locker = QMutexLocker(self._mutex)  # noqa: F841

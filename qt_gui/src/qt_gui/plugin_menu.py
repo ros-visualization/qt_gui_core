@@ -29,7 +29,8 @@
 # POSSIBILITY OF SUCH DAMAGE.
 
 from python_qt_binding.QtCore import QObject, QSignalMapper, Signal, Slot
-from python_qt_binding.QtWidgets import QAction, QMenu
+from python_qt_binding.QtGui import QAction
+from python_qt_binding.QtWidgets import QMenu
 
 from qt_gui.icon_loader import get_icon
 from qt_gui.menu_manager import MenuManager
@@ -50,7 +51,16 @@ class PluginMenu(QObject):
         running_menu = menu_bar.addMenu(menu_bar.tr('&Running'))
         self._plugin_menu_manager = MenuManager(plugin_menu)
         self._plugin_mapper = QSignalMapper(plugin_menu)
+
+        from pprint import pprint
+        pprint(vars(self._plugin_mapper))
+
         self._plugin_mapper.mapped[str].connect(self.load_plugin_signal)
+
+        self.connect(self._plugin_mapper, QtCore.SIGNAL("mapped(str)"), self.removeItem,
+            self.load_plugin_signal)
+
+
         self._running_menu_manager = MenuManager(running_menu)
         action = QAction(
             ' Hidden action to work around QTBUG-52582', self._running_menu_manager.menu)

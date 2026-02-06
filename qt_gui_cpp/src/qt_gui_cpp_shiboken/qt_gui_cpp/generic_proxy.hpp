@@ -34,15 +34,11 @@
 #define QT_GUI_CPP__GENERIC_PROXY_HPP_
 
 #include <QObject>
-
-#include "visibility.hpp"
-
 #define Q_ARG_OLD(type, data) QArgument<type >(#type, data)
-
 namespace qt_gui_cpp
 {
 
-class BINDINGS_API GenericProxy
+class GenericProxy
 {
 public:
   explicit GenericProxy(QObject * obj = 0);

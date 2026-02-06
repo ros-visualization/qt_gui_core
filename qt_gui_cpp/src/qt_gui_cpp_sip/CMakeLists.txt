@@ -83,6 +83,22 @@ if(sip_helper_FOUND)
   list(APPEND qt_gui_cpp_BINDINGS "sip")
   set(qt_gui_cpp_BINDINGS "${qt_gui_cpp_BINDINGS}" PARENT_SCOPE)
 
+  # Get all relevant Qt include dirs, to pass them on to shiboken.
+  get_property(QT_WIDGETS_INCLUDE_DIRS TARGET Qt6::Widgets PROPERTY INTERFACE_INCLUDE_DIRECTORIES)
+  set(INCLUDES "")
+  foreach(INCLUDE_DIR ${QT_WIDGETS_INCLUDE_DIRS})
+      list(APPEND INCLUDES "-I${INCLUDE_DIR}")
+  endforeach()
+
+  # We need to include the headers for the module bindings that we use.
+  set(PYSIDE_ADDITIONAL_INCLUDES "")
+  foreach(INCLUDE_DIR ${PYSIDE_INCLUDE_DIR})
+      list(APPEND PYSIDE_ADDITIONAL_INCLUDES "${INCLUDE_DIR}/QtCore")
+      list(APPEND PYSIDE_ADDITIONAL_INCLUDES "${INCLUDE_DIR}/QtGui")
+      list(APPEND PYSIDE_ADDITIONAL_INCLUDES "${INCLUDE_DIR}/QtWidgets")
+  endforeach()
+
+
   build_sip_binding(qt_gui_cpp_sip qt_gui_cpp.sip
     SOURCE_DIR ${PROJECT_SOURCE_DIR}/src/qt_gui_cpp_sip
     LIBRARY_DIR ${CMAKE_CURRENT_BINARY_DIR}

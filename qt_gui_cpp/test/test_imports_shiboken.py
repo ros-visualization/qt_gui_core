@@ -14,5 +14,7 @@
 
 
 def test_import_libqt_gui_cpp_shiboken():
-    from qt_gui_cpp import libqt_gui_cpp_shiboken
-    assert libqt_gui_cpp_shiboken is not None
+    from qt_gui_cpp import qt_gui_cpp_shiboken
+    assert qt_gui_cpp_shiboken is not None
+
+test_import_libqt_gui_cpp_shiboken()

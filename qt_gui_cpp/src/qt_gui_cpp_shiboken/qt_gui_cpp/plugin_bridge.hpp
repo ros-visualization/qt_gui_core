@@ -30,47 +30,48 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef QT_GUI_CPP__GENERIC_PROXY_HPP_
-#define QT_GUI_CPP__GENERIC_PROXY_HPP_
+#ifndef QT_GUI_CPP__PLUGIN_BRIDGE_HPP_
+#define QT_GUI_CPP__PLUGIN_BRIDGE_HPP_
 
 #include <QObject>
-
-#include "visibility.hpp"
-
-#define Q_ARG_OLD(type, data) QArgument<type >(#type, data)
 
 namespace qt_gui_cpp
 {
 
-class BINDINGS_API GenericProxy
+class Plugin;
+class PluginContext;
+class PluginProvider;
+
+class PluginBridge
+  : public QObject
 {
+  Q_OBJECT
+
 public:
-  explicit GenericProxy(QObject * obj = 0);
+  PluginBridge();
 
-  QObject * proxiedObject();
+  virtual bool load_plugin(
+    PluginProvider * provider, const QString & plugin_id,
+    PluginContext * plugin_context);
 
-  void setProxiedObject(QObject * obj);
+  virtual void unload_plugin();
 
-  bool invokeMethod(
-    const char * member, QGenericArgument val0 = QGenericArgument(),
-    QGenericArgument val1 = QGenericArgument(), QGenericArgument val2 = QGenericArgument(),
-    QGenericArgument val3 = QGenericArgument(), QGenericArgument val4 = QGenericArgument(),
-    QGenericArgument val5 = QGenericArgument(), QGenericArgument val6 = QGenericArgument(),
-    QGenericArgument val7 = QGenericArgument(), QGenericArgument val8 = QGenericArgument(),
-    QGenericArgument val9 = QGenericArgument());
+  virtual bool has_configuration() const;
 
-  bool invokeMethodWithReturn(
-    const char * member,
-    QGenericReturnArgument ret = QGenericReturnArgument(0, 0),
-    QGenericArgument val0 = QGenericArgument(), QGenericArgument val1 = QGenericArgument(),
-    QGenericArgument val2 = QGenericArgument(), QGenericArgument val3 = QGenericArgument(),
-    QGenericArgument val4 = QGenericArgument(), QGenericArgument val5 = QGenericArgument(),
-    QGenericArgument val6 = QGenericArgument(), QGenericArgument val7 = QGenericArgument(),
-    QGenericArgument val8 = QGenericArgument(), QGenericArgument val9 = QGenericArgument());
+  virtual void trigger_configuration();
+
+public slots:
+  virtual void shutdown_plugin();
+
+  virtual void save_settings(QObject * plugin_settings, QObject * instance_settings);
+
+  virtual void restore_settings(QObject * plugin_settings, QObject * instance_settings);
 
 private:
-  QObject * object_;
+  PluginProvider * provider_;
+
+  Plugin * plugin_;
 };
 }  // namespace qt_gui_cpp
 
-#endif  // QT_GUI_CPP__GENERIC_PROXY_HPP_
+#endif  // QT_GUI_CPP__PLUGIN_BRIDGE_HPP_

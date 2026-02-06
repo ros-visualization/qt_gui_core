@@ -30,47 +30,17 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef QT_GUI_CPP__GENERIC_PROXY_HPP_
-#define QT_GUI_CPP__GENERIC_PROXY_HPP_
+#ifndef QT_GUI_CPP__ROS_PLUGINLIB_PLUGIN_PROVIDER_FOR_PLUGIN_PROVIDERS_HPP_
+#define QT_GUI_CPP__ROS_PLUGINLIB_PLUGIN_PROVIDER_FOR_PLUGIN_PROVIDERS_HPP_
 
-#include <QObject>
-
-#include "visibility.hpp"
-
-#define Q_ARG_OLD(type, data) QArgument<type >(#type, data)
+#include "plugin_provider.hpp"
+#include "ros_pluginlib_plugin_provider.hpp"
 
 namespace qt_gui_cpp
 {
 
-class BINDINGS_API GenericProxy
-{
-public:
-  explicit GenericProxy(QObject * obj = 0);
+typedef RosPluginlibPluginProvider<PluginProvider> RosPluginlibPluginProvider_ForPluginProviders;
 
-  QObject * proxiedObject();
-
-  void setProxiedObject(QObject * obj);
-
-  bool invokeMethod(
-    const char * member, QGenericArgument val0 = QGenericArgument(),
-    QGenericArgument val1 = QGenericArgument(), QGenericArgument val2 = QGenericArgument(),
-    QGenericArgument val3 = QGenericArgument(), QGenericArgument val4 = QGenericArgument(),
-    QGenericArgument val5 = QGenericArgument(), QGenericArgument val6 = QGenericArgument(),
-    QGenericArgument val7 = QGenericArgument(), QGenericArgument val8 = QGenericArgument(),
-    QGenericArgument val9 = QGenericArgument());
-
-  bool invokeMethodWithReturn(
-    const char * member,
-    QGenericReturnArgument ret = QGenericReturnArgument(0, 0),
-    QGenericArgument val0 = QGenericArgument(), QGenericArgument val1 = QGenericArgument(),
-    QGenericArgument val2 = QGenericArgument(), QGenericArgument val3 = QGenericArgument(),
-    QGenericArgument val4 = QGenericArgument(), QGenericArgument val5 = QGenericArgument(),
-    QGenericArgument val6 = QGenericArgument(), QGenericArgument val7 = QGenericArgument(),
-    QGenericArgument val8 = QGenericArgument(), QGenericArgument val9 = QGenericArgument());
-
-private:
-  QObject * object_;
-};
 }  // namespace qt_gui_cpp
 
-#endif  // QT_GUI_CPP__GENERIC_PROXY_HPP_
+#endif  // QT_GUI_CPP__ROS_PLUGINLIB_PLUGIN_PROVIDER_FOR_PLUGIN_PROVIDERS_HPP_

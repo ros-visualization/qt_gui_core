@@ -63,7 +63,7 @@ const QStringList & PluginContext::argv() const
 
 void PluginContext::addWidget(QWidget * widget)
 {
-  bool rc = proxy_.invokeMethod("add_widget", Q_ARG(QWidget *, widget));
+  bool rc = proxy_.invokeMethod("add_widget", Q_ARG_OLD(QWidget *, widget));
   if (!rc) {
     throw std::runtime_error("PluginContext::addWidget() invoke method failed");
   }
@@ -71,7 +71,7 @@ void PluginContext::addWidget(QWidget * widget)
 
 void PluginContext::removeWidget(QWidget * widget)
 {
-  bool rc = proxy_.invokeMethod("remove_widget", Q_ARG(QWidget *, widget));
+  bool rc = proxy_.invokeMethod("remove_widget", Q_ARG_OLD(QWidget *, widget));
   if (!rc) {
     throw std::runtime_error("PluginContext::removeWidget() invoke method failed");
   }

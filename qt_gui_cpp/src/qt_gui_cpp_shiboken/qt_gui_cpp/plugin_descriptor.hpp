@@ -30,47 +30,54 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef QT_GUI_CPP__GENERIC_PROXY_HPP_
-#define QT_GUI_CPP__GENERIC_PROXY_HPP_
+#ifndef QT_GUI_CPP__PLUGIN_DESCRIPTOR_HPP_
+#define QT_GUI_CPP__PLUGIN_DESCRIPTOR_HPP_
 
-#include <QObject>
-
-#include "visibility.hpp"
-
-#define Q_ARG_OLD(type, data) QArgument<type >(#type, data)
+#include <QMap>
+#include <QString>
+#include <QVector>
 
 namespace qt_gui_cpp
 {
 
-class BINDINGS_API GenericProxy
+class PluginDescriptor
 {
 public:
-  explicit GenericProxy(QObject * obj = 0);
+  PluginDescriptor(
+    const QString & plugin_id,
+    const QMap<QString, QString> & attributes = (QMap<QString, QString>()));
 
-  QObject * proxiedObject();
+  const QString & pluginId() const;
 
-  void setProxiedObject(QObject * obj);
+  const QMap<QString, QString> & attributes() const;
 
-  bool invokeMethod(
-    const char * member, QGenericArgument val0 = QGenericArgument(),
-    QGenericArgument val1 = QGenericArgument(), QGenericArgument val2 = QGenericArgument(),
-    QGenericArgument val3 = QGenericArgument(), QGenericArgument val4 = QGenericArgument(),
-    QGenericArgument val5 = QGenericArgument(), QGenericArgument val6 = QGenericArgument(),
-    QGenericArgument val7 = QGenericArgument(), QGenericArgument val8 = QGenericArgument(),
-    QGenericArgument val9 = QGenericArgument());
+  QMap<QString, QString> & attributes();
 
-  bool invokeMethodWithReturn(
-    const char * member,
-    QGenericReturnArgument ret = QGenericReturnArgument(0, 0),
-    QGenericArgument val0 = QGenericArgument(), QGenericArgument val1 = QGenericArgument(),
-    QGenericArgument val2 = QGenericArgument(), QGenericArgument val3 = QGenericArgument(),
-    QGenericArgument val4 = QGenericArgument(), QGenericArgument val5 = QGenericArgument(),
-    QGenericArgument val6 = QGenericArgument(), QGenericArgument val7 = QGenericArgument(),
-    QGenericArgument val8 = QGenericArgument(), QGenericArgument val9 = QGenericArgument());
+  const QMap<QString, QString> & actionAttributes() const;
 
-private:
-  QObject * object_;
+  void setActionAttributes(
+    const QString & label, const QString & statustip = QString(),
+    const QString & icon = QString(), const QString & icontype = QString());
+
+  int countGroups() const;
+
+  QMap<QString, QString> group(int index) const;
+
+  void addGroupAttributes(
+    const QString & label, const QString & statustip = QString(),
+    const QString & icon = QString(), const QString & icontype = QString());
+
+  QMap<QString, QString> toDictionary() const;
+
+protected:
+  QString plugin_id_;
+
+  QMap<QString, QString> attributes_;
+
+  QMap<QString, QString> action_attributes_;
+
+  QVector<QMap<QString, QString>> groups_;
 };
 }  // namespace qt_gui_cpp
 
-#endif  // QT_GUI_CPP__GENERIC_PROXY_HPP_
+#endif  // QT_GUI_CPP__PLUGIN_DESCRIPTOR_HPP_

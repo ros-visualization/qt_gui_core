@@ -220,7 +220,7 @@ class Main(object):
         from python_qt_binding.QtCore import Qt
         from python_qt_binding.QtWidgets import QApplication
         app = QApplication(argv)
-        app.setAttribute(Qt.AA_DontShowIconsInMenus, False)
+        # app.setAttribute(Qt.AA_DontShowIconsInMenus, False)
         return app
 
     def main(self, argv=None, standalone=None, plugin_argument_provider=None,
@@ -418,11 +418,11 @@ class Main(object):
         from python_qt_binding import QT_BINDING
 
         from python_qt_binding.QtCore import (qDebug, qInstallMessageHandler,
-                                              QSettings, Qt, QtCriticalMsg, QtDebugMsg)
-        from python_qt_binding.QtCore import QtFatalMsg, QTimer, QtWarningMsg
+                                              QSettings, Qt)
+        from python_qt_binding.QtCore import QTimer
 
         from python_qt_binding.QtGui import QIcon
-        from python_qt_binding.QtWidgets import QAction
+        from python_qt_binding.QtGui import QAction
 
         from qt_gui.about_handler import AboutHandler
         from qt_gui.composite_plugin_provider import CompositePluginProvider
@@ -441,15 +441,18 @@ class Main(object):
                 cyan_color = '\033[36m' if colored_output else ''
                 red_color = '\033[31m' if colored_output else ''
                 reset_color = '\033[0m' if colored_output else ''
-                if type_ == QtDebugMsg and self._options.verbose:
-                    print(msg, file=sys.stderr)
-                elif type_ == QtWarningMsg:
-                    print(cyan_color + msg + reset_color, file=sys.stderr)
-                elif type_ == QtCriticalMsg:
-                    print(red_color + msg + reset_color, file=sys.stderr)
-                elif type_ == QtFatalMsg:
-                    print(red_color + msg + reset_color, file=sys.stderr)
-                    sys.exit(1)
+                # if type_ == QtDebugMsg and self._options.verbose:
+                print(msg, file=sys.stderr)
+
+                # if type_ == Qt.QLoggingCategory.QtDebugMsg and self._options.verbose:
+                #     print(msg, file=sys.stderr)
+                # elif type_ == Qt.QLoggingCategory.QtWarningMsg:
+                #     print(cyan_color + msg + reset_color, file=sys.stderr)
+                # elif type_ == Qt.QLoggingCategory.QtCriticalMsg:
+                #     print(red_color + msg + reset_color, file=sys.stderr)
+                # elif type_ == Qt.QLoggingCategory.QtFatalMsg:
+                #     print(red_color + msg + reset_color, file=sys.stderr)
+                #     sys.exit(1)
             qInstallMessageHandler(message_handler)
 
         app = self.create_application(argv)
@@ -457,7 +460,7 @@ class Main(object):
         self._set_theme_if_necessary()
 
         settings = QSettings(
-            QSettings.IniFormat, QSettings.UserScope, 'ros.org', self._settings_filename)
+            QSettings.Format.IniFormat, QSettings.Scope.UserScope, 'ros.org', self._settings_filename)
         if len(embed_options_set) == 0:
             if self._options.clear_config:
                 settings.clear()
@@ -527,7 +530,7 @@ class Main(object):
             if not self._options.freeze_layout:
                 minimized_dock_widgets_toolbar = MinimizedDockWidgetsToolbar(
                     container_manager, main_window)
-                main_window.addToolBar(Qt.BottomToolBarArea, minimized_dock_widgets_toolbar)
+                main_window.addToolBar(Qt.ToolBarArea.BottomToolBarArea, minimized_dock_widgets_toolbar)
                 plugin_manager.set_minimized_dock_widgets_toolbar(minimized_dock_widgets_toolbar)
 
         if menu_bar is not None:
@@ -561,7 +564,7 @@ class Main(object):
             main_window.save_settings_before_close_signal.connect(plugin_manager.close_application)
             # signal save and shutdown called for all plugins, trigger closing main window again
             plugin_manager.close_application_signal.connect(
-                main_window.close, type=Qt.QueuedConnection)
+                main_window.close, type=Qt.ConnectionType.QueuedConnection)
 
         if main_window is not None and menu_bar is not None:
             about_handler = AboutHandler(context.qtgui_path, main_window)
@@ -596,6 +599,7 @@ class Main(object):
             plugin = self._options.standalone_plugin
             plugin_serial = 0
         if plugin is not None:
+            print('plugin ', plugin)
             plugins = plugin_manager.find_plugins_by_name(plugin)
             if len(plugins) == 0:
                 print('qt_gui_main() found no plugin matching "%s"' % plugin)
@@ -657,7 +661,7 @@ class Main(object):
             if sys.platform == 'darwin':
                 main_window.raise_()
 
-        return app.exec_()
+        return app.exec()
 
 
 if __name__ == '__main__':

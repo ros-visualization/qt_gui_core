@@ -17,6 +17,11 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 
+# Enable policy to run automoc on generated files.
+if(POLICY CMP0071)
+  cmake_policy(SET CMP0071 NEW)
+endif()
+
 if(WIN32)
   message(STATUS "${PROJECT_NAME} is not yet supported on Windows. Package will not be built.")
   ament_package()
@@ -28,7 +33,7 @@ if(WIN32)
 endif()
 
 find_package(pluginlib REQUIRED)
-find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets Core)
+find_package(QT NAMES Qt6 REQUIRED COMPONENTS Widgets Core)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets Core)
 find_package(TinyXML2 REQUIRED)
 
@@ -54,17 +59,25 @@ set(qt_gui_cpp_HDRS
 
 if (${QT_VERSION_MAJOR} GREATER "5")
   qt_standard_project_setup()
-  qt_wrap_cpp(turtlesim_node_MOCS ${qt_gui_cpp_HDRS})
+  qt_wrap_cpp(qt_gui_cpp_MOCS ${qt_gui_cpp_HDRS})
 else()
-  qt5_wrap_cpp(turtlesim_node_MOCS ${qt_gui_cpp_HDRS})
+  # qt5_wrap_cpp(turtlesim_node_MOCS ${qt_gui_cpp_HDRS})
 endif()
+
+set(CMAKE_SKIP_BUILD_RPATH FALSE)
+set(CMAKE_BUILD_WITH_INSTALL_RPATH TRUE)
+set(CMAKE_INSTALL_RPATH ${CMAKE_CURRENT_SOURCE_DIR})
+set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 
 add_library(${PROJECT_NAME} SHARED ${qt_gui_cpp_SRCS} ${qt_gui_cpp_MOCS})
 target_include_directories(${PROJECT_NAME} PUBLIC
   "$<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include>"
   "$<INSTALL_INTERFACE:include/${PROJECT_NAME}>")
+set_property(TARGET ${PROJECT_NAME} PROPERTY PREFIX "")
+target_compile_definitions(${PROJECT_NAME} PRIVATE BINDINGS_BUILD)
 
 target_link_libraries(${PROJECT_NAME}
+PUBLIC
   ${QT_QTCORE_LIBRARY}
   ${QT_QTGUI_LIBRARY}
   Qt${QT_VERSION_MAJOR}::Widgets
@@ -72,7 +85,7 @@ target_link_libraries(${PROJECT_NAME}
   tinyxml2::tinyxml2)
 
 add_subdirectory(src/qt_gui_cpp_shiboken)
-add_subdirectory(src/qt_gui_cpp_sip)
+# add_subdirectory(src/qt_gui_cpp_sip)
 
 # message(STATUS "Python binding generators: ${qt_gui_cpp_BINDINGS}")
 # if(NOT qt_gui_cpp_BINDINGS)
@@ -87,7 +100,7 @@ install(
   DESTINATION include/${PROJECT_NAME}
 )
 
-ament_export_dependencies(pluginlib TinyXML2)
+ament_export_dependencies(pluginlib TinyXML2 Qt6)
 ament_export_targets(export_${PROJECT_NAME} HAS_LIBRARY_TARGET)
 
 install(TARGETS ${PROJECT_NAME}
@@ -102,11 +115,11 @@ if(BUILD_TESTING)
 
   find_package(ament_cmake_pytest REQUIRED)
 
-  if(TARGET qt_gui_cpp_shiboken)
+  # if(TARGET qt_gui_cpp_shiboken)
     ament_add_pytest_test(qt_gui_cpp_shiboken test/test_imports_shiboken.py
       APPEND_ENV PYTHONPATH=${CMAKE_CURRENT_BINARY_DIR}
       TIMEOUT 90)
-  endif()
+  # endif()
 
   if(TARGET qt_gui_cpp_sip)
     ament_add_pytest_test(qt_gui_cpp_sip test/test_imports_sip.py

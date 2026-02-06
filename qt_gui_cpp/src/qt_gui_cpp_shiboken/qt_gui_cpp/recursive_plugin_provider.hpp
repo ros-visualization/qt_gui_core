@@ -30,47 +30,34 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef QT_GUI_CPP__GENERIC_PROXY_HPP_
-#define QT_GUI_CPP__GENERIC_PROXY_HPP_
+#ifndef QT_GUI_CPP__RECURSIVE_PLUGIN_PROVIDER_HPP_
+#define QT_GUI_CPP__RECURSIVE_PLUGIN_PROVIDER_HPP_
 
-#include <QObject>
+#include <QList>
+#include <QMultiMap>
+#include <QString>
 
-#include "visibility.hpp"
-
-#define Q_ARG_OLD(type, data) QArgument<type >(#type, data)
+#include "composite_plugin_provider.hpp"
+#include "ros_pluginlib_plugin_provider_for_plugin_providers.hpp"
 
 namespace qt_gui_cpp
 {
 
-class BINDINGS_API GenericProxy
+class RecursivePluginProvider
+  : public CompositePluginProvider
 {
 public:
-  explicit GenericProxy(QObject * obj = 0);
+  explicit RecursivePluginProvider(RosPluginlibPluginProvider_ForPluginProviders * plugin_provider);
 
-  QObject * proxiedObject();
+  virtual ~RecursivePluginProvider();
 
-  void setProxiedObject(QObject * obj);
+  virtual QMultiMap<QString, QString> discover(QObject * discovery_data);
 
-  bool invokeMethod(
-    const char * member, QGenericArgument val0 = QGenericArgument(),
-    QGenericArgument val1 = QGenericArgument(), QGenericArgument val2 = QGenericArgument(),
-    QGenericArgument val3 = QGenericArgument(), QGenericArgument val4 = QGenericArgument(),
-    QGenericArgument val5 = QGenericArgument(), QGenericArgument val6 = QGenericArgument(),
-    QGenericArgument val7 = QGenericArgument(), QGenericArgument val8 = QGenericArgument(),
-    QGenericArgument val9 = QGenericArgument());
-
-  bool invokeMethodWithReturn(
-    const char * member,
-    QGenericReturnArgument ret = QGenericReturnArgument(0, 0),
-    QGenericArgument val0 = QGenericArgument(), QGenericArgument val1 = QGenericArgument(),
-    QGenericArgument val2 = QGenericArgument(), QGenericArgument val3 = QGenericArgument(),
-    QGenericArgument val4 = QGenericArgument(), QGenericArgument val5 = QGenericArgument(),
-    QGenericArgument val6 = QGenericArgument(), QGenericArgument val7 = QGenericArgument(),
-    QGenericArgument val8 = QGenericArgument(), QGenericArgument val9 = QGenericArgument());
+  virtual void shutdown();
 
 private:
-  QObject * object_;
+  RosPluginlibPluginProvider_ForPluginProviders * plugin_provider_;
+  QList<PluginProvider *> providers_;
 };
 }  // namespace qt_gui_cpp
-
-#endif  // QT_GUI_CPP__GENERIC_PROXY_HPP_
+#endif  // QT_GUI_CPP__RECURSIVE_PLUGIN_PROVIDER_HPP_

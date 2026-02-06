@@ -97,7 +97,7 @@ class ContainerManager(QObject):
                    e.new_parent.objectName())
             floating = e.dock_widget.isFloating()
             pos = e.dock_widget.pos()
-            e.new_parent.addDockWidget(Qt.BottomDockWidgetArea, e.dock_widget)
+            e.new_parent.addDockWidget(Qt.DockWidgetArea.BottomDockWidgetArea, e.dock_widget)
             if floating:
                 e.dock_widget.setFloating(floating)
                 e.dock_widget.move(pos)

@@ -30,47 +30,57 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef QT_GUI_CPP__GENERIC_PROXY_HPP_
-#define QT_GUI_CPP__GENERIC_PROXY_HPP_
+#ifndef QT_GUI_CPP__SETTINGS_HPP_
+#define QT_GUI_CPP__SETTINGS_HPP_
 
-#include <QObject>
-
-#include "visibility.hpp"
-
-#define Q_ARG_OLD(type, data) QArgument<type >(#type, data)
+#include <QString>
+#include <QStringList>
+// Upstream issue: https://codereview.qt-project.org/c/qt/qtbase/+/272258
+#if __GNUC__ >= 9
+# pragma GCC diagnostic push
+# pragma GCC diagnostic ignored "-Wdeprecated-copy"
+#endif
+#include <QVariant>
+#if __GNUC__ >= 9
+# pragma GCC diagnostic pop
+#endif
+#include "generic_proxy.hpp"
 
 namespace qt_gui_cpp
 {
 
-class BINDINGS_API GenericProxy
+class Settings
 {
 public:
-  explicit GenericProxy(QObject * obj = 0);
+  explicit Settings(QObject * obj);
 
-  QObject * proxiedObject();
+  Settings getSettings(const QString & prefix);
 
-  void setProxiedObject(QObject * obj);
+  QStringList allKeys() const;
 
-  bool invokeMethod(
-    const char * member, QGenericArgument val0 = QGenericArgument(),
-    QGenericArgument val1 = QGenericArgument(), QGenericArgument val2 = QGenericArgument(),
-    QGenericArgument val3 = QGenericArgument(), QGenericArgument val4 = QGenericArgument(),
-    QGenericArgument val5 = QGenericArgument(), QGenericArgument val6 = QGenericArgument(),
-    QGenericArgument val7 = QGenericArgument(), QGenericArgument val8 = QGenericArgument(),
-    QGenericArgument val9 = QGenericArgument());
+//  int beginReadArray(const QString& prefix);
 
-  bool invokeMethodWithReturn(
-    const char * member,
-    QGenericReturnArgument ret = QGenericReturnArgument(0, 0),
-    QGenericArgument val0 = QGenericArgument(), QGenericArgument val1 = QGenericArgument(),
-    QGenericArgument val2 = QGenericArgument(), QGenericArgument val3 = QGenericArgument(),
-    QGenericArgument val4 = QGenericArgument(), QGenericArgument val5 = QGenericArgument(),
-    QGenericArgument val6 = QGenericArgument(), QGenericArgument val7 = QGenericArgument(),
-    QGenericArgument val8 = QGenericArgument(), QGenericArgument val9 = QGenericArgument());
+//  void beginWriteArray(const QString& prefix, int size = -1);
 
-private:
-  QObject * object_;
+  QStringList childGroups() const;
+
+  QStringList childKeys() const;
+
+  bool contains(const QString & key) const;
+
+//  void endArray();
+
+  void remove(const QString & key);
+
+//  void setArrayIndex(int i);
+
+  void setValue(const QString & key, const QVariant & value);
+
+  QVariant value(const QString & key, const QVariant & defaultValue = QVariant()) const;
+
+protected:
+  GenericProxy proxy_;
 };
 }  // namespace qt_gui_cpp
 
-#endif  // QT_GUI_CPP__GENERIC_PROXY_HPP_
+#endif  // QT_GUI_CPP__SETTINGS_HPP_

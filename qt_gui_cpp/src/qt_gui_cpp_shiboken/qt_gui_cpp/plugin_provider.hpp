@@ -30,47 +30,44 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef QT_GUI_CPP__GENERIC_PROXY_HPP_
-#define QT_GUI_CPP__GENERIC_PROXY_HPP_
+#ifndef QT_GUI_CPP__PLUGIN_PROVIDER_HPP_
+#define QT_GUI_CPP__PLUGIN_PROVIDER_HPP_
 
-#include <QObject>
+#include "plugin.hpp"
+#include "plugin_context.hpp"
+#include "plugin_descriptor.hpp"
 
-#include "visibility.hpp"
-
-#define Q_ARG_OLD(type, data) QArgument<type >(#type, data)
+#include <QList>
+#include <QMultiMap>
+#include <QString>
 
 namespace qt_gui_cpp
 {
 
-class BINDINGS_API GenericProxy
+class PluginProvider
 {
 public:
-  explicit GenericProxy(QObject * obj = 0);
+  PluginProvider();
 
-  QObject * proxiedObject();
+  virtual ~PluginProvider();
 
-  void setProxiedObject(QObject * obj);
+  virtual QMultiMap<QString, QString> discover(QObject * discovery_data);
 
-  bool invokeMethod(
-    const char * member, QGenericArgument val0 = QGenericArgument(),
-    QGenericArgument val1 = QGenericArgument(), QGenericArgument val2 = QGenericArgument(),
-    QGenericArgument val3 = QGenericArgument(), QGenericArgument val4 = QGenericArgument(),
-    QGenericArgument val5 = QGenericArgument(), QGenericArgument val6 = QGenericArgument(),
-    QGenericArgument val7 = QGenericArgument(), QGenericArgument val8 = QGenericArgument(),
-    QGenericArgument val9 = QGenericArgument());
+  /**
+   * @attention Ownership of returned PluginDescriptor's is transfered to the caller
+   */
+  virtual QList<PluginDescriptor *> discover_descriptors(QObject * discovery_data);
 
-  bool invokeMethodWithReturn(
-    const char * member,
-    QGenericReturnArgument ret = QGenericReturnArgument(0, 0),
-    QGenericArgument val0 = QGenericArgument(), QGenericArgument val1 = QGenericArgument(),
-    QGenericArgument val2 = QGenericArgument(), QGenericArgument val3 = QGenericArgument(),
-    QGenericArgument val4 = QGenericArgument(), QGenericArgument val5 = QGenericArgument(),
-    QGenericArgument val6 = QGenericArgument(), QGenericArgument val7 = QGenericArgument(),
-    QGenericArgument val8 = QGenericArgument(), QGenericArgument val9 = QGenericArgument());
+  virtual void * load(const QString & plugin_id, PluginContext * plugin_context);
 
-private:
-  QObject * object_;
+  virtual Plugin * load_plugin(const QString & plugin_id, PluginContext * plugin_context);
+
+  virtual void unload(void * plugin_instance);
+
+  virtual void unload_plugin(Plugin * plugin_instance);
+
+  virtual void shutdown();
 };
 }  // namespace qt_gui_cpp
 
-#endif  // QT_GUI_CPP__GENERIC_PROXY_HPP_
+#endif  // QT_GUI_CPP__PLUGIN_PROVIDER_HPP_
