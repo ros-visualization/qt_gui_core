@@ -84,7 +84,7 @@ if(sip_helper_FOUND)
   set(qt_gui_cpp_BINDINGS "${qt_gui_cpp_BINDINGS}" PARENT_SCOPE)
 
   # Get all relevant Qt include dirs, to pass them on to shiboken.
-  get_property(QT_WIDGETS_INCLUDE_DIRS TARGET Qt6::Widgets PROPERTY INTERFACE_INCLUDE_DIRECTORIES)
+  get_property(QT_WIDGETS_INCLUDE_DIRS TARGET Qt${QT_VERSION_MAJOR}::Widgets PROPERTY INTERFACE_INCLUDE_DIRECTORIES)
   set(INCLUDES "")
   foreach(INCLUDE_DIR ${QT_WIDGETS_INCLUDE_DIRS})
       list(APPEND INCLUDES "-I${INCLUDE_DIR}")

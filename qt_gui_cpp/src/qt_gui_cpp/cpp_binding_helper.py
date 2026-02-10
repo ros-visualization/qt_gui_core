@@ -36,12 +36,12 @@ from python_qt_binding.QtCore import qWarning
 
 try:
     if QT_BINDING == 'pyside':
-        from . import qt_gui_cpp_shiboken
-        qt_gui_cpp = qt_gui_cpp_shiboken.qt_gui_cpp
+        from . import libqt_gui_cpp_shiboken
+        qt_gui_cpp = libqt_gui_cpp_shiboken.qt_gui_cpp
 
     elif QT_BINDING == 'pyqt':
-        from . import qt_gui_cpp_sip
-        qt_gui_cpp = qt_gui_cpp_sip.qt_gui_cpp
+        from . import libqt_gui_cpp_sip
+        qt_gui_cpp = libqt_gui_cpp_sip.qt_gui_cpp
 
     else:
         raise ImportError('Qt binding name "%s" is unknown.' % QT_BINDING)

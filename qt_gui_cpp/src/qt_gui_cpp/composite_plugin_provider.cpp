@@ -124,14 +124,18 @@ Plugin * CompositePluginProvider::load_plugin(
   const QString & plugin_id,
   PluginContext * plugin_context)
 {
+  QString plugin_id_temp = plugin_id;
+  plugin_id_temp.replace("['", "");
+  plugin_id_temp.replace("']", "");
+
   // dispatch load to appropriate provider
   for (QMap<PluginProvider *, QSet<QString>>::iterator it = discovered_plugins_.begin();
     it != discovered_plugins_.end(); it++)
   {
-    if (it.value().contains(plugin_id)) {
+    if (it.value().contains(plugin_id_temp)) {
       PluginProvider * plugin_provider = it.key();
       try {
-        Plugin * instance = plugin_provider->load_plugin(plugin_id, plugin_context);
+        Plugin * instance = plugin_provider->load_plugin(plugin_id_temp, plugin_context);
         running_plugins_[instance] = plugin_provider;
         return instance;
       } catch (std::exception & e) {

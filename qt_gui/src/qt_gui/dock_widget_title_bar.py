@@ -150,7 +150,8 @@ class DockWidgetTitleBar(QWidget):
         pixmap = None
         if self.parentWidget().windowIcon():
             pixmap = self.parentWidget().windowIcon().pixmap(self.close_button.iconSize())
-        self.icon_label.setPixmap(pixmap)
+        if pixmap is not None:
+            self.icon_label.setPixmap(pixmap)
 
     def _update_title(self, *args):
         self.title_label.setText(self.parentWidget().windowTitle())

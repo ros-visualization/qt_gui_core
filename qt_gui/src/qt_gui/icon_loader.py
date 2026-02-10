@@ -37,18 +37,18 @@ from python_qt_binding.QtGui import QIcon
 
 
 def get_icon(name, type_=None, base_path=None):
-    if type_ == 'file' or type_ is None:
+    if 'file' in type_ or type_ is None:
         path = name
         if base_path is not None:
             path = os.path.join(base_path, path)
         icon = QIcon(path)
         if len(icon.availableSizes()) == 0:
             raise UserWarning('icon "%s" not found' % str(path))
-    elif type_ == 'resource':
+    elif 'resource' in type_:
         icon = QIcon(name)
         if len(icon.availableSizes()) == 0:
             raise UserWarning('icon "%s" not found' % str(path))
-    elif type_ == 'theme':
+    elif 'theme' in type_:
         # see http://standards.freedesktop.org/icon-naming-spec/icon-naming-spec-latest.html
         icon = QIcon.fromTheme(name)
     else:
