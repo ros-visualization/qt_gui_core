@@ -31,10 +31,17 @@
 import json
 import os
 
-from python_qt_binding import loadUi
+from packaging.version import Version
+
+from python_qt_binding import loadUi, QT_BINDING_VERSION
 from python_qt_binding.QtCore import QByteArray, qDebug, QObject, QSignalMapper, Signal, Slot
-from python_qt_binding.QtGui import QAction, QIcon, QValidator
+from python_qt_binding.QtGui import QIcon, QValidator
 from python_qt_binding.QtWidgets import QFileDialog, QInputDialog, QMessageBox
+
+if Version(QT_BINDING_VERSION) > Version("6.0.0"):
+    from python_qt_binding.QtGui import QAction
+else:
+    from python_qt_binding.QtWidgets import QAction
 
 from qt_gui.menu_manager import MenuManager
 from qt_gui.settings import Settings

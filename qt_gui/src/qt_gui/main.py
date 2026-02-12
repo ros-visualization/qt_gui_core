@@ -415,15 +415,19 @@ class Main(object):
 
         # choose selected or default qt binding
         setattr(sys, 'SELECT_QT_BINDING', self._options.qt_binding)
-        from python_qt_binding import QT_BINDING
+        from python_qt_binding import QT_BINDING, QT_BINDING_VERSION
 
         from python_qt_binding.QtCore import (qDebug, qInstallMessageHandler,
                                               QSettings, Qt)
         from python_qt_binding.QtCore import QTimer
 
-        from python_qt_binding.QtGui import QIcon
-        from python_qt_binding.QtGui import QAction
+        from packaging.version import Version
 
+        from python_qt_binding.QtGui import QIcon
+        if Version(QT_BINDING_VERSION) > Version("6.0.0"):
+            from python_qt_binding.QtGui import QAction
+        else:
+            from python_qt_binding.QtWidgets import QAction
         from qt_gui.about_handler import AboutHandler
         from qt_gui.composite_plugin_provider import CompositePluginProvider
         from qt_gui.container_manager import ContainerManager

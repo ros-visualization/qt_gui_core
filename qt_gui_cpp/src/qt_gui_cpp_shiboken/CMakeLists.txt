@@ -41,60 +41,59 @@ ament_get_recursive_properties(deps_include_dirs _ ${TinyXML2_TARGETS} ${pluginl
 list(APPEND qt_gui_cpp_INCLUDE_PATH ${deps_include_dirs})
 
 find_package(python_qt_binding REQUIRED)
-include(${python_qt_binding_DIR}/shiboken_helper.cmake)
-ament_export_dependencies(pluginlib)
-if(shiboken_helper_FOUND)
-  if (${QT_VERSION_MAJOR} GREATER "5")
-    list(APPEND qt_gui_cpp_BINDINGS "shiboken")
-    set(qt_gui_cpp_BINDINGS "${qt_gui_cpp_BINDINGS}" PARENT_SCOPE)
-    # Find required packages
-    find_package(Python COMPONENTS Interpreter Development REQUIRED)
-    # On RHEL and some other distros, Python wheels and site-packages may be installed under 'lib64'
-    # instead of 'lib'. The FindPython CMake module may set Python_SITELIB to 'lib', which is incorrect
-    # for these cases. To ensure compatibility, we override Python_SITELIB by querying Python directly.
-    # This guarantees the correct site-packages path is used regardless of platform or Python build.
-    execute_process(
-        COMMAND ${Python_EXECUTABLE} -c
-        "import site; print(next(p for p in site.getsitepackages() if 'site-packages' in p))"
-        OUTPUT_VARIABLE Python_SITELIB
-        OUTPUT_STRIP_TRAILING_WHITESPACE
-    )
+if (${QT_VERSION_MAJOR} GREATER "5")
+  list(APPEND qt_gui_cpp_BINDINGS "shiboken")
+  set(qt_gui_cpp_BINDINGS "${qt_gui_cpp_BINDINGS}" PARENT_SCOPE)
+  # Find required packages
+  find_package(Python COMPONENTS Interpreter Development REQUIRED)
+  # On RHEL and some other distros, Python wheels and site-packages may be installed under 'lib64'
+  # instead of 'lib'. The FindPython CMake module may set Python_SITELIB to 'lib', which is incorrect
+  # for these cases. To ensure compatibility, we override Python_SITELIB by querying Python directly.
+  # This guarantees the correct site-packages path is used regardless of platform or Python build.
+  execute_process(
+      COMMAND ${Python_EXECUTABLE} -c
+      "import site; print(next(p for p in site.getsitepackages() if 'site-packages' in p))"
+      OUTPUT_VARIABLE Python_SITELIB
+      OUTPUT_STRIP_TRAILING_WHITESPACE
+  )
 
-    message("Python_SITELIB: ${Python_SITELIB}")
+  message("Python_SITELIB: ${Python_SITELIB}")
 
-    list(APPEND CMAKE_PREFIX_PATH
-        "${Python_SITELIB}/shiboken6_generator/lib/cmake"
-    )
-    find_package(Shiboken6Tools REQUIRED)
+  list(APPEND CMAKE_PREFIX_PATH
+      "${Python_SITELIB}/shiboken6_generator/lib/cmake"
+  )
+  find_package(Shiboken6Tools REQUIRED)
 
-    set(shiboken_extra_options_str "")
-    foreach(dir ${class_loader_INCLUDE_DIRS} ${pluginlib_INCLUDE_DIRS} ${rcutils_INCLUDE_DIRS} ${rcpputils_INCLUDE_DIRS})
-      list(APPEND shiboken_extra_options_str "-I\"${dir}\" ")
-    endforeach()
+  set(shiboken_extra_options_str "")
+  foreach(dir ${class_loader_INCLUDE_DIRS} ${pluginlib_INCLUDE_DIRS} ${rcutils_INCLUDE_DIRS} ${rcpputils_INCLUDE_DIRS})
+    list(APPEND shiboken_extra_options_str "-I\"${dir}\" ")
+  endforeach()
 
-    message(class_loader_INCLUDE_DIRS ${class_loader_INCLUDE_DIRS})
-    message(pluginlib_INCLUDE_DIRS ${pluginlib_INCLUDE_DIRS})
-    message(rcutils_INCLUDE_DIRS ${rcutils_INCLUDE_DIRS})
-    message(rcpputils_INCLUDE_DIRS ${rcpputils_INCLUDE_DIRS})
+  message(class_loader_INCLUDE_DIRS ${class_loader_INCLUDE_DIRS})
+  message(pluginlib_INCLUDE_DIRS ${pluginlib_INCLUDE_DIRS})
+  message(rcutils_INCLUDE_DIRS ${rcutils_INCLUDE_DIRS})
+  message(rcpputils_INCLUDE_DIRS ${rcpputils_INCLUDE_DIRS})
 
-    message(shiboken_extra_options_str ${shiboken_extra_options_str})
+  message(shiboken_extra_options_str ${shiboken_extra_options_str})
 
-    # Create Python bindings using Shiboken6Tools function
-    shiboken_generator_create_binding(
-        EXTENSION_TARGET libqt_gui_cpp_shiboken
-        GENERATED_SOURCES ${qt_gui_cpp_shiboken_SRCS}
-        HEADERS "${CMAKE_CURRENT_SOURCE_DIR}/global.h"
-        TYPESYSTEM_FILE ${CMAKE_CURRENT_SOURCE_DIR}/typesystem.xml
-        LIBRARY_TARGET qt_gui_cpp
-        SHIBOKEN_EXTRA_OPTIONS
-          ${shiboken_extra_options_str}
-          -I${CMAKE_CURRENT_SOURCE_DIR}/../../include
-        QT_MODULES Core Gui Widgets
-    )
-    install(TARGETS libqt_gui_cpp_shiboken
-      DESTINATION ${PYTHON_INSTALL_DIR}/${PROJECT_NAME})
+  # Create Python bindings using Shiboken6Tools function
+  shiboken_generator_create_binding(
+      EXTENSION_TARGET libqt_gui_cpp_shiboken
+      GENERATED_SOURCES ${qt_gui_cpp_shiboken_SRCS}
+      HEADERS "${CMAKE_CURRENT_SOURCE_DIR}/global.h"
+      TYPESYSTEM_FILE ${CMAKE_CURRENT_SOURCE_DIR}/typesystem.xml
+      LIBRARY_TARGET qt_gui_cpp
+      SHIBOKEN_EXTRA_OPTIONS
+        ${shiboken_extra_options_str}
+        -I${CMAKE_CURRENT_SOURCE_DIR}/../../include
+      QT_MODULES Core Gui Widgets
+  )
+  install(TARGETS libqt_gui_cpp_shiboken
+    DESTINATION ${PYTHON_INSTALL_DIR}/${PROJECT_NAME})
 
-  else()
+else()
+  include(${python_qt_binding_DIR}/shiboken_helper.cmake)
+  if(shiboken_helper_FOUND)
     if(Shiboken_VERSION VERSION_GREATER "1.1.1")
       # shiboken 1.1.2 and higher will segfault until https://bugreports.qt-project.org/browse/PYSIDE-218 is fixed
       message(WARNING "Shiboken version ${Shiboken_VERSION} would segfault when trying to process qt_gui_cpp "

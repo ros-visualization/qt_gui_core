@@ -20,7 +20,7 @@ if(WIN32)
 endif()
 
 find_package(pluginlib REQUIRED)
-find_package(QT NAMES Qt5 REQUIRED COMPONENTS Widgets Core)
+find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets Core)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets Core)
 find_package(TinyXML2 REQUIRED)
 
@@ -59,10 +59,11 @@ set_property(TARGET ${PROJECT_NAME} PROPERTY PREFIX "")
 target_compile_definitions(${PROJECT_NAME} PRIVATE BINDINGS_BUILD)
 
 target_link_libraries(${PROJECT_NAME}
-PUBLIC
+PRIVATE
   ${QT_QTCORE_LIBRARY}
   ${QT_QTGUI_LIBRARY}
   Qt${QT_VERSION_MAJOR}::Widgets
+PUBLIC
   pluginlib::pluginlib
   tinyxml2::tinyxml2)
 
@@ -85,7 +86,7 @@ install(
   DESTINATION include/${PROJECT_NAME}
 )
 
-ament_export_dependencies(pluginlib TinyXML2 Qt${QT_VERSION_MAJOR})
+ament_export_dependencies(pluginlib TinyXML2)
 ament_export_targets(export_${PROJECT_NAME} HAS_LIBRARY_TARGET)
 
 install(TARGETS ${PROJECT_NAME}
