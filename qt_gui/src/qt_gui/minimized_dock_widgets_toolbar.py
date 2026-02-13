@@ -52,7 +52,7 @@ class MinimizedDockWidgetsToolbar(QToolBar):
         self.setToolButtonStyle(Qt.ToolButtonStyle.ToolButtonTextBesideIcon)
         self._container_manager = container_manager
         self._signal_mapper = QSignalMapper(self)
-        # self._signal_mapper.mapping(QWidget).connect(self._on_action_triggered)
+        self._signal_mapper.mappedObject.connect(self._on_action_triggered)
         self._dock_widgets = {}
 
         self.hide()

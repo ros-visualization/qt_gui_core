@@ -50,7 +50,7 @@ class NodeItem(GraphItem):
         self._brush = QBrush(self._default_color)
         self._label_pen = QPen()
         self._label_pen.setColor(self._default_color)
-        self._label_pen.setJoinStyle(Qt.RoundJoin)
+        self._label_pen.setJoinStyle(Qt.PenJoinStyle.RoundJoin)
         self._ellipse_pen = QPen(self._label_pen)
         self._ellipse_pen.setWidth(1)
 

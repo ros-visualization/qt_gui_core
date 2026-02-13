@@ -41,7 +41,7 @@ class GraphItem(QGraphicsItemGroup):
     _COLOR_RED = QColor(255, 0, 0)
     _COLOR_TEAL = QColor(0, 170, 170)
 
-    _LABEL_FONT = QFont('sans', weight=QFont.Light)
+    _LABEL_FONT = QFont('sans', weight=QFont.Weight.Light)
 
     def __init__(self, highlight_level, parent=None):
         super(GraphItem, self).__init__(parent)

@@ -58,14 +58,24 @@ target_include_directories(${PROJECT_NAME} PUBLIC
 set_property(TARGET ${PROJECT_NAME} PROPERTY PREFIX "")
 target_compile_definitions(${PROJECT_NAME} PRIVATE BINDINGS_BUILD)
 
-target_link_libraries(${PROJECT_NAME}
-PRIVATE
-  ${QT_QTCORE_LIBRARY}
-  ${QT_QTGUI_LIBRARY}
-  Qt${QT_VERSION_MAJOR}::Widgets
-PUBLIC
-  pluginlib::pluginlib
-  tinyxml2::tinyxml2)
+if (${QT_VERSION_MAJOR} GREATER "5")
+  target_link_libraries(${PROJECT_NAME}
+    PRIVATE
+      ${QT_QTCORE_LIBRARY}
+      ${QT_QTGUI_LIBRARY}
+      Qt${QT_VERSION_MAJOR}::Widgets
+    PUBLIC
+      pluginlib::pluginlib
+      tinyxml2::tinyxml2)
+else()
+  target_link_libraries(${PROJECT_NAME}
+    PUBLIC
+      ${QT_QTCORE_LIBRARY}
+      ${QT_QTGUI_LIBRARY}
+      Qt${QT_VERSION_MAJOR}::Widgets
+      pluginlib::pluginlib
+      tinyxml2::tinyxml2)
+endif()
 
 add_subdirectory(src/qt_gui_cpp_shiboken)
 
@@ -86,6 +96,9 @@ install(
   DESTINATION include/${PROJECT_NAME}
 )
 
+if (${QT_VERSION_MAJOR} GREATER "5")
+  ament_export_dependencies(Qt6)
+endif()
 ament_export_dependencies(pluginlib TinyXML2)
 ament_export_targets(export_${PROJECT_NAME} HAS_LIBRARY_TARGET)
 
