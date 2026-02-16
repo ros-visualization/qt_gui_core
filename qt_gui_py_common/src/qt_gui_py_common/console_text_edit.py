@@ -33,14 +33,14 @@
 import sys
 
 from python_qt_binding.QtCore import Qt
-from python_qt_binding.QtGui import QFont
+from python_qt_binding.QtGui import QColorConstants, QFont
 from python_qt_binding.QtWidgets import QTextEdit
 
 
 class ConsoleTextEdit(QTextEdit):
-    _color_stdout = Qt.blue
-    _color_stderr = Qt.red
-    _color_stdin = Qt.black
+    _color_stdout = QColorConstants.Blue
+    _color_stderr = QColorConstants.Red
+    _color_stdin = QColorConstants.Black
     _multi_line_char = '\\'
     _multi_line_indent = '    '
     _prompt = ('$ ', '  ')  # prompt for single and multi line
@@ -123,23 +123,23 @@ class ConsoleTextEdit(QTextEdit):
 
         # only handle keys if cursor is in the last line
         if self.textCursor().position() >= prompt_position:
-            if event.key() == Qt.Key_Down:
+            if event.key() == Qt.Key.Key_Down:
                 if self._history_index == len(self._history):
                     self._history_index -= 1
                 self._move_in_history(-1)
                 return None
 
-            if event.key() == Qt.Key_Up:
+            if event.key() == Qt.Key.Key_Up:
                 self._move_in_history(1)
                 return None
 
-            if event.key() in [Qt.Key_Backspace]:
+            if event.key() in [Qt.Key.Key_Backspace]:
                 # don't allow cursor to delete into prompt
                 if (self.textCursor().positionInBlock() == prompt_length and
                         not self.textCursor().hasSelection()):
                     return None
 
-            if event.key() in [Qt.Key_Return, Qt.Key_Enter]:
+            if event.key() in [Qt.Key.Key_Return, Qt.Key.Key_Enter]:
                 # set cursor to end of line to avoid line splitting
                 cursor = self.textCursor()
                 cursor.setPosition(document_length - 1)
