@@ -79,9 +79,7 @@ endif()
 
 add_subdirectory(src/qt_gui_cpp_shiboken)
 
-if (${QT_VERSION_MAJOR} LESS "6")
-  add_subdirectory(src/qt_gui_cpp_sip)
-endif()
+add_subdirectory(src/qt_gui_cpp_sip)
 
 message(STATUS "Python binding generators: ${qt_gui_cpp_BINDINGS}")
 if(NOT qt_gui_cpp_BINDINGS)

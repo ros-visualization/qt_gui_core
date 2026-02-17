@@ -98,13 +98,21 @@ if(sip_helper_FOUND)
       list(APPEND PYSIDE_ADDITIONAL_INCLUDES "${INCLUDE_DIR}/QtWidgets")
   endforeach()
 
-
-  build_sip_binding(qt_gui_cpp_sip qt_gui_cpp.sip
-    SOURCE_DIR ${PROJECT_SOURCE_DIR}/src/qt_gui_cpp_sip
-    LIBRARY_DIR ${CMAKE_CURRENT_BINARY_DIR}
-    DEPENDS ${qt_gui_cpp_sip_DEPENDENT_FILES}
-    DEPENDENCIES qt_gui_cpp
-  )
+  if (${QT_VERSION_MAJOR} GREATER "5")
+    build_sip_6_binding(qt_gui_cpp_sip qt_gui_cpp.sip
+      SOURCE_DIR ${PROJECT_SOURCE_DIR}/src/qt_gui_cpp_sip
+      LIBRARY_DIR ${CMAKE_CURRENT_BINARY_DIR}
+      DEPENDS ${qt_gui_cpp_sip_DEPENDENT_FILES}
+      DEPENDENCIES qt_gui_cpp
+    )
+  else()
+    build_sip_binding(qt_gui_cpp_sip qt_gui_cpp.sip pyproject.toml
+      SOURCE_DIR ${PROJECT_SOURCE_DIR}/src/qt_gui_cpp_sip
+      LIBRARY_DIR ${CMAKE_CURRENT_BINARY_DIR}
+      DEPENDS ${qt_gui_cpp_sip_DEPENDENT_FILES}
+      DEPENDENCIES qt_gui_cpp
+    )
+  endif()
 
   if(APPLE)
     set(LIBQT_GUI_CPP_SIP_SUFFIX .so)
@@ -114,6 +122,16 @@ if(sip_helper_FOUND)
     set(LIBQT_GUI_CPP_SIP_SUFFIX ${CMAKE_SHARED_LIBRARY_SUFFIX})
   endif()
 
-  install(FILES ${CMAKE_CURRENT_BINARY_DIR}/libqt_gui_cpp_sip${LIBQT_GUI_CPP_SIP_SUFFIX}
-      DESTINATION ${PYTHON_INSTALL_DIR}/${PROJECT_NAME})
+  if (${QT_VERSION_MAJOR} GREATER "5")
+    execute_process(
+      COMMAND ${Python3_EXECUTABLE} -c "import sysconfig as c; print(c.get_config_var('EXT_SUFFIX'), end='')"
+      OUTPUT_VARIABLE PYTHON_EXTENSION_MODULE_SUFFIX
+      ERROR_QUIET)
+    install(FILES ${CMAKE_CURRENT_BINARY_DIR}/libqt_gui_cpp_sip${PYTHON_EXTENSION_MODULE_SUFFIX}
+        DESTINATION ${PYTHON_INSTALL_DIR}/${PROJECT_NAME})
+  else()
+    install(FILES ${CMAKE_CURRENT_BINARY_DIR}/libqt_gui_cpp_sip${LIBQT_GUI_CPP_SIP_SUFFIX}
+        DESTINATION ${PYTHON_INSTALL_DIR}/${PROJECT_NAME})
+
+  endif()
 endif()
