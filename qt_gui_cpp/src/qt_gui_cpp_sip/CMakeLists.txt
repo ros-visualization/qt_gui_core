@@ -1,4 +1,10 @@
 set(qt_gui_cpp_HDRS_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../../include/qt_gui_cpp)
+
+set(qt_gui_cpp_sip "qt_gui_cpp.sip")
+if (${QT_VERSION_MAJOR} GREATER "5")
+  set(qt_gui_cpp_sip "qt_gui_cpp_6.sip")
+endif()
+
 set(qt_gui_cpp_sip_DEPENDENT_FILES
   composite_plugin_provider.sip
   generic_proxy.sip
@@ -8,7 +14,7 @@ set(qt_gui_cpp_sip_DEPENDENT_FILES
   plugin_descriptor.sip
   plugin_provider.sip
   recursive_plugin_provider.sip
-  qt_gui_cpp.sip
+  ${qt_gui_cpp_sip}
   ros_pluginlib_plugin_provider_for_plugin_providers.sip
   ros_pluginlib_plugin_provider_for_plugins.sip
   settings.sip
@@ -132,6 +138,5 @@ if(sip_helper_FOUND)
   else()
     install(FILES ${CMAKE_CURRENT_BINARY_DIR}/libqt_gui_cpp_sip${LIBQT_GUI_CPP_SIP_SUFFIX}
         DESTINATION ${PYTHON_INSTALL_DIR}/${PROJECT_NAME})
-
   endif()
 endif()

@@ -1,4 +1,5 @@
 # Specify sip v6 as the build system for the package.
+
 [build-system]
 requires = ["sip >=6, <7", "PyQt-builder >=1.10, <2"]
 build-backend = "sipbuild.api"
@@ -15,6 +16,7 @@ sip-files-dir = "@SIP_FILES_DIR@"
 build-dir = "@SIP_BUILD_DIR@"
 sip-include-dirs = ["@SIP_PROJECT_INCLUDE_DIRS@"]
 verbose = true
+abi-version = "13.6"
 
 
 # Specify the PEP 566 metadata for the project.

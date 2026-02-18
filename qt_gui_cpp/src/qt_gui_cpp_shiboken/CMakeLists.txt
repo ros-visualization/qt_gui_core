@@ -57,8 +57,6 @@ if (${QT_VERSION_MAJOR} GREATER "5")
       OUTPUT_STRIP_TRAILING_WHITESPACE
   )
 
-  message("Python_SITELIB: ${Python_SITELIB}")
-
   list(APPEND CMAKE_PREFIX_PATH
       "${Python_SITELIB}/shiboken6_generator/lib/cmake"
   )
