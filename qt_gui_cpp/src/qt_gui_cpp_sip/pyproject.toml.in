@@ -7,7 +7,7 @@ build-backend = "sipbuild.api"
 project-factory = "pyqtbuild:PyQtProject"
 
 [tool.sip.builder]
-qmake = "/home/ahcorde/Qt/6.10.1/gcc_64/bin/qmake6"
+qmake = "@QMAKE_EXECUTABLE@"
 qmake-settings = ["LIBS += @SIP_ABS_LIBRARIES@"]
 
 [tool.sip.project]
