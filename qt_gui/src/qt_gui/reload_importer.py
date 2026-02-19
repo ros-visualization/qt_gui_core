@@ -30,7 +30,7 @@
 # ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-import __builtin__
+import builtins
 from importlib import reload
 import os
 import sys
@@ -48,13 +48,13 @@ class ReloadImporter:
         self._reload_paths = None
         self._import_stack = []
         self._reloaded_modules = set()
-        self._import = __builtin__.__import__
+        self._import = builtins.__import__
 
     def enable(self):
-        __builtin__.__import__ = self._reimport
+        builtins.__import__ = self._reimport
 
     def disable(self):
-        __builtin__.__import__ = self._import
+        builtins.__import__ = self._import
 
     def add_reload_path(self, path):
         if self._reload_paths is None:
