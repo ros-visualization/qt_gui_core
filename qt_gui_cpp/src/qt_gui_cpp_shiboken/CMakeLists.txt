@@ -64,13 +64,9 @@ if (${QT_VERSION_MAJOR} GREATER "5")
 
   set(shiboken_extra_options_str "")
   foreach(dir ${class_loader_INCLUDE_DIRS} ${pluginlib_INCLUDE_DIRS} ${rcutils_INCLUDE_DIRS} ${rcpputils_INCLUDE_DIRS})
-    list(APPEND shiboken_extra_options_str "-I\"${dir}\" ")
+    list(APPEND shiboken_extra_options_str "-I\"${dir}\"")
   endforeach()
 
-  message(class_loader_INCLUDE_DIRS ${class_loader_INCLUDE_DIRS})
-  message(pluginlib_INCLUDE_DIRS ${pluginlib_INCLUDE_DIRS})
-  message(rcutils_INCLUDE_DIRS ${rcutils_INCLUDE_DIRS})
-  message(rcpputils_INCLUDE_DIRS ${rcpputils_INCLUDE_DIRS})
 
   message(shiboken_extra_options_str ${shiboken_extra_options_str})
 
