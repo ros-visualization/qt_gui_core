@@ -38,7 +38,7 @@ from python_qt_binding.QtCore import QByteArray, qDebug, QObject, QSignalMapper,
 from python_qt_binding.QtGui import QIcon, QValidator
 from python_qt_binding.QtWidgets import QFileDialog, QInputDialog, QMessageBox
 
-if Version(QT_BINDING_VERSION) > Version("6.0.0"):
+if Version(QT_BINDING_VERSION) > Version('6.0.0'):
     from python_qt_binding.QtGui import QAction
 else:
     from python_qt_binding.QtWidgets import QAction

@@ -195,7 +195,8 @@ class DockWidget(QDockWidget):
                 # ...and back
                 if Version(QT_BINDING_VERSION) > Version('6.0.0'):
                     mouse_move_event = QMouseEvent(
-                        QEvent.Type.MouseMove, self._dragging_local_pos, e.globalPosition().toPoint(),
+                        QEvent.Type.MouseMove,
+                        self._dragging_local_pos, e.globalPosition().toPoint(),
                         Qt.NoButton, Qt.MouseButton.LeftButton, e.modifiers())
                 else:
                     mouse_move_event = QMouseEvent(

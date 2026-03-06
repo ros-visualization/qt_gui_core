@@ -41,7 +41,7 @@ ament_get_recursive_properties(deps_include_dirs _ ${TinyXML2_TARGETS} ${pluginl
 list(APPEND qt_gui_cpp_INCLUDE_PATH ${deps_include_dirs})
 
 find_package(python_qt_binding REQUIRED)
-if (${QT_VERSION_MAJOR} GREATER "5")
+if(${QT_VERSION_MAJOR} GREATER "5")
   list(APPEND qt_gui_cpp_BINDINGS "shiboken")
   set(qt_gui_cpp_BINDINGS "${qt_gui_cpp_BINDINGS}" PARENT_SCOPE)
   # Find required packages

@@ -53,7 +53,8 @@ class MainWindow(DockableMainWindow):
             self._help_widget = QTextBrowser(self)
             self._help_widget.setFont(font)
             self._help_widget.setReadOnly(True)
-            self._help_widget.setTextInteractionFlags(Qt.TextInteractionFlag.TextBrowserInteraction)
+            self._help_widget.setTextInteractionFlags(
+                Qt.TextInteractionFlag.TextBrowserInteraction)
             self._help_widget.setOpenExternalLinks(True)
             self._help_widget.setHtml(help_text)
             self._help_widget.setStyleSheet('background:transparent;')
@@ -154,14 +155,14 @@ class MainWindow(DockableMainWindow):
         if self._settings.contains('state'):
             self.restoreState(self._settings.value('state'))
             # restore area for all toolbars
-            toolbar_settings = self._settings.get_settings('toolbar_areas')
+            # toolbar_settings = self._settings.get_settings('toolbar_areas')
             for toolbar in self.findChildren(QToolBar):
                 if not toolbar.objectName():
                     continue
-                print('toolbar.objectName() ', toolbar.objectName())
                 # TODO(ahcorde): Review this
                 # area = Qt.ToolBarArea(
-                #     int(toolbar_settings.value(toolbar.objectName(), Qt.ToolBarArea.NoToolBarArea)))
+                #     int(toolbar_settings.value(toolbar.objectName(),
+                #         Qt.ToolBarArea.NoToolBarArea)))
                 area = Qt.ToolBarArea.NoToolBarArea
                 if area in [Qt.ToolBarArea.LeftToolBarArea,
                             Qt.ToolBarArea.RightToolBarArea,

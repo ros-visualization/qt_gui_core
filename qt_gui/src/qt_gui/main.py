@@ -217,7 +217,6 @@ class Main(object):
         QIcon.setFallbackThemeName(original_theme)
 
     def create_application(self, argv):
-        from python_qt_binding.QtCore import Qt
         from python_qt_binding.QtWidgets import QApplication
         app = QApplication(argv)
         # app.setAttribute(Qt.AA_DontShowIconsInMenus, False)
@@ -419,12 +418,12 @@ class Main(object):
 
         from python_qt_binding.QtCore import (qDebug, qInstallMessageHandler,
                                               QSettings, Qt)
-        from python_qt_binding.QtCore import QTimer
+        from python_qt_binding.QtCore import QTimer, QtMsgType
 
         from packaging.version import Version
 
         from python_qt_binding.QtGui import QIcon
-        if Version(QT_BINDING_VERSION) > Version("6.0.0"):
+        if Version(QT_BINDING_VERSION) > Version('6.0.0'):
             from python_qt_binding.QtGui import QAction
         else:
             from python_qt_binding.QtWidgets import QAction
@@ -445,18 +444,15 @@ class Main(object):
                 cyan_color = '\033[36m' if colored_output else ''
                 red_color = '\033[31m' if colored_output else ''
                 reset_color = '\033[0m' if colored_output else ''
-                # if type_ == QtDebugMsg and self._options.verbose:
-                print(msg, file=sys.stderr)
-
-                # if type_ == Qt.QLoggingCategory.QtDebugMsg and self._options.verbose:
-                #     print(msg, file=sys.stderr)
-                # elif type_ == Qt.QLoggingCategory.QtWarningMsg:
-                #     print(cyan_color + msg + reset_color, file=sys.stderr)
-                # elif type_ == Qt.QLoggingCategory.QtCriticalMsg:
-                #     print(red_color + msg + reset_color, file=sys.stderr)
-                # elif type_ == Qt.QLoggingCategory.QtFatalMsg:
-                #     print(red_color + msg + reset_color, file=sys.stderr)
-                #     sys.exit(1)
+                if type_ == QtMsgType.QtDebugMsg and self._options.verbose:
+                    print(msg, file=sys.stderr)
+                elif type_ == QtMsgType.QtWarningMsg:
+                    print(cyan_color + msg + reset_color, file=sys.stderr)
+                elif type_ == QtMsgType.QtCriticalMsg:
+                    print(red_color + msg + reset_color, file=sys.stderr)
+                elif type_ == QtMsgType.QtFatalMsg:
+                    print(red_color + msg + reset_color, file=sys.stderr)
+                    sys.exit(1)
             qInstallMessageHandler(message_handler)
 
         app = self.create_application(argv)
@@ -464,7 +460,10 @@ class Main(object):
         self._set_theme_if_necessary()
 
         settings = QSettings(
-            QSettings.Format.IniFormat, QSettings.Scope.UserScope, 'ros.org', self._settings_filename)
+            QSettings.Format.IniFormat,
+            QSettings.Scope.UserScope,
+            'ros.org',
+            self._settings_filename)
         if len(embed_options_set) == 0:
             if self._options.clear_config:
                 settings.clear()
@@ -534,7 +533,9 @@ class Main(object):
             if not self._options.freeze_layout:
                 minimized_dock_widgets_toolbar = MinimizedDockWidgetsToolbar(
                     container_manager, main_window)
-                main_window.addToolBar(Qt.ToolBarArea.BottomToolBarArea, minimized_dock_widgets_toolbar)
+                main_window.addToolBar(
+                    Qt.ToolBarArea.BottomToolBarArea,
+                    minimized_dock_widgets_toolbar)
                 plugin_manager.set_minimized_dock_widgets_toolbar(minimized_dock_widgets_toolbar)
 
         if menu_bar is not None:

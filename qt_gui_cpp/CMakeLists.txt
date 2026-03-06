@@ -44,7 +44,7 @@ set(qt_gui_cpp_HDRS
   include/qt_gui_cpp/plugin_context.hpp
 )
 
-if (${QT_VERSION_MAJOR} GREATER "5")
+if(${QT_VERSION_MAJOR} GREATER "5")
   qt_standard_project_setup()
   qt_wrap_cpp(qt_gui_cpp_MOCS ${qt_gui_cpp_HDRS})
 else()
@@ -84,7 +84,7 @@ install(
   DESTINATION include/${PROJECT_NAME}
 )
 
-if (${QT_VERSION_MAJOR} GREATER "5")
+if(${QT_VERSION_MAJOR} GREATER "5")
   ament_export_dependencies(Qt6)
 endif()
 ament_export_dependencies(pluginlib TinyXML2)

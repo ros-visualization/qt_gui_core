@@ -1,7 +1,7 @@
 set(qt_gui_cpp_HDRS_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../../include/qt_gui_cpp)
 
 set(qt_gui_cpp_sip "qt_gui_cpp.sip")
-if (${QT_VERSION_MAJOR} GREATER "5")
+if(${QT_VERSION_MAJOR} GREATER "5")
   set(qt_gui_cpp_sip "qt_gui_cpp_6.sip")
 endif()
 
@@ -89,7 +89,7 @@ if(sip_helper_FOUND)
   list(APPEND qt_gui_cpp_BINDINGS "sip")
   set(qt_gui_cpp_BINDINGS "${qt_gui_cpp_BINDINGS}" PARENT_SCOPE)
 
-  if (${QT_VERSION_MAJOR} GREATER "5")
+  if(${QT_VERSION_MAJOR} GREATER "5")
     # Get all relevant Qt include dirs, to pass them on to shiboken.
     get_property(QT_WIDGETS_INCLUDE_DIRS TARGET Qt${QT_VERSION_MAJOR}::Widgets PROPERTY INTERFACE_INCLUDE_DIRECTORIES)
     set(INCLUDES "")
@@ -127,7 +127,7 @@ if(sip_helper_FOUND)
     set(LIBQT_GUI_CPP_SIP_SUFFIX ${CMAKE_SHARED_LIBRARY_SUFFIX})
   endif()
 
-  if (${QT_VERSION_MAJOR} GREATER "5")
+  if(${QT_VERSION_MAJOR} GREATER "5")
     execute_process(
       COMMAND ${Python3_EXECUTABLE} -c "import sysconfig as c; print(c.get_config_var('EXT_SUFFIX'), end='')"
       OUTPUT_VARIABLE PYTHON_EXTENSION_MODULE_SUFFIX

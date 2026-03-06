@@ -190,7 +190,8 @@ class DockWidgetTitleBar(QWidget):
         settings.set_value('dock_widget_title', self._dock_widget.windowTitle())
 
         # skip saving dockable flag when layout is frozen
-        movable = bool(self.parentWidget().features() & QDockWidget.DockWidgetFeature.DockWidgetMovable)
+        movable = bool(
+            self.parentWidget().features() & QDockWidget.DockWidgetFeature.DockWidgetMovable)
         if movable:
             settings.set_value('dockable', self.dockable_button.isChecked())
 
@@ -202,7 +203,8 @@ class DockWidgetTitleBar(QWidget):
 
         dockable = settings.value('dockable', True) in [True, 'true']
         # only allow dockable when layout is not frozen
-        movable = bool(self.parentWidget().features() & QDockWidget.DockWidgetFeature.DockWidgetMovable)
+        movable = bool(
+            self.parentWidget().features() & QDockWidget.DockWidgetFeature.DockWidgetMovable)
         self.dockable_button.setChecked(dockable and movable)
         self._toggle_dockable(self.dockable_button.isChecked())
 

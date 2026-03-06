@@ -33,7 +33,7 @@ from packaging.version import Version
 from python_qt_binding import QT_BINDING_VERSION
 
 from python_qt_binding.QtCore import QObject, QSignalMapper, Signal, Slot
-if Version(QT_BINDING_VERSION) > Version("6.0.0"):
+if Version(QT_BINDING_VERSION) > Version('6.0.0'):
     from python_qt_binding.QtGui import QAction
 else:
     from python_qt_binding.QtWidgets import QAction
@@ -59,14 +59,7 @@ class PluginMenu(QObject):
         self._plugin_menu_manager = MenuManager(plugin_menu)
         self._plugin_mapper = QSignalMapper(plugin_menu)
 
-        from pprint import pprint
-        pprint(vars(self._plugin_mapper))
-
-        self._plugin_mapper.mapped[str].connect(self.load_plugin_signal)
-
-        self.connect(self._plugin_mapper, QtCore.SIGNAL("mapped(str)"), self.removeItem,
-            self.load_plugin_signal)
-
+        self._plugin_mapper.mappedString.connect(self.load_plugin_signal)
 
         self._running_menu_manager = MenuManager(running_menu)
         action = QAction(

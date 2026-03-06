@@ -30,15 +30,15 @@
 
 from packaging.version import Version
 
-from python_qt_binding import QT_BINDING, QT_BINDING_VERSION
+from python_qt_binding import QT_BINDING_VERSION
 
 from python_qt_binding.QtCore import QSignalMapper, Qt
-if Version(QT_BINDING_VERSION) > Version("6.0.0"):
+if Version(QT_BINDING_VERSION) > Version('6.0.0'):
     from python_qt_binding.QtGui import QAction
 else:
     from python_qt_binding.QtWidgets import QAction
 from python_qt_binding.QtGui import QIcon
-from python_qt_binding.QtWidgets import QToolBar, QWidget
+from python_qt_binding.QtWidgets import QToolBar
 
 
 class MinimizedDockWidgetsToolbar(QToolBar):
