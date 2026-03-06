@@ -604,7 +604,6 @@ class Main(object):
             plugin = self._options.standalone_plugin
             plugin_serial = 0
         if plugin is not None:
-            print('plugin ', plugin)
             plugins = plugin_manager.find_plugins_by_name(plugin)
             if len(plugins) == 0:
                 print('qt_gui_main() found no plugin matching "%s"' % plugin)
