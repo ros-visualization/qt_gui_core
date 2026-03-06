@@ -49,7 +49,6 @@
 #include <QWidget>
 
 #include "generic_proxy.hpp"
-#include "visibility.hpp"
 
 namespace qt_gui_cpp
 {
@@ -58,7 +57,7 @@ namespace qt_gui_cpp
  * PluginContext providing information to the plugin and exposing methods for the plugin to interact with the framework.
  * It relays all methods to the corresponding plugin handler.
  */
-class BINDINGS_API PluginContext
+class PluginContext
   : public QObject
 {
   Q_OBJECT
