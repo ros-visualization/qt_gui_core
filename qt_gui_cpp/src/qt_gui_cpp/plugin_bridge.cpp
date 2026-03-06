@@ -40,6 +40,8 @@
 namespace qt_gui_cpp
 {
 
+PluginBridge::~PluginBridge() = default;
+
 PluginBridge::PluginBridge()
 : QObject()
   , provider_(0)

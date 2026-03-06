@@ -4,7 +4,7 @@
 %Import QtGui/QtGuimod.sip
 %Import QtWidgets/QtWidgetsmod.sip
 
-%DefaultSupertype PyQt6.sip.simplewrapper
+%DefaultSupertype sip.simplewrapper
 
 %Include composite_plugin_provider.sip
 %Include generic_proxy.sip

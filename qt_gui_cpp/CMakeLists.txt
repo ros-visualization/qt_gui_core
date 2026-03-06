@@ -48,7 +48,7 @@ if (${QT_VERSION_MAJOR} GREATER "5")
   qt_standard_project_setup()
   qt_wrap_cpp(qt_gui_cpp_MOCS ${qt_gui_cpp_HDRS})
 else()
-  qt5_wrap_cpp(turtlesim_node_MOCS ${qt_gui_cpp_HDRS})
+  qt5_wrap_cpp(qt_gui_cpp_MOCS ${qt_gui_cpp_HDRS})
 endif()
 
 add_library(${PROJECT_NAME} SHARED ${qt_gui_cpp_SRCS} ${qt_gui_cpp_MOCS})
@@ -69,7 +69,6 @@ target_link_libraries(${PROJECT_NAME}
 )
 
 add_subdirectory(src/qt_gui_cpp_shiboken)
-
 add_subdirectory(src/qt_gui_cpp_sip)
 
 message(STATUS "Python binding generators: ${qt_gui_cpp_BINDINGS}")
