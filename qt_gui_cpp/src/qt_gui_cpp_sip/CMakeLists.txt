@@ -31,7 +31,7 @@ set(qt_gui_cpp_sip_INCLUDE_DIRS ${qt_gui_cpp_INCLUDE_DIRS} "${CMAKE_CURRENT_SOUR
 set(qt_gui_cpp_sip_LIBRARY_DIRS ${qt_gui_cpp_LIBRARY_DIRS} lib)
 set(qt_gui_cpp_sip_LDFLAGS_OTHER ${qt_gui_cpp_LDFLAGS_OTHER})
 
-ament_get_recursive_properties(deps_include_dirs deps_libraries ${pluginlib_TARGETS})
+ament_get_recursive_properties(deps_include_dirs deps_libraries pluginlib::pluginlib)
 list(APPEND deps_include_dirs ${TinyXML2_INCLUDE_DIRS})
 list(APPEND deps_libraries ${TinyXML2_LIBRARIES})
 
