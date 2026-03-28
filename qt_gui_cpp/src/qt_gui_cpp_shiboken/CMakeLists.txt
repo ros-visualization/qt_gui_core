@@ -1,3 +1,9 @@
+
+# Cannot use shiboken because of bugs in Debian and Ubuntu
+# https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1131536
+# https://bugs.launchpad.net/ubuntu/+source/pyside6/+bug/2146611
+return()
+
 find_package(Qt${QT_VERSION_MAJOR}Widgets REQUIRED)
 
 set(qt_gui_cpp_shiboken_QT_COMPONENTS
@@ -46,27 +52,12 @@ if(${QT_VERSION_MAJOR} GREATER "5")
   set(qt_gui_cpp_BINDINGS "${qt_gui_cpp_BINDINGS}" PARENT_SCOPE)
   # Find required packages
   find_package(Python COMPONENTS Interpreter Development REQUIRED)
-  # On RHEL and some other distros, Python wheels and site-packages may be installed under 'lib64'
-  # instead of 'lib'. The FindPython CMake module may set Python_SITELIB to 'lib', which is incorrect
-  # for these cases. To ensure compatibility, we override Python_SITELIB by querying Python directly.
-  # This guarantees the correct site-packages path is used regardless of platform or Python build.
-  execute_process(
-      COMMAND ${Python_EXECUTABLE} -c
-      "import site; print(next(p for p in site.getsitepackages() if 'site-packages' in p))"
-      OUTPUT_VARIABLE Python_SITELIB
-      OUTPUT_STRIP_TRAILING_WHITESPACE
-  )
-
-  list(APPEND CMAKE_PREFIX_PATH
-      "${Python_SITELIB}/shiboken6_generator/lib/cmake"
-  )
   find_package(Shiboken6Tools REQUIRED)
 
   set(shiboken_extra_options_str "")
   foreach(dir ${class_loader_INCLUDE_DIRS} ${pluginlib_INCLUDE_DIRS} ${rcutils_INCLUDE_DIRS} ${rcpputils_INCLUDE_DIRS})
     list(APPEND shiboken_extra_options_str "-I\"${dir}\"")
   endforeach()
-
 
   message(shiboken_extra_options_str ${shiboken_extra_options_str})
 
@@ -88,39 +79,32 @@ if(${QT_VERSION_MAJOR} GREATER "5")
 else()
   include(${python_qt_binding_DIR}/shiboken_helper.cmake)
   if(shiboken_helper_FOUND)
-    if(Shiboken_VERSION VERSION_GREATER "1.1.1")
-      # shiboken 1.1.2 and higher will segfault until https://bugreports.qt-project.org/browse/PYSIDE-218 is fixed
-      message(WARNING "Shiboken version ${Shiboken_VERSION} would segfault when trying to process qt_gui_cpp "
-      "(see https://bugreports.qt-project.org/browse/PYSIDE-218)"
-      " Therefore shiboken bindings are being skipped.")
-    else()
-      list(APPEND qt_gui_cpp_BINDINGS "shiboken")
-      set(qt_gui_cpp_BINDINGS "${qt_gui_cpp_BINDINGS}" PARENT_SCOPE)
+    list(APPEND qt_gui_cpp_BINDINGS "shiboken")
+    set(qt_gui_cpp_BINDINGS "${qt_gui_cpp_BINDINGS}" PARENT_SCOPE)
 
-      set(QT_INCLUDE_DIR "${Qt5Widgets_INCLUDE_DIRS}")
-      shiboken_generator(
-        libqt_gui_cpp
-        global.h
-        typesystem.xml
-        ${PROJECT_SOURCE_DIR}/src/qt_gui_cpp_shiboken
-        "${qt_gui_cpp_shiboken_SRCS}"
-        "${qt_gui_cpp_HDRS}"
-        "${qt_gui_cpp_INCLUDE_PATH}"
-        "${CMAKE_CURRENT_BINARY_DIR}")
+    set(QT_INCLUDE_DIR "${Qt5Widgets_INCLUDE_DIRS}")
+    shiboken_generator(
+      libqt_gui_cpp
+      global.h
+      typesystem.xml
+      ${PROJECT_SOURCE_DIR}/src/qt_gui_cpp_shiboken
+      "${qt_gui_cpp_shiboken_SRCS}"
+      "${qt_gui_cpp_HDRS}"
+      "${qt_gui_cpp_INCLUDE_PATH}"
+      "${CMAKE_CURRENT_BINARY_DIR}")
 
-      shiboken_include_directories(qt_gui_cpp_shiboken "${qt_gui_cpp_shiboken_QT_COMPONENTS}")
+    shiboken_include_directories(qt_gui_cpp_shiboken "${qt_gui_cpp_shiboken_QT_COMPONENTS}")
 
-      add_library(qt_gui_cpp_shiboken SHARED ${qt_gui_cpp_shiboken_SRCS})
-      target_include_directories(qt_gui_cpp_shiboken PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../../include)
-      target_link_libraries(qt_gui_cpp_shiboken
-        ${PROJECT_NAME}
-        pluginlib::pluginlib
-        tinyxml2::tinyxml2
-      )
-      shiboken_target_link_libraries(qt_gui_cpp_shiboken "${qt_gui_cpp_shiboken_QT_COMPONENTS}")
+    add_library(qt_gui_cpp_shiboken SHARED ${qt_gui_cpp_shiboken_SRCS})
+    target_include_directories(qt_gui_cpp_shiboken PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../../include)
+    target_link_libraries(qt_gui_cpp_shiboken
+      ${PROJECT_NAME}
+      pluginlib::pluginlib
+      tinyxml2::tinyxml2
+    )
+    shiboken_target_link_libraries(qt_gui_cpp_shiboken "${qt_gui_cpp_shiboken_QT_COMPONENTS}")
 
-      install(TARGETS qt_gui_cpp_shiboken
-        DESTINATION ${PYTHON_INSTALL_DIR}/${PROJECT_NAME})
-    endif()
+    install(TARGETS qt_gui_cpp_shiboken
+      DESTINATION ${PYTHON_INSTALL_DIR}/${PROJECT_NAME})
   endif()
 endif()
