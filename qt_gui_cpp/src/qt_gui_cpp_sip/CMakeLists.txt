@@ -53,7 +53,8 @@ if(sip_helper_FOUND)
     DEPENDS ${qt_gui_cpp_sip_DEPENDENT_FILES}
     DEPENDENCIES qt_gui_cpp ${deps_libraries}
   )
-  install(TARGETS ${_library_name}
+  # build_sip_binding prefixes the target with "lib"
+  install(TARGETS libqt_gui_cpp_sip
     DESTINATION "${PYTHON_INSTALL_DIR}/${PROJECT_NAME}"
   )
 endif()
