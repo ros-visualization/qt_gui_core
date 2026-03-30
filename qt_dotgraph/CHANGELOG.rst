@@ -2,6 +2,9 @@
 Changelog for package qt_dotgraph
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+2.2.5 (2026-03-30)
+------------------
+
 2.2.4 (2025-03-25)
 ------------------
 * Cleanup qt_dotgraph and make the tests more robust. (`#296 <https://github.com/ros-visualization/qt_gui_core/issues/296>`_) (`#297 <https://github.com/ros-visualization/qt_gui_core/issues/297>`_)
