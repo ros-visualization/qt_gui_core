@@ -2,6 +2,11 @@
 Changelog for package qt_gui_core
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+2.7.6 (2026-03-30)
+------------------
+* Update qt_gui_core to package.xml version 2. (`#319 <https://github.com/ros-visualization/qt_gui_core/issues/319>`_) (`#321 <https://github.com/ros-visualization/qt_gui_core/issues/321>`_)
+* Contributors: mergify[bot]
+
 2.7.5 (2024-12-18)
 ------------------
 

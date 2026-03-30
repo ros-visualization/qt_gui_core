@@ -2,6 +2,11 @@
 Changelog for package qt_gui
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+2.7.6 (2026-03-30)
+------------------
+* fix(qt_gui): __builtin_\_ -> builtins (`#315 <https://github.com/ros-visualization/qt_gui_core/issues/315>`_) (`#317 <https://github.com/ros-visualization/qt_gui_core/issues/317>`_)
+* Contributors: mergify[bot]
+
 2.7.5 (2024-12-18)
 ------------------
 
