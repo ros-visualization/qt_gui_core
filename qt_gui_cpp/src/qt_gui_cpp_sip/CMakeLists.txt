@@ -1,7 +1,7 @@
 set(qt_gui_cpp_HDRS_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../../include/qt_gui_cpp)
 
 set(qt_gui_cpp_sip "qt_gui_cpp.sip")
-if(${QT_VERSION_MAJOR} GREATER "5")
+if(${qt_gui_cpp_USE_QT_MAJOR_VERSION} GREATER "5")
   set(qt_gui_cpp_sip "qt_gui_cpp_6.sip")
 endif()
 
@@ -47,7 +47,7 @@ if(sip_helper_FOUND)
   list(APPEND qt_gui_cpp_BINDINGS "sip")
   set(qt_gui_cpp_BINDINGS "${qt_gui_cpp_BINDINGS}" PARENT_SCOPE)
 
-  build_sip_binding(qt_gui_cpp_sip qt_gui_cpp.sip
+  build_sip_binding(qt_gui_cpp_sip ${qt_gui_cpp_sip}
     SOURCE_DIR ${PROJECT_SOURCE_DIR}/src/qt_gui_cpp_sip
     LIBRARY_DIR ${CMAKE_CURRENT_BINARY_DIR}
     DEPENDS ${qt_gui_cpp_sip_DEPENDENT_FILES}

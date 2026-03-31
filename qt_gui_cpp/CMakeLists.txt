@@ -20,8 +20,8 @@ if(WIN32)
 endif()
 
 find_package(pluginlib REQUIRED)
-find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets Core)
-find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets Core)
+include(cmake/qt_gui_cpp-extras.cmake)
+find_package(Qt${qt_gui_cpp_USE_QT_MAJOR_VERSION} REQUIRED COMPONENTS Widgets Core)
 find_package(TinyXML2 REQUIRED)
 
 ament_python_install_package(${PROJECT_NAME}
@@ -44,7 +44,7 @@ set(qt_gui_cpp_HDRS
   include/qt_gui_cpp/plugin_context.hpp
 )
 
-if(${QT_VERSION_MAJOR} GREATER "5")
+if(${qt_gui_cpp_USE_QT_MAJOR_VERSION} GREATER "5")
   qt_standard_project_setup()
   qt_wrap_cpp(qt_gui_cpp_MOCS ${qt_gui_cpp_HDRS})
 else()
@@ -62,8 +62,8 @@ target_link_libraries(${PROJECT_NAME}
   PUBLIC
     ${QT_QTCORE_LIBRARY}
     ${QT_QTGUI_LIBRARY}
-    Qt${QT_VERSION_MAJOR}::Widgets
-    Qt${QT_VERSION_MAJOR}::Core
+    Qt${qt_gui_cpp_USE_QT_MAJOR_VERSION}::Widgets
+    Qt${qt_gui_cpp_USE_QT_MAJOR_VERSION}::Core
     pluginlib::pluginlib
     tinyxml2::tinyxml2
 )
@@ -84,7 +84,7 @@ install(
   DESTINATION include/${PROJECT_NAME}
 )
 
-if(${QT_VERSION_MAJOR} GREATER "5")
+if(${qt_gui_cpp_USE_QT_MAJOR_VERSION} GREATER "5")
   ament_export_dependencies(Qt6)
 endif()
 ament_export_dependencies(pluginlib TinyXML2)
