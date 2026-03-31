@@ -100,7 +100,10 @@ class PerspectiveManager(QObject):
     def set_menu(self, menu):
         self._menu_manager = MenuManager(menu)
         self._perspective_mapper = QSignalMapper(menu)
-        self._perspective_mapper.mapped[str].connect(self.switch_perspective)
+        if Version(QT_BINDING_VERSION) <= Version('5.14.0'):
+            self._perspective_mapper.mapped[str].connect(self.switch_perspective)
+        else:
+            self._perspective_mapper.mappedString[str].connect(self.switch_perspective)
 
         # generate menu
         create_action = QAction('&Create perspective...', self._menu_manager.menu)

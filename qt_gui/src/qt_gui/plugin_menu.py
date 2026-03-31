@@ -67,7 +67,10 @@ class PluginMenu(QObject):
         action.setVisible(False)
         self._running_menu_manager.add_item(action)
         self._running_mapper = QSignalMapper(running_menu)
-        self._running_mapper.mapped[str].connect(self.unload_plugin_signal)
+        if Version(QT_BINDING_VERSION) <= Version('5.14.0'):
+            self._running_mapper.mapped[str].connect(self.unload_plugin_signal)
+        else:
+            self._running_mapper.mappedString[str].connect(self.unload_plugin_signal)
 
         self._instances = {}
 
