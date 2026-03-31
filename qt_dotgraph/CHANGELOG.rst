@@ -2,6 +2,11 @@
 Changelog for package qt_dotgraph
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+2.10.3 (2026-03-30)
+-------------------
+* Ignore case when asserting snippet presence in tests (`#314 <https://github.com/ros-visualization/qt_gui_core/issues/314>`_)
+* Contributors: Scott K Logan
+
 2.10.2 (2025-10-09)
 -------------------
 * Fix setupTools deprecations (`#308 <https://github.com/ros-visualization/qt_gui_core/issues/308>`_)

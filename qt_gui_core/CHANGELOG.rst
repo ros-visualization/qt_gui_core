@@ -2,6 +2,11 @@
 Changelog for package qt_gui_core
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+2.10.3 (2026-03-30)
+-------------------
+* Update qt_gui_core to package.xml version 2. (`#319 <https://github.com/ros-visualization/qt_gui_core/issues/319>`_)
+* Contributors: Chris Lalancette
+
 2.10.2 (2025-10-09)
 -------------------
 * Fix cmake deprecations (`#307 <https://github.com/ros-visualization/qt_gui_core/issues/307>`_)

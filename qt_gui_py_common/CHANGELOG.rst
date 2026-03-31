@@ -2,6 +2,11 @@
 Changelog for package qt_gui_py_common
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+2.10.3 (2026-03-30)
+-------------------
+* remove unsued setup.py (`#323 <https://github.com/ros-visualization/qt_gui_core/issues/323>`_)
+* Contributors: Michael Carlstrom
+
 2.10.2 (2025-10-09)
 -------------------
 * Fix cmake deprecations (`#307 <https://github.com/ros-visualization/qt_gui_core/issues/307>`_)

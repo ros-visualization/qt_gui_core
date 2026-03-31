@@ -2,6 +2,12 @@
 Changelog for package qt_gui_cpp
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+2.10.3 (2026-03-30)
+-------------------
+* Use new aggregate rosidl target instead of _TARGETS (`#325 <https://github.com/ros-visualization/qt_gui_core/issues/325>`_)
+* remove unsued setup.py (`#323 <https://github.com/ros-visualization/qt_gui_core/issues/323>`_)
+* Contributors: Alexis Tsogias, Michael Carlstrom
+
 2.10.2 (2025-10-09)
 -------------------
 * Removed tinyxml2_vendor dependency (`#309 <https://github.com/ros-visualization/qt_gui_core/issues/309>`_)
