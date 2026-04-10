@@ -1,4 +1,4 @@
-find_package(Qt5Widgets REQUIRED)
+find_package(Qt6Widgets REQUIRED)
 set(qt_gui_cpp_shiboken_QT_COMPONENTS
   QtCore
   QtGui
@@ -52,7 +52,7 @@ if(shiboken_helper_FOUND)
     list(APPEND qt_gui_cpp_BINDINGS "shiboken")
     set(qt_gui_cpp_BINDINGS "${qt_gui_cpp_BINDINGS}" PARENT_SCOPE)
 
-    set(QT_INCLUDE_DIR "${Qt5Widgets_INCLUDE_DIRS}")
+    set(QT_INCLUDE_DIR "${Qt6Widgets_INCLUDE_DIRS}")
     shiboken_generator(
       libqt_gui_cpp
       global.h

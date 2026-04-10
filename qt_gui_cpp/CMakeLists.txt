@@ -20,7 +20,7 @@ if(WIN32)
 endif()
 
 find_package(pluginlib REQUIRED)
-find_package(Qt5 REQUIRED COMPONENTS Widgets)
+find_package(Qt6 REQUIRED COMPONENTS Core Gui Widgets)
 find_package(TinyXML2 REQUIRED)
 
 ament_python_install_package(${PROJECT_NAME}
@@ -43,7 +43,7 @@ set(qt_gui_cpp_HDRS
   include/qt_gui_cpp/plugin_context.hpp
 )
 
-qt5_wrap_cpp(qt_gui_cpp_MOCS ${qt_gui_cpp_HDRS})
+qt6_wrap_cpp(qt_gui_cpp_MOCS ${qt_gui_cpp_HDRS})
 
 add_library(${PROJECT_NAME} SHARED ${qt_gui_cpp_SRCS} ${qt_gui_cpp_MOCS})
 target_include_directories(${PROJECT_NAME} PUBLIC
@@ -51,9 +51,7 @@ target_include_directories(${PROJECT_NAME} PUBLIC
   "$<INSTALL_INTERFACE:include/${PROJECT_NAME}>")
 
 target_link_libraries(${PROJECT_NAME}
-  ${QT_QTCORE_LIBRARY}
-  ${QT_QTGUI_LIBRARY}
-  Qt6::Widgets
+  ${qt_gui_cpp_QT_LIBRARIES}
   pluginlib::pluginlib
   tinyxml2::tinyxml2)
 
