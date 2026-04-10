@@ -21,6 +21,10 @@ endif()
 
 find_package(pluginlib REQUIRED)
 find_package(Qt6 REQUIRED COMPONENTS Core Gui Widgets)
+set(qt_gui_cpp_QT_LIBRARIES
+  Qt6::Core
+  Qt6::Gui
+  Qt6::Widgets)
 find_package(TinyXML2 REQUIRED)
 
 ament_python_install_package(${PROJECT_NAME}
