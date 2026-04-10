@@ -16,8 +16,8 @@
 
   <buildtool_depend>ament_cmake</buildtool_depend>
 
-  <build_depend>qt5-qmake</build_depend>
-  <build_depend>python3-qt5-bindings</build_depend>
+  <build_depend>qt6-qmake</build_depend>
+  <build_depend>python3-qt6-bindings</build_depend>
 
   <exec_depend>ament_index_python</exec_depend>
   <exec_depend>python_qt_binding</exec_depend>
