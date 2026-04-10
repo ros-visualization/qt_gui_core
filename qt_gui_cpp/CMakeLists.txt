@@ -20,7 +20,10 @@ if(WIN32)
 endif()
 
 find_package(pluginlib REQUIRED)
-find_package(Qt5 REQUIRED COMPONENTS Widgets)
+find_package(Qt6 COMPONENTS Widgets QUIET)
+if (NOT Qt6_FOUND)
+    find_package(Qt5 COMPONENTS Widgets REQUIRED)
+endif()
 find_package(TinyXML2 REQUIRED)
 
 ament_python_install_package(${PROJECT_NAME}
@@ -43,19 +46,32 @@ set(qt_gui_cpp_HDRS
   include/qt_gui_cpp/plugin_context.hpp
 )
 
-qt5_wrap_cpp(qt_gui_cpp_MOCS ${qt_gui_cpp_HDRS})
+if (Qt6_FOUND)
+  qt6_wrap_cpp(qt_gui_cpp_MOCS ${qt_gui_cpp_HDRS})
+else()
+  qt5_wrap_cpp(qt_gui_cpp_MOCS ${qt_gui_cpp_HDRS})
+endif()
 
 add_library(${PROJECT_NAME} SHARED ${qt_gui_cpp_SRCS} ${qt_gui_cpp_MOCS})
 target_include_directories(${PROJECT_NAME} PUBLIC
   "$<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include>"
   "$<INSTALL_INTERFACE:include/${PROJECT_NAME}>")
 
-target_link_libraries(${PROJECT_NAME}
-  ${QT_QTCORE_LIBRARY}
-  ${QT_QTGUI_LIBRARY}
-  Qt5::Widgets
-  pluginlib::pluginlib
-  tinyxml2::tinyxml2)
+if (Qt6_FOUND)
+  target_link_libraries(${PROJECT_NAME}
+    ${QT_QTCORE_LIBRARY}
+    ${QT_QTGUI_LIBRARY}
+    Qt6::Widgets
+    pluginlib::pluginlib
+    tinyxml2::tinyxml2)
+else()
+  target_link_libraries(${PROJECT_NAME}
+    ${QT_QTCORE_LIBRARY}
+    ${QT_QTGUI_LIBRARY}
+    Qt5::Widgets
+    pluginlib::pluginlib
+    tinyxml2::tinyxml2)endif()
+endif()
 
 add_subdirectory(src/qt_gui_cpp_shiboken)
 add_subdirectory(src/qt_gui_cpp_sip)
