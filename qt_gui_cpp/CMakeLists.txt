@@ -53,7 +53,7 @@ target_include_directories(${PROJECT_NAME} PUBLIC
 target_link_libraries(${PROJECT_NAME}
   ${QT_QTCORE_LIBRARY}
   ${QT_QTGUI_LIBRARY}
-  Qt5::Widgets
+  Qt6::Widgets
   pluginlib::pluginlib
   tinyxml2::tinyxml2)
 
