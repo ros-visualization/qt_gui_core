@@ -67,7 +67,7 @@ class PluginHandlerDirect(PluginHandler):
         super(PluginHandlerDirect, self)._emit_load_completed(exception)
 
     def eventFilter(self, watched, event):
-        if event.type() == QEvent.DeferredDelete:
+        if event.type() == QEvent.Type.DeferredDelete:
             # TOOD: check if ignore() is necessary
             event.ignore()
             self.close_signal.emit(str(self._instance_id))

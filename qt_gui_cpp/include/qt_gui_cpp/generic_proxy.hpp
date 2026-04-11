@@ -35,6 +35,8 @@
 
 #include <QObject>
 
+#define Q_ARG_OLD(type, data) QArgument<type>(#type, data)
+
 namespace qt_gui_cpp
 {
 

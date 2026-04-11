@@ -31,10 +31,17 @@
 import json
 import os
 
-from python_qt_binding import loadUi
+from packaging.version import Version
+
+from python_qt_binding import loadUi, QT_BINDING_VERSION
 from python_qt_binding.QtCore import QByteArray, qDebug, QObject, QSignalMapper, Signal, Slot
 from python_qt_binding.QtGui import QIcon, QValidator
-from python_qt_binding.QtWidgets import QAction, QFileDialog, QInputDialog, QMessageBox
+from python_qt_binding.QtWidgets import QFileDialog, QInputDialog, QMessageBox
+
+if Version(QT_BINDING_VERSION) > Version('6.0.0'):
+    from python_qt_binding.QtGui import QAction
+else:
+    from python_qt_binding.QtWidgets import QAction
 
 from qt_gui.menu_manager import MenuManager
 from qt_gui.settings import Settings
@@ -93,7 +100,10 @@ class PerspectiveManager(QObject):
     def set_menu(self, menu):
         self._menu_manager = MenuManager(menu)
         self._perspective_mapper = QSignalMapper(menu)
-        self._perspective_mapper.mapped[str].connect(self.switch_perspective)
+        if Version(QT_BINDING_VERSION) <= Version('5.14.0'):
+            self._perspective_mapper.mapped[str].connect(self.switch_perspective)
+        else:
+            self._perspective_mapper.mappedString[str].connect(self.switch_perspective)
 
         # generate menu
         create_action = QAction('&Create perspective...', self._menu_manager.menu)

@@ -1,0 +1,35 @@
+# Specify sip v6 as the build system for the package.
+
+[build-system]
+requires = ["sip >=6, <7", "PyQt-builder >=1.10, <2"]
+build-backend = "sipbuild.api"
+
+[tool.sip]
+project-factory = "pyqtbuild:PyQtProject"
+
+[tool.sip.builder]
+qmake = "@QMAKE_EXECUTABLE@"
+qmake-settings = ["LIBS += @SIP_ABS_LIBRARIES@"]
+
+[tool.sip.project]
+sip-files-dir = "@SIP_FILES_DIR@"
+build-dir = "@SIP_BUILD_DIR@"
+sip-include-dirs = ["@SIP_PROJECT_INCLUDE_DIRS@"]
+verbose = true
+abi-version = "13.6"
+
+
+# Specify the PEP 566 metadata for the project.
+[project]
+name = "lib@PROJECT_NAME@"
+
+[tool.sip.bindings.libqt_gui_cpp_sip]
+sip-file = "@SIP_FILE@"
+include-dirs = [@SIP_INCLUDE_DIRS@]
+libraries = []
+library-dirs = []
+# this should be extra-objects, but these break inside pybuild with sip modules
+extra-link-args = []
+qmake-QT = ["widgets"]
+define-macros = [@SIP_EXTRA_DEFINES@]
+exceptions = true

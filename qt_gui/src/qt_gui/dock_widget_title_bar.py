@@ -84,8 +84,8 @@ class DockWidgetTitleBar(QWidget):
 
         self._close_callbacks = []
         self._event_callbacks = {
-            QEvent.WindowIconChange: self._update_icon,
-            QEvent.WindowTitleChange: self._update_title,
+            QEvent.Type.WindowIconChange: self._update_icon,
+            QEvent.Type.WindowTitleChange: self._update_title,
         }
         self._dock_widget.installEventFilter(self)
 
@@ -134,7 +134,7 @@ class DockWidgetTitleBar(QWidget):
             ret_val = self._event_callbacks[event.type()](obj, event)
             if ret_val is not None:
                 return ret_val
-        if event.type() == event.ContextMenu and obj == self.title_label:
+        if event.type() == QEvent.Type.ContextMenu and obj == self.title_label:
             menu = QMenu(self)
             rename_action = menu.addAction(self.tr('Rename dock widget'))
             action = menu.exec_(self.mapToGlobal(event.pos()))
@@ -150,7 +150,8 @@ class DockWidgetTitleBar(QWidget):
         pixmap = None
         if self.parentWidget().windowIcon():
             pixmap = self.parentWidget().windowIcon().pixmap(self.close_button.iconSize())
-        self.icon_label.setPixmap(pixmap)
+        if pixmap is not None:
+            self.icon_label.setPixmap(pixmap)
 
     def _update_title(self, *args):
         self.title_label.setText(self.parentWidget().windowTitle())
@@ -158,7 +159,7 @@ class DockWidgetTitleBar(QWidget):
     def _toggle_dockable(self, enabled):
         dock_widget = self.parentWidget()
         if enabled:
-            dock_widget.setAllowedAreas(Qt.AllDockWidgetAreas)
+            dock_widget.setAllowedAreas(Qt.DockWidgetArea.AllDockWidgetAreas)
         else:
             dock_widget.setAllowedAreas(Qt.NoDockWidgetArea)
 
@@ -174,11 +175,11 @@ class DockWidgetTitleBar(QWidget):
         if features is None:
             features = self.parentWidget().features()
 
-        closable = bool(features & QDockWidget.DockWidgetClosable)
+        closable = bool(features & QDockWidget.DockWidgetFeature.DockWidgetClosable)
         self.close_button.setVisible(closable)
         self.reload_button.setVisible(closable)
 
-        movable = bool(features & QDockWidget.DockWidgetMovable)
+        movable = bool(features & QDockWidget.DockWidgetFeature.DockWidgetMovable)
         self.dockable_button.setChecked(movable)
         self._toggle_dockable(self.dockable_button.isChecked())
         self.dockable_button.setVisible(movable)
@@ -189,7 +190,8 @@ class DockWidgetTitleBar(QWidget):
         settings.set_value('dock_widget_title', self._dock_widget.windowTitle())
 
         # skip saving dockable flag when layout is frozen
-        movable = bool(self.parentWidget().features() & QDockWidget.DockWidgetMovable)
+        movable = bool(
+            self.parentWidget().features() & QDockWidget.DockWidgetFeature.DockWidgetMovable)
         if movable:
             settings.set_value('dockable', self.dockable_button.isChecked())
 
@@ -201,7 +203,8 @@ class DockWidgetTitleBar(QWidget):
 
         dockable = settings.value('dockable', True) in [True, 'true']
         # only allow dockable when layout is not frozen
-        movable = bool(self.parentWidget().features() & QDockWidget.DockWidgetMovable)
+        movable = bool(
+            self.parentWidget().features() & QDockWidget.DockWidgetFeature.DockWidgetMovable)
         self.dockable_button.setChecked(dockable and movable)
         self._toggle_dockable(self.dockable_button.isChecked())
 

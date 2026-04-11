@@ -26,4 +26,6 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-set(qt_gui_cpp_USE_QT_MAJOR_VERSION 5)
+
+find_package(python_qt_binding QUIET)
+set(qt_gui_cpp_USE_QT_MAJOR_VERSION "${python_qt_binding_QT_MAJOR_VERSION}")

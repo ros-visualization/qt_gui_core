@@ -66,7 +66,7 @@ class PluginHandler(QObject):
         self._minimized_dock_widgets_toolbar = None
         self._plugin_descriptor = None
 
-        self._defered_check_close.connect(self._check_close, Qt.QueuedConnection)
+        self._defered_check_close.connect(self._check_close, Qt.ConnectionType.QueuedConnection)
         self._plugin_provider = None
         self.__callback = None
         self.__instance_settings = None
@@ -260,7 +260,7 @@ class PluginHandler(QObject):
             # dock widgets are not closable when perspective is locked or plugin is
             # running standalone
             features = dock_widget.features()
-            dock_widget.setFeatures(features ^ QDockWidget.DockWidgetClosable)
+            dock_widget.setFeatures(features ^ QDockWidget.DockWidgetFeature.DockWidgetClosable)
         if self._application_context.options.freeze_layout:
             # dock widgets are not closable when perspective is locked or plugin is
             # running standalone
@@ -342,7 +342,7 @@ class PluginHandler(QObject):
                          '"%s", assign unique object names before adding widgets!' %
                          dock_widget.objectName())
 
-            self._main_window.addDockWidget(Qt.BottomDockWidgetArea, dock_widget)
+            self._main_window.addDockWidget(Qt.DockWidgetArea.BottomDockWidgetArea, dock_widget)
 
     def _on_widget_icon_changed(self, widget):
         dock_widget, _, _ = self._widgets[widget]

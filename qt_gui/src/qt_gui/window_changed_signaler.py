@@ -58,20 +58,20 @@ class WindowChangedSignaler(QObject):
         self.window_title_changed_signal.emit(self._widget)
 
     def eventFilter(self, watched, event):
-        if event.type() == QEvent.Hide:
+        if event.type() == QEvent.Type.Hide:
             self.hide_signal.emit(watched)
 
-        if event.type() == QEvent.Show:
+        if event.type() == QEvent.Type.Show:
             self.show_signal.emit(watched)
 
-        if event.type() == QEvent.WindowIconChange:
+        if event.type() == QEvent.Type.WindowIconChange:
             # prevent emitting recursive event when emitted signal will trigger another event
             if not self._recursive_invocation:
                 self._recursive_invocation = True
                 self.window_icon_changed_signal.emit(watched)
                 self._recursive_invocation = False
 
-        if event.type() == QEvent.WindowTitleChange:
+        if event.type() == QEvent.Type.WindowTitleChange:
             # prevent emitting recursive event when emitted signal will trigger another event
             if not self._recursive_invocation:
                 self._recursive_invocation = True

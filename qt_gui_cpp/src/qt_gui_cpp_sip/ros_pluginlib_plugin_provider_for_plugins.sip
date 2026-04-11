@@ -17,7 +17,7 @@ public:
 
   virtual ~RosPluginlibPluginProvider_ForPlugins();
 
-  virtual QMap<QString, QString> discover(QObject* discovery_data);
+  virtual QMultiMap<QString, QString> discover(QObject* discovery_data);
 
   virtual QList<qt_gui_cpp::PluginDescriptor*> discover_descriptors(QObject* discovery_data);
 

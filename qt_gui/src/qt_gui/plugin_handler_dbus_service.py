@@ -43,7 +43,7 @@ class PluginHandlerDBusService(Object):
 
         def __init__(self, callback):
             super(PluginHandlerDBusService.QueuedSignal, self).__init__()
-            self._signal.connect(callback, Qt.QueuedConnection)
+            self._signal.connect(callback, Qt.ConnectionType.QueuedConnection)
 
         def emit(self):
             self._signal.emit()

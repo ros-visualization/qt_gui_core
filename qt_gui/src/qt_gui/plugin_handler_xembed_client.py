@@ -224,7 +224,8 @@ class PluginHandlerXEmbedClient(PluginHandlerDirect):
     def _toolbar_orientation_changed(self, win_id, is_horizontal):
         for toolbar, (embed_widget, _) in self._embed_widgets.items():
             if embed_widget.containerWinId() == win_id:
-                toolbar.setOrientation(Qt.Horizontal if is_horizontal else Qt.Vertical)
+                toolbar.setOrientation(
+                    Qt.Orientation.Horizontal if is_horizontal else Qt.Orientation.Vertical)
                 break
 
     # pointer to QToolBar must be used for PySide to work (at least with 1.0.1)

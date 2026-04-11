@@ -53,7 +53,8 @@ class MainWindow(DockableMainWindow):
             self._help_widget = QTextBrowser(self)
             self._help_widget.setFont(font)
             self._help_widget.setReadOnly(True)
-            self._help_widget.setTextInteractionFlags(Qt.TextBrowserInteraction)
+            self._help_widget.setTextInteractionFlags(
+                Qt.TextInteractionFlag.TextBrowserInteraction)
             self._help_widget.setOpenExternalLinks(True)
             self._help_widget.setHtml(help_text)
             self._help_widget.setStyleSheet('background:transparent;')
@@ -144,24 +145,27 @@ class MainWindow(DockableMainWindow):
             toolbar_settings = self._settings.get_settings('toolbar_areas')
             for toolbar in self.findChildren(QToolBar):
                 area = self.toolBarArea(toolbar)
-                if area in [Qt.LeftToolBarArea,
-                            Qt.RightToolBarArea,
-                            Qt.TopToolBarArea,
-                            Qt.BottomToolBarArea]:
+                if area in [Qt.ToolBarArea.LeftToolBarArea,
+                            Qt.ToolBarArea.RightToolBarArea,
+                            Qt.ToolBarArea.TopToolBarArea,
+                            Qt.ToolBarArea.BottomToolBarArea]:
                     toolbar_settings.set_value(toolbar.objectName(), area)
 
     def _restore_state_from_perspective(self):
         if self._settings.contains('state'):
             self.restoreState(self._settings.value('state'))
             # restore area for all toolbars
-            toolbar_settings = self._settings.get_settings('toolbar_areas')
+            # toolbar_settings = self._settings.get_settings('toolbar_areas')
             for toolbar in self.findChildren(QToolBar):
                 if not toolbar.objectName():
                     continue
-                area = Qt.ToolBarArea(
-                    int(toolbar_settings.value(toolbar.objectName(), Qt.NoToolBarArea)))
-                if area in [Qt.LeftToolBarArea,
-                            Qt.RightToolBarArea,
-                            Qt.TopToolBarArea,
-                            Qt.BottomToolBarArea]:
+                # TODO(ahcorde): Review this
+                # area = Qt.ToolBarArea(
+                #     int(toolbar_settings.value(toolbar.objectName(),
+                #         Qt.ToolBarArea.NoToolBarArea)))
+                area = Qt.ToolBarArea.NoToolBarArea
+                if area in [Qt.ToolBarArea.LeftToolBarArea,
+                            Qt.ToolBarArea.RightToolBarArea,
+                            Qt.ToolBarArea.TopToolBarArea,
+                            Qt.ToolBarArea.BottomToolBarArea]:
                     self.addToolBar(area, toolbar)

@@ -40,9 +40,9 @@ from qt_dotgraph.graph_item import GraphItem
 class EdgeItem(GraphItem):
 
     _qt_pen_styles = {
-        'dashed': Qt.DashLine,
-        'dotted': Qt.DotLine,
-        'solid': Qt.SolidLine,
+        'dashed': Qt.PenStyle.DashLine,
+        'dotted': Qt.PenStyle.DotLine,
+        'solid': Qt.PenStyle.SolidLine,
     }
 
     def __init__(
@@ -68,11 +68,11 @@ class EdgeItem(GraphItem):
             self._shape_brush = QBrush(Qt.transparent)
         self._label_pen = QPen()
         self._label_pen.setColor(self._default_text_color)
-        self._label_pen.setJoinStyle(Qt.RoundJoin)
+        self._label_pen.setJoinStyle(Qt.PenJoinStyle.RoundJoin)
         self._edge_pen = QPen(self._label_pen)
         self._edge_pen.setWidth(penwidth)
         self._edge_pen.setColor(self._default_edge_color)
-        self._edge_pen.setStyle(self._qt_pen_styles.get(style, Qt.SolidLine))
+        self._edge_pen.setStyle(self._qt_pen_styles.get(style, Qt.PenStyle.SolidLine))
 
         self._sibling_edges = set()
 

@@ -28,6 +28,8 @@
 # ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
+from packaging.version import Version
+from python_qt_binding import QT_BINDING_VERSION
 from python_qt_binding.QtCore import qDebug, QEvent, QPoint, QRect, Qt
 from python_qt_binding.QtGui import QMouseEvent
 from python_qt_binding.QtWidgets import QApplication, QDockWidget
@@ -50,28 +52,40 @@ class DockWidget(QDockWidget):
         self._main_windows = []
 
     def _event(self, e):
-        if e.type() == QEvent.MouseButtonPress and e.button() == Qt.LeftButton:
-            qDebug('%spress, rel=%s, global=%s, diff=%s' % (
-                (' - pseudo ' if self._releasing_and_repressing_while_dragging else ''),
-                e.pos(), e.globalPos(), e.globalPos() - self.pos()))
+        if e.type() == QEvent.Type.MouseButtonPress and e.button() == Qt.MouseButton.LeftButton:
+            if Version(QT_BINDING_VERSION) > Version('6.0.0'):
+                qDebug('%spress, rel=%s, global=%s, diff=%s' % (
+                    (' - pseudo ' if self._releasing_and_repressing_while_dragging else ''),
+                    e.pos(), e.globalPosition().toPoint(),
+                    e.globalPosition().toPoint() - self.pos()))
+            else:
+                qDebug('%spress, rel=%s, global=%s, diff=%s' % (
+                    (' - pseudo ' if self._releasing_and_repressing_while_dragging else ''),
+                    e.pos(), e.globalPos(), e.globalPos() - self.pos()))
 
-        if e.type() == QEvent.MouseButtonRelease and e.button() == Qt.LeftButton:
-            qDebug('%srelease, rel=%s, global=%s, diff=%s' % (
-                (' - pseudo ' if self._releasing_and_repressing_while_dragging else ''),
-                e.pos(), e.globalPos(), e.globalPos() - self.pos()))
+        if e.type() == QEvent.Type.MouseButtonRelease and e.button() == Qt.MouseButton.LeftButton:
+            if Version(QT_BINDING_VERSION) > Version('6.0.0'):
+                qDebug('%srelease, rel=%s, global=%s, diff=%s' % (
+                    (' - pseudo ' if self._releasing_and_repressing_while_dragging else ''),
+                    e.pos(), e.globalPosition().toPoint(),
+                    e.globalPosition().toPoint() - self.pos()))
+            else:
+                qDebug('%srelease, rel=%s, global=%s, diff=%s' % (
+                    (' - pseudo ' if self._releasing_and_repressing_while_dragging else ''),
+                    e.pos(), e.globalPos(), e.globalPos() - self.pos()))
 
         # store local position when pressing button before starting the custom drag'n'drop
         # only allow when layout is not frozen
         if self._dragging_parent is None and \
-                e.type() == QEvent.MouseButtonPress and \
-                e.button() == Qt.LeftButton and \
-                bool(self.features() & QDockWidget.DockWidgetMovable):
+                e.type() == QEvent.Type.MouseButtonPress and \
+                e.button() == Qt.MouseButton.LeftButton and \
+                bool(self.features() & QDockWidget.DockWidgetFeature.DockWidgetMovable):
             self._dragging_local_pos = e.pos()
 
         if self._dragging_parent is None and \
                 self._dragging_local_pos is not None and \
-                e.type() == QEvent.Move and \
-                QApplication.mouseButtons() & Qt.LeftButton:
+                e.type() == QEvent.Type.Move and \
+                QApplication.mouseButtons() & Qt.MouseButton.LeftButton:
             if self._widget_at(e.pos()) is not None:
                 qDebug(
                     'DockWidget._event() start drag, dockwidget=%s, parent=%s, '
@@ -95,14 +109,14 @@ class DockWidget(QDockWidget):
         # unset local position when releasing button even when custom drag'n'drop
         # has not been started
         if self._dragging_local_pos is not None and \
-                e.type() == QEvent.MouseButtonRelease and \
-                e.button() == Qt.LeftButton \
+                e.type() == QEvent.Type.MouseButtonRelease and \
+                e.button() == Qt.MouseButton.LeftButton \
                 and not self._releasing_and_repressing_while_dragging:
             self._dragging_local_pos = None
 
         if self._dragging_parent is not None and \
-                e.type() == QEvent.MouseButtonRelease and \
-                e.button() == Qt.LeftButton and \
+                e.type() == QEvent.Type.MouseButtonRelease and \
+                e.button() == Qt.MouseButton.LeftButton and \
                 not self._releasing_and_repressing_while_dragging:
             qDebug('DockWidget._event() stop drag, dockwidget=%s, parent=%s\n' %
                    (self, self.parent()))
@@ -111,19 +125,28 @@ class DockWidget(QDockWidget):
             self._main_windows = []
 
         if self._dragging_parent is not None and \
-                e.type() == QEvent.MouseMove and \
-                e.buttons() & Qt.LeftButton and \
+                e.type() == QEvent.Type.MouseMove and \
+                e.buttons() & Qt.MouseButton.LeftButton and \
                 not self._releasing_and_repressing_while_dragging:
-            widget = self._widget_at(e.globalPos())
+            if Version(QT_BINDING_VERSION) > Version('6.0.0'):
+                widget = self._widget_at(e.globalPosition().toPoint())
+            else:
+                widget = self._widget_at(e.globalPos())
             new_parent = self._get_new_parent(widget)
             # print 'new_parent', new_parent, (new_parent.objectName() if new_parent else '')
             if new_parent is not None and new_parent != self.parent():
                 self._releasing_and_repressing_while_dragging = True
 
                 # schedule stop of pseudo drag'n'drop and let it complete
-                mouse_release_event = QMouseEvent(
-                    QEvent.MouseButtonRelease, self._dragging_local_pos,
-                    e.globalPos(), Qt.LeftButton, Qt.NoButton, e.modifiers())
+                if Version(QT_BINDING_VERSION) > Version('6.0.0'):
+                    mouse_release_event = QMouseEvent(
+                        QEvent.Type.MouseButtonRelease, self._dragging_local_pos,
+                        e.globalPosition().toPoint(),
+                        Qt.MouseButton.LeftButton, Qt.NoButton, e.modifiers())
+                else:
+                    mouse_release_event = QMouseEvent(
+                        QEvent.Type.MouseButtonRelease, self._dragging_local_pos,
+                        e.globalPos(), Qt.MouseButton.LeftButton, Qt.NoButton, e.modifiers())
                 QApplication.instance().postEvent(self, mouse_release_event)
                 QApplication.sendPostedEvents()
 
@@ -136,27 +159,49 @@ class DockWidget(QDockWidget):
                 self.setAttribute(Qt.WA_TransparentForMouseEvents, False)
 
                 # schedule restart of pseudo drag'n'drop and let it complete
-                mouse_repress_event = QMouseEvent(
-                    QEvent.MouseButtonPress, self._dragging_local_pos, e.globalPos(),
-                    Qt.LeftButton, Qt.LeftButton, e.modifiers())
+                if Version(QT_BINDING_VERSION) > Version('6.0.0'):
+                    mouse_repress_event = QMouseEvent(
+                        QEvent.Type.MouseButtonPress, self._dragging_local_pos,
+                        e.globalPosition().toPoint(),
+                        Qt.MouseButton.LeftButton,
+                        Qt.MouseButton.LeftButton, e.modifiers())
+                else:
+                    mouse_repress_event = QMouseEvent(
+                        QEvent.Type.MouseButtonPress, self._dragging_local_pos, e.globalPos(),
+                        Qt.MouseButton.LeftButton, Qt.MouseButton.LeftButton, e.modifiers())
                 QApplication.instance().postEvent(self, mouse_repress_event)
                 QApplication.sendPostedEvents()
 
                 # schedule move to trigger dock widget drag'n'drop required for snapping and
                 # showing rubber band and let it complete move forth...
-                mouse_move_event = QMouseEvent(
-                    QEvent.MouseMove,
-                    self._dragging_local_pos,
-                    e.globalPos() + QPoint(QApplication.startDragDistance(), 1),
-                    Qt.NoButton,
-                    Qt.LeftButton,
-                    e.modifiers())
+                if Version(QT_BINDING_VERSION) > Version('6.0.0'):
+                    mouse_move_event = QMouseEvent(
+                        QEvent.Type.MouseMove,
+                        self._dragging_local_pos,
+                        e.globalPosition().toPoint() + QPoint(QApplication.startDragDistance(), 1),
+                        Qt.NoButton,
+                        Qt.MouseButton.LeftButton,
+                        e.modifiers())
+                else:
+                    mouse_move_event = QMouseEvent(
+                        QEvent.Type.MouseMove,
+                        self._dragging_local_pos,
+                        e.globalPos() + QPoint(QApplication.startDragDistance(), 1),
+                        Qt.NoButton,
+                        Qt.MouseButton.LeftButton,
+                        e.modifiers())
                 QApplication.instance().postEvent(self, mouse_move_event)
                 QApplication.sendPostedEvents()
                 # ...and back
-                mouse_move_event = QMouseEvent(
-                    QEvent.MouseMove, self._dragging_local_pos, e.globalPos(),
-                    Qt.NoButton, Qt.LeftButton, e.modifiers())
+                if Version(QT_BINDING_VERSION) > Version('6.0.0'):
+                    mouse_move_event = QMouseEvent(
+                        QEvent.Type.MouseMove,
+                        self._dragging_local_pos, e.globalPosition().toPoint(),
+                        Qt.NoButton, Qt.MouseButton.LeftButton, e.modifiers())
+                else:
+                    mouse_move_event = QMouseEvent(
+                        QEvent.Type.MouseMove, self._dragging_local_pos, e.globalPos(),
+                        Qt.NoButton, Qt.MouseButton.LeftButton, e.modifiers())
                 QApplication.instance().postEvent(self, mouse_move_event)
                 QApplication.sendPostedEvents()
 

@@ -28,9 +28,17 @@
 # ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
+from packaging.version import Version
+
+from python_qt_binding import QT_BINDING_VERSION
+
 from python_qt_binding.QtCore import QSignalMapper, Qt
+if Version(QT_BINDING_VERSION) > Version('6.0.0'):
+    from python_qt_binding.QtGui import QAction
+else:
+    from python_qt_binding.QtWidgets import QAction
 from python_qt_binding.QtGui import QIcon
-from python_qt_binding.QtWidgets import QAction, QToolBar, QWidget
+from python_qt_binding.QtWidgets import QToolBar
 
 
 class MinimizedDockWidgetsToolbar(QToolBar):
@@ -41,10 +49,10 @@ class MinimizedDockWidgetsToolbar(QToolBar):
         super(MinimizedDockWidgetsToolbar, self).__init__(parent=parent)
         self.setWindowTitle(self.tr('Minimized dock widgets'))
         self.setObjectName('MinimizedDockWidgetsToolbar')
-        self.setToolButtonStyle(Qt.ToolButtonTextBesideIcon)
+        self.setToolButtonStyle(Qt.ToolButtonStyle.ToolButtonTextBesideIcon)
         self._container_manager = container_manager
         self._signal_mapper = QSignalMapper(self)
-        self._signal_mapper.mapped[QWidget].connect(self._on_action_triggered)
+        self._signal_mapper.mappedObject.connect(self._on_action_triggered)
         self._dock_widgets = {}
 
         self.hide()
