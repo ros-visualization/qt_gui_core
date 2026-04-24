@@ -2,8 +2,8 @@
 Changelog for package qt_gui_cpp
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+2.10.5 (2026-04-24)
+-------------------
 * Use qt-base-dev / libqtwidgets (`#330 <https://github.com/ros-visualization/qt_gui_core/issues/330>`_)
 * Contributors: Shane Loretz
 

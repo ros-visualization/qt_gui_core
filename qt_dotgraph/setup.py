@@ -4,7 +4,7 @@ package_name = 'qt_dotgraph'
 
 setup(
     name=package_name,
-    version='2.10.4',
+    version='2.10.5',
     packages=[package_name],
     package_dir={'': 'src'},
     data_files=[
