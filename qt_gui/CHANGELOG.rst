@@ -2,6 +2,9 @@
 Changelog for package qt_gui
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+
 2.10.4 (2026-04-13)
 -------------------
 * Support qt6 (`#293 <https://github.com/ros-visualization/qt_gui_core/issues/293>`_)

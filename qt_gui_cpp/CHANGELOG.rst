@@ -2,6 +2,11 @@
 Changelog for package qt_gui_cpp
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Use qt-base-dev / libqtwidgets (`#330 <https://github.com/ros-visualization/qt_gui_core/issues/330>`_)
+* Contributors: Shane Loretz
+
 2.10.4 (2026-04-13)
 -------------------
 * Support qt6 (`#293 <https://github.com/ros-visualization/qt_gui_core/issues/293>`_)
