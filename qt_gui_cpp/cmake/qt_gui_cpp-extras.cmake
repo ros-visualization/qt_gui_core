@@ -29,3 +29,4 @@
 
 find_package(python_qt_binding QUIET)
 set(qt_gui_cpp_USE_QT_MAJOR_VERSION "${python_qt_binding_QT_MAJOR_VERSION}")
+find_package(Qt${qt_gui_cpp_USE_QT_MAJOR_VERSION} REQUIRED COMPONENTS Widgets Core)
