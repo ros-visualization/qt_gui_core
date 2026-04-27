@@ -2,6 +2,11 @@
 Changelog for package qt_gui_cpp
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* find_package(Qt...) in downstream packages (`#332 <https://github.com/ros-visualization/qt_gui_core/issues/332>`_)
+* Contributors: Shane Loretz
+
 2.10.6 (2026-04-27)
 -------------------
 * Export qt dependencies in package.xml (`#331 <https://github.com/ros-visualization/qt_gui_core/issues/331>`_)
