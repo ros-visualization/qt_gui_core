@@ -2,8 +2,8 @@
 Changelog for package qt_gui_cpp
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+2.10.7 (2026-04-27)
+-------------------
 * find_package(Qt...) in downstream packages (`#332 <https://github.com/ros-visualization/qt_gui_core/issues/332>`_)
 * Contributors: Shane Loretz
 
