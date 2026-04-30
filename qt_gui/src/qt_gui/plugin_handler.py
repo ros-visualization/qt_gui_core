@@ -407,7 +407,7 @@ class PluginHandler(QObject):
                 qWarning('PluginHandler._add_toolbar() duplicate object name "%s", '
                          'assign unique object names before adding toolbars!' %
                          toolbar.objectName())
-            self._main_window.addToolBar(Qt.TopToolBarArea, toolbar)
+            self._main_window.addToolBar(Qt.ToolBarArea.TopToolBarArea, toolbar)
 
     # pointer to QToolBar must be used for PySide to work (at least with 1.0.1)
     @Slot('QToolBar*')

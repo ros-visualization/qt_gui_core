@@ -82,6 +82,9 @@ class RosPluginlibPluginProvider(PluginProvider):
     def _unfold(self, flat_dict):
         dictionary = {}
         for key, value in flat_dict.items():
+            # QMultiMap values come back as a list under PyQt6/PySide6; unwrap to scalar
+            if isinstance(value, list):
+                value = value[0] if value else ''
             keys = str(key).split('.')
             current_level = dictionary
             for i in keys[:-1]:
