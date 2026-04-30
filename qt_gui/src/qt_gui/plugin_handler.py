@@ -266,7 +266,8 @@ class PluginHandler(QObject):
             # running standalone
             features = dock_widget.features()
             dock_widget.setFeatures(
-                features ^ (QDockWidget.DockWidgetMovable | QDockWidget.DockWidgetFloatable))
+                features ^ (QDockWidget.DockWidgetFeature.DockWidgetMovable |
+                            QDockWidget.DockWidgetFeature.DockWidgetFloatable))
 
     def _update_title_bar(self, dock_widget, hide_help=False, hide_reload=False):
         title_bar = dock_widget.titleBarWidget()
