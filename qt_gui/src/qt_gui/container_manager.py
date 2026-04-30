@@ -39,7 +39,7 @@ class ContainerManager(QObject):
     """Manager of `DockWidgetContainer`s enabling reparenting to stored parent."""
 
     def __init__(self, root_main_window, parent=None):
-        super(ContainerManager, self).__init__(parent)
+        super().__init__(parent)
         self._root_main_window = root_main_window
         self._container_descriptor = PluginDescriptor('__DockWidgetContainer')
         self._container_descriptor.set_action_attributes(
@@ -103,4 +103,4 @@ class ContainerManager(QObject):
                 e.dock_widget.move(pos)
             e.accept()
             return True
-        return super(ContainerManager, self).event(e)
+        return super().event(e)

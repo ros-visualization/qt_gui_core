@@ -39,7 +39,7 @@ class CompositePluginProvider(PluginProvider):
     """Composite of multiple `PluginProvider`s."""
 
     def __init__(self, plugin_providers=None):
-        super(CompositePluginProvider, self).__init__()
+        super().__init__()
         self.setObjectName('CompositePluginProvider')
 
         self._plugin_providers = plugin_providers or []

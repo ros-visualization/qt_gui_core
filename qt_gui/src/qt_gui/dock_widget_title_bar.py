@@ -40,7 +40,7 @@ class DockWidgetTitleBar(QWidget):
     """Title bar for dock widgets providing custom actions."""
 
     def __init__(self, dock_widget, qtgui_path, hide_title=False):
-        super(DockWidgetTitleBar, self).__init__(dock_widget)
+        super().__init__(dock_widget)
         self._dock_widget = dock_widget
 
         ui_file = os.path.join(

@@ -49,7 +49,7 @@ class AboutHandler(QObject):
     """
 
     def __init__(self, qtgui_path, parent=None):
-        super(AboutHandler, self).__init__(parent)
+        super().__init__(parent)
         self._qtgui_path = qtgui_path
 
     def show(self):

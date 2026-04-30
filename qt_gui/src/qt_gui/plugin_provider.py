@@ -35,7 +35,7 @@ class PluginProvider(QObject):
     """Interface for discovering, loading and unloading of plugins."""
 
     def __init__(self):
-        super(PluginProvider, self).__init__()
+        super().__init__()
         self.setObjectName('PluginProvider')
 
     def discover(self, discovery_data):

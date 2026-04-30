@@ -39,7 +39,7 @@ class PerspectiveManagerDBusInterface(Object):
 
     def __init__(self, perspective_manager, application_context):
         bus_name = BusName(application_context.dbus_unique_bus_name, dbus.SessionBus())
-        super(PerspectiveManagerDBusInterface, self).__init__(bus_name, '/PerspectiveManager')
+        super().__init__(bus_name, '/PerspectiveManager')
         self._perspective_manager = perspective_manager
 
     @dbus.service.method('org.ros.qt_gui.PerspectiveManager', in_signature='s', out_signature='')

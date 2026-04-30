@@ -30,8 +30,6 @@
 # ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-from __future__ import print_function
-
 from argparse import ArgumentParser, SUPPRESS
 import os
 import signal
@@ -40,7 +38,7 @@ import sys
 from ament_index_python.resources import get_resource, has_resource
 
 
-class Main(object):
+class Main:
 
     main_filename = None
 
@@ -77,7 +75,7 @@ class Main(object):
         common_group = parser.add_argument_group('Options for GUI instance')
         common_group.add_argument(
             '-b', '--qt-binding', dest='qt_binding', type=str, metavar='BINDING',
-            help='choose Qt bindings to be used [pyqt|pyside]')
+            help='choose Qt bindings to be used [pyqt5|pyqt6|pyside2|pyside6]')
         common_group.add_argument(
             '--clear-config', dest='clear_config', default=False, action='store_true',
             help='clear the configuration (including all perspectives and plugin settings)')
@@ -423,7 +421,7 @@ class Main(object):
         from packaging.version import Version
 
         from python_qt_binding.QtGui import QIcon
-        if Version(QT_BINDING_VERSION) > Version('6.0.0'):
+        if Version(QT_BINDING_VERSION) >= Version('6.0.0'):
             from python_qt_binding.QtGui import QAction
         else:
             from python_qt_binding.QtWidgets import QAction

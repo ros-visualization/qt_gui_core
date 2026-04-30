@@ -59,7 +59,7 @@ class ConsoleTextEdit(QTextEdit):
             self._text_edit.ensureCursorVisible()
 
     def __init__(self, parent=None):
-        super(ConsoleTextEdit, self).__init__(parent)
+        super().__init__(parent)
         self.setFont(QFont('Mono'))
 
         self._multi_line = False
@@ -175,7 +175,7 @@ class ConsoleTextEdit(QTextEdit):
                 return None
 
         # allow all other key events
-        super(ConsoleTextEdit, self).keyPressEvent(event)
+        super().keyPressEvent(event)
 
         # fix cursor position to be after the prompt, if the cursor is in the last line
         if line_start <= self.textCursor().position() < prompt_position:

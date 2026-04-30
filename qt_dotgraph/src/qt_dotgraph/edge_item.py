@@ -49,7 +49,7 @@ class EdgeItem(GraphItem):
             self, highlight_level, spline, label_center, label, from_node, to_node,
             parent=None, penwidth=1, edge_color=None, style='solid',
             edgetooltip=None):
-        super(EdgeItem, self).__init__(highlight_level, parent)
+        super().__init__(highlight_level, parent)
 
         self.from_node = from_node
         self.from_node.add_outgoing_edge(self)
@@ -152,7 +152,7 @@ class EdgeItem(GraphItem):
             scene.addItem(self._arrow)
 
     def setToolTip(self, tool_tip):
-        super(EdgeItem, self).setToolTip(tool_tip)
+        super().setToolTip(tool_tip)
         if self._label is not None:
             self._label.setToolTip(tool_tip)
         if self._arrow is not None and self._edgetooltip is None:

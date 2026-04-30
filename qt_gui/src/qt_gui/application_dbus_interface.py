@@ -44,7 +44,7 @@ class ApplicationDBusInterface(Object):
 
     def __init__(self, named_bus_name):
         bus_name = BusName(named_bus_name, dbus.SessionBus())
-        super(ApplicationDBusInterface, self).__init__(bus_name, '/Application')
+        super().__init__(bus_name, '/Application')
 
     @dbus.service.method('org.ros.qt_gui.Application', in_signature='', out_signature='i')
     def get_pid(self):

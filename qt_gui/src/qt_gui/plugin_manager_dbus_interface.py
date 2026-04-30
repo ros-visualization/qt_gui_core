@@ -39,7 +39,7 @@ class PluginManagerDBusInterface(Object):
 
     def __init__(self, plugin_manager, application_context):
         bus_name = BusName(application_context.dbus_unique_bus_name, dbus.SessionBus())
-        super(PluginManagerDBusInterface, self).__init__(bus_name, '/PluginManager')
+        super().__init__(bus_name, '/PluginManager')
         self._plugin_manager = plugin_manager
 
     @dbus.service.method('org.ros.qt_gui.PluginManager', in_signature='ss', out_signature='is')

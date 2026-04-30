@@ -44,7 +44,7 @@ class NodeItem(GraphItem):
     def __init__(
             self, highlight_level, bounding_box, label, shape, color=None,
             parent=None, label_pos=None, tooltip=None):
-        super(NodeItem, self).__init__(highlight_level, parent)
+        super().__init__(highlight_level, parent)
 
         self._default_color = self._COLOR_BLACK if color is None else color
         self._brush = QBrush(self._default_color)
@@ -98,7 +98,7 @@ class NodeItem(GraphItem):
             path.addRect(self.hovershape)
             return path
         else:
-            return super(self.__class__, self).shape()
+            return super().shape()
 
     def add_incoming_edge(self, edge):
         self._incoming_edges.add(edge)

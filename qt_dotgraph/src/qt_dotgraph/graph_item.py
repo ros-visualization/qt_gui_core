@@ -44,7 +44,7 @@ class GraphItem(QGraphicsItemGroup):
     _LABEL_FONT = QFont('sans', weight=QFont.Weight.Light)
 
     def __init__(self, highlight_level, parent=None):
-        super(GraphItem, self).__init__(parent)
+        super().__init__(parent)
         self._highlight_level = highlight_level
         # use device depended font size to produce
         GraphItem._LABEL_FONT.setPixelSize(11)

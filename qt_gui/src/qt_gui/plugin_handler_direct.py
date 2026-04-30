@@ -41,7 +41,7 @@ class PluginHandlerDirect(PluginHandler):
 
     def __init__(self, parent, main_window, instance_id,
                  application_context, container_manager, argv):
-        super(PluginHandlerDirect, self).__init__(
+        super().__init__(
             parent, main_window, instance_id, application_context, container_manager, argv)
         self.setObjectName('PluginHandlerDirect')
         self._context = None
@@ -49,7 +49,7 @@ class PluginHandlerDirect(PluginHandler):
 
     def load(self, plugin_provider, callback=None):
         self._context = PluginContext(self)
-        super(PluginHandlerDirect, self).load(plugin_provider, callback)
+        super().load(plugin_provider, callback)
 
     def _load(self):
         self._plugin = self._plugin_provider.load(self._instance_id.plugin_id, self._context)
@@ -64,7 +64,7 @@ class PluginHandlerDirect(PluginHandler):
         if exception is None and hasattr(self._plugin, 'installEventFilter'):
             # emit close_signal when deferred delete event for plugin is received
             self._plugin.installEventFilter(self)
-        super(PluginHandlerDirect, self)._emit_load_completed(exception)
+        super()._emit_load_completed(exception)
 
     def eventFilter(self, watched, event):
         if event.type() == QEvent.Type.DeferredDelete:
@@ -77,7 +77,7 @@ class PluginHandlerDirect(PluginHandler):
     def shutdown_plugin(self, callback):
         if hasattr(self._plugin, 'removeEventFilter'):
             self._plugin.removeEventFilter(self)
-        super(PluginHandlerDirect, self).shutdown_plugin(callback)
+        super().shutdown_plugin(callback)
         if hasattr(self._plugin, 'deleteLater'):
             self._plugin.deleteLater()
 
@@ -94,7 +94,7 @@ class PluginHandlerDirect(PluginHandler):
     def _delete_widget(self, widget):
         # only delete widgets which are not at the same time the plugin
         if widget != self._plugin:
-            super(PluginHandlerDirect, self)._delete_widget(widget)
+            super()._delete_widget(widget)
 
     def _unload(self):
         self._plugin_provider.unload(self._plugin)
