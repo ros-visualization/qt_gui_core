@@ -146,7 +146,8 @@ class DockWidget(QDockWidget):
                 else:
                     mouse_release_event = QMouseEvent(
                         QEvent.Type.MouseButtonRelease, self._dragging_local_pos,
-                        e.globalPos(), Qt.MouseButton.LeftButton, Qt.MouseButton.NoButton, e.modifiers())
+                        e.globalPos(), Qt.MouseButton.LeftButton, Qt.MouseButton.NoButton,
+                        e.modifiers())
                 QApplication.instance().postEvent(self, mouse_release_event)
                 QApplication.sendPostedEvents()
 
