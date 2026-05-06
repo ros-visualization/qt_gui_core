@@ -2,8 +2,8 @@
 Changelog for package qt_gui_py_common
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+3.0.0 (2026-05-06)
+------------------
 * More qt6 fixes (`#334 <https://github.com/ros-visualization/qt_gui_core/issues/334>`_)
 * Contributors: Alejandro Hernández Cordero
 
