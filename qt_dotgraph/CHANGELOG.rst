@@ -2,6 +2,13 @@
 Changelog for package qt_dotgraph
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+2.11.0 (2026-05-06)
+-------------------
+* More qt6 fixes (`#334 <https://github.com/ros-visualization/qt_gui_core/issues/334>`_) (`#335 <https://github.com/ros-visualization/qt_gui_core/issues/335>`_)
+  (cherry picked from commit 62f29544c4061006f9c09c3dfa4bf2895e8126e0)
+  Co-authored-by: Alejandro Hernández Cordero <ahcorde@gmail.com>
+* Contributors: mergify[bot]
+
 2.10.7 (2026-04-27)
 -------------------
 
