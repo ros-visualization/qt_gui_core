@@ -65,7 +65,7 @@ class EdgeItem(GraphItem):
         self._text_brush = QBrush(self._default_color)
         self._shape_brush = QBrush(self._default_color)
         if style in ['dashed', 'dotted']:
-            self._shape_brush = QBrush(Qt.transparent)
+            self._shape_brush = QBrush(Qt.GlobalColor.transparent)
         self._label_pen = QPen()
         self._label_pen.setColor(self._default_text_color)
         self._label_pen.setJoinStyle(Qt.PenJoinStyle.RoundJoin)

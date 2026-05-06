@@ -96,7 +96,7 @@ class DockWidget(QDockWidget):
                 self._dragging_parent = self.parent()
                 # ignore further mouse events so that the widget behind this dock widget
                 # can be determined
-                self.setAttribute(Qt.WA_TransparentForMouseEvents)
+                self.setAttribute(Qt.WidgetAttribute.WA_TransparentForMouseEvents)
 
                 # collect all main windows (except self.main_window) to re-implement
                 # QApplication.widgetAt() in self._widget_at()
@@ -121,7 +121,7 @@ class DockWidget(QDockWidget):
             qDebug('DockWidget._event() stop drag, dockwidget=%s, parent=%s\n' %
                    (self, self.parent()))
             self._dragging_parent = None
-            self.setAttribute(Qt.WA_TransparentForMouseEvents, False)
+            self.setAttribute(Qt.WidgetAttribute.WA_TransparentForMouseEvents, False)
             self._main_windows = []
 
         if self._dragging_parent is not None and \
@@ -142,11 +142,12 @@ class DockWidget(QDockWidget):
                     mouse_release_event = QMouseEvent(
                         QEvent.Type.MouseButtonRelease, self._dragging_local_pos,
                         e.globalPosition().toPoint(),
-                        Qt.MouseButton.LeftButton, Qt.NoButton, e.modifiers())
+                        Qt.MouseButton.LeftButton, Qt.MouseButton.NoButton, e.modifiers())
                 else:
                     mouse_release_event = QMouseEvent(
                         QEvent.Type.MouseButtonRelease, self._dragging_local_pos,
-                        e.globalPos(), Qt.MouseButton.LeftButton, Qt.NoButton, e.modifiers())
+                        e.globalPos(), Qt.MouseButton.LeftButton, Qt.MouseButton.NoButton,
+                        e.modifiers())
                 QApplication.instance().postEvent(self, mouse_release_event)
                 QApplication.sendPostedEvents()
 
@@ -156,7 +157,7 @@ class DockWidget(QDockWidget):
                 QApplication.sendPostedEvents()
 
                 # reenable mouse events to be able to receive upcoming pseudo mouse events
-                self.setAttribute(Qt.WA_TransparentForMouseEvents, False)
+                self.setAttribute(Qt.WidgetAttribute.WA_TransparentForMouseEvents, False)
 
                 # schedule restart of pseudo drag'n'drop and let it complete
                 if Version(QT_BINDING_VERSION) > Version('6.0.0'):
@@ -179,7 +180,7 @@ class DockWidget(QDockWidget):
                         QEvent.Type.MouseMove,
                         self._dragging_local_pos,
                         e.globalPosition().toPoint() + QPoint(QApplication.startDragDistance(), 1),
-                        Qt.NoButton,
+                        Qt.MouseButton.NoButton,
                         Qt.MouseButton.LeftButton,
                         e.modifiers())
                 else:
@@ -187,7 +188,7 @@ class DockWidget(QDockWidget):
                         QEvent.Type.MouseMove,
                         self._dragging_local_pos,
                         e.globalPos() + QPoint(QApplication.startDragDistance(), 1),
-                        Qt.NoButton,
+                        Qt.MouseButton.NoButton,
                         Qt.MouseButton.LeftButton,
                         e.modifiers())
                 QApplication.instance().postEvent(self, mouse_move_event)
@@ -197,16 +198,16 @@ class DockWidget(QDockWidget):
                     mouse_move_event = QMouseEvent(
                         QEvent.Type.MouseMove,
                         self._dragging_local_pos, e.globalPosition().toPoint(),
-                        Qt.NoButton, Qt.MouseButton.LeftButton, e.modifiers())
+                        Qt.MouseButton.NoButton, Qt.MouseButton.LeftButton, e.modifiers())
                 else:
                     mouse_move_event = QMouseEvent(
                         QEvent.Type.MouseMove, self._dragging_local_pos, e.globalPos(),
-                        Qt.NoButton, Qt.MouseButton.LeftButton, e.modifiers())
+                        Qt.MouseButton.NoButton, Qt.MouseButton.LeftButton, e.modifiers())
                 QApplication.instance().postEvent(self, mouse_move_event)
                 QApplication.sendPostedEvents()
 
                 # restore attributes after repressing the button
-                self.setAttribute(Qt.WA_TransparentForMouseEvents)
+                self.setAttribute(Qt.WidgetAttribute.WA_TransparentForMouseEvents)
 
                 self._releasing_and_repressing_while_dragging = False
 

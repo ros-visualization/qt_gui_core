@@ -36,7 +36,7 @@ from packaging.version import Version
 from python_qt_binding import loadUi, QT_BINDING_VERSION
 from python_qt_binding.QtCore import QByteArray, qDebug, QObject, QSignalMapper, Signal, Slot
 from python_qt_binding.QtGui import QIcon, QValidator
-from python_qt_binding.QtWidgets import QFileDialog, QInputDialog, QMessageBox
+from python_qt_binding.QtWidgets import QDialog, QFileDialog, QInputDialog, QMessageBox
 
 if Version(QT_BINDING_VERSION) > Version('6.0.0'):
     from python_qt_binding.QtGui import QAction
@@ -227,10 +227,10 @@ class PerspectiveManager(QObject):
                 def validate(self, value, pos):
                     if value.find('/') != -1:
                         pos = value.find('/')
-                        return (QValidator.Invalid, value, pos)
+                        return (QValidator.State.Invalid, value, pos)
                     if value == '':
-                        return (QValidator.Intermediate, value, pos)
-                    return (QValidator.Acceptable, value, pos)
+                        return (QValidator.State.Intermediate, value, pos)
+                    return (QValidator.State.Acceptable, value, pos)
             self._create_perspective_dialog.perspective_name_edit.setValidator(CustomValidator())
 
         # set default values
@@ -239,8 +239,8 @@ class PerspectiveManager(QObject):
         self._create_perspective_dialog.clone_checkbox.setVisible(show_cloning)
 
         # show dialog and wait for it's return value
-        return_value = self._create_perspective_dialog.exec_()
-        if return_value == self._create_perspective_dialog.Rejected:
+        return_value = self._create_perspective_dialog.exec()
+        if return_value == QDialog.DialogCode.Rejected:
             return
 
         name = str(self._create_perspective_dialog.perspective_name_edit.text()).lstrip(
@@ -315,7 +315,7 @@ class PerspectiveManager(QObject):
             self._menu_manager.tr('Select the perspective'), names, 0, False)
         # convert from unicode
         name = str(name)
-        if return_value == QInputDialog.Rejected:
+        if return_value == QDialog.DialogCode.Rejected:
             return
         self._remove_perspective(name)
 
