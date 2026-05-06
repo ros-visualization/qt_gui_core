@@ -244,7 +244,7 @@ class PluginHandlerXEmbedContainer(PluginHandler):
         embed_container = self._embed_containers[toolbar_object_name]
         toolbar = self._embed_toolbars[toolbar_object_name]
         self._dbus_container_service.toolbar_orientation_changed(
-            embed_container.winId(), toolbar.orientation() == Qt.Horizontal)
+            embed_container.winId(), toolbar.orientation() == Qt.Orientation.Horizontal)
 
     def unembed_toolbar(self, toolbar_object_name):
         embed_container = self._embed_containers[toolbar_object_name]

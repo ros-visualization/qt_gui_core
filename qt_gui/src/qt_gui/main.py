@@ -470,7 +470,7 @@ class Main(object):
 
             main_window = MainWindow(help_text)
             if self._options.on_top:
-                main_window.setWindowFlags(Qt.WindowStaysOnTopHint)
+                main_window.setWindowFlags(Qt.WindowType.WindowStaysOnTopHint)
 
             main_window.statusBar()
 
