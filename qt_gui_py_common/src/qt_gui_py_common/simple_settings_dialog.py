@@ -80,7 +80,7 @@ class SimpleSettingsDialog(QDialog):
 
     def get_settings(self):
         """Return the combined settings from all settings groups as a list."""
-        if self.exec_() == QDialog.Accepted:
+        if self.exec() == QDialog.DialogCode.Accepted:
             results = []
             for settings_group in self._settings_groups:
                 if hasattr(settings_group, 'get_settings'):

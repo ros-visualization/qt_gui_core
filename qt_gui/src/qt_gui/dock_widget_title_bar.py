@@ -137,7 +137,7 @@ class DockWidgetTitleBar(QWidget):
         if event.type() == QEvent.Type.ContextMenu and obj == self.title_label:
             menu = QMenu(self)
             rename_action = menu.addAction(self.tr('Rename dock widget'))
-            action = menu.exec_(self.mapToGlobal(event.pos()))
+            action = menu.exec(self.mapToGlobal(event.pos()))
             if action == rename_action:
                 self.title_label.hide()
                 self.title_edit.setText(self.title_label.text())
@@ -161,7 +161,7 @@ class DockWidgetTitleBar(QWidget):
         if enabled:
             dock_widget.setAllowedAreas(Qt.DockWidgetArea.AllDockWidgetAreas)
         else:
-            dock_widget.setAllowedAreas(Qt.NoDockWidgetArea)
+            dock_widget.setAllowedAreas(Qt.DockWidgetArea.NoDockWidgetArea)
 
     def _toggle_floating(self):
         dock_widget = self.parentWidget()
@@ -230,12 +230,12 @@ if __name__ == '__main__':
     win = DockableMainWindow()
 
     dock1 = QDockWidget('dockwidget1', win)
-    win.addDockWidget(Qt.LeftDockWidgetArea, dock1)
+    win.addDockWidget(Qt.DockWidgetArea.LeftDockWidgetArea, dock1)
     title_bar = DockWidgetTitleBar(dock1, qtgui_path)
     dock1.setTitleBarWidget(title_bar)
 
     dock2 = QDockWidget('dockwidget2')
-    win.addDockWidget(Qt.RightDockWidgetArea, dock2)
+    win.addDockWidget(Qt.DockWidgetArea.RightDockWidgetArea, dock2)
     title_bar = DockWidgetTitleBar(dock2, qtgui_path)
 
     dock2.setTitleBarWidget(title_bar)
@@ -243,4 +243,4 @@ if __name__ == '__main__':
     win.resize(640, 480)
     win.show()
 
-    app.exec_()
+    app.exec()
