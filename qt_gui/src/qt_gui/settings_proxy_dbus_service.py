@@ -88,9 +88,4 @@ class SettingsProxyDBusService(dbus.service.Object):
             value = float(value)
         elif isinstance(value, dbus.String):
             value = str(value)
-        elif isinstance(value, dbus.UTF8String):
-            try:
-                value = unicode(value)
-            except NameError:
-                value = str(value)
         return value
