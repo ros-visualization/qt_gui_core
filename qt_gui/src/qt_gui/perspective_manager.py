@@ -49,11 +49,8 @@ from qt_gui.settings_proxy import SettingsProxy
 
 
 def is_string(s):
-    """Check if the argument is a string which works for both Python 2 and 3."""
-    try:
-        return isinstance(s, basestring)
-    except NameError:
-        return isinstance(s, str)
+    """Check if the argument is a string."""
+    return isinstance(s, str)
 
 
 class PerspectiveManager(QObject):
