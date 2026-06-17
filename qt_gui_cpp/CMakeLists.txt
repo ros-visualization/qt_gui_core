@@ -21,7 +21,6 @@ endif()
 
 find_package(pluginlib REQUIRED)
 include(cmake/qt_gui_cpp-extras.cmake)
-find_package(Qt${qt_gui_cpp_USE_QT_MAJOR_VERSION} REQUIRED COMPONENTS Widgets Core)
 find_package(TinyXML2 REQUIRED)
 
 ament_python_install_package(${PROJECT_NAME}
@@ -84,9 +83,6 @@ install(
   DESTINATION include/${PROJECT_NAME}
 )
 
-if(${qt_gui_cpp_USE_QT_MAJOR_VERSION} GREATER "5")
-  ament_export_dependencies(Qt6)
-endif()
 ament_export_dependencies(pluginlib TinyXML2)
 ament_export_targets(export_${PROJECT_NAME} HAS_LIBRARY_TARGET)
 

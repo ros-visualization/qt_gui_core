@@ -2,6 +2,20 @@
 Changelog for package qt_gui
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+3.0.0 (2026-05-06)
+-------------------
+* More qt6 fixes (`#334 <https://github.com/ros-visualization/qt_gui_core/issues/334>`_)
+* Contributors: Alejandro Hernández Cordero
+
+2.10.7 (2026-04-27)
+-------------------
+
+2.10.6 (2026-04-27)
+-------------------
+
+2.10.5 (2026-04-24)
+-------------------
+
 2.10.4 (2026-04-13)
 -------------------
 * Support qt6 (`#293 <https://github.com/ros-visualization/qt_gui_core/issues/293>`_)

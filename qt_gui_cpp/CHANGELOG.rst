@@ -2,6 +2,26 @@
 Changelog for package qt_gui_cpp
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+3.0.0 (2026-05-06)
+-------------------
+* More qt6 fixes (`#334 <https://github.com/ros-visualization/qt_gui_core/issues/334>`_)
+* Contributors: Alejandro Hernández Cordero
+
+2.10.7 (2026-04-27)
+-------------------
+* find_package(Qt...) in downstream packages (`#332 <https://github.com/ros-visualization/qt_gui_core/issues/332>`_)
+* Contributors: Shane Loretz
+
+2.10.6 (2026-04-27)
+-------------------
+* Export qt dependencies in package.xml (`#331 <https://github.com/ros-visualization/qt_gui_core/issues/331>`_)
+* Contributors: Shane Loretz
+
+2.10.5 (2026-04-24)
+-------------------
+* Use qt-base-dev / libqtwidgets (`#330 <https://github.com/ros-visualization/qt_gui_core/issues/330>`_)
+* Contributors: Shane Loretz
+
 2.10.4 (2026-04-13)
 -------------------
 * Support qt6 (`#293 <https://github.com/ros-visualization/qt_gui_core/issues/293>`_)

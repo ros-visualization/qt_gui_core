@@ -266,7 +266,8 @@ class PluginHandler(QObject):
             # running standalone
             features = dock_widget.features()
             dock_widget.setFeatures(
-                features ^ (QDockWidget.DockWidgetMovable | QDockWidget.DockWidgetFloatable))
+                features ^ (QDockWidget.DockWidgetFeature.DockWidgetMovable |
+                            QDockWidget.DockWidgetFeature.DockWidgetFloatable))
 
     def _update_title_bar(self, dock_widget, hide_help=False, hide_reload=False):
         title_bar = dock_widget.titleBarWidget()
@@ -407,7 +408,7 @@ class PluginHandler(QObject):
                 qWarning('PluginHandler._add_toolbar() duplicate object name "%s", '
                          'assign unique object names before adding toolbars!' %
                          toolbar.objectName())
-            self._main_window.addToolBar(Qt.TopToolBarArea, toolbar)
+            self._main_window.addToolBar(Qt.ToolBarArea.TopToolBarArea, toolbar)
 
     # pointer to QToolBar must be used for PySide to work (at least with 1.0.1)
     @Slot('QToolBar*')

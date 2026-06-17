@@ -110,7 +110,4 @@ class AboutHandler(QObject):
 
         mb = QMessageBox(
             no_icon, self.tr('About rqt'), text, ok, self.parent())
-        if Version(QT_BINDING_VERSION) < Version('6.0.0'):
-            mb.exec_()
-        else:
-            mb.exec()
+        mb.exec()
