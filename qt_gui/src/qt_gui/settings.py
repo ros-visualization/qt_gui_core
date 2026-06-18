@@ -35,7 +35,7 @@ class Settings(QObject):
     """Storage of key-value data with a QSettings-like interface."""
 
     def __init__(self, settings_proxy, group):
-        super(Settings, self).__init__()
+        super().__init__()
         self.setObjectName('Settings')
 
         self._settings_proxy = settings_proxy
@@ -51,10 +51,6 @@ class Settings(QObject):
     def all_keys(self):
         return self._settings_proxy.all_keys(self._group)
 
-#    def begin_read_array(self):
-
-#    def begin_write_array(self):
-
     @Slot(result='QStringList')
     def child_groups(self):
         return self._settings_proxy.child_groups(self._group)
@@ -67,13 +63,9 @@ class Settings(QObject):
     def contains(self, key):
         return self._settings_proxy.contains(self._group, key)
 
-#    def end_array(self):
-
     @Slot(str)
     def remove(self, key):
         self._settings_proxy.remove(self._group, key)
-
-#    def set_array_index(self, i):
 
     @Slot(str, 'QVariant')
     def set_value(self, key, value):

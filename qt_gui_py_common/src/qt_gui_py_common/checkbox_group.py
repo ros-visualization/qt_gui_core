@@ -43,7 +43,7 @@ class CheckBoxGroup(QGroupBox):
     """
 
     def __init__(self, options, title='Checkboxes', selected_indexes=[], parent=None):
-        super(CheckBoxGroup, self).__init__()
+        super().__init__()
         self.setTitle(title)
         self.setLayout(QVBoxLayout())
         self._button_group = QButtonGroup()

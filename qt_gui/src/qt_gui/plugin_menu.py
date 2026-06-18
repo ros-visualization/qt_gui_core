@@ -33,7 +33,7 @@ from packaging.version import Version
 from python_qt_binding import QT_BINDING_VERSION
 
 from python_qt_binding.QtCore import QObject, QSignalMapper, Signal, Slot
-if Version(QT_BINDING_VERSION) > Version('6.0.0'):
+if Version(QT_BINDING_VERSION) >= Version('6.0.0'):
     from python_qt_binding.QtGui import QAction
 else:
     from python_qt_binding.QtWidgets import QAction
@@ -51,7 +51,7 @@ class PluginMenu(QObject):
     unload_plugin_signal = Signal(str)
 
     def __init__(self, menu_bar, plugin_manager):
-        super(PluginMenu, self).__init__()
+        super().__init__()
         self.setObjectName('PluginMenu')
 
         plugin_menu = menu_bar.addMenu(menu_bar.tr('&Plugins'))

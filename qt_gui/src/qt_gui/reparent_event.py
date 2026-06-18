@@ -37,6 +37,6 @@ class ReparentEvent(QEvent):
     reparent_event_type = QEvent.registerEventType()
 
     def __init__(self, dock_widget, new_parent):
-        super(ReparentEvent, self).__init__(ReparentEvent.reparent_event_type)
+        super().__init__(ReparentEvent.reparent_event_type)
         self.dock_widget = dock_widget
         self.new_parent = new_parent

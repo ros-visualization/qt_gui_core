@@ -43,7 +43,7 @@ class RecursivePluginProvider(CompositePluginProvider):
     """
 
     def __init__(self, plugin_provider):
-        super(RecursivePluginProvider, self).__init__([])
+        super().__init__([])
         self.setObjectName('RecursivePluginProvider')
 
         self._plugin_provider = plugin_provider

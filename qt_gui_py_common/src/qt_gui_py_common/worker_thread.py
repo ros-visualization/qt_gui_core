@@ -41,14 +41,14 @@ class WorkerThread(QThread):
     """
 
     def __init__(self, run_callback, finished_callback=None):
-        super(WorkerThread, self).__init__()
+        super().__init__()
         self.run = run_callback
         self._finished_callback = finished_callback
 
     def start(self):
         # reconnect finished signal
         self.finished.connect(self._finished_handler)
-        super(WorkerThread, self).start()
+        super().start()
 
     def _finished_handler(self):
         # disconnect finished signal to avoid being called twice

@@ -62,7 +62,7 @@ class PluginManager(QObject):
     discovery_cache_max_age = 60 * 60 * 24  # one day
 
     def __init__(self, plugin_provider, settings, application_context, settings_prefix=''):
-        super(PluginManager, self).__init__()
+        super().__init__()
         self.setObjectName('PluginManager')
 
         self._plugin_provider = plugin_provider

@@ -41,7 +41,7 @@ class Plugin(QObject):
 
     def __init__(self, context):
         """Instantiate the plugin and pass the `PluginContext`."""
-        super(Plugin, self).__init__(context)
+        super().__init__(context)
         self.setObjectName('Plugin')
 
     def shutdown_plugin(self):

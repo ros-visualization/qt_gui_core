@@ -35,11 +35,10 @@ class SettingsProxy(QObject):
     """Wrapper of a QSettings instance simplifying access of grouped data."""
 
     def __init__(self, qsettings):
-        super(SettingsProxy, self).__init__()
+        super().__init__()
         self.setObjectName('SettingsProxy')
 
         self._qsettings = qsettings
-        # self._mutex = QMutex(QMutex.Recursive)
         self._mutex = QMutex()
 
     def all_keys(self, group):
@@ -48,10 +47,6 @@ class SettingsProxy(QObject):
         keys = self._qsettings.allKeys()
         self._qsettings.endGroup()
         return keys
-
-#    def begin_read_array(self, group):
-
-#    def begin_write_array(self, group):
 
     def child_groups(self, group):
         locker = QMutexLocker(self._mutex)  # noqa: F841
@@ -74,15 +69,11 @@ class SettingsProxy(QObject):
         self._qsettings.endGroup()
         return key_exists
 
-#    def end_array(self):
-
     def remove(self, group, key):
         locker = QMutexLocker(self._mutex)  # noqa: F841
         self._qsettings.beginGroup(group)
         self._qsettings.remove(key)
         self._qsettings.endGroup()
-
-#    def set_array_index(self, i):
 
     def set_value(self, group, key, value):
         locker = QMutexLocker(self._mutex)  # noqa: F841
