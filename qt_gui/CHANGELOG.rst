@@ -2,6 +2,12 @@
 Changelog for package qt_gui
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+2.11.1 (2026-06-18)
+-------------------
+* Removed dead code, Python 2 to 3 modernization and other fixes (`#333 <https://github.com/ros-visualization/qt_gui_core/issues/333>`_) (`#338 <https://github.com/ros-visualization/qt_gui_core/issues/338>`_)
+* Removed Python2 references (`#336 <https://github.com/ros-visualization/qt_gui_core/issues/336>`_) (`#337 <https://github.com/ros-visualization/qt_gui_core/issues/337>`_)
+* Contributors: mergify[bot]
+
 2.11.0 (2026-05-06)
 -------------------
 * More qt6 fixes (`#334 <https://github.com/ros-visualization/qt_gui_core/issues/334>`_) (`#335 <https://github.com/ros-visualization/qt_gui_core/issues/335>`_)
