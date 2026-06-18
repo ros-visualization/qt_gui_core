@@ -55,7 +55,7 @@ class PluginHandler(QObject):
 
     def __init__(self, parent, main_window, instance_id, application_context, container_manager,
                  argv=None):
-        super(PluginHandler, self).__init__(parent)
+        super().__init__(parent)
         self.setObjectName('PluginHandler')
 
         self._main_window = main_window

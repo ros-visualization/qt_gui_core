@@ -43,7 +43,7 @@ class ExclusiveOptionGroup(QGroupBox):
     """
 
     def __init__(self, options, title='Exclusive Options', selected_index=None, parent=None):
-        super(ExclusiveOptionGroup, self).__init__()
+        super().__init__()
         self.setTitle(title)
         self.setLayout(QVBoxLayout())
         self._button_group = QButtonGroup()

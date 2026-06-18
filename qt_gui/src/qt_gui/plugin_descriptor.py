@@ -29,7 +29,7 @@
 # POSSIBILITY OF SUCH DAMAGE.
 
 
-class PluginDescriptor(object):
+class PluginDescriptor:
     """Information about one Plugin."""
 
     def __init__(self, plugin_id, attributes=None):

@@ -43,7 +43,7 @@ class WindowChangedSignaler(QObject):
     window_title_changed_signal = Signal(object)
 
     def __init__(self, widget, parent=None):
-        super(WindowChangedSignaler, self).__init__(parent)
+        super().__init__(parent)
         self._widget = widget
         self.setObjectName('WindowChangedSignaler__' + self._widget.objectName())
         self._recursive_invocation = False

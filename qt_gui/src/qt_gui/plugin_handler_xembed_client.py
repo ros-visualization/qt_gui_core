@@ -52,7 +52,7 @@ class PluginHandlerXEmbedClient(PluginHandlerDirect):
 
     def __init__(self, parent, main_window, instance_id,
                  application_context, container_manager, argv, dbus_object_path):
-        super(PluginHandlerXEmbedClient, self).__init__(
+        super().__init__(
             parent, main_window, instance_id, application_context, container_manager, argv)
         self.setObjectName('PluginHandlerXEmbedClient')
         self._dbus_object_path = dbus_object_path
@@ -80,13 +80,13 @@ class PluginHandlerXEmbedClient(PluginHandlerDirect):
         proxy = conn.get_object(None, self._dbus_object_path + '/instance')
         self._remote_instance_settings = Interface(proxy, 'org.ros.qt_gui.Settings')
 
-        super(PluginHandlerXEmbedClient, self)._load()
+        super()._load()
 
     def _emit_load_completed(self, exception=None):
         # signal failed loading before emitting signal, as it might not be possible afterwards
         if exception is not None:
             self._remote_container.load_completed(False, False)
-        super(PluginHandlerXEmbedClient, self)._emit_load_completed(exception)
+        super()._emit_load_completed(exception)
         # signal successful loading after emitting signal, for better message order
         if exception is None:
             self._remote_container.load_completed(True, self._plugin_has_configuration)

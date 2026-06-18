@@ -42,7 +42,7 @@ class DockWidget(QDockWidget):
     """Widget with the capability to be reparented via drag-and-drop to any other main window."""
 
     def __init__(self, container_manager):
-        super(DockWidget, self).__init__()
+        super().__init__()
         self._container_manager = container_manager
         if self._container_manager is not None:
             self.event = self._event
@@ -53,7 +53,7 @@ class DockWidget(QDockWidget):
 
     def _event(self, e):
         if e.type() == QEvent.Type.MouseButtonPress and e.button() == Qt.MouseButton.LeftButton:
-            if Version(QT_BINDING_VERSION) > Version('6.0.0'):
+            if Version(QT_BINDING_VERSION) >= Version('6.0.0'):
                 qDebug('%spress, rel=%s, global=%s, diff=%s' % (
                     (' - pseudo ' if self._releasing_and_repressing_while_dragging else ''),
                     e.pos(), e.globalPosition().toPoint(),
@@ -64,7 +64,7 @@ class DockWidget(QDockWidget):
                     e.pos(), e.globalPos(), e.globalPos() - self.pos()))
 
         if e.type() == QEvent.Type.MouseButtonRelease and e.button() == Qt.MouseButton.LeftButton:
-            if Version(QT_BINDING_VERSION) > Version('6.0.0'):
+            if Version(QT_BINDING_VERSION) >= Version('6.0.0'):
                 qDebug('%srelease, rel=%s, global=%s, diff=%s' % (
                     (' - pseudo ' if self._releasing_and_repressing_while_dragging else ''),
                     e.pos(), e.globalPosition().toPoint(),
@@ -128,7 +128,7 @@ class DockWidget(QDockWidget):
                 e.type() == QEvent.Type.MouseMove and \
                 e.buttons() & Qt.MouseButton.LeftButton and \
                 not self._releasing_and_repressing_while_dragging:
-            if Version(QT_BINDING_VERSION) > Version('6.0.0'):
+            if Version(QT_BINDING_VERSION) >= Version('6.0.0'):
                 widget = self._widget_at(e.globalPosition().toPoint())
             else:
                 widget = self._widget_at(e.globalPos())
@@ -138,7 +138,7 @@ class DockWidget(QDockWidget):
                 self._releasing_and_repressing_while_dragging = True
 
                 # schedule stop of pseudo drag'n'drop and let it complete
-                if Version(QT_BINDING_VERSION) > Version('6.0.0'):
+                if Version(QT_BINDING_VERSION) >= Version('6.0.0'):
                     mouse_release_event = QMouseEvent(
                         QEvent.Type.MouseButtonRelease, self._dragging_local_pos,
                         e.globalPosition().toPoint(),
@@ -160,7 +160,7 @@ class DockWidget(QDockWidget):
                 self.setAttribute(Qt.WidgetAttribute.WA_TransparentForMouseEvents, False)
 
                 # schedule restart of pseudo drag'n'drop and let it complete
-                if Version(QT_BINDING_VERSION) > Version('6.0.0'):
+                if Version(QT_BINDING_VERSION) >= Version('6.0.0'):
                     mouse_repress_event = QMouseEvent(
                         QEvent.Type.MouseButtonPress, self._dragging_local_pos,
                         e.globalPosition().toPoint(),
@@ -175,7 +175,7 @@ class DockWidget(QDockWidget):
 
                 # schedule move to trigger dock widget drag'n'drop required for snapping and
                 # showing rubber band and let it complete move forth...
-                if Version(QT_BINDING_VERSION) > Version('6.0.0'):
+                if Version(QT_BINDING_VERSION) >= Version('6.0.0'):
                     mouse_move_event = QMouseEvent(
                         QEvent.Type.MouseMove,
                         self._dragging_local_pos,
@@ -194,7 +194,7 @@ class DockWidget(QDockWidget):
                 QApplication.instance().postEvent(self, mouse_move_event)
                 QApplication.sendPostedEvents()
                 # ...and back
-                if Version(QT_BINDING_VERSION) > Version('6.0.0'):
+                if Version(QT_BINDING_VERSION) >= Version('6.0.0'):
                     mouse_move_event = QMouseEvent(
                         QEvent.Type.MouseMove,
                         self._dragging_local_pos, e.globalPosition().toPoint(),
@@ -211,7 +211,7 @@ class DockWidget(QDockWidget):
 
                 self._releasing_and_repressing_while_dragging = False
 
-        return super(DockWidget, self).event(e)
+        return super().event(e)
 
     def _get_new_parent(self, widget):
         from .dock_widget_container import DockWidgetContainer

@@ -29,7 +29,7 @@
 # POSSIBILITY OF SUCH DAMAGE.
 
 
-class ApplicationContext(object):
+class ApplicationContext:
     """Application wide context containing variables used in various places."""
 
     def __init__(self):
