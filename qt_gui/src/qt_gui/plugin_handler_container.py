@@ -37,7 +37,7 @@ class PluginHandlerContainer(PluginHandler):
     """Handler for creating a container."""
 
     def __init__(self, parent, main_window, instance_id, application_context, container_manager):
-        super(PluginHandlerContainer, self).__init__(
+        super().__init__(
             parent, main_window, instance_id, application_context, container_manager)
         self.setObjectName('PluginHandlerContainer')
         self._container = None
@@ -66,7 +66,7 @@ class PluginHandlerContainer(PluginHandler):
     def remove_widget(self, widget):
         self._container_manager.move_container_children_to_parent(self._container)
         self._container_manager.remove_container(self._container)
-        super(PluginHandlerContainer, self).remove_widget(widget)
+        super().remove_widget(widget)
         self._container = None
 
     def _shutdown_plugin(self):

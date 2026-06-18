@@ -38,7 +38,7 @@ from python_qt_binding.QtCore import QByteArray, qDebug, QObject, QSignalMapper,
 from python_qt_binding.QtGui import QIcon, QValidator
 from python_qt_binding.QtWidgets import QDialog, QFileDialog, QInputDialog, QMessageBox
 
-if Version(QT_BINDING_VERSION) > Version('6.0.0'):
+if Version(QT_BINDING_VERSION) >= Version('6.0.0'):
     from python_qt_binding.QtGui import QAction
 else:
     from python_qt_binding.QtWidgets import QAction
@@ -64,7 +64,7 @@ class PerspectiveManager(QObject):
     HIDDEN_PREFIX = '@'
 
     def __init__(self, settings, application_context):
-        super(PerspectiveManager, self).__init__()
+        super().__init__()
         self.setObjectName('PerspectiveManager')
 
         self._qtgui_path = application_context.qtgui_path
@@ -79,7 +79,7 @@ class PerspectiveManager(QObject):
 
         # get perspective list from settings
         self.perspectives = self._settings_proxy.value('', 'perspectives', [])
-        if is_string(self.perspectives):
+        if isinstance(self.perspectives, str):
             self.perspectives = [self.perspectives]
 
         self._current_perspective = None
@@ -216,7 +216,7 @@ class PerspectiveManager(QObject):
             class CustomValidator(QValidator):
 
                 def __init__(self, parent=None):
-                    super(CustomValidator, self).__init__(parent)
+                    super().__init__(parent)
 
                 def fixup(self, value):
                     value = value.replace('/', '')
@@ -362,9 +362,8 @@ class PerspectiveManager(QObject):
         self._create_perspective(perspective_name, clone_perspective=False)
 
         # read perspective from file
-        file_handle = open(path, 'r')
-        # data = eval(file_handle.read())
-        data = json.loads(file_handle.read())
+        with open(path, 'r') as file_handle:
+            data = json.loads(file_handle.read())
         self._convert_values(data, self._import_value)
 
         new_settings = self._get_perspective_settings(perspective_name)
@@ -406,9 +405,8 @@ class PerspectiveManager(QObject):
         self._convert_values(data, self._export_value)
 
         # write perspective data to file
-        file_handle = open(file_name, 'w')
-        file_handle.write(json.dumps(data, indent=2, separators=(',', ': ')))
-        file_handle.close()
+        with open(file_name, 'w') as file_handle:
+            file_handle.write(json.dumps(data, indent=2, separators=(',', ': ')))
 
     def _get_dict_from_settings(self, settings):
         """Convert data of Settings instance to dictionary."""

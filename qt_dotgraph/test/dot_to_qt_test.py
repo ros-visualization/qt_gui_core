@@ -94,7 +94,7 @@ class DotToQtGeneratorTest(unittest.TestCase):
     _Q_APP = None
 
     def __init__(self, *args):
-        super(DotToQtGeneratorTest, self).__init__(*args)
+        super().__init__(*args)
 
         # needed for creation of QtGraphic items in NodeItem.__init__
         if DotToQtGeneratorTest._Q_APP is None:

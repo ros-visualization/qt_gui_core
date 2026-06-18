@@ -45,7 +45,7 @@ class SimpleSettingsDialog(QDialog):
     """Simple dialog that can show multiple settings groups and returns their combined results."""
 
     def __init__(self, title='Options', description=None):
-        super(SimpleSettingsDialog, self).__init__()
+        super().__init__()
         self.setObjectName('SimpleSettingsDialog')
 
         _, package_path = get_resource('packages', 'qt_gui_py_common')

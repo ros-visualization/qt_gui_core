@@ -38,7 +38,7 @@ from .cpp_binding_helper import qt_gui_cpp
 class RosPluginlibPluginProvider(PluginProvider):
 
     def __init__(self, plugin_provider):
-        super(RosPluginlibPluginProvider, self).__init__()
+        super().__init__()
         self._plugin_provider = plugin_provider
 
     def discover(self, discovery_data):

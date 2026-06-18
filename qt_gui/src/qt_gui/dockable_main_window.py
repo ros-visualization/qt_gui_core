@@ -38,5 +38,5 @@ class DockableMainWindow(QMainWindow):
     """Main window which allows DockWidgets to be reparented into it."""
 
     def __init__(self, parent=None):
-        super(DockableMainWindow, self).__init__(parent=parent)
+        super().__init__(parent=parent)
         self.setDockNestingEnabled(True)

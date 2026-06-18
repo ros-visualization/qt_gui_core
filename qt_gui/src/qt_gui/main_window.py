@@ -42,7 +42,7 @@ class MainWindow(DockableMainWindow):
     save_settings_before_close_signal = Signal(Settings, Settings)
 
     def __init__(self, help_text=None):
-        super(MainWindow, self).__init__()
+        super().__init__()
         self.setObjectName('MainWindow')
         self._help_widget = None
 

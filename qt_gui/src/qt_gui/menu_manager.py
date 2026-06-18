@@ -32,7 +32,7 @@ from packaging.version import Version
 
 from python_qt_binding import QT_BINDING_VERSION
 from python_qt_binding.QtCore import QObject
-if Version(QT_BINDING_VERSION) > Version('6.0.0'):
+if Version(QT_BINDING_VERSION) >= Version('6.0.0'):
     from python_qt_binding.QtGui import QAction
 else:
     from python_qt_binding.QtWidgets import QAction
@@ -43,7 +43,7 @@ class MenuManager(QObject):
     """Menu manager containing alphabetically ordered items and other items before and after."""
 
     def __init__(self, menu):
-        super(MenuManager, self).__init__()
+        super().__init__()
         self.setObjectName('MenuManager')
 
         self.menu = menu

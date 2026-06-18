@@ -39,7 +39,7 @@ class PluginContext(QObject):
     """
 
     def __init__(self, handler):
-        super(PluginContext, self).__init__(handler)
+        super().__init__(handler)
         self.setObjectName('PluginContext')
 
         self._handler = handler

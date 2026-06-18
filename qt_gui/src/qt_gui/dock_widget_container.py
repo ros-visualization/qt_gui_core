@@ -38,7 +38,7 @@ class DockWidgetContainer(DockWidget):
     """`DockWidget` containing a main window acting as a container for other dock widgets."""
 
     def __init__(self, container_manager, serial_number):
-        super(DockWidgetContainer, self).__init__(container_manager)
+        super().__init__(container_manager)
         self._serial_number = serial_number
         self._settings = None
 
@@ -57,7 +57,7 @@ class DockWidgetContainer(DockWidget):
         mw_settings = settings.get_settings('mainwindow')
         self._save_geometry(mw_settings)
         self._save_state(mw_settings)
-        super(DockWidgetContainer, self).save_settings(settings)
+        super().save_settings(settings)
 
     def _save_geometry(self, settings):
         # unmaximizing widget before saveGeometry works around bug to restore dock-widgets
@@ -74,7 +74,7 @@ class DockWidgetContainer(DockWidget):
             self._settings.set_value('state', self.main_window.saveState())
 
     def restore_settings(self, settings):
-        super(DockWidgetContainer, self).restore_settings(settings)
+        super().restore_settings(settings)
         mw_settings = settings.get_settings('mainwindow')
         self._settings = mw_settings
         # only restore geometry, restoring state is triggered after PluginManager has been updated

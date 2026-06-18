@@ -47,4 +47,4 @@ class CppPluginProvider(CompositePluginProvider):
                     qt_gui_cpp.RosPluginlibPluginProvider_ForPluginProviders.create_instance(
                         'qt_gui', 'qt_gui_cpp::PluginProvider'))),
             ]
-        super(CppPluginProvider, self).__init__(plugin_providers)
+        super().__init__(plugin_providers)

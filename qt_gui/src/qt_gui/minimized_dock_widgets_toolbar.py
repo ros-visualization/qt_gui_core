@@ -33,7 +33,7 @@ from packaging.version import Version
 from python_qt_binding import QT_BINDING_VERSION
 
 from python_qt_binding.QtCore import QSignalMapper, Qt
-if Version(QT_BINDING_VERSION) > Version('6.0.0'):
+if Version(QT_BINDING_VERSION) >= Version('6.0.0'):
     from python_qt_binding.QtGui import QAction
 else:
     from python_qt_binding.QtWidgets import QAction
@@ -46,7 +46,7 @@ class MinimizedDockWidgetsToolbar(QToolBar):
     max_label_length = 15
 
     def __init__(self, container_manager, parent=None):
-        super(MinimizedDockWidgetsToolbar, self).__init__(parent=parent)
+        super().__init__(parent=parent)
         self.setWindowTitle(self.tr('Minimized dock widgets'))
         self.setObjectName('MinimizedDockWidgetsToolbar')
         self.setToolButtonStyle(Qt.ToolButtonStyle.ToolButtonTextBesideIcon)
