@@ -55,30 +55,25 @@ public:
    * Construct the plugin.
    * All initialization should be performed in initPlugin().
    */
-  Plugin()
-  : QObject()
-  {}
+  Plugin();
 
   /**
    * Instantiate the plugin.
    * @param the plugin context
    */
-  virtual void initPlugin(PluginContext & /*context*/)
-  {}
+  virtual void initPlugin(PluginContext & context);
 
   /**
    * Shutdown and clean up the plugin before unloading.
    */
-  virtual void shutdownPlugin()
-  {}
+  virtual void shutdownPlugin();
 
   /**
    * Save the intrinsic state of the plugin to the plugin-specific or instance-specific settings.
    * @param the plugin-specific settings
    * @param the instance-specific settings
    */
-  virtual void saveSettings(Settings & /*plugin_settings*/, Settings & /*instance_settings*/) const
-  {}
+  virtual void saveSettings(Settings & plugin_settings, Settings & instance_settings) const;
 
   /**
    * Restore the intrinsic state of the plugin from the plugin-specific or instance-specific settings.
@@ -86,25 +81,20 @@ public:
    * @param the instance-specific settings
    */
   virtual void restoreSettings(
-    const Settings & /*plugin_settings*/,
-    const Settings & /*instance_settings*/)
-  {}
+    const Settings & plugin_settings,
+    const Settings & instance_settings);
 
   /**
    * Indicate if the plugin has configuration dialog which could be triggered by an icon in the title bar of the dock widgets.
    * @return true if the plugin implements triggerConfiguration()
    */
-  virtual bool hasConfiguration() const
-  {
-    return false;
-  }
+  virtual bool hasConfiguration() const;
 
   /**
    * Trigger a configuration dialog.
    * If this method is reimplemented hasConfiguration() should also be reimplemented and return true.
    */
-  virtual void triggerConfiguration()
-  {}
+  virtual void triggerConfiguration();
 };
 }  // namespace qt_gui_cpp
 
