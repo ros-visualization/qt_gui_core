@@ -69,6 +69,13 @@ public:
 
   QMap<QString, QString> toDictionary() const;
 
+  /**
+   * Member-wise equality. Defaulted under C++20: compares the plugin id and
+   * all attribute/group maps. (No operator<=> is provided because the Qt
+   * container members do not offer three-way comparison; see header notes.)
+   */
+  bool operator==(const PluginDescriptor & other) const = default;
+
 protected:
   QString plugin_id_;
 

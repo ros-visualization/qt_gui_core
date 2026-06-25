@@ -32,6 +32,8 @@
 
 #include <qt_gui_cpp/plugin_provider.hpp>
 
+#include <utility>
+
 namespace qt_gui_cpp
 {
 
@@ -45,11 +47,8 @@ QMultiMap<QString, QString> PluginProvider::discover(QObject * discovery_data)
 {
   QMultiMap<QString, QString> plugins;
   QList<PluginDescriptor *> descriptors = discover_descriptors(discovery_data);
-  for (QList<PluginDescriptor *>::iterator it = descriptors.begin(); it != descriptors.end();
-    it++)
-  {
+  for (PluginDescriptor * descriptor : std::as_const(descriptors)) {
     // extract plugin descriptor dictionary
-    PluginDescriptor * descriptor = *it;
     QMap descriptorValue = descriptor->toDictionary();
     for (auto i = descriptorValue.cbegin(), end = descriptorValue.cend(); i != end; ++i) {
       plugins.insert(i.key(), i.value());
@@ -71,7 +70,7 @@ void * PluginProvider::load(const QString & plugin_id, PluginContext * plugin_co
 
 Plugin * PluginProvider::load_plugin(const QString & plugin_id, PluginContext * plugin_context)
 {
-  return 0;
+  return nullptr;
 }
 
 void PluginProvider::unload(void * plugin_instance)
