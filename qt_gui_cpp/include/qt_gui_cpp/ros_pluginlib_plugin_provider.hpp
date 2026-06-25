@@ -42,11 +42,9 @@
 
 #include <tinyxml2.h>
 
-#include <filesystem>
 #include <memory>
 #include <string>
-#include <utility>
-#include <vector>
+#include <type_traits>
 
 #include "plugin.hpp"
 #include "plugin_context.hpp"
@@ -57,6 +55,11 @@
 
 namespace qt_gui_cpp
 {
+// The method definitions live in ros_pluginlib_plugin_provider.cpp, which
+// explicitly instantiates this template for the only two types in use:
+// RosPluginlibPluginProvider<Plugin> (RosPluginlibPluginProvider_ForPlugins) and
+// RosPluginlibPluginProvider<PluginProvider>
+// (RosPluginlibPluginProvider_ForPluginProviders).
 template<typename T>
 class RosPluginlibPluginProvider
   : public QObject,
@@ -65,207 +68,34 @@ class RosPluginlibPluginProvider
 public:
   static RosPluginlibPluginProvider<T> * create_instance(
     const QString & export_tag,
-    const QString & base_class_type)
-  {
-    return new RosPluginlibPluginProvider<T>(export_tag, base_class_type);
-  }
+    const QString & base_class_type);
 
-  RosPluginlibPluginProvider(const QString & export_tag, const QString & base_class_type)
-  : QObject()
-    , PluginProvider()
-    , export_tag_(export_tag)
-    , base_class_type_(base_class_type)
-    , class_loader_(nullptr)
-  {
-    unload_libraries_event_ = QEvent::registerEventType();
-  }
+  RosPluginlibPluginProvider(const QString & export_tag, const QString & base_class_type);
 
-  ~RosPluginlibPluginProvider() override
-  {
-    // class_loader_ (std::unique_ptr) is released automatically.
-  }
+  ~RosPluginlibPluginProvider() override;
 
-  QMultiMap<QString, QString> discover(QObject * discovery_data) override
-  {
-    return PluginProvider::discover(discovery_data);
-  }
+  QMultiMap<QString, QString> discover(QObject * discovery_data) override;
 
-  QList<PluginDescriptor *> discover_descriptors(QObject * discovery_data) override
-  {
-    Settings discovery_settings(discovery_data);
-    QString key = "qt_gui_cpp.RosPluginlibPluginProvider/" + export_tag_ + " " + base_class_type_;
-    bool is_cached = discovery_settings.contains(key);
+  QList<PluginDescriptor *> discover_descriptors(QObject * discovery_data) override;
 
-    std::vector<std::string> plugin_xml_paths;
-    // reuse plugin paths from cache if available
-    if (is_cached) {
-      QStringList paths = discovery_settings.value(key).toStringList();
-      for (const QString & path : std::as_const(paths)) {
-        plugin_xml_paths.push_back(path.toStdString());
-      }
-    } else {
-      qDebug(
-          "RosPluginlibPluginProvider::discover_descriptors() crawling for plugins of type '%s' "
-          "and base class '%s'",
-          export_tag_.toStdString().c_str(), base_class_type_.toStdString().c_str());
-    }
-    class_loader_ = std::make_unique<pluginlib::ClassLoader<T>>(export_tag_.toStdString(),
-        base_class_type_.toStdString(), std::string("plugin"), plugin_xml_paths);
+  void * load(const QString & plugin_id, PluginContext * plugin_context) override;
 
-    if (!is_cached) {
-      // save discovered paths
-      std::vector<std::string> paths = class_loader_->getPluginXmlPaths();
-      QStringList qpaths;
-      for (const std::string & path : paths) {
-        qpaths.push_back(path.c_str());
-      }
-      discovery_settings.setValue(key, qpaths);
-    }
+  Plugin * load_plugin(const QString & plugin_id, PluginContext * plugin_context) override;
 
-    QList<PluginDescriptor *> descriptors;
+  virtual T * load_explicit_type(const QString & plugin_id, PluginContext * plugin_context);
 
-    std::vector<std::string> classes = class_loader_->getDeclaredClasses();
-    for (const std::string & lookup_name : classes) {
-      std::string name = class_loader_->getName(lookup_name);
-      std::string plugin_xml = class_loader_->getPluginManifestPath(lookup_name);
-      std::filesystem::path p(plugin_xml);
-      std::string plugin_path = p.parent_path().string();
+  void unload(void * instance) override;
 
-      QMap<QString, QString> attributes;
-      attributes["class_name"] = name.c_str();
-      attributes["class_type"] = class_loader_->getClassType(lookup_name).c_str();
-      attributes["class_base_class_type"] = class_loader_->getBaseClassType().c_str();
-      attributes["package_name"] = class_loader_->getClassPackage(lookup_name).c_str();
-      attributes["plugin_path"] = plugin_path.c_str();
-
-      // check if plugin is available
-      // std::string library_path = class_loader_->getClassLibraryPath(lookup_name);
-      // attributes["not_available"] =
-      //   !std::ifstream(library_path.c_str()) ?
-      //      QString("library ").append(lookup_name.c_str()).append(
-      //        " not found (may be it must be built?)") : "";
-      attributes["not_available"] = "";
-
-      PluginDescriptor * plugin_descriptor = new PluginDescriptor(lookup_name.c_str(), attributes);
-      QString label = name.c_str();
-      QString statustip = class_loader_->getClassDescription(lookup_name).c_str();
-      QString icon;
-      QString icontype;
-      parseManifest(lookup_name, plugin_path, label, statustip, icon, icontype, plugin_descriptor);
-      plugin_descriptor->setActionAttributes(label, statustip, icon, icontype);
-
-      // add plugin descriptor
-      descriptors.append(plugin_descriptor);
-    }
-    return descriptors;
-  }
-
-  void * load(const QString & plugin_id, PluginContext * plugin_context) override
-  {
-    return load_explicit_type(plugin_id, plugin_context);
-  }
-
-  Plugin * load_plugin(const QString & plugin_id, PluginContext * plugin_context) override
-  {
-    T * instance = load_explicit_type(plugin_id, plugin_context);
-    if (instance == nullptr) {
-      return nullptr;
-    }
-    Plugin * plugin = dynamic_cast<Plugin *>(instance);
-    if (plugin == nullptr) {
-      // TODO(someone): garbage instance
-      qWarning("RosPluginlibPluginProvider::load_plugin() called on non-plugin plugin provider");
-      return nullptr;
-    }
-    return plugin;
-  }
-
-  virtual T * load_explicit_type(const QString & plugin_id, PluginContext * plugin_context)
-  {
-    std::string lookup_name = plugin_id.toStdString();
-
-    if (!class_loader_->isClassAvailable(lookup_name)) {
-      qWarning("RosPluginlibPluginProvider::load_explicit_type(%s) class not available",
-          lookup_name.c_str());
-      return nullptr;
-    }
-
-    std::shared_ptr<T> instance;
-    try {
-      instance = create_plugin(lookup_name, plugin_context);
-    } catch (const pluginlib::LibraryLoadException & e) {
-      qWarning("RosPluginlibPluginProvider::load_explicit_type(%s) could not load library (%s)",
-          lookup_name.c_str(), e.what());
-      return nullptr;
-    } catch (const pluginlib::PluginlibException & e) {
-      qWarning("RosPluginlibPluginProvider::load_explicit_type(%s) failed creating instance (%s)",
-          lookup_name.c_str(), e.what());
-      return nullptr;
-    }
-
-    if (!instance) {
-      qWarning("RosPluginlibPluginProvider::load_explicit_type(%s) failed creating instance",
-          lookup_name.c_str());
-      return nullptr;
-    }
-
-    // pass context to plugin
-    Plugin * plugin = dynamic_cast<Plugin *>(&*instance);
-    if (plugin) {
-      try {
-        init_plugin(plugin_id, plugin_context, plugin);
-      } catch (const std::exception & e) {
-        // TODO(someone): garbage instance
-        qWarning(
-            "RosPluginlibPluginProvider::load_explicit_type(%s) failed initializing plugin (%s)",
-            lookup_name.c_str(), e.what());
-        return nullptr;
-      }
-    }
-
-    // qDebug("RosPluginlibPluginProvider::load_explicit_type(%s) succeeded", lookup_name.c_str());
-    instances_[&*instance] = instance;
-
-    return &*instance;
-  }
-
-  void unload(void * instance) override
-  {
-    if (!instances_.contains(instance)) {
-      qCritical("RosPluginlibPluginProvider::unload() instance not found");
-      return;
-    }
-
-    std::shared_ptr<T> pointer = instances_.take(instance);
-    libraries_to_unload_.append(pointer);
-
-    QCoreApplication::postEvent(this,
-        new QEvent(static_cast<QEvent::Type>(unload_libraries_event_)));
-  }
-
-  bool event(QEvent * e) override
-  {
-    if (e->type() == unload_libraries_event_) {
-      libraries_to_unload_.clear();
-      return true;
-    }
-    return QObject::event(e);
-  }
+  bool event(QEvent * e) override;
 
 protected:
   virtual std::shared_ptr<T> create_plugin(
     const std::string & lookup_name,
-    PluginContext * /*plugin_context*/ = nullptr)
-  {
-    return class_loader_->createSharedInstance(lookup_name);
-  }
+    PluginContext * plugin_context = nullptr);
 
   virtual void init_plugin(
-    const QString & /*plugin_id*/, PluginContext * plugin_context,
-    Plugin * plugin)
-  {
-    plugin->initPlugin(*plugin_context);
-  }
+    const QString & plugin_id, PluginContext * plugin_context,
+    Plugin * plugin);
 
 private:
   template<typename TVersion>
@@ -304,88 +134,11 @@ private:
   bool parseManifest(
     const std::string & lookup_name, const std::string & plugin_path,
     QString & label, QString & statustip, QString & icon, QString & icontype,
-    PluginDescriptor * plugin_descriptor)
-  {
-    // qDebug("RosPluginlibPluginProvider::parseManifest()");
-
-    std::string manifest_path = class_loader_->getPluginManifestPath(lookup_name);
-    // qDebug("RosPluginlibPluginProvider::parseManifest() manifest_path \"%s\"",
-    //    manifest_path.c_str());
-    tinyxml2::XMLDocument doc;
-    tinyxml2::XMLError result = doc.LoadFile(manifest_path.c_str());
-    if (result != tinyxml2::XML_SUCCESS) {
-      TinyXMLAPIChoice<std::integral_constant<bool,
-        (TIXML2_MAJOR_VERSION >= 6)>>::warningWithErrorStr(manifest_path, doc);
-      return false;
-    }
-
-    // search library-tag with specific path-attribute
-    std::string class_type = class_loader_->getClassType(lookup_name);
-    tinyxml2::XMLElement * library_element = doc.FirstChildElement("library");
-    while (library_element) {
-      // search class-tag with specific type- and base_class_type-attribute
-      tinyxml2::XMLElement * class_element = library_element->FirstChildElement("class");
-      while (class_element) {
-        if (class_type.compare(class_element->Attribute("type")) == 0 &&
-          base_class_type_.compare(class_element->Attribute("base_class_type")) == 0)
-        {
-          tinyxml2::XMLElement * qtgui_element = class_element->FirstChildElement("qtgui");
-          if (qtgui_element) {
-            // extract meta information
-            parseActionAttributes(qtgui_element, plugin_path, label, statustip, icon, icontype);
-
-            // extract grouping information
-            tinyxml2::XMLElement * group_element = qtgui_element->FirstChildElement("group");
-            while (group_element) {
-              QString group_label;
-              QString group_statustip;
-              QString group_icon;
-              QString group_icontype;
-              parseActionAttributes(group_element, plugin_path, group_label, group_statustip,
-                  group_icon, group_icontype);
-              plugin_descriptor->addGroupAttributes(group_label, group_statustip, group_icon,
-                  group_icontype);
-
-              group_element = group_element->NextSiblingElement("group");
-            }
-          }
-          return true;
-        }
-        class_element = class_element->NextSiblingElement("class");
-      }
-      break;
-
-      library_element = library_element->NextSiblingElement("library");
-    }
-
-    qWarning("RosPluginlibPluginProvider::parseManifest() could not handle manifest \"%s\"",
-        manifest_path.c_str());
-    return false;
-  }
+    PluginDescriptor * plugin_descriptor);
 
   void parseActionAttributes(
     tinyxml2::XMLElement * element, const std::string & plugin_path,
-    QString & label, QString & statustip, QString & icon, QString & icontype)
-  {
-    tinyxml2::XMLElement * child_element;
-    if ((child_element = element->FirstChildElement("label")) != nullptr) {
-      label = child_element->GetText();
-    }
-    if ((child_element = element->FirstChildElement("icon")) != nullptr) {
-      icontype = child_element->Attribute("type");
-      if (icontype == "file") {
-        // prepend base path
-        icon = plugin_path.c_str();
-        icon += "/";
-        icon += child_element->GetText();
-      } else {
-        icon = child_element->GetText();
-      }
-    }
-    if ((child_element = element->FirstChildElement("statustip")) != nullptr) {
-      statustip = child_element->GetText();
-    }
-  }
+    QString & label, QString & statustip, QString & icon, QString & icontype);
 
   QString export_tag_;
 

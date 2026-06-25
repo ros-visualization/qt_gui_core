@@ -29,11 +29,13 @@ ament_python_install_package(${PROJECT_NAME}
 set(qt_gui_cpp_SRCS
   src/qt_gui_cpp/composite_plugin_provider.cpp
   src/qt_gui_cpp/generic_proxy.cpp
+  src/qt_gui_cpp/plugin.cpp
   src/qt_gui_cpp/plugin_bridge.cpp
   src/qt_gui_cpp/plugin_context.cpp
   src/qt_gui_cpp/plugin_descriptor.cpp
   src/qt_gui_cpp/plugin_provider.cpp
   src/qt_gui_cpp/recursive_plugin_provider.cpp
+  src/qt_gui_cpp/ros_pluginlib_plugin_provider.cpp
   src/qt_gui_cpp/settings.cpp
 )
 
