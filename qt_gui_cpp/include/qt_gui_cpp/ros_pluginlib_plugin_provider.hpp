@@ -82,7 +82,6 @@ public:
 
   virtual ~RosPluginlibPluginProvider()
   {
-    // class_loader_ (std::unique_ptr) is released automatically.
   }
 
   virtual QMultiMap<QString, QString> discover(QObject * discovery_data)
