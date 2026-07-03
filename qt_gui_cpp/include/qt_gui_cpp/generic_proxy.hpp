@@ -43,7 +43,7 @@ namespace qt_gui_cpp
 class GenericProxy
 {
 public:
-  explicit GenericProxy(QObject * obj = 0);
+  explicit GenericProxy(QObject * obj = nullptr);
 
   QObject * proxiedObject();
 

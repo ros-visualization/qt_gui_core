@@ -100,22 +100,16 @@ QMap<QString, QString> PluginDescriptor::toDictionary() const
   QMap<QString, QString> dict;
   QString plugin_prefix = plugin_id_ + ".";
   dict[plugin_prefix + "plugin_id"] = plugin_id_;
-  for (QMap<QString, QString>::const_iterator it = attributes_.constBegin();
-    it != attributes_.constEnd(); it++)
-  {
+  for (auto it = attributes_.constBegin(); it != attributes_.constEnd(); ++it) {
     dict[plugin_prefix + QString("attributes.") + it.key()] = it.value();
   }
-  for (QMap<QString, QString>::const_iterator it = action_attributes_.constBegin();
-    it != action_attributes_.constEnd(); it++)
-  {
+  for (auto it = action_attributes_.constBegin(); it != action_attributes_.constEnd(); ++it) {
     dict[plugin_prefix + QString("action.") + it.key()] = it.value();
   }
   int group_index = 1;
-  for (QVector<QMap<QString, QString>>::const_iterator it = groups_.constBegin();
-    it != groups_.constEnd(); it++)
-  {
+  for (const QMap<QString, QString> & group : groups_) {
     QString prefix = QString("groups.") + QString::number(group_index) + QString(".");
-    for (QMap<QString, QString>::const_iterator jt = it->constBegin(); jt != it->constEnd(); jt++) {
+    for (auto jt = group.constBegin(); jt != group.constEnd(); ++jt) {
       dict[plugin_prefix + prefix + jt.key()] = jt.value();
     }
     group_index++;

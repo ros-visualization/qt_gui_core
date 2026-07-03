@@ -50,7 +50,7 @@ class PluginBridge
 public:
   PluginBridge();
 
-  virtual ~PluginBridge();
+  ~PluginBridge() override;
 
   virtual bool load_plugin(
     PluginProvider * provider, const QString & plugin_id,

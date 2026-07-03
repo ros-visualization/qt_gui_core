@@ -33,6 +33,7 @@
 #include <qt_gui_cpp/recursive_plugin_provider.hpp>
 
 #include <stdexcept>
+#include <utility>
 
 namespace qt_gui_cpp
 {
@@ -53,26 +54,23 @@ QMultiMap<QString, QString> RecursivePluginProvider::discover(QObject * discover
   // discover plugins, which are providers themselves
   QList<PluginDescriptor *> descriptors = plugin_provider_->discover_descriptors(discovery_data);
   QList<QString> plugin_ids;
-  for (QList<PluginDescriptor *>::iterator it = descriptors.begin(); it != descriptors.end();
-    it++)
-  {
-    PluginDescriptor * descriptor = *it;
+  for (PluginDescriptor * descriptor : std::as_const(descriptors)) {
     plugin_ids.append(descriptor->pluginId());
     delete descriptor;
   }
 
   // instantiate plugins
-  for (QList<QString>::iterator it = plugin_ids.begin(); it != plugin_ids.end(); it++) {
+  for (const QString & plugin_id : std::as_const(plugin_ids)) {
     try {
-      // pass NULL as PluginContext for PluginProviders
-      PluginProvider * instance = plugin_provider_->load_explicit_type(*it, 0);
-      if (instance == 0) {
+      // pass nullptr as PluginContext for PluginProviders
+      PluginProvider * instance = plugin_provider_->load_explicit_type(plugin_id, nullptr);
+      if (instance == nullptr) {
         throw std::runtime_error("load returned None");
       }
       providers_.append(instance);
     } catch (...) {
       qCritical("RecursivePluginProvider.discover() loading plugin '%s' failed",
-          it->toStdString().c_str());
+          plugin_id.toStdString().c_str());
     }
   }
 
@@ -83,8 +81,8 @@ QMultiMap<QString, QString> RecursivePluginProvider::discover(QObject * discover
 
 void RecursivePluginProvider::shutdown()
 {
-  for (QList<PluginProvider *>::iterator it = providers_.begin(); it != providers_.end(); it++) {
-    plugin_provider_->unload(*it);
+  for (PluginProvider * provider : std::as_const(providers_)) {
+    plugin_provider_->unload(provider);
   }
   CompositePluginProvider::shutdown();
 }

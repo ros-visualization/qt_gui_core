@@ -58,15 +58,15 @@ public:
    */
   virtual void set_plugin_providers(const QList<PluginProvider *> & plugin_providers);
 
-  virtual QList<PluginDescriptor *> discover_descriptors(QObject * discovery_data);
+  QList<PluginDescriptor *> discover_descriptors(QObject * discovery_data) override;
 
-  virtual void * load(const QString & plugin_id, PluginContext * plugin_context);
+  void * load(const QString & plugin_id, PluginContext * plugin_context) override;
 
-  virtual Plugin * load_plugin(const QString & plugin_id, PluginContext * plugin_context);
+  Plugin * load_plugin(const QString & plugin_id, PluginContext * plugin_context) override;
 
-  virtual void unload(void * plugin_instance);
+  void unload(void * plugin_instance) override;
 
-  virtual void shutdown();
+  void shutdown() override;
 
 private:
   QList<PluginProvider *> plugin_providers_;

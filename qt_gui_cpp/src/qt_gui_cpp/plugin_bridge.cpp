@@ -44,8 +44,8 @@ PluginBridge::~PluginBridge() = default;
 
 PluginBridge::PluginBridge()
 : QObject()
-  , provider_(0)
-  , plugin_(0)
+  , provider_(nullptr)
+  , plugin_(nullptr)
 {
   setObjectName("PluginBridge");
 }
@@ -60,14 +60,14 @@ bool PluginBridge::load_plugin(
   if (plugin_) {
     plugin_->installEventFilter(this);
   }
-  return plugin_ != 0;
+  return plugin_ != nullptr;
 }
 
 void PluginBridge::unload_plugin()
 {
   qDebug("PluginBridge::unload_plugin()");
   provider_->unload_plugin(plugin_);
-  plugin_ = 0;
+  plugin_ = nullptr;
 }
 
 bool PluginBridge::has_configuration() const

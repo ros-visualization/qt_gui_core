@@ -51,9 +51,9 @@ public:
 
   virtual ~RecursivePluginProvider();
 
-  virtual QMultiMap<QString, QString> discover(QObject * discovery_data);
+  QMultiMap<QString, QString> discover(QObject * discovery_data) override;
 
-  virtual void shutdown();
+  void shutdown() override;
 
 private:
   RosPluginlibPluginProvider_ForPluginProviders * plugin_provider_;
