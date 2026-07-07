@@ -82,7 +82,6 @@ public:
 
   ~RosPluginlibPluginProvider() override
   {
-    // class_loader_ (std::unique_ptr) is released automatically.
   }
 
   QMultiMap<QString, QString> discover(QObject * discovery_data) override
