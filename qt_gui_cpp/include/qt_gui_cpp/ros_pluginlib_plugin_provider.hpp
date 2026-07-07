@@ -387,10 +387,6 @@ private:
     }
   }
 
-  void unload_pending_libraries()
-  {
-  }
-
   QString export_tag_;
 
   QString base_class_type_;
