@@ -102,7 +102,10 @@ bool Settings::contains(const QString & key) const
 
 void Settings::remove(const QString & key)
 {
-  bool rc;
+  bool rc = QMetaObject::invokeMethod(proxy_.proxiedObject(),
+                                    "remove",
+                                    Q_ARG(QString, key));
+
   if (!rc) {throw std::runtime_error("Settings::remove() invoke method failed");}
 }
 
