@@ -2,6 +2,9 @@
 Changelog for package qt_dotgraph
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+3.0.2 (2026-07-09)
+------------------
+
 3.0.1 (2026-06-18)
 ------------------
 * Removed dead code, Python 2 to 3 modernization and other fixes (`#333 <https://github.com/ros-visualization/qt_gui_core/issues/333>`_)

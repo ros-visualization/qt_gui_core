@@ -2,6 +2,14 @@
 Changelog for package qt_gui_cpp
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+3.0.2 (2026-07-09)
+------------------
+* Fix Settings::remove() reading uninitialized bool and never invoking the proxied method (`#342 <https://github.com/ros-visualization/qt_gui_core/issues/342>`_)
+* Removed dead code (`#341 <https://github.com/ros-visualization/qt_gui_core/issues/341>`_)
+* Modernize qt_gui_cpp toward C++20 (`#340 <https://github.com/ros-visualization/qt_gui_core/issues/340>`_)
+* Use smart ptr with class loader (`#339 <https://github.com/ros-visualization/qt_gui_core/issues/339>`_)
+* Contributors: Alejandro Hernández Cordero
+
 3.0.1 (2026-06-18)
 ------------------
 * Removed dead code, Python 2 to 3 modernization and other fixes (`#333 <https://github.com/ros-visualization/qt_gui_core/issues/333>`_)
