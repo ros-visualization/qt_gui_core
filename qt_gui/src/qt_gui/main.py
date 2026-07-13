@@ -120,13 +120,13 @@ class Main:
             '-v', '--verbose', dest='verbose', default=False, action='store_true',
             help='output qDebug messages')
 
-        if not standalone:
-            common_group.add_argument(
-                '--args', dest='plugin_args', nargs='*', type=str,
-                help='arbitrary arguments which are passes to the plugin '
-                     '(only with -s, --command-start-plugin or --embed-plugin). '
-                     'It must be the last option since it collects all following options.')
+        common_group.add_argument(
+            '--args', dest='plugin_args', nargs='*', type=str,
+            help='arbitrary arguments which are passes to the plugin '
+                 '(only with -s, --command-start-plugin or --embed-plugin). '
+                 'It must be the last option since it collects all following options.')
 
+        if not standalone:
             group = parser.add_argument_group(
                 'Options to query information without starting a GUI instance',
                 'These options can be used to query information about valid arguments for various '
@@ -229,12 +229,11 @@ class Main:
         arguments = argv[1:]
 
         # extract plugin specific args when not being invoked in standalone mode programmatically
-        if not standalone:
-            plugin_args = []
-            if '--args' in arguments:
-                index = arguments.index('--args')
-                plugin_args = arguments[index + 1:]
-                arguments = arguments[0:index + 1]
+        plugin_args = []
+        if '--args' in arguments:
+            index = arguments.index('--args')
+            plugin_args = arguments[index + 1:]
+            arguments = arguments[0:index + 1]
 
         parser = ArgumentParser(os.path.basename(Main.main_filename), add_help=False)
         self.add_arguments(parser, standalone=bool(standalone),
@@ -267,14 +266,6 @@ class Main:
 
         # check option dependencies
         try:
-            if self._options.plugin_args and \
-                    not self._options.standalone_plugin and \
-                    not self._options.command_start_plugin and \
-                    not self._options.embed_plugin:
-                raise RuntimeError(
-                    'Option --args can only be used together with either --standalone, '
-                    '--command-start-plugin or --embed-plugin option')
-
             if self._options.freeze_layout and not self._options.lock_perspective:
                 raise RuntimeError(
                     'Option --freeze_layout can only be used together with the '
