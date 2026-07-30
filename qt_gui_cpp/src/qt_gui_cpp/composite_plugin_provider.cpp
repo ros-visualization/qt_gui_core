@@ -32,10 +32,10 @@
 
 #include <qt_gui_cpp/composite_plugin_provider.hpp>
 
-#include <qt_gui_cpp/plugin_descriptor.hpp>
-
 #include <stdexcept>
 #include <utility>
+
+#include <qt_gui_cpp/plugin_descriptor.hpp>
 
 namespace qt_gui_cpp
 {
