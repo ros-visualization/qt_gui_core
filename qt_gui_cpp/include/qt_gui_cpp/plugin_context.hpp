@@ -33,19 +33,8 @@
 #ifndef QT_GUI_CPP__PLUGIN_CONTEXT_HPP_
 #define QT_GUI_CPP__PLUGIN_CONTEXT_HPP_
 
-#include <QMap>
 #include <QObject>
-#include <QString>
 #include <QStringList>
-// Upstream issue: https://codereview.qt-project.org/c/qt/qtbase/+/272258
-#if __GNUC__ >= 9
-# pragma GCC diagnostic push
-# pragma GCC diagnostic ignored "-Wdeprecated-copy"
-#endif
-#include <QVariant>
-#if __GNUC__ >= 9
-# pragma GCC diagnostic pop
-#endif
 
 #include "generic_proxy.hpp"
 
