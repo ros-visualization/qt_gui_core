@@ -32,6 +32,8 @@
 
 #include <qt_gui_cpp/plugin_provider.hpp>
 
+#include <qt_gui_cpp/plugin_descriptor.hpp>
+
 #include <utility>
 
 namespace qt_gui_cpp

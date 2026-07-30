@@ -46,9 +46,10 @@
 #if __GNUC__ >= 9
 # pragma GCC diagnostic pop
 #endif
-#include <QWidget>
 
 #include "generic_proxy.hpp"
+
+class QWidget;
 
 namespace qt_gui_cpp
 {

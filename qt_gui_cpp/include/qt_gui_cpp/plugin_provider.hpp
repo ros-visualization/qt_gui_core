@@ -33,16 +33,18 @@
 #ifndef QT_GUI_CPP__PLUGIN_PROVIDER_HPP_
 #define QT_GUI_CPP__PLUGIN_PROVIDER_HPP_
 
-#include "plugin.hpp"
-#include "plugin_context.hpp"
-#include "plugin_descriptor.hpp"
-
 #include <QList>
 #include <QMultiMap>
 #include <QString>
 
+class QObject;
+
 namespace qt_gui_cpp
 {
+
+class Plugin;
+class PluginContext;
+class PluginDescriptor;
 
 class PluginProvider
 {

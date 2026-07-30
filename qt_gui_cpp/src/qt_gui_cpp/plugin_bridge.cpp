@@ -35,8 +35,6 @@
 #include <qt_gui_cpp/plugin_context.hpp>
 #include <qt_gui_cpp/plugin_provider.hpp>
 
-#include <QEvent>
-
 namespace qt_gui_cpp
 {
 

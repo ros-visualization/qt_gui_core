@@ -32,6 +32,8 @@
 
 #include <qt_gui_cpp/plugin_context.hpp>
 
+#include <QWidget>
+
 #include <stdexcept>
 
 namespace qt_gui_cpp

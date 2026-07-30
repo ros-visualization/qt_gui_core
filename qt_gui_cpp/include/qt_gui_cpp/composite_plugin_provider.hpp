@@ -38,11 +38,12 @@
 #include <QSet>
 #include <QString>
 
-#include "plugin_descriptor.hpp"
 #include "plugin_provider.hpp"
 
 namespace qt_gui_cpp
 {
+
+class PluginDescriptor;
 
 class CompositePluginProvider
   : public PluginProvider
