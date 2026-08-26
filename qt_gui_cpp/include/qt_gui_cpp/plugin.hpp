@@ -35,7 +35,6 @@
 
 #include <QObject>
 
-#include "plugin_bridge.hpp"
 #include "plugin_context.hpp"
 #include "settings.hpp"
 

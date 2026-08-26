@@ -33,7 +33,9 @@
 #ifndef QT_GUI_CPP__GENERIC_PROXY_HPP_
 #define QT_GUI_CPP__GENERIC_PROXY_HPP_
 
-#include <QObject>
+#include <QtCore/qobjectdefs.h>
+
+class QObject;
 
 #define Q_ARG_OLD(type, data) QArgument<type>(#type, data)
 
