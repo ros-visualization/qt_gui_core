@@ -75,7 +75,7 @@ class Main:
         common_group = parser.add_argument_group('Options for GUI instance')
         common_group.add_argument(
             '-b', '--qt-binding', dest='qt_binding', type=str, metavar='BINDING',
-            help='choose Qt bindings to be used [pyqt5|pyqt6|pyside2|pyside6]')
+            help='choose Qt bindings to be used [pyqt6|pyside6]')
         common_group.add_argument(
             '--clear-config', dest='clear_config', default=False, action='store_true',
             help='clear the configuration (including all perspectives and plugin settings)')
@@ -412,19 +412,14 @@ class Main:
 
         # choose selected or default qt binding
         setattr(sys, 'SELECT_QT_BINDING', self._options.qt_binding)
-        from python_qt_binding import QT_BINDING, QT_BINDING_VERSION
+        from python_qt_binding import QT_BINDING
 
         from python_qt_binding.QtCore import (qDebug, qInstallMessageHandler,
                                               QSettings, Qt)
         from python_qt_binding.QtCore import QTimer, QtMsgType
 
-        from packaging.version import Version
-
         from python_qt_binding.QtGui import QIcon
-        if Version(QT_BINDING_VERSION) >= Version('6.0.0'):
-            from python_qt_binding.QtGui import QAction
-        else:
-            from python_qt_binding.QtWidgets import QAction
+        from python_qt_binding.QtGui import QAction
         from qt_gui.about_handler import AboutHandler
         from qt_gui.composite_plugin_provider import CompositePluginProvider
         from qt_gui.container_manager import ContainerManager
@@ -435,7 +430,7 @@ class Main:
         from qt_gui.perspective_manager import PerspectiveManager
         from qt_gui.plugin_manager import PluginManager
 
-        # TODO PySide2 segfaults when invoking this custom message handler atm
+        # TODO PySide segfaults when invoking this custom message handler atm
         if QT_BINDING != 'pyside':
             def message_handler(type_, context, msg):
                 colored_output = 'TERM' in os.environ and 'ANSI_COLORS_DISABLED' not in os.environ

@@ -1,9 +1,6 @@
 set(qt_gui_cpp_HDRS_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../../include/qt_gui_cpp)
 
-set(qt_gui_cpp_sip "qt_gui_cpp.sip")
-if(${qt_gui_cpp_USE_QT_MAJOR_VERSION} GREATER "5")
-  set(qt_gui_cpp_sip "qt_gui_cpp_6.sip")
-endif()
+set(qt_gui_cpp_sip "qt_gui_cpp_6.sip")
 
 set(qt_gui_cpp_sip_DEPENDENT_FILES
   composite_plugin_provider.sip

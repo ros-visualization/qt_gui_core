@@ -28,15 +28,8 @@
 # ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-from packaging.version import Version
-
-from python_qt_binding import QT_BINDING_VERSION
-
 from python_qt_binding.QtCore import QObject, QSignalMapper, Signal, Slot
-if Version(QT_BINDING_VERSION) >= Version('6.0.0'):
-    from python_qt_binding.QtGui import QAction
-else:
-    from python_qt_binding.QtWidgets import QAction
+from python_qt_binding.QtGui import QAction
 from python_qt_binding.QtWidgets import QMenu
 
 from qt_gui.icon_loader import get_icon
@@ -67,10 +60,7 @@ class PluginMenu(QObject):
         action.setVisible(False)
         self._running_menu_manager.add_item(action)
         self._running_mapper = QSignalMapper(running_menu)
-        if Version(QT_BINDING_VERSION) <= Version('5.14.0'):
-            self._running_mapper.mapped[str].connect(self.unload_plugin_signal)
-        else:
-            self._running_mapper.mappedString[str].connect(self.unload_plugin_signal)
+        self._running_mapper.mappedString[str].connect(self.unload_plugin_signal)
 
         self._instances = {}
 
