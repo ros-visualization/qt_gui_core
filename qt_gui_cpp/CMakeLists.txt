@@ -43,12 +43,8 @@ set(qt_gui_cpp_HDRS
   include/qt_gui_cpp/plugin_context.hpp
 )
 
-if(${qt_gui_cpp_USE_QT_MAJOR_VERSION} GREATER "5")
-  qt_standard_project_setup()
-  qt_wrap_cpp(qt_gui_cpp_MOCS ${qt_gui_cpp_HDRS})
-else()
-  qt5_wrap_cpp(qt_gui_cpp_MOCS ${qt_gui_cpp_HDRS})
-endif()
+qt_standard_project_setup()
+qt_wrap_cpp(qt_gui_cpp_MOCS ${qt_gui_cpp_HDRS})
 
 add_library(${PROJECT_NAME} SHARED ${qt_gui_cpp_SRCS} ${qt_gui_cpp_MOCS})
 target_include_directories(${PROJECT_NAME} PUBLIC
@@ -59,10 +55,8 @@ target_compile_definitions(${PROJECT_NAME} PRIVATE BINDINGS_BUILD)
 
 target_link_libraries(${PROJECT_NAME}
   PUBLIC
-    ${QT_QTCORE_LIBRARY}
-    ${QT_QTGUI_LIBRARY}
-    Qt${qt_gui_cpp_USE_QT_MAJOR_VERSION}::Widgets
-    Qt${qt_gui_cpp_USE_QT_MAJOR_VERSION}::Core
+    Qt6::Widgets
+    Qt6::Core
     pluginlib::pluginlib
     tinyxml2::tinyxml2
 )

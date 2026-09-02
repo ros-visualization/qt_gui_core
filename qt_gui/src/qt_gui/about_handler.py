@@ -32,7 +32,6 @@ import os
 import platform
 import sys
 
-from packaging.version import Version
 
 from python_qt_binding import QT_BINDING, QT_BINDING_MODULES, QT_BINDING_VERSION
 from python_qt_binding.QtCore import QObject, qVersion
@@ -101,12 +100,8 @@ class AboutHandler(QObject):
 
         text += '.</p>'
 
-        if Version(QT_BINDING_VERSION) < Version('6.0.0'):
-            no_icon = QMessageBox.NoIcon
-            ok = QMessageBox.Ok
-        else:
-            no_icon = QMessageBox.Icon.NoIcon
-            ok = QMessageBox.StandardButton.Ok
+        no_icon = QMessageBox.Icon.NoIcon
+        ok = QMessageBox.StandardButton.Ok
 
         mb = QMessageBox(
             no_icon, self.tr('About rqt'), text, ok, self.parent())
