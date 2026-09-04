@@ -2,6 +2,11 @@
 Changelog for package qt_gui
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+3.0.3 (2026-09-04)
+------------------
+* Removed Qt5 (`#345 <https://github.com/ros-visualization/qt_gui_core/issues/345>`_)
+* Contributors: Alejandro Hernández Cordero
+
 3.0.2 (2026-07-09)
 ------------------
 
