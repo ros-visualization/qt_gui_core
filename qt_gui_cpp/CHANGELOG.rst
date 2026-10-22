@@ -2,6 +2,11 @@
 Changelog for package qt_gui_cpp
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+3.0.4 (2026-10-22)
+------------------
+* Remove the stale relative 'lib' link directory from qt_gui_cpp_sip (`#346 <https://github.com/ros-visualization/qt_gui_core//issues/346>`_)
+ Contributors: Maurice Alexander Purnawan
+
 3.0.3 (2026-09-04)
 ------------------
 * Removed Qt5 (`#345 <https://github.com/ros-visualization/qt_gui_core/issues/345>`_)

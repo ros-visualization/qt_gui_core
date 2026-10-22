@@ -2,6 +2,11 @@
 Changelog for package qt_gui
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+3.0.4 (2026-10-22)
+------------------
+* Shut down plugin providers before returning from list modes (`#348 <https://github.com/ros-visualization/qt_gui_core//issues/348>`_)
+* Contributors: Maurice Alexander Purnawan
+
 3.0.3 (2026-09-04)
 ------------------
 * Removed Qt5 (`#345 <https://github.com/ros-visualization/qt_gui_core/issues/345>`_)
