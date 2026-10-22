@@ -465,15 +465,31 @@ class PluginManager(QObject):
         # trigger async call on all running plugins
         self._number_of_ongoing_calls = len(self._running_plugins)
         if self._number_of_ongoing_calls > 0:
-            for info in self._running_plugins.values():
+            # Direct handlers may complete synchronously and mutate this dictionary.
+            for info in list(self._running_plugins.values()):
                 self._shutdown_plugin(
                     info['instance_id'], self._close_application_shutdown_callback)
         else:
             self._close_application_shutdown_callback()
 
     def _close_application_shutdown_callback(self, instance_id=None):
+        """Unload every plugin once all plugin shutdown callbacks have completed."""
         if instance_id is not None:
             self._number_of_ongoing_calls = self._number_of_ongoing_calls - 1
+        if self._number_of_ongoing_calls == 0:
+            self._number_of_ongoing_calls = len(self._running_plugins)
+            if self._number_of_ongoing_calls > 0:
+                for info in list(self._running_plugins.values()):
+                    self._unload_plugin(
+                        info['instance_id'], self._close_application_unload_callback)
+            else:
+                self._close_application_unload_callback()
+
+    def _close_application_unload_callback(self, instance_id=None):
+        """Finish closing after providers release every plugin instance."""
+        if instance_id is not None:
+            self._number_of_ongoing_calls = self._number_of_ongoing_calls - 1
+            self._remove_running_plugin(instance_id)
         if self._number_of_ongoing_calls == 0:
             qDebug('PluginManager.close_application() completed')
             self._number_of_ongoing_calls = None
