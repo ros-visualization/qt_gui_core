@@ -17,6 +17,7 @@
 
   <build_depend>pkg-config</build_depend>
   <build_depend version_gte="1.9.23">pluginlib</build_depend>
+  <build_depend>python3-dev</build_depend>
   <build_depend version_gte="0.3.0">python_qt_binding</build_depend>
   <build_depend>qt6-base-dev</build_depend>
   <build_depend>libqt6-widgets</build_depend>
@@ -27,7 +28,6 @@
 
   <exec_depend version_gte="1.9.23">pluginlib</exec_depend>
   <exec_depend version_gte="0.3.0">qt_gui</exec_depend>
-  <exec_depend>qt6-base-dev</exec_depend>
   <exec_depend>libqt6-widgets</exec_depend>
   <exec_depend>tinyxml2</exec_depend>
 
