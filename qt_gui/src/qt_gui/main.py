@@ -502,6 +502,8 @@ class Main:
         if self._options.list_plugins:
             # output available plugins
             print('\n'.join(sorted(plugin_manager.get_plugins().values())))
+            plugin_provider.shutdown()
+            app.sendPostedEvents()
             return 0
 
         help_provider = HelpProvider()
@@ -514,6 +516,8 @@ class Main:
             if self._options.list_perspectives:
                 # output available perspectives
                 print('\n'.join(sorted(perspective_manager.perspectives)))
+                plugin_provider.shutdown()
+                app.sendPostedEvents()
                 return 0
         else:
             perspective_manager = None
