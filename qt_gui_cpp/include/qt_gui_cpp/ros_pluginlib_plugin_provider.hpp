@@ -82,6 +82,9 @@ public:
 
   virtual ~RosPluginlibPluginProvider()
   {
+    // destroy all plugin instances before the class loader which created them
+    libraries_to_unload_.clear();
+    instances_.clear();
     if (class_loader_) {
       delete class_loader_;
     }
