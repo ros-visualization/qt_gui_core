@@ -17,6 +17,7 @@
   <buildtool_depend>pkg-config</buildtool_depend>
 
   <build_depend version_gte="1.9.23">pluginlib</build_depend>
+  <build_depend>python3-dev</build_depend>
   <build_depend version_gte="0.3.0">python_qt_binding</build_depend>
   <build_depend>qt6-base-dev</build_depend>
   <build_depend>tinyxml2</build_depend>

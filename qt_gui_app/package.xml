@@ -12,15 +12,15 @@
   <url type="bugtracker">https://github.com/ros-visualization/qt_gui_app/issues</url>
   <author>Dirk Thomas</author>
 
-  <buildtool_depend>ament_cmake</buildtool_depend>
-
   <exec_depend>ament_index_python</exec_depend>
   <exec_depend>qt_gui</exec_depend>
 
-  <test_depend>ament_lint_auto</test_depend>
-  <test_depend>ament_lint_common</test_depend>
-  
+  <test_depend>ament_flake8</test_depend>
+  <test_depend>ament_pep257</test_depend>
+  <test_depend>ament_xmllint</test_depend>
+  <test_depend>python3-pytest</test_depend>
+
   <export>
-    <build_type>ament_cmake</build_type>
+    <build_type>ament_python</build_type>
   </export>
 </package>
