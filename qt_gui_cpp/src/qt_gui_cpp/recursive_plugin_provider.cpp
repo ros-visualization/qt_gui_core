@@ -68,6 +68,9 @@ QMultiMap<QString, QString> RecursivePluginProvider::discover(QObject * discover
         throw std::runtime_error("load returned None");
       }
       providers_.append(instance);
+    } catch (const std::exception & e) {
+      qCritical("RecursivePluginProvider.discover() loading plugin '%s' failed: %s",
+          plugin_id.toStdString().c_str(), e.what());
     } catch (...) {
       qCritical("RecursivePluginProvider.discover() loading plugin '%s' failed",
           plugin_id.toStdString().c_str());
